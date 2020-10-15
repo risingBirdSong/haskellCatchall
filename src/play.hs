@@ -63,17 +63,26 @@ sum' (Cons num lst) = num + sum' lst
 insertInto val Nil = (Cons val Nil) 
 insertInto val (Cons x list) = Cons x (insertInto val list) 
 
-newList = insertInto 33 myList  -- Cons 1 (Cons 2 (Cons 3 (Cons 99 Nil)))
+newList = insertInto 4 myList  -- Cons 1 (Cons 2 (Cons 3 (Cons 99 Nil)))
 sumNewList = sum' newList -- 105
 
-anotherNewList = insertInto 99 newList -- Cons 1 (Cons 2 (Cons 3 (Cons 99 (Cons 777 Nil))))
+anotherNewList = insertInto 5 newList -- Cons 1 (Cons 2 (Cons 3 (Cons 99 (Cons 777 Nil))))
 
 add x y = x + y
 
 (reduce f x) Nil = x
 (reduce f x) (Cons v l) = f v ((reduce f x ) l)
 
-rdcTest = (reduce add 0) (anotherNewList) -- 138
+rdcTest = (reduce add 0) (anotherNewList) -- 15
 rdc f acc list = (reduce f acc) (list) 
 -- rdcd_a = add 0 anotherNewList
-rdcTesta = rdc add 0 anotherNewList -- 138
+rdcTesta = rdc add 0 anotherNewList -- 15
+
+productTest = rdc (\x y -> x * y) 1 anotherNewList -- 120
+
+or' x y = x || y
+
+boolList = foldr insertInto Nil [True, True, False, True] -- Cons True (Cons False (Cons True (Cons True Nil)))
+
+
+-- rdc_or = rdc (\x y -> x || y) False 
