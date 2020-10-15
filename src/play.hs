@@ -59,3 +59,11 @@ myList = Cons 1 (Cons 2 (Cons 3 Nil)) -- Cons 1 (Cons 2 (Cons 3 Nil))
 
 sum' Nil = 0
 sum' (Cons num lst) = num + sum' lst 
+
+insertInto val Nil = (Cons val Nil) 
+insertInto val (Cons x list) = Cons x (insertInto val list) 
+
+newList = insertInto 99 myList  -- Cons 1 (Cons 2 (Cons 3 (Cons 99 Nil)))
+sumNewList = sum' newList -- 105
+
+anotherNewList = insertInto 777 newList -- Cons 1 (Cons 2 (Cons 3 (Cons 99 (Cons 777 Nil))))
