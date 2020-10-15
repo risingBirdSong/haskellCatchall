@@ -82,7 +82,11 @@ productTest = rdc (\x y -> x * y) 1 anotherNewList -- 120
 
 or' x y = x || y
 
-boolList = foldr insertInto Nil [True, True, False, True] -- Cons True (Cons False (Cons True (Cons True Nil)))
+boolLista = foldr insertInto Nil [True, True, False, True] -- Cons True (Cons False (Cons True (Cons True Nil)))
+boolListb = foldr insertInto Nil [True, True, True, True] -- Cons True (Cons False (Cons True (Cons True Nil)))
+boolListc = foldr insertInto Nil [False, False, False, False] -- Cons True (Cons False (Cons True (Cons True Nil)))
 
 
--- rdc_or = rdc (\x y -> x || y) False 
+rdc_ora = rdc (\x y -> x || y) False boolLista -- True
+rdc_orb = rdc (\x y -> x || y) False boolListb -- True
+rdc_orc = rdc (\x y -> x || y) False boolListc -- False
