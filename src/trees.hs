@@ -14,8 +14,28 @@ insert (Node l v r) x
   
 contains Nil _ = False
 contains (Node l v r) x
-  | v == x = True
-  | x < v = contains l x
-  | x > v = contains r x
+ | v == x = True
+ | x < v = contains l x
+ | x > v = contains r x
 
-testTree = foldl insert Nil  [1,2,3,4]
+testTree = foldl insert Nil  [10,5,15,3,7,13,17]
+
+delete Nil _ = Nil
+delete (Node t1 v t2) x  
+ | x == v = deleteX (Node t1 v t2)
+ | x  < v = Node (delete t2 x) v t2
+ | x  > v = Node t1 v (delete t2 x)
+
+-- Delete root (is used on subtree)
+deleteX :: (Ord a) => Tree a -> Tree a 
+deleteX (Node Nil v t2) = t2
+deleteX (Node t1 v Nil) = t1
+deleteX (Node t1 v t2) = (Node t1 v2 t2) --(delete t2 v2))
+ where 
+  v2 = leftistElement t2
+    
+leftistElement :: (Ord a) => Tree a -> a
+leftistElement (Node Nil v _) = v
+leftistElement (Node t1 _ _) = leftistElement t1
+
+deleteTwo = delete testTree 15
