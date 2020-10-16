@@ -1,4 +1,5 @@
 import Data.List.Split
+import Debug.Trace
 -- reverse without built in 
 split1 xs = chunksOf 1 xs
 c = split1 "abcdefg"
@@ -87,6 +88,31 @@ boolListb = foldr insertInto Nil [True, True, True, True] -- Cons True (Cons Fal
 boolListc = foldr insertInto Nil [False, False, False, False] -- Cons True (Cons False (Cons True (Cons True Nil)))
 
 
-rdc_ora = rdc (\x y -> x || y) False boolLista -- True
-rdc_orb = rdc (\x y -> x || y) False boolListb -- True
-rdc_orc = rdc (\x y -> x || y) False boolListc -- False
+rdc_or_a = rdc (\x y -> x || y) False boolLista -- True
+rdc_or_b = rdc (\x y -> x || y) False boolListb -- True
+rdc_or_c = rdc (\x y -> x || y) False boolListc -- False
+
+-- note there are equivalents built in, like
+-- or [True, False, True] -> True
+
+rdc_all_a = rdc (\x y -> x && y) True boolLista -- False
+rdc_all_b = rdc (\x y -> x && y) True boolListb -- True
+
+-- note there are equivalents built in, like
+-- and [True, False, True] -> False
+-- and [True, True, True] -> True
+
+
+-- data ListOf x = Nil | Cons x (ListOf x) deriving (Show, Eq, Ord)
+-- myList = Cons 1 (Cons 2 (Cons 3 Nil)) -- Cons 1 (Cons 2 (Cons 3 Nil))
+
+aList = foldr insertInto Nil (reverse [1,2,3]) -- Cons 1 (Cons 2 (Cons 3 Nil))
+bList = foldr insertInto Nil (reverse [4,5,6]) -- Cons 4 (Cons 5 (Cons 6 Nil))
+
+-- (reduce f x) Nil = x
+-- (reduce f x) (Cons v l) = f v ((reduce f x ) l)
+
+copyList = reduce Cons Nil aList -- direct copy
+appendList = reduce Cons bList aList -- Cons 1 (Cons 2 (Cons 3 (Cons 4 (Cons 5 (Cons 6 Nil)))))
+
+append' x y = reduce Cons x y 
