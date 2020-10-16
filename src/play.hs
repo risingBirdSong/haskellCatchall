@@ -178,3 +178,10 @@ t = foldr (+) 0 [1,2,3]
 --answer by konsumlamm
 -- foldr1
 tt = foldr1 (+) [1,2,3] -- 6
+
+ttt = foldr1 (\x y -> (x+y)) [1,2,3]
+
+
+plusOne = (+1)
+plusTwo = (+2)
+test = map (plusOne . plusTwo) [1,2,3]
