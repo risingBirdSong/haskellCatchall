@@ -189,7 +189,7 @@ test = map (plusOne . plusTwo) [1,2,3]
 -- wrapping in a maybe type because the channel pointed out an empty [] will error with fold1
 -- ah yes it does tt [] -> *** Exception: Prelude.foldr1: empty list
 
-rsng (x:xs) = rsng' x xs
+rsng (xs) = rsng' (0) xs
 rsng' x [] = []
 rsng' wtr (x:ls) 
   | wtr >= x = rsng' x ls
