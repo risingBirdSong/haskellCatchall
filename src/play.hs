@@ -1,5 +1,6 @@
 import Data.List.Split
 import Debug.Trace
+import qualified Data.Map as Map
 -- reverse without built in 
 split1 xs = chunksOf 1 xs
 c = split1 "abcdefg"
@@ -144,3 +145,30 @@ fandcons f el list = Cons (f el) list
 testdoubleandcons = reduce doubleandcons Nil aList -- Cons 2 (Cons 4 (Cons 6 Nil))
 
 slickDble = reduce (Cons . (\x->2*x)) Nil 
+
+uniqueInOrder :: Eq a => [a] -> [a]
+uniqueInOrder [] = []
+uniqueInOrder (f:l) = machine f l
+  where 
+    machine lastvalue [] = [lastvalue]
+    machine lastvalue (x:xs) = 
+      if x == lastvalue then
+        machine x xs
+      else lastvalue : machine x xs
+    
+
+-- uniqueInOrder :: Eq a => [a] -> [a]
+-- uniqueInOrder [] = []
+-- uniqueInOrder (x:y) = machine x y
+--   where 
+--     machine lastvalue [] = []
+--     machine lastvalue (x:y) = 
+--       if x == lastvalue then
+--         machine x y
+--       else x : machine x y
+
+rising [] = []
+rising [v] = [v]
+rising (x:y:ls) 
+  | x > y = rising (y:ls)
+  | y >= x = x : rising (y:ls) 
