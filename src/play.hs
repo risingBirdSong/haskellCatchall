@@ -177,7 +177,7 @@ t = foldr (+) 0 [1,2,3]
 -- but how to call fold without the accumulator?
 --answer by konsumlamm
 -- foldr1
-tt = foldr1 (+) [1,2,3] -- 6
+tt ls = foldr1 (+) ls -- 6
 
 ttt = foldr1 (\x y -> (x+y)) [1,2,3]
 
@@ -186,7 +186,11 @@ plusOne = (+1)
 plusTwo = (+2)
 test = map (plusOne . plusTwo) [1,2,3]
 
+-- wrapping in a maybe type because the channel pointed out an empty [] will error with fold1
+-- ah yes it does tt [] -> *** Exception: Prelude.foldr1: empty list
 
-rising [] = Nothing
-rising (xs) = Just (foldr1 f xs)
-  where f x y = x + y  
+rsng (x:xs) = rsng' x xs
+rsng' x [] = []
+rsng' wtr (x:ls) 
+  | wtr >= x = rsng' x ls
+  | wtr < x = x : rsng' x ls 
