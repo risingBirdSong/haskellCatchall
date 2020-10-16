@@ -129,3 +129,6 @@ doubleall = reduce doubleandcons Nil
 dble_ num = Cons (2*num) 
 dlblerdx = reduce dble_ Nil
 dbledList = dlblerdx aList --Cons 2 (Cons 4 (Cons 6 Nil))
+
+duuble :: Num x => ListOf x -> ListOf x
+duuble lst = reduce (\x -> Cons (x*2)) Nil lst 
