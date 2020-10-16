@@ -116,3 +116,10 @@ copyList = reduce Cons Nil aList -- direct copy
 appendList = reduce Cons bList aList -- Cons 1 (Cons 2 (Cons 3 (Cons 4 (Cons 5 (Cons 6 Nil)))))
 
 append' x y = reduce Cons x y 
+
+uniqueOrder [] = []
+uniqueOrder [x] = [x]
+uniqueOrder (x:y:ls)
+  | x == y = uniqueOrder (y:ls)
+  | otherwise = x : uniqueOrder (y:ls)
+  
