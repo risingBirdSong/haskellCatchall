@@ -7,3 +7,7 @@ sol1 (x:xs) = sol1' x xs
 sol1' :: t -> [t] -> Maybe t
 sol1' x [] = Just (x)
 sol1' x (y:ys) = sol1' y ys 
+
+-- built in
+sol1a [] = Nothing
+sol1a xs = Just (last xs)
