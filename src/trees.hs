@@ -39,3 +39,9 @@ leftistElement (Node Nil v _) = v
 leftistElement (Node t1 _ _) = leftistElement t1
 
 deleteTwo = delete testTree 15
+
+-- and what native data structures are implemented as trees?
+-- Seq is a tree
+-- Map and Set are trees
+-- yea, they're all implemented as finger trees
+-- but also an advice that you generally dont go looking for trees
