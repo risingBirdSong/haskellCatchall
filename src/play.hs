@@ -167,11 +167,11 @@ uniqueInOrder (f:l) = machine f l
 --         machine x y
 --       else x : machine x y
 
-rising [] = []
-rising [v] = [v]
-rising (x:y:ls) 
-  | x > y = rising (y:ls)
-  | y >= x = x : rising (y:ls) 
+risingNaive [] = []
+risingNaive [v] = [v]
+risingNaive (x:y:ls) 
+  | x > y = risingNaive (y:ls)
+  | y >= x = x : risingNaive (y:ls) 
 
 t = foldr (+) 0 [1,2,3] 
 -- but how to call fold without the accumulator?
@@ -185,3 +185,8 @@ ttt = foldr1 (\x y -> (x+y)) [1,2,3]
 plusOne = (+1)
 plusTwo = (+2)
 test = map (plusOne . plusTwo) [1,2,3]
+
+
+rising [] = Nothing
+rising (xs) = Just (foldr1 f xs)
+  where f x y = x + y  
