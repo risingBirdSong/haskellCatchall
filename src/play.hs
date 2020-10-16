@@ -123,3 +123,9 @@ uniqueOrder (x:y:ls)
   | x == y = uniqueOrder (y:ls)
   | otherwise = x : uniqueOrder (y:ls)
   
+doubleall = reduce doubleandcons Nil
+  where doubleandcons num list = Cons (2*num) list
+
+dble_ num = Cons (2*num) 
+dlblerdx = reduce dble_ Nil
+dbledList = dlblerdx aList --Cons 2 (Cons 4 (Cons 6 Nil))
