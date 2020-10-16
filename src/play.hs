@@ -132,3 +132,15 @@ dbledList = dlblerdx aList --Cons 2 (Cons 4 (Cons 6 Nil))
 
 duuble :: Num x => ListOf x -> ListOf x
 duuble lst = reduce (\x -> Cons (x*2)) Nil lst 
+
+-- duubleWrong lst = reduce (Cons (\x->2*x)) Nil lst
+-- Expected type: ListOf (a -> a) -> ListOf x -> ListOf x
+-- Actual type: ListOf (a -> a) -> ListOf (a -> a)
+
+doubleandcons = fandcons double
+  where double n = 2*n
+fandcons f el list = Cons (f el) list
+
+testdoubleandcons = reduce doubleandcons Nil aList -- Cons 2 (Cons 4 (Cons 6 Nil))
+
+slickDble = reduce (Cons . (\x->2*x)) Nil 
