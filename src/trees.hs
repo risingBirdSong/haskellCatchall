@@ -44,4 +44,6 @@ deleteTwo = delete testTree 15
 -- Seq is a tree
 -- Map and Set are trees
 -- yea, they're all implemented as finger trees
+-- https://en.wikipedia.org/wiki/Finger_tree
 -- but also an advice that you generally dont go looking for trees
+
