@@ -172,3 +172,9 @@ rising [v] = [v]
 rising (x:y:ls) 
   | x > y = rising (y:ls)
   | y >= x = x : rising (y:ls) 
+
+t = foldr (+) 0 [1,2,3] 
+-- but how to call fold without the accumulator?
+--answer by konsumlamm
+-- foldr1
+tt = foldr1 (+) [1,2,3] -- 6
