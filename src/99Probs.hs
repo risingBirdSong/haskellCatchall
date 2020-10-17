@@ -114,3 +114,20 @@ rvrs [] = []
 rvrs (x:xs) = rvrs xs ++ [x]
 
 foldrev lst = foldr (\x acc -> (acc ++ [x])) [] lst
+
+data NestedList a = Elem a | List [NestedList a]
+
+tst = (List [Elem 1, List [Elem 2, List [Elem 3, Elem 4], Elem 5]]) 
+
+
+-- how do I guard with custom types like ?
+-- tst_a or 
+--  | or == List = True
+--  | or == Elem = False
+
+
+
+-- flatten lst 
+--   | 
+
+-- flattened = flatten (List [Elem 1, List [Elem 2, List [Elem 3, Elem 4], Elem 5]]) 
