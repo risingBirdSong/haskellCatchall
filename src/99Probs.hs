@@ -158,6 +158,9 @@ boxer'' (x:xs) = boxer'' xs ++ [[x]]
 
 
 
--- pack [] =[]
--- pack (x:y:ls) 
---   | x == y = 
+pack ls = pack' ls []
+pack' [] _ = []
+pack' [l] sub = [l:sub]
+pack' (x:y:ls) sub
+  | x == y = pack' (y:ls) (x:sub)
+  | x /= y = (x:sub) : pack' (y:ls) []
