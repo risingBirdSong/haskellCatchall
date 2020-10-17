@@ -36,3 +36,5 @@ myLast'''' xs = foldl1 (curry snd) xs
 sndLast [] = Nothing
 sndLast (x:y:z:ls) = sndLast (y:z:ls)
 sndLast (x: _) = Just (x)
+
+sndLast_a xs = head $ tail (reverse xs)
