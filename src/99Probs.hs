@@ -1,6 +1,7 @@
 -- prob 1
 -- Find the last element of a list.
 -- no built in 
+import Data.List
 sol1 :: [a] -> Maybe a
 sol1 [] = Nothing 
 sol1 (x:xs) = sol1' x xs  
@@ -169,3 +170,9 @@ pack'' [] = []
 pack'' (x:xs) = (x : l) : pack'' r
   where
     (l, r) = span (== x) xs
+
+simpleSpan (x:xs) = span (==x) xs
+-- simpleSpan [1,1,1,2,2,3] ([1,1],[2,2,3])
+
+grouped xs = group xs
+-- grouped [1,1,1,2,2,3] -> [[1,1,1],[2,2],[3]]
