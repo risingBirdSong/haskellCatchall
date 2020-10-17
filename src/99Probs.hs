@@ -61,3 +61,9 @@ elementAt (x:xs) i
   
 
 zipTillN list n = zip [1..n] list
+
+elemAt'' x lst = fst . last $ zip [1..x] lst
+
+elemat_d x lst = head $ drop (x-1) lst
+
+elemat_t x lst = last $ take x lst
