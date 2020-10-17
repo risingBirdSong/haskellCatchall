@@ -164,3 +164,8 @@ pack' [l] sub = [l:sub]
 pack' (x:y:ls) sub
   | x == y = pack' (y:ls) (x:sub)
   | x /= y = (x:sub) : pack' (y:ls) []
+
+pack'' [] = []
+pack'' (x:xs) = (x : l) : pack'' r
+  where
+    (l, r) = span (== x) xs
