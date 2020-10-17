@@ -79,3 +79,13 @@ countEle' [] c = c
 countEle' (x:xs) c = countEle' xs (c+1)
 
 cnt lst = fst . last $ zip [1..] lst
+
+cnt' [] = 0
+cnt' (x:xs)=  1 + cnt' xs  
+
+examineFold_r_x lst = foldr (\x y -> x) 0 lst -- for foldr the first arg in the lambda is cur, the second is accu 
+examineFold_r_y lst = foldr (\x y -> y) 0 lst -- for foldr the first arg in the lambda is cur, the second is accu 
+examineFold_l_x lst = foldl (\x y -> x) 0 lst -- for foldl the first arg to lamba is acc, the second is current
+examineFold_l_y lst = foldl (\x y -> y) 0 lst -- for foldl the first arg to lamba is acc, the second is current
+
+cntFold lst = foldr (\x y -> y+1) 0 lst 
