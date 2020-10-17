@@ -38,3 +38,17 @@ sndLast (x:y:z:ls) = sndLast (y:z:ls)
 sndLast (x: _) = Just (x)
 
 sndLast_a xs = head $ tail (reverse xs)
+
+sndLast_b xs = last . init $ xs
+
+myButLast'' [x,_]  = x
+myButLast'' (_:xs) = myButLast'' xs
+
+
+lastbut1safe :: Foldable f => f a -> Maybe a
+lastbut1safe = fst . foldl (\(a,b) x -> (b,Just x)) (Nothing,Nothing)
+
+exprmt :: Foldable f => f a ->(Maybe a, Maybe a)
+exprmt = foldl (\(a,b) x -> (b,Just x)) (Nothing,Nothing)
+
+-- $ is for applying a function to a value, . is for smashing two functions together.
