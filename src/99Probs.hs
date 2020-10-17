@@ -89,3 +89,5 @@ examineFold_l_x lst = foldl (\x y -> x) 0 lst -- for foldl the first arg to lamb
 examineFold_l_y lst = foldl (\x y -> y) 0 lst -- for foldl the first arg to lamba is acc, the second is current
 
 cntFold lst = foldr (\x y -> y+1) 0 lst 
+
+cntMap lst = sum ( map (\_->1) lst)
