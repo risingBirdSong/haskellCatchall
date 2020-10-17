@@ -59,3 +59,5 @@ elementAt (x:xs) i
   | i == 1 = Just (x)
   | otherwise = elementAt xs (i - 1)
   
+
+zipTillN list n = zip [1..n] list
