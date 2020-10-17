@@ -103,3 +103,14 @@ rev (x:xs) = rev xs <> [x]
 rev lst = rev' lst []
 rev' [] ys = ys
 rev' (x:xs) ys = rev' (xs) (x : ys )
+
+-- cool the one I wrote is also written in the examples and they say this about it -> (they did with where syntax)
+-- However this definition is more wasteful than the one in Prelude as it repeatedly reconses the
+-- result as it is accumulated.  The following variation avoids that, and thus computationally 
+-- closer to the Prelude version.
+
+rvrs :: [a] -> [a]
+rvrs [] = []
+rvrs (x:xs) = rvrs xs ++ [x]
+
+foldrev lst = foldr (\x acc -> (acc ++ [x])) [] lst
