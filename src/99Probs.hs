@@ -127,6 +127,7 @@ guardTypes (List x) = "list of elem"
 flttn (Elem x) = [x]
 flttn (List x) = concat . map flttn $ x
 
+flt1 = flttn tst -- [1,2,3,4,5]
 
 -- guardTypes (Elem 3) "elem"
 -- guardTypes (List [Elem 3]) "list of elem"
@@ -135,3 +136,10 @@ flttn (List x) = concat . map flttn $ x
 --   | 
 
 -- flattened = flatten (List [Elem 1, List [Elem 2, List [Elem 3, Elem 4], Elem 5]]) 
+
+
+-- Problem 6
+-- (*) Find out whether a list is a palindrome. A palindrome can be read forward or backward; e.g. (x a m a x).
+
+
+pali xs = xs == (reverse xs)
