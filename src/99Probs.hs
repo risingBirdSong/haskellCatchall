@@ -18,6 +18,9 @@ hm x  = (const id) x
 
 alwaysFirst = foldr1 (const) [1,2,3] -- 1
 alwaysLast = foldr1 (flip const) [1,2,3] --3
+
+myLast'''' xs = foldl1 (curry snd) xs
+
 -- so 
 -- acc cur
 -- 0    1
@@ -29,3 +32,7 @@ alwaysLast = foldr1 (flip const) [1,2,3] --3
 
 -- Problem 2
 -- (*) Find the last but one element of a list.
+
+sndLast [] = Nothing
+sndLast (x:y:z:ls) = sndLast (y:z:ls)
+sndLast (x: _) = Just (x)

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e7195d6766ab7ce6efaaea79fc7ad0110c413305c3bd13212a39737394480f4b
+-- hash: 13bd85fb31d90ea139405bf23d931112c02caad2cd7d4be9f5c122bc79bc3292
 
 name:           catchallHaskell
 version:        0.1.0.0
@@ -35,6 +35,7 @@ library
   build-depends:
       base >=4.7 && <5
     , containers
+    , hmatrix
     , split
   default-language: Haskell2010
 
@@ -49,6 +50,7 @@ executable catchallHaskell-exe
       base >=4.7 && <5
     , catchallHaskell
     , containers
+    , hmatrix
     , split
   default-language: Haskell2010
 
@@ -64,5 +66,6 @@ test-suite catchallHaskell-test
       base >=4.7 && <5
     , catchallHaskell
     , containers
+    , hmatrix
     , split
   default-language: Haskell2010
