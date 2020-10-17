@@ -52,3 +52,10 @@ exprmt :: Foldable f => f a ->(Maybe a, Maybe a)
 exprmt = foldl (\(a,b) x -> (b,Just x)) (Nothing,Nothing)
 
 -- $ is for applying a function to a value, . is for smashing two functions together.
+
+-- no built ins
+elementAt [] i = Nothing 
+elementAt (x:xs) i 
+  | i == 1 = Just (x)
+  | otherwise = elementAt xs (i - 1)
+  
