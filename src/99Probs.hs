@@ -12,13 +12,12 @@ sol1' x (y:ys) = sol1' y ys
 sol1a [] = Nothing
 sol1a xs = Just (last xs)
 
--- Problem 2
--- (*) Find the last but one element of a list.
-
 fld ls = foldr1 (const id) ls
 fld1 = foldl (const id) 0 [1,2,3]
 hm x  = (const id) x
 
+alwaysFirst = foldr1 (const) [1,2,3] -- 1
+alwaysLast = foldr1 (flip const) [1,2,3] --3
 -- so 
 -- acc cur
 -- 0    1
@@ -26,3 +25,7 @@ hm x  = (const id) x
 -- 0    3
 -- and (const id) will always select the 2nd of those
 -- the last of which is 3, so thats how the whole expression evaluates to 3
+
+
+-- Problem 2
+-- (*) Find the last but one element of a list.
