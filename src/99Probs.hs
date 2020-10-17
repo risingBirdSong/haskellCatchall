@@ -91,3 +91,15 @@ examineFold_l_y lst = foldl (\x y -> y) 0 lst -- for foldl the first arg to lamb
 cntFold lst = foldr (\x y -> y+1) 0 lst 
 
 cntMap lst = sum ( map (\_->1) lst)
+
+-- Problem 5
+-- (*) Reverse a list.
+
+
+
+rev [] = []
+rev (x:xs) = rev xs <> [x]
+
+rev lst = rev' lst []
+rev' [] ys = ys
+rev' (x:xs) ys = rev' (xs) (x : ys )
