@@ -124,6 +124,10 @@ tst = (List [Elem 1, List [Elem 2, List [Elem 3, Elem 4], Elem 5]])
 guardTypes (Elem x) = "elem"
 guardTypes (List x) = "list of elem"
 
+flttn (Elem x) = [x]
+flttn (List x) = concat . map flttn $ x
+
+
 -- guardTypes (Elem 3) "elem"
 -- guardTypes (List [Elem 3]) "list of elem"
 
