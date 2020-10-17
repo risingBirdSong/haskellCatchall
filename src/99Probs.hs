@@ -77,3 +77,5 @@ elemat_t x lst = last $ take x lst
 countEle lst = countEle' lst 0 
 countEle' [] c = c 
 countEle' (x:xs) c = countEle' xs (c+1)
+
+cnt lst = fst . last $ zip [1..] lst
