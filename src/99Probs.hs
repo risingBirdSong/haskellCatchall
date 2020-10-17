@@ -67,3 +67,13 @@ elemAt'' x lst = fst . last $ zip [1..x] lst
 elemat_d x lst = head $ drop (x-1) lst
 
 elemat_t x lst = last $ take x lst
+
+-- standard built in 
+-- [1,2,3] !! 1 -- 2
+
+-- Problem 4
+-- (*) Find the number of elements of a list.
+
+countEle lst = countEle' lst 0 
+countEle' [] c = c 
+countEle' (x:xs) c = countEle' xs (c+1)
