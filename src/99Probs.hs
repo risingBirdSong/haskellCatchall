@@ -143,3 +143,21 @@ flt1 = flttn tst -- [1,2,3,4,5]
 
 
 pali xs = xs == (reverse xs)
+
+-- Problem 9
+-- (**) Pack consecutive duplicates of list elements into sublists. If a list contains repeated elements they should be placed in separate sublists.
+
+boxer [] = []
+boxer (x:xs) = [x] : boxer xs
+
+boxer' [] = []
+boxer' (x:xs) = boxer' xs ++ [x]
+--boxer [1,2,3] [3,2,1]
+boxer'' [] = []
+boxer'' (x:xs) = boxer'' xs ++ [[x]]
+
+
+
+-- pack [] =[]
+-- pack (x:y:ls) 
+--   | x == y = 
