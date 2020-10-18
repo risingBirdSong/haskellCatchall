@@ -192,3 +192,18 @@ endcodeMap ys = map (\x -> (length x, head x)) (group ys)
 -- encode_ :: String -> [(Int, Char)]
 encode_ x = (\(x:xs) -> (1 + length xs, x)) <$> group x
 
+-- (*) Modified run-length encoding.
+-- Modify the result of problem 10 in such a way that if an element has no duplicates
+-- it is simply copied into the result list. Only elements with duplicates are transferred as (N E) lists.
+
+data M_S a = Single a | Multiple a deriving (Show, Eq, Read)
+
+myS = Single 3
+myMult = (Multiple 4)
+
+-- handler :: [b] -> M_S (Int, b)
+handler x
+  | length x > 1 = (Multiple (length x, head x))
+  | otherwise  =  (Single(1, head x))
+
+multsingle xs = map handler $ group xs
