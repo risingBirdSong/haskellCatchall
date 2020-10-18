@@ -196,14 +196,38 @@ encode_ x = (\(x:xs) -> (1 + length xs, x)) <$> group x
 -- Modify the result of problem 10 in such a way that if an element has no duplicates
 -- it is simply copied into the result list. Only elements with duplicates are transferred as (N E) lists.
 
-data M_S a = Single a | Multiple a deriving (Show, Eq, Read)
+data M_S a = Single (Int, a) | Multiple (Int, a) deriving (Show, Eq, Read)
 
-myS = Single 3
-myMult = (Multiple 4)
+myS = Single (4,2)
+myMult = (Multiple (3,1))
+
+data Customized a = MyCustomTuple (Int, Int) deriving (Show, Eq, Read)
+
+ttt = MyCustomTuple (3,1)
+
+
 
 -- handler :: [b] -> M_S (Int, b)
 handler x
   | length x > 1 = (Multiple (length x, head x))
   | otherwise  =  (Single(1, head x))
 
+extracter (Multiple x) = fst (x)
+extracter (Single x) = snd (x)
+
 multsingle xs = map handler $ group xs
+
+-- (**) Decode a run-length encoded list.
+-- Given a run-length code list generated as specified in problem 11. Construct its uncompressed version.
+-- Example in Haskell:
+-- λ> decodeModified 
+      --  [Multiple 4 'a',Single 'b',Multiple 2 'c',
+        -- Multiple 2 'a',Single 'd',Multiple 4 'e']
+-- "aaaabccaadeeee"
+
+-- decode xs = map 
+--   | x == Multiple a = replicate (fst a) (snd a)
+--   | == Single a = replicate (1) (snd a)
+
+sngleRepl x = replicate (fst x) (snd x)
+
