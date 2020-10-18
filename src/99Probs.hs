@@ -184,5 +184,11 @@ grouped xs = group xs
 
 encode xs = map length (group xs)
 
-pack_m :: String -> [(Int, Char)]
-pack_m x = (\(x:xs) -> (1 + length xs, x)) <$> group x
+encode' ys = (\x -> (length x, x)) <$> ( group ys)
+-- encode' [1,1,1 ,2,2,3] -> [(3,[1,1,1]),(2,[2,2]),(1,[3])]
+
+endcodeMap ys = map (\x -> (length x, head x)) (group ys)
+
+-- encode_ :: String -> [(Int, Char)]
+encode_ x = (\(x:xs) -> (1 + length xs, x)) <$> group x
+
