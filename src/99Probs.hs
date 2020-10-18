@@ -242,3 +242,10 @@ data2 = [Multiple (4,2), Multiple (5,3), Single (1,1)]
 -- (*) Duplicate the elements of a list.
 
 duplicate xs = concatMap (replicate 2) xs
+
+-- what is uncurry like?
+testa = foldr (+) 0 [1,2]
+testUnCurry = uncurry (+) (1,2)
+testUnCurryA = map (uncurry (max)) [(1,2),(3,4),(7,8)] -- [2,4,8]
+
+currTest = curry fst 1 2
