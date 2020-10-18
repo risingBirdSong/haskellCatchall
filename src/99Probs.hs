@@ -237,3 +237,8 @@ data1 = [Multiple (4, 'a'), Single (1, 'b'),Multiple (2 ,'c'), Multiple (2 ,'a')
 -- decode data1 -> "aaaabccaadeeee"
 data2 = [Multiple (4,2), Multiple (5,3), Single (1,1)]
 -- decode data2 -> [2,2,2,2,3,3,3,3,3,1]
+
+-- Problem 14
+-- (*) Duplicate the elements of a list.
+
+duplicate xs = concatMap (replicate 2) xs
