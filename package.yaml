@@ -23,7 +23,6 @@ dependencies:
 - base >= 4.7 && < 5
 - split
 - containers 
-- hmatrix
 library:
   source-dirs: src
 

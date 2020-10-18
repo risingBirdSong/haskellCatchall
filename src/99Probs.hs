@@ -229,5 +229,11 @@ multsingle xs = map handler $ group xs
 --   | x == Multiple a = replicate (fst a) (snd a)
 --   | == Single a = replicate (1) (snd a)
 
-sngleRepl x = replicate (fst x) (snd x)
+decode' (Multiple a) = replicate (fst a) (snd a)
+decode' (Single a) = [snd a]
+decode xs = concat  (map decode' xs)
 
+data1 = [Multiple (4, 'a'), Single (1, 'b'),Multiple (2 ,'c'), Multiple (2 ,'a'),Single (1, 'd'),Multiple (4 , 'e')]
+-- decode data1 -> "aaaabccaadeeee"
+data2 = [Multiple (4,2), Multiple (5,3), Single (1,1)]
+-- decode data2 -> [2,2,2,2,3,3,3,3,3,1]
