@@ -176,3 +176,13 @@ simpleSpan (x:xs) = span (==x) xs
 
 grouped xs = group xs
 -- grouped [1,1,1,2,2,3] -> [[1,1,1],[2,2],[3]]
+
+-- Problem 10
+-- (*) Run-length encoding of a list. Use the result of problem P09 to implement the so-called
+--  run-length encoding data compression method. Consecutive duplicates of elements are encoded
+  -- as lists (N E) where N is the number of duplicates of the element E.
+
+encode xs = map length (group xs)
+
+pack_m :: String -> [(Int, Char)]
+pack_m x = (\(x:xs) -> (1 + length xs, x)) <$> group x
