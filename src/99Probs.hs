@@ -249,3 +249,14 @@ testUnCurry = uncurry (+) (1,2)
 testUnCurryA = map (uncurry (max)) [(1,2),(3,4),(7,8)] -- [2,4,8]
 
 currTest = curry fst 1 2
+
+dupli [] = []
+dupli (x:xs) = x:x:dupli xs
+
+dupli' list = concat [[x,x] | x <- list]
+
+dupli'' xs = xs >>= (\x -> [x,x])
+
+exampleMap = map (replicate 2) [1,2,3] -- [[1,1],[2,2],[3,3]]
+exampleCMap = concatMap (replicate 2) [1,2,3] -- [[1,1],[2,2],[3,3]]
+exampleMonad = replicate 2 =<< [1, 2, 3] -- [1,1,2,2,3,3]
