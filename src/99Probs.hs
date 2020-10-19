@@ -334,3 +334,12 @@ removeKth k lst = f ++ b
         b = drop k lst
 
 removeKth' k lst = (map (snd))  (filter (\x -> fst x /= k ) (zip [0,1..] lst))
+
+removeAt 1 (x:xs) = (x, xs)
+removeAt n (x:xs) = (l, x:r)
+  where (l, r) = removeAt (n - 1) xs
+  
+removeAt' :: Int -> [a] -> (a, [a])
+removeAt' n xs = let (front, back) = splitAt n xs in (last front, init front ++ back)
+
+removeAt'' n = (\(a, b) -> (head b, a ++ tail b)) . splitAt (n - 1)
