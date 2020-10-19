@@ -352,7 +352,16 @@ removeAt'' n = (\(a, b) -> (head b, a ++ tail b)) . splitAt (n - 1)
 insertAt x n ls = f ++ [x] ++ b
       where f = take n ls
             b = drop n ls
-            
+
 nsert :: a -> [a] -> Int -> [a]
 nsert x ys     1 = x:ys
 nsert x (y:ys) n = y:nsert (x) (ys) (n-1)
+
+-- Problem 22
+-- Create a list containing all integers within a given range.
+
+cheekyRange x y = [x..y]
+
+range_r x y 
+  | x >= y = []
+  | otherwise = x:range_r (x+1) y
