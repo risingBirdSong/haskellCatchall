@@ -282,3 +282,14 @@ repli' (x:xs) n = foldr (const (x:)) (repli' xs n) [1..n]
 
 indexed xs = zip [0,1..] xs
 dropN xs n = map (snd) (filter (\x -> fst x `mod` n /= 0)( zip [1..] xs))
+
+-- Problem 17
+-- (*) Split a list into two parts; the length of the first part is given.
+-- Do not use any predefined predicates.
+-- split "abcdefghik" 3
+-- ("abc", "defghik")
+splitGroup xs n = map (reverse) (last (splitGroup' xs [] [] n 0))
+splitGroup' [] _ _ _ _ = []
+splitGroup' (x:xs) prt prta n c
+  | c < n = [(x:prt) , xs] : splitGroup' (xs) (x:prt) prta (n) (c+1)
+  | c >= n = [prt, (x:prta)] : splitGroup' (xs) (prt) (x:prta) (n) (c+1) 
