@@ -314,3 +314,14 @@ slice (x:xs) i k
 rotateN n lst = b ++ f
   where f = take n lst
         b = drop n lst
+
+rotate n xs = take len . drop (n `mod` len) . cycle $ xs
+  where len = length xs
+
+rotate' n xs  = take (length xs) $ drop (length xs + n) $ cycle xs
+
+rotate'' :: Int -> [a] -> [a]
+rotate'' _ [] = []
+rotate'' n xs = zipWith const (drop n (cycle xs)) xs
+
+-- zipWith const ([1..10])([10..1])
