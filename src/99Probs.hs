@@ -343,3 +343,11 @@ removeAt' :: Int -> [a] -> (a, [a])
 removeAt' n xs = let (front, back) = splitAt n xs in (last front, init front ++ back)
 
 removeAt'' n = (\(a, b) -> (head b, a ++ tail b)) . splitAt (n - 1)
+
+
+-- Problem 21
+-- Insert an element at a given position into a list.
+
+insertAt x n ls = f ++ [x] ++ b
+      where f = take n ls
+            b = drop n ls
