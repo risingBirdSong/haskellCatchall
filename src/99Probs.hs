@@ -325,3 +325,10 @@ rotate'' _ [] = []
 rotate'' n xs = zipWith const (drop n (cycle xs)) xs
 
 -- zipWith const ([1..10])([10..1])
+
+-- Problem 20
+-- (*) Remove the K'th element from a list.
+
+removeKth k lst = f ++ b
+  where f = take (k -1) lst
+        b = drop k lst
