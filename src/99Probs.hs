@@ -2,6 +2,7 @@
 -- Find the last element of a list.
 -- no built in 
 import Data.List
+import Data.List.Split
 import Control.Applicative
 import Control.Monad
 sol1 :: [a] -> Maybe a
@@ -351,3 +352,7 @@ removeAt'' n = (\(a, b) -> (head b, a ++ tail b)) . splitAt (n - 1)
 insertAt x n ls = f ++ [x] ++ b
       where f = take n ls
             b = drop n ls
+            
+nsert :: a -> [a] -> Int -> [a]
+nsert x ys     1 = x:ys
+nsert x (y:ys) n = y:nsert (x) (ys) (n-1)
