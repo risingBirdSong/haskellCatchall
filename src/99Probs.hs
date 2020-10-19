@@ -302,4 +302,15 @@ spltAtIt xs n = (take n xs, drop n xs)
 -- Given two indices, i and k, the slice is the list containing the elements between the i'th and k'th
 --  element of the original list (both limits included). Start counting the elements with 1.
 
-mySplit str stp lst = take (stp-str) (drop str lst)
+mySlice str stp lst = take (stp-str) (drop str lst)
+
+slice :: [a] -> Int -> Int -> [a]
+slice [] _ _  = []
+slice (x:xs) i k
+ | i > 1      = slice xs (i - 1) (k - 1)
+ | k < 1      = []
+ | otherwise  = x:slice xs (i - 1) (k - 1)
+
+rotateN n lst = b ++ f
+  where f = take n lst
+        b = drop n lst
