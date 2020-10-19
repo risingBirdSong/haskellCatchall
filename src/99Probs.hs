@@ -2,6 +2,8 @@
 -- Find the last element of a list.
 -- no built in 
 import Data.List
+import Control.Applicative
+import Control.Monad
 sol1 :: [a] -> Maybe a
 sol1 [] = Nothing 
 sol1 (x:xs) = sol1' x xs  
@@ -260,3 +262,7 @@ dupli'' xs = xs >>= (\x -> [x,x])
 exampleMap = map (replicate 2) [1,2,3] -- [[1,1],[2,2],[3,3]]
 exampleCMap = concatMap (replicate 2) [1,2,3] -- [[1,1],[2,2],[3,3]]
 exampleMonad = replicate 2 =<< [1, 2, 3] -- [1,1,2,2,3,3]
+
+dupli''' = (<**> [id,id])
+ 
+dupli'''' xs  = concatMap (\x->[x,x]) xs
