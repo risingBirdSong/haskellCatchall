@@ -293,3 +293,5 @@ splitGroup' [] _ _ _ _ = []
 splitGroup' (x:xs) prt prta n c
   | c < n = [(x:prt) , xs] : splitGroup' (xs) (x:prt) prta (n) (c+1)
   | c >= n = [prt, (x:prta)] : splitGroup' (xs) (prt) (x:prta) (n) (c+1) 
+
+spltAtIt xs n = (take n xs, drop n xs)
