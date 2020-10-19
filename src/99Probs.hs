@@ -276,3 +276,9 @@ repli xs tms = concatMap (repli_ tms) xs
 repli' :: [a] -> Int -> [a]
 repli' [] _ = []
 repli' (x:xs) n = foldr (const (x:)) (repli' xs n) [1..n]
+
+-- Problem 16
+-- (**) Drop every N'th element from a list.
+
+indexed xs = zip [0,1..] xs
+dropN xs n = map (snd) (filter (\x -> fst x `mod` n /= 0)( zip [1..] xs))
