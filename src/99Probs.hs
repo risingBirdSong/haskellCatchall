@@ -266,3 +266,9 @@ exampleMonad = replicate 2 =<< [1, 2, 3] -- [1,1,2,2,3,3]
 dupli''' = (<**> [id,id])
  
 dupli'''' xs  = concatMap (\x->[x,x]) xs
+
+-- Problem 15
+-- (**) Replicate the elements of a list a given number of times.
+
+repli_ tms v = concat (map (\_->[v])  [1..tms])
+repli xs tms = concatMap (repli_ tms) xs
