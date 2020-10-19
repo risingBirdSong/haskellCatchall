@@ -272,3 +272,7 @@ dupli'''' xs  = concatMap (\x->[x,x]) xs
 
 repli_ tms v = concat (map (\_->[v])  [1..tms])
 repli xs tms = concatMap (repli_ tms) xs
+
+repli' :: [a] -> Int -> [a]
+repli' [] _ = []
+repli' (x:xs) n = foldr (const (x:)) (repli' xs n) [1..n]
