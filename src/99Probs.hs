@@ -332,3 +332,5 @@ rotate'' n xs = zipWith const (drop n (cycle xs)) xs
 removeKth k lst = f ++ b
   where f = take (k -1) lst
         b = drop k lst
+
+removeKth' k lst = (map (snd))  (filter (\x -> fst x /= k ) (zip [0,1..] lst))
