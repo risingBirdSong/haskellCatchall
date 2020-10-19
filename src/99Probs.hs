@@ -295,3 +295,11 @@ splitGroup' (x:xs) prt prta n c
   | c >= n = [prt, (x:prta)] : splitGroup' (xs) (prt) (x:prta) (n) (c+1) 
 
 spltAtIt xs n = (take n xs, drop n xs)
+
+-- Problem 18
+-- (**) Extract a slice from a list.
+
+-- Given two indices, i and k, the slice is the list containing the elements between the i'th and k'th
+--  element of the original list (both limits included). Start counting the elements with 1.
+
+mySplit str stp lst = take (stp-str) (drop str lst)
