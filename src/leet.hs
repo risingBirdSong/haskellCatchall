@@ -125,11 +125,20 @@ allEqual (x:xs) = all (==x) xs
 -- combos [[1,2,3],[3,4,5],[3,6,7]]
 
 solve xs = filter (\x -> length x ==(length xs)) (filtering (combos xs))
-solve_a = head $ head $ sortBy ( flip compare `on` length) ( filter (\x -> all (== (head x)) x)(combos [[1,2,3], [3,4,5]]))
+solve_ xs = ( map filtering (replicateM (length xs) xs))
+-- filter (\x -> length x ==(length xs))
+-- solve_a xs = sortBy ( flip compare `on` length) (map ( filter all (\x -> (== ( head (head x) ))))(replicateM (length xs) xs))
+solve_a xs = (combos  xs)
 
+-- filter (\x -> all (== (head x)))
 
 -- solve [[1,2,3,9],[3,9,5],[3,6,7,8,9]]
 -- solve ["abc","cdea", "ctgza"]
+
+-- ["acc","acc","acz","acz","ac","acc","acc","acz","acz","ac","adc","adc","adz","adz","ad","aec","aec","aez","aez","ae","ac","ac","az","az","a","bcc","bcc","bcz","bcz","bc","bcc","bcc","bcz","bcz","bc","bdc","bdc","bdz","bdz","bd","bec","bec","bez","bez","be","bc","bc","bz","bz","b","ccc","ccc","ccz","ccz","cc","ccc","ccc","ccz","ccz","cc","cdc","cdc","cdz","cdz","cd","cec","cec","cez","cez","ce","cc","cc","cz","cz","c","ccc","ccc","ccz","ccz","cc","ccc","ccc","ccz","ccz","cc","cdc","cdc","cdz","cdz","cd","cec","cec","cez","cez","ce","cc","cc","cz","cz","c","cc","cc","cz","cz","c","cc","cc","cz","cz","c","dc","dc","dz","dz","d","ec","ec","ez","ez","e","c","c","z","z",""]
+
+-- fltr  =  filter all (\x -> (== (head x)))
+
 -- https://wiki.haskell.org/Foldl_as_foldr
 foldlByfoldr :: Foldable t => (b -> a -> b) -> b -> t a -> b
 foldlByfoldr f z0 xs = 
@@ -186,3 +195,9 @@ replcM_or cnt f =
   -- [[1,1],[1,2],[1,3],[1],[2,1],[2,2],[2,3],[2],[3,1],[3,2],[3,3],[3],[1],[2],[3],[]]
   -- replicateM preserves list length
   -- [[1,1],[1,2],[1,3],[2,1],[2,2],[2,3],[3,1],[3,2],[3,3]]
+-- herehere
+rmvDupes [] = []
+rmvDupes (x:xs) = let ys = rmvDupes xs in case ys of
+                                          (y:ys) | x == y -> ys
+                                          _ -> x:ys 
+                                          

@@ -376,3 +376,7 @@ rnd_select :: [a] -> Int -> IO [a]
 rnd_select xs n = do
   gen <- newStdGen
   return $ take n [ xs !! x | x <- randomRs (0, (length xs) - 1) gen]
+
+addUp n 
+  | n == 0 = 0
+  | otherwise = n + addUp (n-1)
