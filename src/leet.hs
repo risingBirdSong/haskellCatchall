@@ -133,5 +133,22 @@ foldlByfoldr f z0 xs =
 -- really hard to understand this function if you try to manually step through the recursion, but relatively easy this way
 
   -- https://stackoverflow.com/questions/35084867/haskell-generating-all-combinations-of-n-numbers
+
+twoDigitCombinations = [[x, y] | x <- [0..9], y <- [0..9]]
+
+twoDigitCombinationsM = do
+    x <- [0..9]
+    y <- [0..9]
+    return [x, y]
+
+intermdt_combinationsOfDigits n = foldUpList $ replicate n [0..3]
+  where foldUpList [] = return []
+        foldUpList (xs : xss) = do
+            x <- xs
+            ys <- foldUpList xss
+            return (x : ys)
+
 combinationsOfDigits n = replicateM n [0..9]
 combinationsOfLetters n = replicateM n ['a'..'d']
+
+possibles = sequence $ replicate 2 [0..3]
