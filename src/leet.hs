@@ -210,3 +210,18 @@ rmvDupes_b [] = []
 rmvDupes_b (x:xs) = let ys = rmvDupes_b xs in case ys of
   (y:ys) | x == y -> ys
   _ -> x:ys
+
+  -- [5,7,3,9,4,9,8,3,1]
+grpSrt xs = (group (sort xs))
+-- [[1],[3,3],[4],[5],[7],[8],[9,9]]
+fltrLength  xs = (filter ((==1) . length )) xs -- [[1],[3,3],[4],[5],[7],[8],[9,9]]
+-- [[1],[4],[5],[7],[8]]
+lrgUniqNum_testa xs =  sortBy ( compare `on` length) (group (sort xs))
+lrgUniqNum xs = head $ last $ sortBy (flip compare `on` length) (group (sort xs))
+
+-- lrgUniqNum xs = filter ((==1).length) ( group (sort xs))
+
+-- https://stackoverflow.com/questions/21410293/filter-list-items-by-length-in-haskell
+-- ah i was getting the orering wrong, in flterTest remember length is a func so it gets first to the incoming args 
+flterTest xs = filter ((==1).length) xs 
+flterTesta xs = filter  (\x -> length x == 1)  xs 
