@@ -97,3 +97,16 @@ process :: [Coin] -> (Int, Int)
 process cs = (length cs, length (filter (== Heads) cs))
 
 
+z1 = zip "abc" "cdef"
+
+testerTwo xs ys = (,) <$> xs <*> ys
+testerThree xs ys zs= (,,) <$> xs <*> ys <*> zs
+
+combos :: [[a]] -> [[a]]
+combos [] = [[]]
+combos ([]:ls) = combos ls
+combos ((h:t):ls) = map (h:) (combos ls) ++ combos (t:ls)
+
+filteredOnce xxs = filter (allEqual) xxs
+
+allEqual (x:xs) = all (==x) xs
