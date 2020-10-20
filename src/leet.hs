@@ -2,6 +2,7 @@
 import Data.List.Split
 import System.Random
 import Control.Monad
+import Control.Applicative
 import Data.Function
 import Data.List
 
@@ -169,6 +170,16 @@ replicateM_o cnt0 f =
     loop cnt
         | cnt <= 0  = pure []
         | otherwise = liftM2 (:) f (loop (cnt - 1))
+
+-- official remake
+replcM_or cnt f =
+    loop cnt
+  where
+    loop cnt
+      | cnt <= 0 = pure []
+      | otherwise =  pure (:) <*> f <*> (loop (cnt -1))
+      -- | otherwise =  (:) <$> f <*> (loop (cnt -1))
+      -- | otherwise = liftM2 (:) f (loop (cnt -1))
 
 -- the difference between the above combos and replicateM ->
   -- combos is exhaustive and includes smaller lists
