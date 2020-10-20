@@ -2,6 +2,8 @@
 import Data.List.Split
 import System.Random
 import Control.Monad
+import Data.Function
+import Data.List
 
 -- this is a nice ticket right here
 splitted pair lst = concat (splitOn (pair) lst)
@@ -108,6 +110,10 @@ combos [] = [[]]
 combos ([]:ls) = combos ls
 combos ((h:t):ls) = map (h:) (combos ls) ++ combos (t:ls)
 
+combos_r :: [[a]] -> [[a]]
+combos_r [] = [[]]
+
+
 filtering xxs = filter (allEqual) xxs
 
 allEqual [] = False
@@ -116,6 +122,7 @@ allEqual (x:xs) = all (==x) xs
 -- combos [[1,2,3],[3,4,5],[3,6,7]]
 
 solve xs = filter (\x -> length x ==(length xs)) (filtering (combos xs))
+solve_a = head $ head $ sortBy ( flip compare `on` length) ( filter (\x -> all (== (head x)) x)(combos [[1,2,3], [3,4,5]]))
 
 -- solve [[1,2,3,9],[3,9,5],[3,6,7,8,9]]
 -- solve ["abc","cdea", "ctgza"]
@@ -152,3 +159,11 @@ combinationsOfDigits n = replicateM n [0..9]
 combinationsOfLetters n = replicateM n ['a'..'d']
 
 possibles = sequence $ replicate 2 [0..3]
+
+replicateM_o cnt0 f =
+    loop cnt0
+  where
+    loop cnt
+        | cnt <= 0  = pure []
+        | otherwise = liftM2 (:) f (loop (cnt - 1))
+
