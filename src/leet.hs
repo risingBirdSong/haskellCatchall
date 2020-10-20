@@ -46,6 +46,10 @@ reSqz (x:xs) = let ys = reSqz xs in case ys of
                                           (y:ys') | x == y -> ys'
                                           _ -> x:ys
 
+sqz [] = [] 
+sqz (x:xs) = let ys = sqz xs in case ys of  (y:ys) | x == y -> ys 
+                                            _ -> x : ys 
+
 myMain = do
   g <- getStdGen
   print $ take 10 (randomRs ('a', 'z') g)
@@ -67,7 +71,15 @@ mainb = do
   g <- newStdGen
   print $ take 5 (randoms g :: [Int])
 
-data Coin = Heads | Tails deriving (Show, Enum, Bounded)
+data MyRandos = Goose | Verbatim | Vote | GrandSlam | GrandStand | FillErUp | Gander | Volcano | Needlepoint | Gargantuan deriving (Show, Enum, Bounded)
+
+-- instance Random Coin where
+--   randomR (a, b) g =
+--     case randomR (fromEnum a, fromEnum b) g of
+--       (x, g') -> (toEnum x, g')
+--   random g = randomR (minBound, maxBound) g
+
+data Coin = Heads | Tails deriving (Show, Enum, Eq, Bounded)
 
 instance Random Coin where
   randomR (a, b) g =
@@ -75,6 +87,13 @@ instance Random Coin where
       (x, g') -> (toEnum x, g')
   random g = randomR (minBound, maxBound) g
 
-coinFlip = do
+main = do
   g <- newStdGen
-  print . take 2 $ (randoms g :: [Coin])
+  print . take 10 $ (randoms g :: [Coin])
+
+  -- [Heads,Tails,Tails,Heads,Tails,Heads,Tails,Heads,Tails,Tails]
+
+process :: [Coin] -> (Int, Int)
+process cs = (length cs, length (filter (== Heads) cs))
+
+
