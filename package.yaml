@@ -24,6 +24,7 @@ dependencies:
 - split
 - containers 
 - split
+- random
 library:
   source-dirs: src
 
