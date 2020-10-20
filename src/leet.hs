@@ -178,8 +178,8 @@ replcM_or cnt f =
     loop cnt
       | cnt <= 0 = pure []
       -- | otherwise =  pure (:) <*> f <*> (loop (cnt -1))
-      | otherwise =  (:) <$> f <*> (loop (cnt -1))
-      -- | otherwise = liftM2 (:) f (loop (cnt -1))
+      -- | otherwise =  (:) <$> f <*> (loop (cnt -1))
+      | otherwise = liftA2 (:) f (loop (cnt -1))
 
 -- the difference between the above combos and replicateM ->
   -- combos is exhaustive and includes smaller lists
