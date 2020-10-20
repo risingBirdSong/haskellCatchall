@@ -368,6 +368,11 @@ range_r x y
   | x >= y = []
   | otherwise = x:range_r (x+1) y
 
-rnd_select n lst = do
+rnd_select_my n lst = do
   g <- getStdGen
   print (take n (randomRs ('a','g') g :: [Char]))
+
+rnd_select :: [a] -> Int -> IO [a]
+rnd_select xs n = do
+  gen <- newStdGen
+  return $ take n [ xs !! x | x <- randomRs (0, (length xs) - 1) gen]
