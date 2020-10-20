@@ -118,3 +118,15 @@ solve xs = filter (\x -> length x ==(length xs)) (filtering (combos xs))
 
 -- solve [[1,2,3,9],[3,9,5],[3,6,7,8,9]]
 -- solve ["abc","cdea", "ctgza"]
+-- https://wiki.haskell.org/Foldl_as_foldr
+foldlByfoldr :: Foldable t => (b -> a -> b) -> b -> t a -> b
+foldlByfoldr f z0 xs = 
+  let leftFold = foldr (\x k -> \z -> k (f z x)) id xs
+  in leftFold z0
+
+--   the foldr returns a function that when given an initial accumulator, does a left fold over the list with that accumulator
+-- base case: empty list: just return the accumulator (id)
+-- inductive step: k is a function that takes an accumulator and does a left fold over the tail of the list, startign with that accumulator
+-- and the initial accumulator for the tail needs to be the result of applying f to our initial accumulator and the head of the list
+-- so return a function that takes an accumulator z and return k (f z x) (a left fold over the tail of the list with (f z x) as the accumulator
+-- really hard to understand this function if you try to manually step through the recursion, but relatively easy this way
