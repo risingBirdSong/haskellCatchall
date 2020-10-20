@@ -107,6 +107,14 @@ combos [] = [[]]
 combos ([]:ls) = combos ls
 combos ((h:t):ls) = map (h:) (combos ls) ++ combos (t:ls)
 
-filteredOnce xxs = filter (allEqual) xxs
+filtering xxs = filter (allEqual) xxs
 
+allEqual [] = False
 allEqual (x:xs) = all (==x) xs
+
+-- combos [[1,2,3],[3,4,5],[3,6,7]]
+
+solve xs = filter (\x -> length x ==(length xs)) (filtering (combos xs))
+
+-- solve [[1,2,3,9],[3,9,5],[3,6,7,8,9]]
+-- solve ["abc","cdea", "ctgza"]
