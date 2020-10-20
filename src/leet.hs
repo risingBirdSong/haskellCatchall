@@ -205,3 +205,8 @@ rmvDupes_a [] = []
 rmvDupes_a (x:xs) = let ys = rmvDupes_a xs in case ys of
                                               (y:ys) | x == y -> ys
                                               _ -> x:ys
+
+rmvDupes_b [] = []
+rmvDupes_b (x:xs) = let ys = rmvDupes_b xs in case ys of
+  (y:ys) | x == y -> ys
+  _ -> x:ys
