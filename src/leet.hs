@@ -112,6 +112,8 @@ combos ((h:t):ls) = map (h:) (combos ls) ++ combos (t:ls)
 
 combos_r :: [[a]] -> [[a]]
 combos_r [] = [[]]
+combos_r ([]:ls) = combos ls
+combos_r ((h:t):ls) = map (h:) (combos ls) ++ combos (t:ls)
 
 
 filtering xxs = filter (allEqual) xxs
@@ -123,6 +125,7 @@ allEqual (x:xs) = all (==x) xs
 
 solve xs = filter (\x -> length x ==(length xs)) (filtering (combos xs))
 solve_a = head $ head $ sortBy ( flip compare `on` length) ( filter (\x -> all (== (head x)) x)(combos [[1,2,3], [3,4,5]]))
+
 
 -- solve [[1,2,3,9],[3,9,5],[3,6,7,8,9]]
 -- solve ["abc","cdea", "ctgza"]
@@ -167,3 +170,8 @@ replicateM_o cnt0 f =
         | cnt <= 0  = pure []
         | otherwise = liftM2 (:) f (loop (cnt - 1))
 
+-- the difference between the above combos and replicateM ->
+  -- combos is exhaustive and includes smaller lists
+  -- [[1,1],[1,2],[1,3],[1],[2,1],[2,2],[2,3],[2],[3,1],[3,2],[3,3],[3],[1],[2],[3],[]]
+  -- replicateM preserves list length
+  -- [[1,1],[1,2],[1,3],[2,1],[2,2],[2,3],[3,1],[3,2],[3,3]]
