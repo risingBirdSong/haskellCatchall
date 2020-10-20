@@ -1,6 +1,7 @@
 -- 1047. Remove All Adjacent Duplicates In String
 import Data.List.Split
 import System.Random
+import Control.Monad
 
 -- this is a nice ticket right here
 splitted pair lst = concat (splitOn (pair) lst)
@@ -130,3 +131,7 @@ foldlByfoldr f z0 xs =
 -- and the initial accumulator for the tail needs to be the result of applying f to our initial accumulator and the head of the list
 -- so return a function that takes an accumulator z and return k (f z x) (a left fold over the tail of the list with (f z x) as the accumulator
 -- really hard to understand this function if you try to manually step through the recursion, but relatively easy this way
+
+  -- https://stackoverflow.com/questions/35084867/haskell-generating-all-combinations-of-n-numbers
+combinationsOfDigits n = replicateM n [0..9]
+combinationsOfLetters n = replicateM n ['a'..'d']
