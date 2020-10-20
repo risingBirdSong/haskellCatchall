@@ -5,6 +5,8 @@ import Data.List
 import Data.List.Split
 import Control.Applicative
 import Control.Monad
+import System.Random
+
 sol1 :: [a] -> Maybe a
 sol1 [] = Nothing 
 sol1 (x:xs) = sol1' x xs  
@@ -365,3 +367,7 @@ cheekyRange x y = [x..y]
 range_r x y 
   | x >= y = []
   | otherwise = x:range_r (x+1) y
+
+rnd_select n lst = do
+  g <- getStdGen
+  print (take n (randomRs ('a','g') g :: [Char]))
