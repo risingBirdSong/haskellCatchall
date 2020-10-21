@@ -433,7 +433,15 @@ sortsubs  xs n =  ordNub (filter ((==n) . length ) ( map sort  (map (ordNub)  $ 
 -- wait so how compose sortsubs so that I can collect over multiple nums of lengths of people groupings?
 -- composegroup lngs xs = foldr (sortsubs xs) [] lngs   
 
+composecombos [] people = [] 
+composecombos (l:lngs) people = (sortsubs people l) : composecombos lngs people
+
+
 listadder xs = foldr (++) [] xs 
 numadder xs = foldr (+) 0 xs
 
 reslen2 = [["aldo","beat"],["aldo","carla"],["beat","aldo"],["beat","carla"],["carla","aldo"],["carla","beat"]]
+resa =[["aldo","beat","carla"],["aldo","beat","david"],["aldo","beat","evi"],["aldo","beat","flip"],["aldo","beat","gary"]]
+resb = [["aldo","beat","carla","david"],["aldo","beat","carla","evi"],["aldo","beat","carla","flip"],["aldo","beat","carla","gary"],["aldo","beat","carla","hugo"]]
+-- resa ++ resb ->
+appendeda_b = [["aldo","beat","carla"],["aldo","beat","david"],["aldo","beat","evi"],["aldo","beat","flip"],["aldo","beat","gary"],["aldo","beat","carla","david"],["aldo","beat","carla","evi"],["aldo","beat","carla","flip"],["aldo","beat","carla","gary"],["aldo","beat","carla","hugo"]]
