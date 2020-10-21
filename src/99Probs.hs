@@ -471,6 +471,11 @@ group' (n:ns) xs =
     [ g:gs | (g,rs) <- combination' n xs
            ,  gs    <- group' ns rs ]
 
+re_group :: [Int] -> [a] -> [[[a]]]
+re_group [] _ = [[]]
+re_group (n:ns) xs =
+    [ g:gs | (g,rs) <- re_combo n xs, gs <- re_group (ns) rs]
+
 
 answercomboa = combination' 4 fourPeople -- [(["aldo","beat","carla","david"],[])]
 myAttempta = sortsubs fourPeople 4 -- [["aldo","beat","carla","david"]]
