@@ -512,3 +512,5 @@ lsort xs = sortBy (compare `on` length) $ sort xs
 -- lfsort xs = 
 
 pureNumAppend =  (pure 1) <> (pure 2) :: [Int]  -- [1,2]
+
+composedSort = sortBy $ (C.comparing length) <> compare
