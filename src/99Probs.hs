@@ -455,6 +455,16 @@ combination' n (x:xs) = ts ++ ds
     ts = [ (x:ys,zs) | (ys,zs) <- combination' (n-1) xs ]
     ds = [ (ys,x:zs) | (ys,zs) <- combination'  n    xs ]
 
+
+re_combo :: Int -> [a] -> [([a], [a])]
+re_combo 0 xs = [([],xs)]
+re_combo n [] = []
+re_combo n (x:xs) = ts ++ ds
+  where
+ ts = [(x:ys,zs) | (ys,zs) <- re_combo (n-1) xs] 
+ ds = [(ys, x:zs) | (ys,zs) <- re_combo n xs]
+
+ 
 group' :: [Int] -> [a] -> [[[a]]]
 group' [] _ = [[]]
 group' (n:ns) xs =
@@ -464,3 +474,7 @@ group' (n:ns) xs =
 
 answercomboa = combination' 4 fourPeople -- [(["aldo","beat","carla","david"],[])]
 myAttempta = sortsubs fourPeople 4 -- [["aldo","beat","carla","david"]]
+
+
+myAttemptb =  composecombos [2,3] fourPeople -- [[["aldo","beat"],["aldo","carla"],["aldo","david"],["beat","carla"],["beat","david"],["carla","david"]],[["aldo","beat","carla"],["aldo","beat","david"],["aldo","carla","david"],["beat","carla","david"]]]
+-- answergroupa = 
