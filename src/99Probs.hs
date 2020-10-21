@@ -387,3 +387,21 @@ diff_select :: Int -> Int -> IO [Int]
 diff_select n m = take n . nub . randomRs (1, m) <$> newStdGen
 
 diff_select_r n m = take n . nub . randomRs (1,m) <$> newStdGen 
+
+-- (**) Generate the combinations of K distinct objects chosen from the N elements of a list
+-- In how many ways can a committee of 3 be chosen from a group of 12 people?
+-- We all know that there are C(12,3) = 220 possibilities (C(N,K) denotes 
+-- the well-known binomial coefficients). For pure mathematicians, this result may be great. But we want to really generate all the possibilities in a list.
+
+-- combinations 3 "abcdef"
+-- ["abc","abd","abe",...]
+
+combinations n lst = replicateM n lst
+
+rplcM_ :: (Ord t, Num t, Applicative f) => t -> f a -> f [a]
+rplcM_ n lst =
+    loop n
+  where
+    loop n
+      | n <= 0 = pure []
+      | otherwise = liftA2 (:) lst (loop (n - 1))
