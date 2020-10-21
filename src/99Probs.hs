@@ -7,6 +7,8 @@ import Control.Applicative
 import Control.Monad
 import System.Random
 import Universum.Nub
+import Data.Function
+
 
 sol1 :: [a] -> Maybe a
 sol1 [] = Nothing 
@@ -483,3 +485,21 @@ myAttempta = sortsubs fourPeople 4 -- [["aldo","beat","carla","david"]]
 
 myAttemptb =  composecombos [2,3] fourPeople -- [[["aldo","beat"],["aldo","carla"],["aldo","david"],["beat","carla"],["beat","david"],["carla","david"]],[["aldo","beat","carla"],["aldo","beat","david"],["aldo","carla","david"],["beat","carla","david"]]]
 -- answergroupa = 
+
+-- Problem 28
+-- Sorting a list of lists according to length of sublists
+
+-- a) We suppose that a list contains elements that are lists themselves. The objective is to sort the elements of this list according to their length. E.g. short lists first, longer lists later, or vice versa.
+
+-- Example:
+
+-- * (lsort '((a b c) (d e) (f g h) (d e) (i j k l) (m n) (o)))
+-- ((O) (D E) (D E) (M N) (A B C) (F G H) (I J K L))
+-- Example in Haskell:
+
+-- λ> lsort ["abc","de","fgh","de","ijkl","mn","o"]
+-- ["o","de","de","mn","abc","fgh","ijkl"]
+
+test_lsort =  ["abc","de","fgh","de","ijkl","mn","o"]
+lsort xs = sortBy (compare `on` length) $ sort xs
+-- ["o","de","de","mn","abc","fgh","ijkl"]
