@@ -6,6 +6,7 @@ import Control.Applicative
 import Data.Function
 import Data.List
 
+
 -- this is a nice ticket right here
 splitted pair lst = concat (splitOn (pair) lst)
 -- sTest = splitted "x" "x" "abcxxdef"
@@ -218,6 +219,8 @@ fltrLength  xs = (filter ((==1) . length )) xs -- [[1],[3,3],[4],[5],[7],[8],[9,
 -- [[1],[4],[5],[7],[8]]
 lrgUniqNum_testa xs =  sortBy ( compare `on` length) (group (sort xs))
 lrgUniqNum xs = head $ last $ sortBy (flip compare `on` length) (group (sort xs))
+lrgUniqNumA xs = head $ head $ reverse $ (filter ((==1) . length )) (group (sort xs))
+lrgUniqNumB xs = head $ concat $ reverse $ (filter ((==1) . length )) (group (sort xs))
 
 -- lrgUniqNum xs = filter ((==1).length) ( group (sort xs))
 
@@ -225,3 +228,20 @@ lrgUniqNum xs = head $ last $ sortBy (flip compare `on` length) (group (sort xs)
 -- ah i was getting the orering wrong, in flterTest remember length is a func so it gets first to the incoming args 
 flterTest xs = filter ((==1).length) xs 
 flterTesta xs = filter  (\x -> length x == 1)  xs 
+
+
+removeDup :: Eq a => [a] -> [a]
+removeDup = go False
+  where
+    go _ [] = []
+    go True (x : y : xs) = go (x == y) (y : xs)
+    go True [x] = []
+    go False (x : y : xs)
+      | x == y = go True (y : xs)
+      | otherwise = x : go False (y : xs)
+    go False [x] = [x]
+
+lrgstUniqNum :: (Eq a, Ord a) => [a] -> a
+lrgstUniqNum = head . removeDup . sortBy (flip compare)
+lrgstUniqNumTest  :: (Eq a, Ord a) => [a] -> [a]
+lrgstUniqNumTest = removeDup . sortBy (flip compare) 

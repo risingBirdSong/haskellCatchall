@@ -25,6 +25,7 @@ dependencies:
 - containers 
 - split
 - random
+- vector
 library:
   source-dirs: src
 
