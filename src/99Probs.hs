@@ -503,3 +503,12 @@ myAttemptb =  composecombos [2,3] fourPeople -- [[["aldo","beat"],["aldo","carla
 test_lsort =  ["abc","de","fgh","de","ijkl","mn","o"]
 lsort xs = sortBy (compare `on` length) $ sort xs
 -- ["o","de","de","mn","abc","fgh","ijkl"]
+
+-- b) Again, we suppose that a list contains elements that are lists themselves.
+--  But this time the objective is to sort the elements of this list according to their length frequency;
+--   i.e., in the default, where sorting is done ascendingly,
+--  lists with rare lengths are placed first, others with a more frequent length come later.
+
+-- lfsort xs = 
+
+pureNumAppend =  (pure 1) <> (pure 2) :: [Int]  -- [1,2]
