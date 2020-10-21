@@ -433,4 +433,7 @@ sortsubs  xs n =  ordNub (filter ((==n) . length ) ( map sort  (map (ordNub)  $ 
 -- wait so how compose sortsubs so that I can collect over multiple nums of lengths of people groupings?
 -- composegroup lngs xs = foldr (sortsubs xs) [] lngs   
 
+listadder xs = foldr (++) [] xs 
+numadder xs = foldr (+) 0 xs
+
 reslen2 = [["aldo","beat"],["aldo","carla"],["beat","aldo"],["beat","carla"],["carla","aldo"],["carla","beat"]]
