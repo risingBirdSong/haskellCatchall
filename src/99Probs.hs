@@ -380,3 +380,10 @@ rnd_select xs n = do
 addUp n 
   | n == 0 = 0
   | otherwise = n + addUp (n-1)
+
+
+
+diff_select :: Int -> Int -> IO [Int]
+diff_select n m = take n . nub . randomRs (1, m) <$> newStdGen
+
+diff_select_r n m = take n . nub . randomRs (1,m) <$> newStdGen 

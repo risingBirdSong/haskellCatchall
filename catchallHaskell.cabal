@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 31c7e009754013a7050991057d5f8e442275dd6484be5c525e93a4129b114860
+-- hash: d581bbd5bb7a5293ae767bf140f574f839617a38e3a6be1206f1af52389aa133
 
 name:           catchallHaskell
 version:        0.1.0.0
@@ -37,6 +37,7 @@ library
     , containers
     , random
     , split
+    , universum
     , vector
   default-language: Haskell2010
 
@@ -53,6 +54,7 @@ executable catchallHaskell-exe
     , containers
     , random
     , split
+    , universum
     , vector
   default-language: Haskell2010
 
@@ -70,5 +72,6 @@ test-suite catchallHaskell-test
     , containers
     , random
     , split
+    , universum
     , vector
   default-language: Haskell2010

@@ -26,6 +26,7 @@ dependencies:
 - split
 - random
 - vector
+- universum
 library:
   source-dirs: src
 
