@@ -445,3 +445,17 @@ resa =[["aldo","beat","carla"],["aldo","beat","david"],["aldo","beat","evi"],["a
 resb = [["aldo","beat","carla","david"],["aldo","beat","carla","evi"],["aldo","beat","carla","flip"],["aldo","beat","carla","gary"],["aldo","beat","carla","hugo"]]
 -- resa ++ resb ->
 appendeda_b = [["aldo","beat","carla"],["aldo","beat","david"],["aldo","beat","evi"],["aldo","beat","flip"],["aldo","beat","gary"],["aldo","beat","carla","david"],["aldo","beat","carla","evi"],["aldo","beat","carla","flip"],["aldo","beat","carla","gary"],["aldo","beat","carla","hugo"]]
+
+combination :: Int -> [a] -> [([a],[a])]
+combination 0 xs     = [([],xs)]
+combination n []     = []
+combination n (x:xs) = ts ++ ds
+  where
+    ts = [ (x:ys,zs) | (ys,zs) <- combination (n-1) xs ]
+    ds = [ (ys,x:zs) | (ys,zs) <- combination  n    xs ]
+
+group :: [Int] -> [a] -> [[[a]]]
+group [] _ = [[]]
+group (n:ns) xs =
+    [ g:gs | (g,rs) <- combination n xs
+           ,  gs    <- group ns rs ]
