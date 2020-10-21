@@ -6,6 +6,7 @@ import Data.List.Split
 import Control.Applicative
 import Control.Monad
 import System.Random
+import Universum.Nub
 
 sol1 :: [a] -> Maybe a
 sol1 [] = Nothing 
@@ -405,3 +406,31 @@ rplcM_ n lst =
     loop n
       | n <= 0 = pure []
       | otherwise = liftA2 (:) lst (loop (n - 1))
+
+replicate'' :: (Ord t, Num t) => t -> a -> [a]
+replicate'' n x  
+    | n <= 0    = []  
+    | otherwise = x:replicate'' (n-1) x
+
+
+
+
+-- comboPeople n xs = combos  
+
+combos :: [[a]] -> [[a]]
+combos [] = [[]]
+combos ([]:ls) = combos ls
+combos ((h:t):ls) = map (h:) (combos ls) ++ combos (t:ls)
+
+threePeople = ["aldo","beat","carla"]      
+fourPeople = ["aldo","beat","carla", "david"]      
+allPeople = ["aldo","beat","carla","david","evi","flip","gary","hugo","ida"]
+
+basegroup n xs =  map (ordNub)  $ replicateM n xs
+-- filter ((==n) . length )
+sortsubs  xs n =  ordNub (filter ((==n) . length ) ( map sort  (map (ordNub)  $ replicateM n xs) ))
+-- grouponLength l n xs = filter ((==l) . length ) (map sort) $ map (ordNub)  $ replicateM n xs
+-- wait so how compose sortsubs so that I can collect over multiple nums of lengths of people groupings?
+-- composegroup lngs xs = foldr (sortsubs xs) [] lngs   
+
+reslen2 = [["aldo","beat"],["aldo","carla"],["beat","aldo"],["beat","carla"],["carla","aldo"],["carla","beat"]]
