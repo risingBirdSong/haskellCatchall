@@ -552,4 +552,10 @@ lfsort_ xs = concat . lsort $ groupBy ((==) `on` length) $ lsort  xs
 solution :: Integer -> Integer
 solution number = if number < 0 
                   then 0 
-                  else sum[x| x <- [1..number], (x `mod` 3 == 0 || x `mod` 5 == 0)]
+                  else sum[x| x <- [1..number-1], (x `mod` 3 == 0 || x `mod` 5 == 0)]
+
+
+solution n 
+  | n <= 0 = 0
+  | (n `mod` 3 == 0 || n `mod` 5 == 0) = n + solution (n-1)
+  | otherwise = solution (n-1)
