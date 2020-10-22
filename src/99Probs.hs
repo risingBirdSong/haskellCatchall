@@ -549,13 +549,27 @@ lfsort_ xs = concat . lsort $ groupBy ((==) `on` length) $ lsort  xs
 -- lfsort_ = concat . lsort $ groupBy ((==) `on` length) . lsort
 
 
-solution :: Integer -> Integer
-solution number = if number < 0 
-                  then 0 
-                  else sum[x| x <- [1..number-1], (x `mod` 3 == 0 || x `mod` 5 == 0)]
+-- solution :: Integer -> Integer
+-- solution number = if number < 0 
+--                   then 0 
+--                   else sum[x| x <- [1..number-1], (x `mod` 3 == 0 || x `mod` 5 == 0)]
 
 
-solution n 
+
+solution n = solution' (n-1) 
+solution' n 
   | n <= 0 = 0
-  | (n `mod` 3 == 0 || n `mod` 5 == 0) = n + solution (n-1)
-  | otherwise = solution (n-1)
+  | (n `mod` 3 == 0 || n `mod` 5 == 0) = n + solution' (n-1)
+  | otherwise = solution' (n-1)
+
+
+initsexample = inits [1,2,3]
+  -- [[],[1],[1,2],[1,2,3]]
+tailsexample = tails [1,2,3]
+-- [[1,2,3],[2,3],[3],[]]
+-- bar :: [a] -> [[a]]
+bar xs = [ys | ts <- tails xs, ys <- inits ts, not (null ys)]
+
+rvrs_ :: [a] -> [a]
+rvrs_ [] = []
+rvrs_ (x:xs) = rvrs_ xs ++ [x]
