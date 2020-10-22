@@ -8,6 +8,7 @@ import Control.Monad
 import System.Random
 import Universum.Nub
 import Data.Function
+import Data.Map  (fromListWith, toList)
 
 
 sol1 :: [a] -> Maybe a
@@ -504,13 +505,30 @@ test_lsort =  ["abc","de","fgh","de","ijkl","mn","o"]
 lsort xs = sortBy (compare `on` length) $ sort xs
 -- ["o","de","de","mn","abc","fgh","ijkl"]
 
+
+
+pureNumAppend =  (pure 1) <> (pure 2) :: [Int]  -- [1,2]
+
+-- composedSort = sortBy $ (C.comparing length) <> compare
+
 -- b) Again, we suppose that a list contains elements that are lists themselves.
 --  But this time the objective is to sort the elements of this list according to their length frequency;
 --   i.e., in the default, where sorting is done ascendingly,
 --  lists with rare lengths are placed first, others with a more frequent length come later.
 
--- lfsort xs = 
 
-pureNumAppend =  (pure 1) <> (pure 2) :: [Int]  -- [1,2]
+-- hand made option from SO
+-- https://stackoverflow.com/questions/13517114/count-frequency-of-each-element-in-a-list
+freq s = map (\x -> (head x, length x)) . group . sort $ s
+  
+-- g = map (head &&& length) . group . sort     -- without the [...]
+-- https://stackoverflow.com/questions/10398698/haskell-counting-how-many-times-each-distinct-element-in-a-list-occurs
+frequency :: (Ord a) => [a] -> [(a, Int)]
+frequency xs = toList (fromListWith (+) [(x, 1) | x <- xs])
 
-composedSort = sortBy $ (C.comparing length) <> compare
+-- lfsort :: [(a, Int)] -> [Int]
+lfsort xs = sortOn (\x -> snd x) $ frequency  xs
+
+
+--  lfsort ["abc", "de", "fgh", "de", "ijkl", "mn", "o"]
+-- ["ijkl","o","abc","fgh","de","de","mn"]
