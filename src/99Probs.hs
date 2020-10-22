@@ -541,8 +541,15 @@ lengthFreq (x:xs) = []
 ddd = ["abc", "de", "fgh", "de", "ijkl", "mn", "o"]
 ooo = [("abc",1),("de",2),("fgh",1),("ijkl",1),("mn",1),("o",1)]
 
-grpByLength xs = concat . lsort $ groupBy equalLength $ lsort xs
+grpByLength xs = concat . lsort . groupBy equalLength $ lsort xs
 equalLength xs ys = length xs == length ys
 
-lfsort_ :: [[a]] -> [[a]]
-lfsort_ = concat . lsort . groupBy ((==) `on` length) . lsort
+-- lfsort_ :: [[a]] -> [[a]]
+lfsort_ xs = concat . lsort $ groupBy ((==) `on` length) $ lsort  xs
+-- lfsort_ = concat . lsort $ groupBy ((==) `on` length) . lsort
+
+
+solution :: Integer -> Integer
+solution number = if number < 0 
+                  then 0 
+                  else sum[x| x <- [1..number], (x `mod` 3 == 0 || x `mod` 5 == 0)]
