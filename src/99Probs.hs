@@ -570,6 +570,28 @@ tailsexample = tails [1,2,3]
 -- bar :: [a] -> [[a]]
 bar xs = [ys | ts <- tails xs, ys <- inits ts, not (null ys)]
 
+arvrs :: Eq a => [a] -> [a]
+arvrs x
+  | x == [] = x
+  | otherwise = (arvrs (tail x) ++ [(head x)] ) 
+
 rvrs_ :: [a] -> [a]
 rvrs_ [] = []
 rvrs_ (x:xs) = rvrs_ xs ++ [x]
+
+-- Problem 46
+-- (**) Define predicates and/2, or/2, nand/2, nor/2, xor/2, impl/2 and equ/2 (for logical equivalence) 
+-- which succeed or fail according to the result of their respective operations; e.g. 
+-- and(A,B) will succeed, if and only if both A and B succeed.
+
+
+and' f x y 
+  | (f x) == True && (f y) == True = True
+  | otherwise = False
+
+or' f x y 
+  | f x == True = True 
+  | f y == True = True
+  | otherwise = False
+
+nand' f x y = not (and' f x y)
