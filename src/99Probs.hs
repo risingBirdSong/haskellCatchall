@@ -523,12 +523,24 @@ freq s = map (\x -> (head x, length x)) . group . sort $ s
   
 -- g = map (head &&& length) . group . sort     -- without the [...]
 -- https://stackoverflow.com/questions/10398698/haskell-counting-how-many-times-each-distinct-element-in-a-list-occurs
-frequency :: (Ord a) => [a] -> [(a, Int)]
-frequency xs = toList (fromListWith (+) [(x, 1) | x <- xs])
+frequency xs = toList (fromListWith (+) [(x, 1) | (x)  <- xs])
+
+
+lengthmap xs = map (\x -> (length x , x, 0)) xs
 
 -- lfsort :: [(a, Int)] -> [Int]
-lfsort xs = sortOn (\x -> snd x) $ frequency  xs
+lfsorta xs =  frequency  xs
+lfsortb xs = sortOn (\x -> snd x) $ frequency  xs
 
+lengthFreq [] = []
+lengthFreq (x:xs) = []
 
 --  lfsort ["abc", "de", "fgh", "de", "ijkl", "mn", "o"]
 -- ["ijkl","o","abc","fgh","de","de","mn"]
+
+ddd = ["abc", "de", "fgh", "de", "ijkl", "mn", "o"]
+ooo = [("abc",1),("de",2),("fgh",1),("ijkl",1),("mn",1),("o",1)]
+
+grpByLength xs = concat . lsort $ groupBy equalLength $ lsort xs
+equalLength xs ys = length xs == length ys
+
