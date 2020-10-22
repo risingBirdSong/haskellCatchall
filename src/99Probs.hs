@@ -544,3 +544,5 @@ ooo = [("abc",1),("de",2),("fgh",1),("ijkl",1),("mn",1),("o",1)]
 grpByLength xs = concat . lsort $ groupBy equalLength $ lsort xs
 equalLength xs ys = length xs == length ys
 
+lfsort_ :: [[a]] -> [[a]]
+lfsort_ = concat . lsort . groupBy ((==) `on` length) . lsort
