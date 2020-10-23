@@ -23,12 +23,25 @@ qrtc = quotRem 12 5 -- (2, 2)
 
 data Tree a = Empty | Branch a (Tree a) (Tree a) deriving (Show, Eq)
 
+
 -- cbalTree :: Int -> [Tree Char]
 cbalTree 0 = [Empty]
 cbalTree n = let (q, r) = (n - 1) `quotRem` 2
     in [Branch 'x' left right | i     <- [q .. q + r],
                                 left  <- cbalTree i,
                                 right <- cbalTree (n - i - 1)]
+
+data Tree_ a b = Branch_ b (Tree_ a b) (Tree_ a b) | Leaf a deriving (Eq,Ord,Show)
+
+cbalTree_ 0 = [Leaf 'x'] 
+cbalTree_ n = let (q, r) = (n - 1) `quotRem` 2
+    in [Branch_ 'x' left right | i     <- [q .. q + r],
+                                left  <- cbalTree_ i,
+                                right <- cbalTree_ (n - i - 1)]
+
+-- tried to use drawTrees with cbalTree_ but get error
+-- * Couldn't match expected type `T.Tree String'
+-- with actual type `Integer -> [Tree_ Char Char]'
 
 -- replacing the 'x' char with q, r and n to understand better
 -- -- cbalTree 4

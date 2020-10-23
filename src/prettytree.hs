@@ -1,3 +1,4 @@
+-- https://stackoverflow.com/questions/12556469/nicely-printing-showing-a-binary-tree-in-haskell
 import Data.Tree hiding (Tree )
 data Tree a b = Branch b (Tree a b) (Tree a b) 
               | Leaf a deriving (Eq,Ord,Show)
@@ -10,3 +11,17 @@ d = Branch "1" (Branch "11" (Leaf "111") (Leaf "112"))
 
 e = toDataTree d
 f = putStrLn $ drawTree e
+
+-- 1
+-- |
+-- +- 11
+-- |  |
+-- |  +- 111
+-- |  |
+-- |  `- 112
+-- |
+-- `- 12
+--    |
+--    +- 121
+--    |
+--    `- 122
