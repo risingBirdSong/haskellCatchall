@@ -25,6 +25,25 @@ data Tree a = Empty | Branch a (Tree a) (Tree a) deriving (Show, Eq)
 -- cbalTree :: Int -> [Tree Char]
 cbalTree 0 = [Empty]
 cbalTree n = let (q, r) = (n - 1) `quotRem` 2
-    in [Branch i left right | i     <- [q .. q + r],
+    in [Branch n left right | i     <- [q .. q + r],
                                 left  <- cbalTree i,
                                 right <- cbalTree (n - i - 1)]
+
+-- replacing the 'x' char with q, r and n to understand better
+-- -- cbalTree 4
+-- [Branch q left right | i     <- [q .. q + r]
+-- [Branch 1 (Branch 0 Empty Empty) (Branch 0 Empty (Branch 0 Empty Empty)),Branch 1 (Branch 0 Empty Empty) (Branch 
+-- 0 (Branch 0 Empty Empty) Empty),Branch 1 (Branch 0 Empty (Branch 0 Empty Empty)) (Branch 0 Empty Empty),Branch 1 
+-- (Branch 0 (Branch 0 Empty Empty) Empty) (Branch 0 Empty Empty)]
+
+-- [Branch r left right | i     <- [q .. q + r]
+-- cbalTree 4
+-- [Branch 1 (Branch 0 Empty Empty) (Branch 1 Empty (Branch 0 Empty Empty)),Branch 1 (Branch 0 Empty Empty) (Branch 
+-- 1 (Branch 0 Empty Empty) Empty),Branch 1 (Branch 1 Empty (Branch 0 Empty Empty)) (Branch 0 Empty Empty),Branch 1 
+-- (Branch 1 (Branch 0 Empty Empty) Empty) (Branch 0 Empty Empty)]
+
+-- [Branch n left right | i     <- [q .. q + r],
+-- cbalTree 4
+-- [Branch 4 (Branch 1 Empty Empty) (Branch 2 Empty (Branch 1 Empty Empty)),Branch 4 (Branch 1 Empty Empty) (Branch 
+-- 2 (Branch 1 Empty Empty) Empty),Branch 4 (Branch 2 Empty (Branch 1 Empty Empty)) (Branch 1 Empty Empty),Branch 4 
+-- (Branch 2 (Branch 1 Empty Empty) Empty) (Branch 1 Empty Empty)]
