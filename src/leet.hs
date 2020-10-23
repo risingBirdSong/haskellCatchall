@@ -246,4 +246,10 @@ lrgstUniqNum = head . removeDup . sortBy (flip compare)
 lrgstUniqNumTest  :: (Eq a, Ord a) => [a] -> [a]
 lrgstUniqNumTest = removeDup . sortBy (flip compare) 
 
+-- https://www.codewars.com/kata/523a86aa4230ebb5420001e1/train/haskell
 
+anag x y = x' == y'
+  where x' = sort x
+        y' = sort y
+
+keepAnas str xs = filter (anag str) xs
