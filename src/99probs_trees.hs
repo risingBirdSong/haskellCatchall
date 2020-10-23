@@ -31,7 +31,7 @@ cbalTree n = let (q, r) = (n - 1) `quotRem` 2
                                 left  <- cbalTree i,
                                 right <- cbalTree (n - i - 1)]
 
--- solanarc provided this insight
+-- solanarc provided this insight, and sampersand also noticed its log2 algo
 -- you repeatedly divide by 2 and stop when you reach 0, which happens after log2 steps
 
 data Tree_ a b = Branch_ b (Tree_ a b) (Tree_ a b) | Leaf a deriving (Eq,Ord,Show)
