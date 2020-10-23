@@ -595,3 +595,54 @@ or' f x y
   | otherwise = False
 
 nand' f x y = not (and' f x y)
+
+nor' f x y = not (or' f x y)
+
+xor' f x y 
+  | f x == True && f y == False = True
+  | f x == False && f y == True = True
+  | otherwise = False
+
+
+-- NOT negates a single Boolean argument
+not'' :: Bool -> Bool
+not'' True  = False
+not'' False = True
+
+-- Type signature for remaining logic functions
+and'',or'',nor'',nand'',xor'',impl'',equ'' :: Bool -> Bool -> Bool
+
+-- AND is True if both a and b are True
+and'' True True = True
+and'' _    _    = False
+
+-- OR is True if a or b or both are True
+or'' False False = False
+or'' _     _     = True
+
+-- NOR is the negation of 'or'
+nor''  a b = not' $ or'  a b
+
+-- NAND is the negation of 'and'
+nand'' a b = not' $ and' a b
+
+-- XOR is True if either a or b is True, but not if both are True
+xor'' True  False = True
+xor'' False True  = True
+xor'' _     _     = False
+
+-- IMPL is True if a implies b, equivalent to (not a) or (b)
+impl'' a b = (not' a) `or'` b
+
+-- EQU is True if a and b are equal
+equ'' True  True  = True
+equ'' False False = True
+equ'' _     _     = False
+
+and'''  a b = a && b
+or'''   a b = a || b
+nand''' a b = not (and' a b)
+nor'''  a b = not (or' a b)
+xor'''  a b = not (equ' a b)
+impl''' a b = or' (not a) b
+equ'''  a b = a == b
