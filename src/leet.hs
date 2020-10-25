@@ -253,3 +253,12 @@ anag x y = x' == y'
         y' = sort y
 
 keepAnas str xs = filter (anag str) xs
+
+-- https://leetcode.com/problems/running-sum-of-1d-array/
+-- -- runningSum :: [a] -> a -> a
+runningSum lst = runningSum' lst 0
+runningSum' [] sm = [] 
+runningSum' (a:xs) sm = (a + sm) : (runningSum' (xs) (a + sm))
+
+test []  = []
+test (x:xs) = (x+1) : test xs 
