@@ -24,11 +24,16 @@ myLast_ (x:xs) = myLast_ xs
 -- numSplit :: (RealFrac a1, Integral a1, Integral a2) => a1 -> [a2]
 -- numSplit :: (Num a1) => a1 -> [a2]
 -- numSplit :: (RealFrac a1, Integral a1, Integral a2) => a1 -> [a2]
-numSplit :: (RealFrac a, Integral b) => a -> [b]
+-- numSplit :: (RealFrac a, Integral b) => a -> [b]
+-- numSplit :: (RealFrac a1, Integral a1, Integral a2) => a1 -> [a2]
+-- numSplit :: (Integral a) => a -> [a]
+numSplit :: Integral a => a -> [a]
 numSplit x 
-  | even x = [round x, round x]
-  | odd x = [floor x, ceiling x]
+  | even x = [(x `div` 2), (x `div` 2)]
+  | odd x = [x `div` 2, (x `div` 2) + 1]
 
 rvrs :: [a] -> [a]
 rvrs [] = [] -- end case , base case, exit condition 
 rvrs (start:rest) = rvrs (rest) ++ [start] -- doing magic, doing the work
+
+ttt = floor 5.5 
