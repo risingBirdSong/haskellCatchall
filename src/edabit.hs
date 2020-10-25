@@ -1,5 +1,15 @@
 import System.IO
 import Data.List
+import Numeric (showHex, showIntAtBase)
+import Data.Char (intToDigit)
+
+-- import Text.Regex.TDFA
+
+-- in package.yamsl
+-- - regex-tdfa-text
+-- error ->
+-- regex-tdfa-text needed, but the stack configuration has no specified version  (latest matching version       
+--                     is 1.0.0.3)
 
 matchHouses :: (Num p, Ord p) => p -> p
 matchHouses x 
@@ -27,3 +37,6 @@ lf :: (() -> Integer) -> (() -> Integer) -> Char
 lf x y 
   | x() > y() = 'f'
   | otherwise = 'g'
+
+
+binary x =  putStrLn $ showIntAtBase 2 intToDigit x "" 
