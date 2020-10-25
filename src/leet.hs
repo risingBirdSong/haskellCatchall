@@ -275,3 +275,11 @@ grtsc lst x = map (\v -> if v >= x then True else False ) lst
 solvecands lst extra = grtsc dist originalMax
     where originalMax = findMax lst
           dist = map (+extra) lst
+
+
+-- 1470. Shuffle the Array
+firstHalf lst = take (length lst `div` 2) lst
+secondHalf lst = drop (length lst `div` 2) lst
+
+-- shuffleArr :: [Int] -> [Int]
+-- shuffleArr lst = 
