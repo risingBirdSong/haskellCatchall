@@ -262,3 +262,8 @@ runningSum' (a:xs) sm = (a + sm) : (runningSum' (xs) (a + sm))
 
 test []  = []
 test (x:xs) = (x+1) : test xs 
+
+rnningsm lst = tail $ foldl (\acc x ->  acc ++ [ x + (last acc)]) [0] [1,4,10,35]
+
+
+-- dosomething x y = (x * y :: _) + 2
