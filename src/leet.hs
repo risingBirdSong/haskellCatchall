@@ -281,5 +281,12 @@ solvecands lst extra = grtsc dist originalMax
 firstHalf lst = take (length lst `div` 2) lst
 secondHalf lst = drop (length lst `div` 2) lst
 
+zipEm front back = zip front back
+
+tupleToList lst = foldr (\(f,s) a -> f : s : a) [] lst
+
+
+joinEm :: Foldable t => t (a, a) -> [a]
+joinEm lst = foldl (\acc x -> acc ++ [fst x, snd x] ) [] lst
 -- shuffleArr :: [Int] -> [Int]
 -- shuffleArr lst = 
