@@ -72,3 +72,4 @@ solve lst extra  = greater (distr extra) (max)
 
 rev [] = [] 
 rev (start:rest) =  (rev rest) ++ [start] 
+

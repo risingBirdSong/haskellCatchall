@@ -290,3 +290,5 @@ joinEm :: Foldable t => t (a, a) -> [a]
 joinEm lst = foldl (\acc x -> acc ++ [fst x, snd x] ) [] lst
 -- shuffleArr :: [Int] -> [Int]
 -- shuffleArr lst = 
+
+candies' lst e = map (>= (maximum lst)) $ (map (+e) lst)
