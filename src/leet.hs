@@ -7,6 +7,7 @@ import Data.Function
 import Data.List
 
 
+
 -- this is a nice ticket right here
 splitted pair lst = concat (splitOn (pair) lst)
 -- sTest = splitted "x" "x" "abcxxdef"
@@ -291,4 +292,15 @@ joinEm lst = foldl (\acc x -> acc ++ [fst x, snd x] ) [] lst
 -- shuffleArr :: [Int] -> [Int]
 -- shuffleArr lst = 
 
+candies' :: (Ord b, Num b) => [b] -> b -> [Bool]
 candies' lst e = map (>= (maximum lst)) $ (map (+e) lst)
+
+
+-- 1512. Number of Good Pairs
+nums = [1,2,3,1,1,3]
+
+myFunc lst = groupBy (\x y -> (snd x == snd y) ) (sortBy (compare `on` snd) $ zip [0,1..] (lst)) 
+
+-- taker tpl lst = filter ((< (tpl.fst)) . fst) lst
+
+example lst = filter ((==1).fst) lst

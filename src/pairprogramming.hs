@@ -70,6 +70,15 @@ solve lst extra  = greater (distr extra) (max)
 
 -- tester lst = map 
 
-rev [] = [] 
-rev (start:rest) =  (rev rest) ++ [start] 
+-- cur sum
+--  1    1
+--  2    3
+--  3    6
+--  4    10
 
+
+rngsum lst = rngsum' lst 0  
+rngsum' :: Num a => [a] -> a -> [a]
+rngsum' [] sum = []
+rngsum' (x:xs) sum = rng : rngsum' xs rng
+    where rng = (x + sum)
