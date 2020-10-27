@@ -6,6 +6,8 @@ import Control.Applicative
 import Data.Function
 import Data.List
 import Test.QuickCheck
+import qualified Data.Text as T
+
  
 -- this one worked!
 -- stack ghc --package QuickCheck -- MyProgram.hs
@@ -337,3 +339,11 @@ maplength lst = fmap length . group . sort $ lst
 -- https://www.google.com/search?newwindow=1&hl=en&sxsrf=ALeKk02YAXV_sC1nIuJw1LmkBSuRqpYeig%3A1603823528984&ei=qGeYX8nWO8Pk9APOmZCwCA&q=x+*+%28x-1%29+%2F+2&oq=x+*+%28x-1%29+%2F+2&gs_lcp=CgZwc3ktYWIQAzIJCAAQyQMQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeOgQIABBHOgQIIxAnOgYIABAKEEM6BAguEEM6BQgAEJECOgUIABCxAzoECAAQQzoICAAQsQMQgwE6CQgAEMkDEAoQQzoKCC4QsQMQFBCHAjoNCAAQsQMQgwEQFBCHAjoCCAA6BQguELEDOgsIABCxAxCDARDJAzoHCAAQFBCHAjoECAAQHlCWiQFYo_EBYJ_0AWgAcAR4AIABd4gBpAqSAQM2LjeYAQCgAQGqAQdnd3Mtd2l6yAEHwAEB&sclient=psy-ab&ved=0ahUKEwjJyuidtNXsAhVDMn0KHc4MBIYQ4dUDCA0&uact=5
 pairs = (\x -> div (x * (x-1)) 2)
 amountofpairs lst = sum . fmap (\x -> div (x * (x-1)) 2) . fmap length . group . sort $ lst
+
+-- Defanging an IP Address
+-- A defanged IP address replaces every period "." with "[.]".
+
+-- defang :: [Char] -> [Char]
+-- defang lst = map (\x -> ) lst
+charToString c = c:[]
+cnvrt ls = map charToString ls
