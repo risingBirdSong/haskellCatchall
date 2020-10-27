@@ -353,3 +353,9 @@ dfg ls = concat $ map (\x ->  if x == "." then "[.]" else x) (cnvrt ls)
 -- 771. Jewels and Stones
 -- sj :: 
 sj j s = foldr (\c acc ->  if (c `elem` j) then (acc+1) else acc ) 0 s 
+
+
+-- s = "codeleet", indices = [4,5,6,7,0,2,1,3]
+aa = "codeleet"
+bb = [4,5,6,7,0,2,1,3]
+shfl s idxs = map (fst) $ sortBy (compare `on` snd) (zip s idxs) 
