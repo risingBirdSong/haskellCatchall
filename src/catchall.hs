@@ -17,3 +17,12 @@ data Pair a = MkPair a a
 
 -- i did get taught what you wrote
 
+split' :: Eq a => a -> [a] -> [[a]]
+split' c [] = []
+split' c xs = xs' : if null xs'' then [] else split' c (tail xs'')
+    where xs' = takeWhile (/=c) xs
+          xs''= dropWhile (/=c) xs
+
+
+taker c xs = takeWhile (/=c) xs
+dropper c xs = dropWhile (/=c) xs

@@ -329,3 +329,5 @@ testcomp = [ x + y | x <- [1..10]  , y <- [50..60] ]
 
 hhh ys xs = reverse ys ++ reverse xs
 ttt ys xs = reverse (xs++ys)
+
+amountofpairs lst = sum . fmap (\x -> div (x * (x-1)) 2) . fmap length . group . sort $ lst
