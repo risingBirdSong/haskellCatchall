@@ -5,8 +5,14 @@ import Control.Monad
 import Control.Applicative
 import Data.Function
 import Data.List
+import Test.QuickCheck
+ 
+-- this one worked!
+-- stack ghc --package QuickCheck -- MyProgram.hs
+-- https://stackoverflow.com/questions/53402263/could-not-find-module-test-quickcheck-on-windows
 
-
+prop_reverse :: [Int] -> Bool
+prop_reverse xs = reverse (reverse xs) == xs
 
 -- this is a nice ticket right here
 splitted pair lst = concat (splitOn (pair) lst)
