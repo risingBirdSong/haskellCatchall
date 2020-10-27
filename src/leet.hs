@@ -349,3 +349,7 @@ charToString c = c:[]
 cnvrt ls = map charToString ls
 -- dfg :: [Char] -> [[Char]]
 dfg ls = concat $ map (\x ->  if x == "." then "[.]" else x) (cnvrt ls)
+
+-- 771. Jewels and Stones
+-- sj :: 
+sj j s = foldr (\c acc ->  if (c `elem` j) then (acc+1) else acc ) 0 s 
