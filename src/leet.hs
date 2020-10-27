@@ -347,3 +347,5 @@ amountofpairs lst = sum . fmap (\x -> div (x * (x-1)) 2) . fmap length . group .
 -- defang lst = map (\x -> ) lst
 charToString c = c:[]
 cnvrt ls = map charToString ls
+-- dfg :: [Char] -> [[Char]]
+dfg ls = concat $ map (\x ->  if x == "." then "[.]" else x) (cnvrt ls)
