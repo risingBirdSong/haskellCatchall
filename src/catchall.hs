@@ -1,3 +1,4 @@
+import Debug.Trace
 class C a where
   m                     :: Show b => a -> b
 
@@ -22,6 +23,7 @@ split' c [] = []
 split' c xs = xs' : if null xs'' then [] else split' c (tail xs'')
     where xs' = takeWhile (/=c) xs
           xs''= dropWhile (/=c) xs
+-- split' c xs | trace ("showing" ++ show xs) False = undefined
 
 
 taker c xs = takeWhile (/=c) xs

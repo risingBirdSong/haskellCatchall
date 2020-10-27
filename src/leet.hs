@@ -330,4 +330,10 @@ testcomp = [ x + y | x <- [1..10]  , y <- [50..60] ]
 hhh ys xs = reverse ys ++ reverse xs
 ttt ys xs = reverse (xs++ys)
 
+testcasea = [1,2,3,1,1,3]
+
+maplength lst = fmap length . group . sort $ lst 
+-- pairs appears to be logarithmic function
+-- https://www.google.com/search?newwindow=1&hl=en&sxsrf=ALeKk02YAXV_sC1nIuJw1LmkBSuRqpYeig%3A1603823528984&ei=qGeYX8nWO8Pk9APOmZCwCA&q=x+*+%28x-1%29+%2F+2&oq=x+*+%28x-1%29+%2F+2&gs_lcp=CgZwc3ktYWIQAzIJCAAQyQMQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeOgQIABBHOgQIIxAnOgYIABAKEEM6BAguEEM6BQgAEJECOgUIABCxAzoECAAQQzoICAAQsQMQgwE6CQgAEMkDEAoQQzoKCC4QsQMQFBCHAjoNCAAQsQMQgwEQFBCHAjoCCAA6BQguELEDOgsIABCxAxCDARDJAzoHCAAQFBCHAjoECAAQHlCWiQFYo_EBYJ_0AWgAcAR4AIABd4gBpAqSAQM2LjeYAQCgAQGqAQdnd3Mtd2l6yAEHwAEB&sclient=psy-ab&ved=0ahUKEwjJyuidtNXsAhVDMn0KHc4MBIYQ4dUDCA0&uact=5
+pairs = (\x -> div (x * (x-1)) 2)
 amountofpairs lst = sum . fmap (\x -> div (x * (x-1)) 2) . fmap length . group . sort $ lst
