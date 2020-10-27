@@ -82,3 +82,48 @@ rngsum' :: Num a => [a] -> a -> [a]
 rngsum' [] sum = []
 rngsum' (x:xs) sum = rng : rngsum' xs rng
     where rng = (x + sum)
+
+
+-- test comment with Yoel
+
+rs lst = rs' lst 0
+rs' [] sum = []
+rs' (x:xs) sum = rt : rs' (xs) rt
+    where rt = (x+sum)
+
+
+
+-- steps
+-- find org max
+-- dist candy gobl
+-- convertto bool gte org
+
+gc :: (Ord b, Num b) => [b] -> b -> [Bool]
+gc lst e = map (>= maximum lst) (map (+e) lst) 
+
+
+
+-- Great day of coding today, worked with a number of talented folks Vaibhav Kejriwal , Hao Fan, Yoel Morad, and Paul L Ferguson on code challenges.
+
+
+-- It was great meeting up with all coding with all of them :)
+
+
+
+-- But Yoel Morad and I really went into the deep end on a Leetcode challenge, called runningSum.
+
+
+
+-- He wrote it easily in Javascript, I wrote mine in Haskell, each of us explaining our thought process as we went along.  The most awesome part for me was that he had never even seen Haskell code before, and solving this challenge prompted a ton of great questions from him and it truly was a crash course in Haskell. He was a fast learner and had a natural intuition for it, and documented everything quite thoroughly and became very interested in the language, and it's unique features. 😊
+
+
+
+-- He even downloaded the compiler so that he could start writing his own Haskell code 😎.
+
+
+
+-- Here are the  
+
+
+
+--  https://leetcode.com/problems/running-sum-of-1d-array/submissions/

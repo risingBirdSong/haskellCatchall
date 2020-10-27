@@ -27,6 +27,7 @@ dependencies:
 - random
 - vector
 - universum
+- quickcheck
 
 library:
   source-dirs: src

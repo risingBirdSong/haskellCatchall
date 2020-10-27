@@ -299,8 +299,27 @@ candies' lst e = map (>= (maximum lst)) $ (map (+e) lst)
 -- 1512. Number of Good Pairs
 nums = [1,2,3,1,1,3]
 
-myFunc lst = groupBy (\x y -> (snd x == snd y) ) (sortBy (compare `on` snd) $ zip [0,1..] (lst)) 
+-- myFunc lst = groupBy (\x y -> (snd x == snd y) ) (sortBy (compare `on` snd) $ zip [0,1..] (lst)) 
+zippertup lst = zip [0,1..] (lst)
 
 -- taker tpl lst = filter ((< (tpl.fst)) . fst) lst
+tup = [(0,1),(3,1),(4,1)]
+example tp lst = filter ((==(snd tp)).snd) lst
 
-example lst = filter ((==1).fst) lst
+tupleFilter tup lst = filter ((==(snd tup)).snd) lst
+
+taker [] = []
+taker [x] = [x]
+taker (x:y:xs)
+  | (fst x < fst y) = x : taker (y:xs)
+  | otherwise = taker (y:xs)
+
+eqvalsmlleridx tuplst = [ x | x <- tuplst , y <- tuplst, (fst x < fst y) && (snd x == snd y)] 
+solution lst = length $ eqvalsmlleridx (zip [0,1..] lst)
+
+
+testcomp = [ x + y | x <- [1..10]  , y <- [50..60] ]
+
+
+hhh ys xs = reverse ys ++ reverse xs
+ttt ys xs = reverse (xs++ys)
