@@ -9,7 +9,6 @@ import Test.QuickCheck
 import qualified Data.Text as T
 import Data.Bool
 import Debug.Trace
-
  
 -- this one worked!
 -- stack ghc --package QuickCheck -- MyProgram.hs
@@ -425,9 +424,19 @@ nums' = [8,1,2,2,3]
 smlrNmsSol ns = map (smlrNms ns) ns
 smlrNms ns x = length $ filter (<x) ns
 
+-- digits nms = map (read . (:[])) . show $ nms
+
 -- 1342. Number of Steps to Reduce a Number to Zero
 
 stpsz 0 s = s 
 stpsz n s 
   | (even n) = stpsz (n `div` 2) (s+1) 
   | otherwise = stpsz (n - 1) (s+1)
+
+digits :: Integer -> [Int]
+digits n = map (\x -> read [x] :: Int) (show n)
+
+-- 1281. Subtract the Product and Sum of Digits of an Integer
+
+-- dps n = abs ((product ) - (sum n))
+
