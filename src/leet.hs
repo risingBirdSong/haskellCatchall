@@ -440,3 +440,9 @@ digits n = map (\x -> read [x] :: Int) (show n)
 
 dps n = abs ((product dgs) - (sum dgs))
     where dgs = digits n
+
+
+avg nums = (sum nums) / realToFrac (length nums)
+
+-- rngAvg cur sum l =   
+
