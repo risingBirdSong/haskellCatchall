@@ -363,3 +363,40 @@ shfla s idxs = map (fst) $ sortBy (compare `on` snd) (zip s idxs)
 shflb s idxs = map (snd) $ sort (zip idxs s) 
 
 -- :! cls
+
+-- Type Signature for stringify visualization
+-- stringify :: [Char] -> [[Char]]
+-- the stringify fn we created will take a list and stringify each character.
+stringify str = map(:[]) str
+-- Type Signature for defang visualization
+-- defang :: [Char] -> [Char]
+-- the defang fn we created will now take the stringified list of all characters
+-- handle and lastly concat the string.
+defang isp = concat(map(\s -> if s == "." then "[.]" else s) (stringify(isp)))
+
+-- *Main> defang "ha.ku.na.ma.ta.taaaa"
+-- will return -> "ha[.]ku[.]na[.]ma[.]ta[.]taaaa"
+
+-- // Solution V1
+-- // Here we split on the .
+-- // And then join the "[.]"
+-- const dissect = address => {
+-- return address.split('.').join('[.]');
+-- };
+
+-- // Solution V2
+-- // Here we are using Regex (regular expression)
+-- // We start the expression with '/'
+-- // indicating the start of our Regex
+-- // Then we use '\.' this is a Escape sequence
+-- // it can be used to insert reserved, special, and unicode characters.
+-- // All escaped characters begin with the \ character.
+-- // We are targeting the '.' => '\.'
+-- // Lastly we flag '/g' the end of the expression with 'g'
+-- // Applying it globally.
+-- // "[.]" indicates that we will replace all . with the literal string [.]
+
+
+-- const dissect = address => {
+-- return address.replace(/\./g,"[.]");
+-- };
