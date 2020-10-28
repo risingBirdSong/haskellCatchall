@@ -8,6 +8,7 @@ import Data.List
 import Test.QuickCheck
 import qualified Data.Text as T
 import Data.Bool
+import Debug.Trace
 
  
 -- this one worked!
@@ -411,3 +412,9 @@ shuffle' s i = map (snd) (sort (zip s i))
 -- [('c',4),('o',5),('d',6),('e',7),('l',0),('e',2),('e',1),('t',3)]
 -- shfl' :: (Ord a, Ord b) => [a] -> [b] -> [b]
 -- shfl' = ((map snd . sort) . ). zip
+
+
+
+dfng'' str = concat(map(\s -> trace ("map 1 ++ " ++ show s) (if s == "." then "[.]" else s)) (map (trace ("map 2" ) . pure) str) )
+
+

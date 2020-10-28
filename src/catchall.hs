@@ -35,3 +35,21 @@ bbb = [4,5,6,7,0,2,1,3]
 
 shfl' :: (Ord a, Ord b) => [a] -> [b] -> [b]
 shfl' = ((map snd . L.sort) . ). zip
+
+
+type Square = [[Integer]]
+
+square = [[1,2,3],[4,5,6],[7,8,9]]
+
+pp :: Square -> IO ()
+pp   = putStrLn . unlines . map (unwords . map show )
+
+ptr = putStrLn "1 2 3\n"
+unwrd str = map (unwords . map show) str
+unlineda =  unlines ["aa","bb","cc","dd","ee"]
+-- *Main> putStrLn unlineda
+-- aa
+-- bb
+-- cc
+-- dd
+-- ee
