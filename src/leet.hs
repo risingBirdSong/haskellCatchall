@@ -7,6 +7,7 @@ import Data.Function
 import Data.List
 import Test.QuickCheck
 import qualified Data.Text as T
+import Data.Bool
 
  
 -- this one worked!
@@ -347,7 +348,7 @@ amountofpairs lst = sum . fmap (\x -> div (x * (x-1)) 2) . fmap length . group .
 -- defang lst = map (\x -> ) lst
 charToString c = c:[]
 cnvrt ls = map charToString ls
--- dfg :: [Char] -> [[Char]]
+dfg :: [Char] -> [Char]
 dfg ls = concat $ map (\x ->  if x == "." then "[.]" else x) (cnvrt ls)
 
 -- 771. Jewels and Stones
@@ -358,4 +359,7 @@ sj j s = foldr (\c acc ->  if (c `elem` j) then (acc+1) else acc ) 0 s
 -- s = "codeleet", indices = [4,5,6,7,0,2,1,3]
 aa = "codeleet"
 bb = [4,5,6,7,0,2,1,3]
-shfl s idxs = map (fst) $ sortBy (compare `on` snd) (zip s idxs) 
+shfla s idxs = map (fst) $ sortBy (compare `on` snd) (zip s idxs) 
+shflb s idxs = map (snd) $ sort (zip idxs s) 
+
+-- :! cls
