@@ -442,7 +442,13 @@ dps n = abs ((product dgs) - (sum dgs))
     where dgs = digits n
 
 
+avg :: (Fractional a, Foldable t) => t a -> a
 avg nums = (sum nums) / realToFrac (length nums)
 
--- rngAvg cur sum l =   
+-- https://stackoverflow.com/questions/12636613/how-to-calculate-moving-average-without-keeping-the-count-and-data-total
+rngAvg avg smpl n = avg + (second - first)
+    where first =  (avg /  n)
+          second = (smpl / n)    
 
+avgDiv avg n = (avg / n)
+smplDiv avg smpl n=  (smpl / n)
