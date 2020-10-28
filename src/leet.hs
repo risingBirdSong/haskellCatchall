@@ -6,7 +6,7 @@ import Control.Applicative
 import Data.Function
 import Data.List
 import Test.QuickCheck
-import qualified Data.Text as T
+-- import qualified Data.Text as T
 import Data.Bool
 import Debug.Trace
  
@@ -454,10 +454,11 @@ avgDiv avg n = (avg / n)
 smplDiv avg smpl n=  (smpl / n)
 
 
-pascltri = [[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]
+-- pascltri = [[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]
 
-pscl [] 0 fnsh =[ [1]]
-pscl [1] 1 fnsh = [[1,1]] 
-pscl (lst) lvl fnsh 
-  | (lvl == fnsh) = []
-  | (lvl < fnsh) = [1] : pscl (lst) (lvl+1) fnsh
+
+-- pscl (lst) acc lvl fnsh 
+--   | (lvl == fnsh) = []
+--   | (lvl < fnsh) = [1] : pscl (lst) (lvl+1) fnsh
+
+

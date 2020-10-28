@@ -127,3 +127,29 @@ gc lst e = map (>= maximum lst) (map (+e) lst)
 
 
 --  https://leetcode.com/problems/running-sum-of-1d-array/submissions/
+
+-- two step for pascal tri
+-- build up the structure
+-- do parent addition
+
+buildStruct :: Num a => Int -> Int -> [[a]]
+buildStruct str end
+  | (str == end ) = []
+  | (str < end) = (take str (repeat 1)) : buildStruct (str + 1) (end)
+
+-- addParent prv idx strct 
+  -- | () = 
+
+tri = [[1],[1,1],[1,1,1],[1,1,1,1],[1,1,1,1,1]]
+
+mapSimple = [[1,1],[1,1,1]]
+-- simple ar1 ar2 id = map () ar2'
+    -- where ar1' = zipped ar1
+          -- ar2' = zipped ar2
+
+zipped arr = zip [0,1..] arr 
+
+pascal 0 = [1]
+pascal n = zipWith (+) ([0] ++ pascal (n-1)) (pascal (n-1) ++ [0])
+
+pascals = [1] : map (\xs -> zipWith (+) ([0] ++ xs) (xs ++ [0])) pascals
