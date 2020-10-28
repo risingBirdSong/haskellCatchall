@@ -424,3 +424,10 @@ nums' = [8,1,2,2,3]
 -- 1365. How Many Numbers Are Smaller Than the Current Number
 smlrNmsSol ns = map (smlrNms ns) ns
 smlrNms ns x = length $ filter (<x) ns
+
+-- 1342. Number of Steps to Reduce a Number to Zero
+
+stpsz 0 s = s 
+stpsz n s 
+  | (even n) = stpsz (n `div` 2) (s+1) 
+  | otherwise = stpsz (n - 1) (s+1)
