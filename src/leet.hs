@@ -438,5 +438,5 @@ digits n = map (\x -> read [x] :: Int) (show n)
 
 -- 1281. Subtract the Product and Sum of Digits of an Integer
 
--- dps n = abs ((product ) - (sum n))
-
+dps n = abs ((product dgs) - (sum dgs))
+    where dgs = digits n
