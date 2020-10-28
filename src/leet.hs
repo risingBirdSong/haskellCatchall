@@ -420,5 +420,7 @@ dfng'' str = concat(map(\s -> trace ("map 1 ++ " ++ show s) (if s == "." then "[
 nums' = [8,1,2,2,3]
 -- Output: [4,0,1,1,3]
 
+
 -- 1365. How Many Numbers Are Smaller Than the Current Number
-smlrNms ns = map (\x -> length $ filter (\y -> y < x) ns) ns
+smlrNmsSol ns = map (smlrNms ns) ns
+smlrNms ns x = length $ filter (<x) ns
