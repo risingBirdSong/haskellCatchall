@@ -374,6 +374,8 @@ stringify str = map(:[]) str
 -- handle and lastly concat the string.
 defang isp = concat(map(\s -> if s == "." then "[.]" else s) (stringify(isp)))
 
+dfng' str = concat(map(\s -> if s == "." then "[.]" else s) (map pure str) ) 
+
 -- *Main> defang "ha.ku.na.ma.ta.taaaa"
 -- will return -> "ha[.]ku[.]na[.]ma[.]ta[.]taaaa"
 
@@ -400,3 +402,12 @@ defang isp = concat(map(\s -> if s == "." then "[.]" else s) (stringify(isp)))
 -- const dissect = address => {
 -- return address.replace(/\./g,"[.]");
 -- };
+
+aaa = "codeleet"
+bbb = [4,5,6,7,0,2,1,3]
+
+shuffle' :: (Ord a, Ord b) => [a] -> [b] -> [b]
+shuffle' s i = map (snd) (sort (zip s i))
+-- [('c',4),('o',5),('d',6),('e',7),('l',0),('e',2),('e',1),('t',3)]
+-- shfl' :: (Ord a, Ord b) => [a] -> [b] -> [b]
+-- shfl' = ((map snd . sort) . ). zip

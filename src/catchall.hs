@@ -1,4 +1,5 @@
 import Debug.Trace
+import Data.List as L
 class C a where
   m                     :: Show b => a -> b
 
@@ -28,3 +29,9 @@ split' c xs = xs' : if null xs'' then [] else split' c (tail xs'')
 
 taker c xs = takeWhile (/=c) xs
 dropper c xs = dropWhile (/=c) xs
+
+aaa = "codeleet"
+bbb = [4,5,6,7,0,2,1,3]
+
+shfl' :: (Ord a, Ord b) => [a] -> [b] -> [b]
+shfl' = ((map snd . L.sort) . ). zip
