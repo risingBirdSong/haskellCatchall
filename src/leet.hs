@@ -502,3 +502,5 @@ nonEmptySubsequences'         :: [a] -> [[a]]
 nonEmptySubsequences' []      =  []
 nonEmptySubsequences' (x:xs)  =  [x] : foldr f [] (nonEmptySubsequences' xs)
   where f ys r = ys : (x : ys) : r
+
+gatherodd nums = filter (\x -> odd (sum x)) ( subsequences nums)
