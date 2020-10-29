@@ -462,3 +462,6 @@ smplDiv avg smpl n=  (smpl / n)
 --   | (lvl < fnsh) = [1] : pscl (lst) (lvl+1) fnsh
 
 
+btwnnums = [10,5,15,3,7,0,18]
+-- 938. Range Sum of BST
+btwn lwr upr lst =  sum $ filter (\x -> (x <= upr) && (x >= lwr)) lst 
