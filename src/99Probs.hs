@@ -419,6 +419,7 @@ replicate'' n x
 
 
 -- comboPeople n xs = combos  
+arr1 = [1,4,2,5,3]
 
 combos :: [[a]] -> [[a]]
 combos [] = [[]]
@@ -604,45 +605,45 @@ xor' f x y
   | otherwise = False
 
 
--- NOT negates a single Boolean argument
-not'' :: Bool -> Bool
-not'' True  = False
-not'' False = True
+-- -- NOT negates a single Boolean argument
+-- not'' :: Bool -> Bool
+-- not'' True  = False
+-- not'' False = True
 
--- Type signature for remaining logic functions
-and'',or'',nor'',nand'',xor'',impl'',equ'' :: Bool -> Bool -> Bool
+-- -- Type signature for remaining logic functions
+-- and'',or'',nor'',nand'',xor'',impl'',equ'' :: Bool -> Bool -> Bool
 
--- AND is True if both a and b are True
-and'' True True = True
-and'' _    _    = False
+-- -- AND is True if both a and b are True
+-- and'' True True = True
+-- and'' _    _    = False
 
--- OR is True if a or b or both are True
-or'' False False = False
-or'' _     _     = True
+-- -- OR is True if a or b or both are True
+-- or'' False False = False
+-- or'' _     _     = True
 
--- NOR is the negation of 'or'
-nor''  a b = not' $ or'  a b
+-- -- NOR is the negation of 'or'
+-- nor''  a b = not' $ or'  a b
 
--- NAND is the negation of 'and'
-nand'' a b = not' $ and' a b
+-- -- NAND is the negation of 'and'
+-- nand'' a b = not' $ and' a b
 
--- XOR is True if either a or b is True, but not if both are True
-xor'' True  False = True
-xor'' False True  = True
-xor'' _     _     = False
+-- -- XOR is True if either a or b is True, but not if both are True
+-- xor'' True  False = True
+-- xor'' False True  = True
+-- xor'' _     _     = False
 
--- IMPL is True if a implies b, equivalent to (not a) or (b)
-impl'' a b = (not' a) `or'` b
+-- -- IMPL is True if a implies b, equivalent to (not a) or (b)
+-- impl'' a b = (not' a) `or'` b
 
--- EQU is True if a and b are equal
-equ'' True  True  = True
-equ'' False False = True
-equ'' _     _     = False
+-- -- EQU is True if a and b are equal
+-- equ'' True  True  = True
+-- equ'' False False = True
+-- equ'' _     _     = False
 
-and'''  a b = a && b
-or'''   a b = a || b
-nand''' a b = not (and' a b)
-nor'''  a b = not (or' a b)
-xor'''  a b = not (equ' a b)
-impl''' a b = or' (not a) b
-equ'''  a b = a == b
+-- and'''  a b = a && b
+-- or'''   a b = a || b
+-- nand''' a b = not (and' a b)
+-- nor'''  a b = not (or' a b)
+-- xor'''  a b = not (equ' a b)
+-- impl''' a b = or' (not a) b
+-- equ'''  a b = a == b

@@ -465,3 +465,17 @@ smplDiv avg smpl n=  (smpl / n)
 btwnnums = [10,5,15,3,7,0,18]
 -- 938. Range Sum of BST
 btwn lwr upr lst =  sum $ filter (\x -> (x <= upr) && (x >= lwr)) lst 
+
+-- 1588. Sum of All Odd Length Subarrays
+arr1 = [1,4,2,5,3]
+
+oddsubs ar = [ sum (xs) | xs <- permutations ar , odd (sum xs) == True ]
+
+powerset [] = [[]]
+powerset (x:xs) = [x:ps | ps <- powerset xs] ++ powerset xs
+
+-- *Main> sort (subsequences [1,2,3,4])
+-- [[],[1],[1,2],[1,2,3],[1,2,3,4],[1,2,4],[1,3],[1,3,4],[1,4],[2],[2,3],[2,3,4],[2,4],[3],[3,4],[4]]
+
+-- *Main> sort (powerset [1,2,3,4])    
+-- [[],[1],[1,2],[1,2,3],[1,2,3,4],[1,2,4],[1,3],[1,3,4],[1,4],[2],[2,3],[2,3,4],[2,4],[3],[3,4],[4]]
