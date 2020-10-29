@@ -529,3 +529,17 @@ numToString num =  (chunksOf 1) (show num)
 
 tnums = [12,345,2,6,7896] 
 evenLengthDgts nums = length $ filter (even . length) $ map (numToString) nums
+
+-- mtrx : [[Int]]
+
+
+grtst coorda coordb = max (abs ((head coorda) - (head coordb))) (abs ((last coorda) - (last coordb)))    
+
+lstTime coords = sum $ concat (lstTime' coords)
+lstTime' :: (Num a, Ord a) => [[a]] -> [[a]]
+lstTime' [] = [[0]] 
+lstTime' [x] = [[0]] 
+lstTime' (x:y:xs) = [(grtst x y)] : lstTime' (y:xs)   
+
+
+ooo = [[3],[4],[0]]
