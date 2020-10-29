@@ -474,8 +474,31 @@ oddsubs ar = [ sum (xs) | xs <- permutations ar , odd (sum xs) == True ]
 powerset [] = [[]]
 powerset (x:xs) = [x:ps | ps <- powerset xs] ++ powerset xs
 
+powerset' = filterM (const [True,False])
+
+
 -- *Main> sort (subsequences [1,2,3,4])
 -- [[],[1],[1,2],[1,2,3],[1,2,3,4],[1,2,4],[1,3],[1,3,4],[1,4],[2],[2,3],[2,3,4],[2,4],[3],[3,4],[4]]
 
 -- *Main> sort (powerset [1,2,3,4])    
 -- [[],[1],[1,2],[1,2,3],[1,2,3,4],[1,2,4],[1,3],[1,3,4],[1,4],[2],[2,3],[2,3,4],[2,4],[3],[3,4],[4]]
+
+
+-- idiomatic subsequences
+
+-- | The 'subsequences' function returns the list of all subsequences of the argument.
+--
+-- >>> subsequences "abc"
+-- ["","a","b","ab","c","ac","bc","abc"]
+subsequences'            :: [a] -> [[a]]
+subsequences' xs         =  [] : nonEmptySubsequences' xs
+
+-- | The 'nonEmptySubsequences'' function returns the list of all subsequences' of the argument,
+--   except for the empty list.
+--
+-- >>> nonEmptySubsequences' "abc"
+-- ["a","b","ab","c","ac","bc","abc"]
+nonEmptySubsequences'         :: [a] -> [[a]]
+nonEmptySubsequences' []      =  []
+nonEmptySubsequences' (x:xs)  =  [x] : foldr f [] (nonEmptySubsequences' xs)
+  where f ys r = ys : (x : ys) : r
