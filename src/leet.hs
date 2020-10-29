@@ -524,3 +524,8 @@ output2 = [[],[1],[4],[1,4],[2],[4,2],[1,4,2],[5],[2,5],[4,2,5],[1,4,2,5],[3],[5
 
 sumOdd :: [Int] -> Int
 sumOdd x = sum $ sum <$> filter (odd . length) (filter (flip isInfixOf x) (subsequences x))
+
+numToString num =  (chunksOf 1) (show num)
+
+tnums = [12,345,2,6,7896] 
+evenLengthDgts nums = length $ filter (even . length) $ map (numToString) nums
