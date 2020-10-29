@@ -503,4 +503,17 @@ nonEmptySubsequences' []      =  []
 nonEmptySubsequences' (x:xs)  =  [x] : foldr f [] (nonEmptySubsequences' xs)
   where f ys r = ys : (x : ys) : r
 
-gatherodd nums = filter (\x -> odd (sum x)) ( subsequences nums)
+gatherodd nums = (filter (\x -> odd ((length x))) ( subsequences nums))
+
+ex1' = [(0,1),(2,2),(4,3)] -- False
+ex2' = [(0,1),(1,2),(2,3),(3,6)] -- False
+
+contigcheck :: (Num a, Ord a) => [(a,a)] -> Bool
+contigcheck [] = True
+contigcheck [x] = True
+contigcheck (x:y:xs)
+  | ((fst (x)+1)  == fst (y)) = contigcheck (y:xs)
+  | otherwise = False
+
+  -- [1,4,2,5,3]
+contigs nums = filter (contigcheck) (subsequences (zip [0,1..] nums))
