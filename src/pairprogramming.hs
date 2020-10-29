@@ -153,3 +153,13 @@ pascal 0 = [1]
 pascal n = zipWith (+) ([0] ++ pascal (n-1)) (pascal (n-1) ++ [0])
 
 pascals = [1] : map (\xs -> zipWith (+) ([0] ++ xs) (xs ++ [0])) pascals
+-- like how?
+
+fibszip = 0 : 1 : zipWith (+) fibszip (tail fibszip)
+-- Rotaerk help break down this function with this nice graph
+  -- 1, 1, 2, 3,  5,  8, 13
+-- + 1, 2, 3, 5,  8, 13, 21
+-----------------------
+  -- 2, 3, 5, 8, 13, 21, 34
+
+tester = [1] : map (\xs -> trace ("-->" ++ show xs) zipWith (+) ([0] ++ xs) (xs ++ [0])) tester
