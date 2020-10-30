@@ -562,3 +562,29 @@ ooo = [[3],[4],[0]]
 
 subs = filterM (const [True, False])
 
+-- 1572. Matrix Diagonal Sum
+
+-- mrdx :: [[Int]] -> [[Int]]
+mymtrx = chunksOf 3 [1,2,3,4,5,6,7,8,9]
+diags1 = diagonals $ transpose $ chunksOf 3 [1,2,3,4,5,6,7,8,9]
+diags2 = diagonals $ map (reverse) $ transpose $ chunksOf 3 [1,2,3,4,5,6,7,8,9]
+
+-- makemtrx n =  
+
+-- chunksOf 3 [1,2,3,4,5,6,7,8,9]
+-- [[1,2,3],
+--  [4,5,6],
+--  [7,8,9]]
+
+-- [[1,4,7],
+--  [2,5,8],
+--  [3,6,9]]
+
+diagonals :: [[a]] -> [[a]]
+diagonals = tail . go [] where
+    -- it is critical for some applications that we start producing answers
+    -- before inspecting es_
+    go b es_ = [h | h:_ <- b] : case es_ of
+        []   -> transpose ts
+        e:es -> go (e:ts) es
+        where ts = [t | _:t <- b]
