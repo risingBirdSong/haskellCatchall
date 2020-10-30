@@ -55,7 +55,7 @@ unlineda =  unlines ["aa","bb","cc","dd","ee"]
 -- dd
 -- ee
 
-nubby lst = nubby' (lst) (M.fromList [])
+nubby lst = map (fst) $ M.toList ( nubby' (lst) (M.fromList []))
 nubby' [] mp = mp
 nubby' (x:xs) mp 
   | M.lookup x mp == Nothing = nubby' (xs) (M.insert x x mp)
