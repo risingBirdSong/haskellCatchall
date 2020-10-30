@@ -64,5 +64,23 @@ nubby' (x:xs) mp
 myMap = M.fromList [(1,1),(2,2),(3,3)]
 
 
+-- maybe practice
 
-  
+maybeMap lst ctf = map (\ x -> if (x > ctf) then Just x else Nothing) lst
+-- *Main> maybeMap [2,4,6,8,10] 4
+-- [Nothing,Nothing,Just 6,Just 8,Just 10]
+
+
+maybeadd :: Maybe Int -> Maybe Int
+maybeadd (Just a) = Just (a+1)
+maybeadd _ = Nothing
+
+
+-- maybeadd' :: Maybe Int -> Maybe Int
+-- maybeadd' 
+--   | (Just a) = Just (a+1)
+--   | otherwise = Nothing
+
+maybeadd' ma
+  | Just a <- ma = Just (a+1)
+  | otherwise    = Nothing
