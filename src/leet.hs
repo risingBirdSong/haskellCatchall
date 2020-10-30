@@ -6,6 +6,7 @@ import Control.Applicative
 import Data.Function
 import Data.List
 import Test.QuickCheck
+import Data.Maybe
 -- import qualified Data.Text as T
 import Data.Bool
 import Debug.Trace
@@ -532,14 +533,32 @@ evenLengthDgts nums = length $ filter (even . length) $ map (numToString) nums
 
 -- mtrx : [[Int]]
 
+data MaybeCoords a = Falsy | Jst a 
+-- testing (MaybeCoords x) (MaybeCoords y) 
+--   | (x + y) = Jst (x + y)
+--   | otherwise = Falsy
 
-grtst coorda coordb = max (abs ((head coorda) - (head coordb))) (abs ((last coorda) - (last coordb)))    
 
-lstTime coords = sum $ concat (lstTime' coords)
-lstTime' :: (Num a, Ord a) => [[a]] -> [[a]]
-lstTime' [] = [[0]] 
-lstTime' [x] = [[0]] 
-lstTime' (x:y:xs) = [(grtst x y)] : lstTime' (y:xs)   
+-- grtstReWrite a b = 
+
+tsttst = (max) <$> Just 2 <*> Just 8 
+
+points = [[1,1],[3,4],[-1,0], [1,1]]
+
+grtst a b = max (abs (x2 - x1))(abs (y2 - y1))   
+  where x1 = head a
+        x2 = head b
+        y1 = last a
+        y2 = last b
+lstTime coords = sum $ concat (f coords)
+f :: (Num a, Ord a) => [[a]] -> [[a]]
+f (x:y:xs) = [(grtst x y)] : f (y:xs)   
+f (x:xs) = []   
+
 
 
 ooo = [[3],[4],[0]]
+
+
+subs = filterM (const [True, False])
+

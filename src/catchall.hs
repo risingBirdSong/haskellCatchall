@@ -1,5 +1,6 @@
 import Debug.Trace
-import Data.List as L
+import qualified Data.List as L
+import qualified Data.Map as M
 class C a where
   m                     :: Show b => a -> b
 
@@ -53,3 +54,15 @@ unlineda =  unlines ["aa","bb","cc","dd","ee"]
 -- cc
 -- dd
 -- ee
+
+nubby lst = nubby' (lst) (M.fromList [])
+nubby' [] mp = mp
+nubby' (x:xs) mp 
+  | M.lookup x mp == Nothing = nubby' (xs) (M.insert x x mp)
+  | M.lookup x mp == Just x = nubby' (xs) (mp)
+
+myMap = M.fromList [(1,1),(2,2),(3,3)]
+
+
+
+  
