@@ -28,7 +28,6 @@ dependencies:
 - vector
 - universum
 - QuickCheck
-
 library:
   source-dirs: src
 

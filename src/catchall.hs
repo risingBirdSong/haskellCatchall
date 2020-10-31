@@ -76,6 +76,10 @@ maybeadd (Just a) = Just (a+1)
 maybeadd _ = Nothing
 
 
+main :: IO ()
+main = do   print (maybeadd(Just 4))
+            print (maybeMap [1,2,3,4,5,6,7,8,9,10] 5)
+
 -- maybeadd' :: Maybe Int -> Maybe Int
 -- maybeadd' 
 --   | (Just a) = Just (a+1)
@@ -84,3 +88,15 @@ maybeadd _ = Nothing
 maybeadd' ma
   | Just a <- ma = Just (a+1)
   | otherwise    = Nothing
+
+myvar :: [Maybe Char]
+myvar = maybeMap ['a', 'g','z'] 'd'
+
+interleave :: [a] -> [a] -> [a]
+interleave xs ys = concat (L.transpose [xs, ys])
+
+interleave' :: [a] -> [a] -> [a]
+interleave' a b =  concat (f a b)  where  
+  f [] _ = []
+  f _ [] = []
+  f (x:xs) (y:ys) = [x,y] : f (xs) (ys) 
