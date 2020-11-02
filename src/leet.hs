@@ -637,3 +637,10 @@ revNum num
   | (num < 0) =  (logic (num * (-1))) * (-1)
     where logic input = read (concat (reverse (chunksOf 1 (show input))))
 
+
+mat = [[1,2,3],
+              [4,5,6],
+              [7,8,9]]
+
+diags [] _ = []
+diags (l:mtr) i = [l !! i] : diags (mtr) (i+1)
