@@ -1,3 +1,4 @@
+import Data.List
 grida = [[4,3,2,-1],[3,2,1,-1],[1,1,-1,-2],[-1,-1,-2,-3]]
 
 testa = [7,6,5,4,3,2,1,-1]
@@ -34,3 +35,10 @@ qt' _ [] _ _ = []
 qt' (s:xs) (e:ys) q acc 
   | ((e > q) && (s < q)) = [acc+1] : qt' (xs) (ys) q (acc+1)
   | otherwise = qt' (xs) (ys) q  (acc)
+
+
+-- 1588. Sum of All Odd Length Subarrays
+arra = [1,4,2,5,3]
+-- [[1], [1,4], [1,4,2], [1,4,2,5], [1,4,2,5,3], [4], [4,2]]
+
+oddsubs arr = sum $ map (sum)  $ filter (odd . length) $ filter (flip isInfixOf arr) $ subsequences arr

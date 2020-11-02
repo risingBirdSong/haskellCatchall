@@ -588,3 +588,8 @@ diagonals = tail . go [] where
         []   -> transpose ts
         e:es -> go (e:ts) es
         where ts = [t | _:t <- b]
+
+
+-- 1436. Destination City
+paths = [["London","New York"],["New York","Lima"],["Lima","Sao Paulo"]]
+destc cts = last (last cts)
