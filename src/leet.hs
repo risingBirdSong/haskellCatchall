@@ -616,3 +616,24 @@ destc cts = arriv `Set.difference` depart where
 
 dprts cts = Set.fromList $ map (head) cts
 arrvs cts = Set.fromList $ map (last) cts
+
+
+-- https://www.youtube.com/watch?v=J5IIH35EBVE&t=125s&ab_channel=NateSantti
+-- Hao sent me a nice explanation of the c
+
+-- -123
+
+--check is neg or pos?
+-- return with the same value
+
+-- convert the num into a string... 
+-- split the string on every charact -> "1,2,3"
+-- reverse that -> "3,2,1,-"
+--join -> "321"
+-- convert to a number
+revNum :: Int -> Int
+revNum num 
+  | (num > 0) = logic num
+  | (num < 0) =  (logic (num * (-1))) * (-1)
+    where logic input = read (concat (reverse (chunksOf 1 (show input))))
+
