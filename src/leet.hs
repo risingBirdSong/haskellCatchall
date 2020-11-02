@@ -10,7 +10,9 @@ import Data.Maybe
 -- import qualified Data.Text as T
 import Data.Bool
 import Debug.Trace
- 
+import qualified Data.Set as Set
+
+
 -- this one worked!
 -- stack ghc --package QuickCheck -- MyProgram.hs
 -- https://stackoverflow.com/questions/53402263/could-not-find-module-test-quickcheck-on-windows
@@ -589,7 +591,28 @@ diagonals = tail . go [] where
         e:es -> go (e:ts) es
         where ts = [t | _:t <- b]
 
-
+-- great resource!
+-- https://www.fpcomplete.com/haskell/library/containers/
 -- 1436. Destination City
-paths = [["London","New York"],["New York","Lima"],["Lima","Sao Paulo"]]
-destc cts = last (last cts)
+
+-- λ> let fourCorners = Set.fromList [Arizona, NewMexico, Colorado, Utah]
+-- λ> let borderStates = Set.fromList [California, Arizona, NewMexico, Texas]
+-- λ> Set.union fourCorners borderStates
+-- fromList [Arizona,California,Colorado,NewMexico,Texas,Utah]
+-- λ> Set.intersection fourCorners borderStates
+-- fromList [Arizona,NewMexico]
+-- λ> Set.difference fourCorners borderStates
+-- fromList [Colorado,Utah]
+-- λ> Set.difference borderStates fourCorners
+-- fromList [California,Texas]
+-- λ> let symmetricDifference a b = Set.union a b Set.\\ Set.intersection a b
+-- λ> symmetricDifference fourCorners borderStates
+-- fromList [California,Colorado,Texas,Utah]
+
+paths = [["London","New York"],["New York","Lima"],["Lima","Sao Paulo"], ["New York","London"]]
+destc cts = arriv `Set.difference` depart where 
+  depart = Set.fromList $ map (head) cts
+  arriv = Set.fromList $ map (last) cts
+
+dprts cts = Set.fromList $ map (head) cts
+arrvs cts = Set.fromList $ map (last) cts
