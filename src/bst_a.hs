@@ -17,3 +17,9 @@ fld_a = foldl (nsrt) Nil [5,4,6,3,7,2,8]
 -- foldr :: Foldable t => (a -> b -> b) -> b -> t a -> b
 fld_b =  foldr (flip nsrt) Nil (reverse [5,4,6,3,7,2,8])
 --  (Node (Node (Node Nil 2 Nil) 3 Nil) 4 Nil) 5 (Node Nil 6 (Node Nil 7 (Node Nil 8 Nil)))
+
+contains Nil _ = False
+contains (Node l v r) qry 
+  | (v == qry) = True
+  | (qry < v) = contains l qry
+  | (qry > v) = contains r qry
