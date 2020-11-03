@@ -23,3 +23,12 @@ contains (Node l v r) qry
   | (v == qry) = True
   | (qry < v) = contains l qry
   | (qry > v) = contains r qry
+
+
+smallest (Node l v r) 
+  | l == Nil = v
+  | otherwise = smallest l 
+
+greatest (Node l v r)
+  | r == Nil = v
+  | otherwise = greatest r
