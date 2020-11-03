@@ -7,13 +7,10 @@
 import Data.List
 
 input = [17,18,5,4,6,1]
-
+-- srted =
  
-  
-dropper _ [] = []
-dropper cur (s:srtd) 
-  | (s >= cur) = dropper cur (srtd)
-  | (s < cur) = s : dropper cur (srtd)
+asc lst = sortBy (compare) lst
+desc lst =sortBy (flip compare) lst 
 
 replace [x] = [-1]
 replace (l:lst) = (maximum lst) : replace (lst)
