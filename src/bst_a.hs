@@ -37,3 +37,10 @@ fld_five = foldl (nsrt) Nil [1,2,3,4,5]
 fld_15 = foldl (nsrt) Nil [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 count Nil = 0 
 count (Node l v r) = 1 + (count l) + count (r) 
+
+
+rmvrChlrdn Nil val = Nil
+rmvrChlrdn (Node l v r) qry 
+  | v == qry = Node Nil v Nil
+  | qry < v = Node (rmvrChlrdn l qry) v r
+  | qry > v = Node l v (rmvrChlrdn r qry) 
