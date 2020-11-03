@@ -639,8 +639,16 @@ revNum num
 
 
 mat = [[1,2,3],
-              [4,5,6],
-              [7,8,9]]
+      [4,5,6],
+      [7,8,9]]
 
-diags [] _ = []
-diags (l:mtr) i = [l !! i] : diags (mtr) (i+1)
+
+
+-- bs stands for backslask because the matrix from top left to bottom right looks like backslash pattern
+-- fs stands for forward slash
+diags_ _ [] _ = []
+diags_ dir (l:mtr) i = [l !! i] : diags_ dir (mtr) (i+dir) 
+
+diagsolve mtrx = first + second
+  where first = sum $ concat $ diags_ (1) mtrx (0)
+        second = sum $ concat $ diags_ (-1) mtrx ((length mat)-1)
