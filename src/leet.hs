@@ -652,3 +652,16 @@ diags_ dir (l:mtr) i = [l !! i] : diags_ dir (mtr) (i+dir)
 diagsolve mtrx = first + second
   where first = sum $ concat $ diags_ (1) mtrx (0)
         second = sum $ concat $ diags_ (-1) mtrx ((length mat)-1)
+
+
+-- 1304. Find N Unique Integers Sum up to Zero
+
+-- 728. Self Dividing Numbers
+-- sdn num = [ n | n <- [1..num], ]
+
+fn str =  show str 
+
+
+myChunks [] = []
+myChunks [x] = [x]
+myChunks (s:str) = s : ',' : myChunks str 
