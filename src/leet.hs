@@ -763,3 +763,4 @@ eee nums = ([(head $filter (>0) $ sort nums)..])
 zipped :: (Num b, Enum b) => [a] -> [(a, b)]
 zipped  nums = zip nums [1..] 
 
+findNum nums = head $ [1..] \\ nums
