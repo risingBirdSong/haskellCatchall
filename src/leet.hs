@@ -691,3 +691,20 @@ myNumSplt n = myNumSplt' n []
 myNumSplt' 0 out = out
 myNumSplt' num out = myNumSplt' (div num 10) (mod num 10 : out)
 
+digts :: Int -> [Int]
+digts 0 = []
+digts x = d : digts ds
+  where (ds, d) = divMod x 10
+
+testa_divmod =  divMod 12 10
+-- (1,2)
+
+-- 905. Sort Array By Parity
+
+paritysort nums = concat $ paritysort' nums [] []
+paritysort' [] e o = [e,o]
+paritysort' (n:nums) e o
+  | even n = paritysort' nums (n:e) o
+  | otherwise = paritysort' nums e (n:o)
+
+  

@@ -48,3 +48,4 @@ nodeEdgeIdEql :: NodeID -> (Node a, Edges) -> Bool
 nodeEdgeIdEql nID (node, _) = nID == getNodeID node
 
 main = print $ insertEdge (0, 3) exGraph
+
