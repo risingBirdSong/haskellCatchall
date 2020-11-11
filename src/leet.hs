@@ -687,5 +687,6 @@ mysplit' (s:src) out = mysplit' src (out ++ [[s]])
 
 -- myNumSplt n = myNumSplt' n [] 
 -- myNumSplt' :: (Integral a) => a -> [a] -> [a]
-myNumSplt' 0 output = output
-myNumSplt' n output = myNumSplt' (n `div` 10)  ((n `mod` 10) : output)
+myNumSplt n = myNumSplt' n [] 
+myNumSplt' 0 out = out
+myNumSplt' num out = myNumSplt' (div num 10) (mod num 10 : out)
