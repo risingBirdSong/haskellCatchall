@@ -20,3 +20,4 @@ contains (Node l v r) qry
 
 treeMap Nil _ = Nil
 treeMap (Node l v r) fn =  Node (treeMap l fn) (fn v) (treeMap r fn)
+

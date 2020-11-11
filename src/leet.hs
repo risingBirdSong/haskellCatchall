@@ -661,3 +661,7 @@ diagsolve mtrx = first + second
 
 fn str = map (read) $ chunksOf 1 (show str) 
 
+mysplit source = mysplit' source []
+
+mysplit' [] out = out
+mysplit' (s:src) out = mysplit' src (out ++ [[s]])
