@@ -13,6 +13,7 @@ import Debug.Trace
 import qualified Data.Set as Set
 
 
+
 -- this one worked!
 -- stack ghc --package QuickCheck -- MyProgram.hs
 -- https://stackoverflow.com/questions/53402263/could-not-find-module-test-quickcheck-on-windows
@@ -672,6 +673,7 @@ selfDivSolution n =
 firsts = map fst
 findSelfDivs = filter (\tpl -> selfDiv (fst tpl) (snd tpl))
 -- so that we can safely divide by each numbers... get rid of zeroes bcz zeroes would break
+rejectZeros :: (Foldable t, Eq a1, Num a1) => [(a2, t a1)] -> [(a2, t a1)]
 rejectZeros lstTupl = filter (\tpl -> all (\x -> x /= 0) (snd tpl)) lstTupl
 
 selfDiv num [] = True 
@@ -707,4 +709,18 @@ paritysort' (n:nums) e o
   | even n = paritysort' nums (n:e) o
   | otherwise = paritysort' nums e (n:o)
 
-  
+selfDividing :: Int -> Int -> [Int]
+selfDividing start stop = filter (liftM2 all divides digits_) [start..stop]
+
+divides :: Int -> Int -> Bool
+divides num 0 = False
+divides num base = num `mod` base == 0
+
+digits_ :: Int -> [Int]
+digits_ 0 = []
+digits_ x = d : digits_ ds
+  where (ds, d) = divMod x 10
+
+mymain = print $ selfDividing 1 22
+
+sortArrayByParity = uncurry (++) . partition even 
