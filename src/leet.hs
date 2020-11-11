@@ -658,33 +658,34 @@ diagsolve mtrx = first + second
 
 -- 728. Self Dividing Numbers
 -- sdn num = [ n | n <- [1..num], ]
-
-selfDivSolution n = map (fst) $ filter (\tpl -> selfDiv (fst tpl) (snd tpl)) $ rejectZeros $ zip [1..n]  (map (numSplt) [1..n])
-
+componentA = fst ([2,8],28)
+componentB = all (\x -> x /= 0) [1,2,3,0]
 solvedSelfDiv = selfDivSolution 100
 -- [1,2,3,4,5,6,7,8,9,11,12,15,22,24,33,36,44,48,55,66,77,88,99]
 
-prepped = [([1],1),([2],2),([3],3),([4],4),([5],5),([6],6),([7],7),([8],8),([9],9),([1,0],10),([1,1],11),([1,2],12),([1,3],13),([1,4],14),([1,5],15),([1,6],16),([1,7],17),([1,8],18),([1,9],19),([2,0],20),([2,1],21),([2,2],22),([2,3],23),([2,4],24),([2,5],25),([2,6],26),([2,7],27),([2,8],28),([2,9],29),([3,0],30)]
+selfDivSolution n =
+  firsts $
+  findSelfDivs $
+  rejectZeros $
+  zip [1..n] (map (numSplt) [1..n])
 
-componentA = fst ([2,8],28)
-componentB = all (\x -> x /= 0) [1,2,3,0]
-
+firsts = map fst
+findSelfDivs = filter (\tpl -> selfDiv (fst tpl) (snd tpl))
 -- so that we can safely divide by each numbers... get rid of zeroes bcz zeroes would break
 rejectZeros lstTupl = filter (\tpl -> all (\x -> x /= 0) (snd tpl)) lstTupl
-rejectedTheZeroes = [([1],1),([2],2),([3],3),([4],4),([5],5),([6],6),([7],7),([8],8),([9],9),([1,1],11),([1,2],12),([1,3],13),([1,4],14),([1,5],15),([1,6],16),([1,7],17),([1,8],18),([1,9],19),([2,1],21),([2,2],22),([2,3],23),([2,4],24),([2,5],25),([2,6],26),([2,7],27),([2,8],28),([2,9],29)]
-
--- fltered lst = filter 
-
 
 selfDiv num [] = True 
 selfDiv num (d:digits) 
   | (num `mod` d == 0) = selfDiv num digits
   | otherwise = False
 
-
 numSplt str = map (\x -> read x :: Integer) $ mysplit (show str) 
 
 mysplit source = mysplit' source []
-
 mysplit' [] out = out
 mysplit' (s:src) out = mysplit' src (out ++ [[s]])
+
+-- myNumSplt n = myNumSplt' n [] 
+-- myNumSplt' :: (Integral a) => a -> [a] -> [a]
+myNumSplt' 0 output = output
+myNumSplt' n output = myNumSplt' (n `div` 10)  ((n `mod` 10) : output)
