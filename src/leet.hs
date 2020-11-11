@@ -659,7 +659,13 @@ diagsolve mtrx = first + second
 -- 728. Self Dividing Numbers
 -- sdn num = [ n | n <- [1..num], ]
 
-fn str = map (read) $ chunksOf 1 (show str) 
+selfDiv num [] = True 
+selfDiv num (d:digits) 
+  | (num `mod` d == 0) = selfDiv num digits
+  | otherwise = False
+
+
+fn str = map (\x -> read x :: Integer) $ mysplit (show str) 
 
 mysplit source = mysplit' source []
 
