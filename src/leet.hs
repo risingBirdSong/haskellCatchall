@@ -690,3 +690,4 @@ mysplit' (s:src) out = mysplit' src (out ++ [[s]])
 myNumSplt n = myNumSplt' n [] 
 myNumSplt' 0 out = out
 myNumSplt' num out = myNumSplt' (div num 10) (mod num 10 : out)
+

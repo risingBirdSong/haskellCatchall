@@ -1,0 +1,1 @@
+data Link a = Nil | Cons a (Link a) deriving (Show, Eq, Ord)
