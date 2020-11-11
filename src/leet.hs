@@ -760,7 +760,10 @@ findGap nums = (+1) $ snd . head $ filter (uncurry (/=)) $ zip nums ([(head $fil
 
 eee nums = ([(head $filter (>0) $ sort nums)..])
 
-zipped :: (Num b, Enum b) => [a] -> [(a, b)]
-zipped  nums = zip nums [1..] 
+-- zipped :: (Num b, Enum b) => [a] -> [(a, b)]
+zipped  nums = zip nums [(head $ filter (>0) $ sort nums)..] 
 
-findNum nums = head $ [1..] \\ nums
+findNum [] = Nothing
+findNum nums = Just $ head $ [(head $ filter (>0) $ sort nums)..] \\ nums
+
+
