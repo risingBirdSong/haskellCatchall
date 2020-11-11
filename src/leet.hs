@@ -659,9 +659,5 @@ diagsolve mtrx = first + second
 -- 728. Self Dividing Numbers
 -- sdn num = [ n | n <- [1..num], ]
 
-fn str =  show str 
+fn str = map (read) $ chunksOf 1 (show str) 
 
-
-myChunks [] = []
-myChunks [x] = [x]
-myChunks (s:str) = s : ',' : myChunks str 
