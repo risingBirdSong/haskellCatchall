@@ -724,3 +724,29 @@ digits_ x = d : digits_ ds
 mymain = print $ selfDividing 1 22
 
 sortArrayByParity = uncurry (++) . partition even 
+
+
+onlyevens nums = filter (even) nums
+-- allTest lst = filter (liftM2 all even (>10)) lst 
+testing nums = filter (>50) $ filter (even) nums
+
+
+divTest n = all (divides n) (digits_ n)
+
+vvv = [3,4,-1,1]
+
+
+getready nums = filter (>0) $ sort nums 
+ready = [1,3,4]
+xxx [x] = []
+xxx (x:y:lst) 
+  | (x+1 /= y) = x : xxx (y:lst)
+  | otherwise = xxx (y:lst)
+
+-- findGap :: :: (Num b, Enum b) => [a] -> [(a2 -> b -> c) -> (a2, b) -> c]
+findGap nums = snd . head $filter (uncurry (/=)) $ zip nums ([(head $filter (>0) $ sort nums)..])
+
+eee nums = ([(head $filter (>0) $ sort nums)..])
+
+zipped :: (Num b, Enum b) => [a] -> [(a, b)]
+zipped  nums = zip nums [1..] 
