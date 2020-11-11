@@ -743,10 +743,23 @@ xxx (x:y:lst)
   | (x+1 /= y) = x : xxx (y:lst)
   | otherwise = xxx (y:lst)
 
+-- Given an array, find the smallest positive Integer that doesn't exist in the array.
+
+-- Input: nums = [3,4,-1,1]
+-- Output: 2
+-- Explanation:
+-- -1 is negative
+-- 0 is not considered positive
+-- 1 is in the array
+-- 2 is the smallest that doesn't exist
+
+-- Extra space allowed: O(1)
+
 -- findGap :: :: (Num b, Enum b) => [a] -> [(a2 -> b -> c) -> (a2, b) -> c]
-findGap nums = snd . head $filter (uncurry (/=)) $ zip nums ([(head $filter (>0) $ sort nums)..])
+findGap nums = (+1) $ snd . head $ filter (uncurry (/=)) $ zip nums ([(head $filter (>0) $ sort nums)..])
 
 eee nums = ([(head $filter (>0) $ sort nums)..])
 
 zipped :: (Num b, Enum b) => [a] -> [(a, b)]
 zipped  nums = zip nums [1..] 
+
