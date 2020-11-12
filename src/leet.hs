@@ -810,6 +810,9 @@ dataMassage d = dataMassage' 0 d
 dataMassage' _ [] = []
 dataMassage' cnt (d:dta) = Point cnt d : dataMassage' (cnt + 1) (dta)  
 
+-- https://leetcode.com/problems/replace-elements-with-greatest-element-on-right-side/
+-- 1299. Replace Elements with Greatest Element on Right Side
+
 asd nums = scanr (max) nums
 -- drop 1 $ asd (-1) [17,18,5,4,6,1]
 -- [18,6,6,6,1,-1]
