@@ -766,4 +766,7 @@ zipped  nums = zip nums [(head $ filter (>0) $ sort nums)..]
 findNum [] = Nothing
 findNum nums = Just $ head $ [(head $ filter (>0) $ sort nums)..] \\ nums
 
+cleanD n qry = n `mod` qry == 0
+buddy n = init $ filter (cleanD n) [1..n]
 
+buddies n = [ (buddy x) | x <- [1..n]]

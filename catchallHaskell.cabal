@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 26cec21a44415b694b5f1e97d295b9ddeead3479f8aa8001e0c9cbbcffa058e6
+-- hash: 1402fb688377cf19fb596362fcba36cc7b32937f3f522fabdf330e1fff355be7
 
 name:           catchallHaskell
 version:        0.1.0.0
@@ -33,7 +33,8 @@ library
   hs-source-dirs:
       src
   build-depends:
-      QuickCheck
+      Chart-diagrams
+    , QuickCheck
     , base >=4.7 && <5
     , containers
     , random
@@ -50,7 +51,8 @@ executable catchallHaskell-exe
       app
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      QuickCheck
+      Chart-diagrams
+    , QuickCheck
     , base >=4.7 && <5
     , catchallHaskell
     , containers
@@ -69,7 +71,8 @@ test-suite catchallHaskell-test
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      QuickCheck
+      Chart-diagrams
+    , QuickCheck
     , base >=4.7 && <5
     , catchallHaskell
     , containers

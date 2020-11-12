@@ -28,6 +28,8 @@ dependencies:
 - vector
 - universum
 - QuickCheck
+- Chart-diagrams
+
 library:
   source-dirs: src
 
