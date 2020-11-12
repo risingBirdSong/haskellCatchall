@@ -12,3 +12,10 @@ I had been doing
 - chart-diagrams
 and the correct package downloads correctly ->
 - Chart-diagrams
+
+cairo          > Configuring cairo-0.13.8.1...
+cairo          > setup.exe: The program 'pkg-config' version >=0.9.0 is required but it could
+cairo          > not be found.
+cairo          >
+
+--  While building package cairo-0.13.8.1 using:

@@ -770,3 +770,14 @@ cleanD n qry = n `mod` qry == 0
 buddy n = init $ filter (cleanD n) [1..n]
 
 buddies n = [ (buddy x) | x <- [1..n]]
+
+data Point a b = Point {x :: Integer, y :: Integer} deriving (Show, Ord, Eq)
+
+summer d = map (sum) d
+ddd_ = [0,1,1,3,1,6,1,7,4,8,1,16,1,10,9,15,1,21,1,22,11,14,1,36,6,16,13,28,1,42,1,31,15,20,13,55,1,22,17,50]
+
+dataMassage d = dataMassage' 0 d   
+dataMassage' _ [] = []
+dataMassage' cnt (d:dta) = Point cnt d : dataMassage' (cnt + 1) (dta)  
+
+rawd =[ {x : 0, y : 0}, {x : 1, y : 1}, {x : 2, y : 1}, {x : 3, y : 3}, {x : 4, y : 1}, {x : 5, y : 6}, {x : 6, y : 1}, {x : 7, y : 7}, {x : 8, y : 4}, {x : 9, y : 8}, {x : 10, y : 1}, {x : 11, y : 16}, {x : 12, y : 1}, {x : 13, y : 10}, {x : 14, y : 9}, {x : 15, y : 15}, {x : 16, y : 1}, {x : 17, y : 21}, {x : 18, y : 1}, {x : 19, y : 22}, {x : 20, y : 11}, {x : 21, y : 14}, {x : 22, y : 1}, {x : 23, y : 36}, {x : 24, y : 6}, {x : 25, y : 16}, {x : 26, y : 13}, {x : 27, y : 28}, {x : 28, y : 1}, {x : 29, y : 42}, {x : 30, y : 1}, {x : 31, y : 31}, {x : 32, y : 15}, {x : 33, y : 20}, {x : 34, y : 13}, {x : 35, y : 55}, {x : 36, y : 1}, {x : 37, y : 22}, {x : 38, y : 17}, {x : 39, y : 50}]
