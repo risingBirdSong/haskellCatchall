@@ -821,5 +821,6 @@ asd nums = scanr (max) nums
 -- https://leetcode.com/problems/n-repeated-element-in-size-2n-array/
 -- 961. N-Repeated Element in Size 2N Array
 
-findMostRepeats = find ((>1) . length) $ group $ sort [5,1,5,2,5,3,5,4]
+-- findMostRepeats :: Maybe [Integer]
+findMostRepeats lst = head $ fromMaybe [] $ find ((>1) . length) $ group $ sort lst
 -- Just [5,5,5,5]
