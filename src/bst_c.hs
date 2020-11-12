@@ -16,3 +16,11 @@ contains (Nodey l v r) qry
 
 treeMap No _ = No
 treeMap (Nodey l v r) fn = Nodey (treeMap l fn) (fn v) (treeMap r fn)
+
+-- todo learn how to do tree fold, attempted at it went nowhere
+
+rmv No _ = No
+rmv (Nodey l v r) delV
+  | (v == delV) = No
+  | (delV < v) = Nodey (rmv l delV) v r
+  | otherwise = Nodey l v (rmv r delV)
