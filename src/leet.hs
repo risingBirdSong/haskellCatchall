@@ -816,3 +816,10 @@ dataMassage' cnt (d:dta) = Point cnt d : dataMassage' (cnt + 1) (dta)
 asd nums = scanr (max) nums
 -- drop 1 $ asd (-1) [17,18,5,4,6,1]
 -- [18,6,6,6,1,-1]
+
+
+-- https://leetcode.com/problems/n-repeated-element-in-size-2n-array/
+-- 961. N-Repeated Element in Size 2N Array
+
+findMostRepeats = find ((>1) . length) $ group $ sort [5,1,5,2,5,3,5,4]
+-- Just [5,5,5,5]
