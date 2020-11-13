@@ -12,8 +12,6 @@ import Data.Bool
 import Debug.Trace
 import qualified Data.Set as Set
 
-
-
 -- this one worked!
 -- stack ghc --package QuickCheck -- MyProgram.hs
 -- https://stackoverflow.com/questions/53402263/could-not-find-module-test-quickcheck-on-windows
@@ -837,4 +835,12 @@ twosumI dta trg = head [(x ,y ) | y <- dta , x <- dta, x+y == trg]
 
 --  [1,4,3,2]
 
-arrPrt ns = maximum [ (uncurry min (x,y) ) | y <- ns , x <- ns]
+
+-- 561. Array Partition I
+
+arrPrt ns = sum $ map (minimum) $ chunksOf 2 $ sort ns
+
+-- 1460. Make Two Arrays Equal by Reversing Sub-arrays
+
+-- rvrsSub ns trg = filter (\x -> () )
+

@@ -30,6 +30,7 @@ dependencies:
 - QuickCheck
 - Chart-diagrams
 - csv-conduit
+- utility-ht
 
 library:
   source-dirs: src
