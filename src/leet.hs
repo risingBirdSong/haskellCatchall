@@ -834,3 +834,7 @@ twosum dta trg = head [(x,y) | y <- dta , x <- dta, x+y == trg]
 -- twosumI :: [b] -> b -> t
 twosumI dta trg = head [(x ,y ) | y <- dta , x <- dta, x+y == trg]
 -- twosumI dta trg = head [(x ,y ) | y <- dta , x <- dta, x+y == trg]
+
+--  [1,4,3,2]
+
+arrPrt ns = maximum [ (uncurry min (x,y) ) | y <- ns , x <- ns]
