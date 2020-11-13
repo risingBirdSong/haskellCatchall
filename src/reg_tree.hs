@@ -1,8 +1,10 @@
-data Gtree a = Empty
-             | Leaf a
-             | Node a [Gtree a]
-  deriving (Show)
+data Tree a = Leaf a | Branch [Tree a] deriving (Show)
 
-a = Empty
-b = Leaf 5
-c = Node 4 [Leaf 5, Leaf 6, Leaf 7]
+travTree                    :: Tree a -> [a]
+travTree (Leaf x)           = [x]
+travTree (Branch branches) = concat $ map travTree branches
+
+testtree = Branch [Leaf 4, Leaf 5, Branch [Leaf 6, Leaf 7]]
+
+
+toInsert = [Just 1, Nothing, Just 2 , Just 3, Nothing]
