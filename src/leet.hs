@@ -824,3 +824,13 @@ asd nums = scanr (max) nums
 -- findMostRepeats :: Maybe [Integer]
 findMostRepeats lst = head $ fromMaybe [] $ find ((>1) . length) $ group $ sort lst
 -- Just [5,5,5,5]
+
+
+twosumlist =  [2,7,11,15]
+twosumanswer = twosum twosumlist 9
+-- twosum dta = sortBy (compare `on` snd) $ zip [0,1..] (dta)  
+twosum dta trg = head [(x,y) | y <- dta , x <- dta, x+y == trg]
+
+-- twosumI :: [b] -> b -> t
+twosumI dta trg = head [(x ,y ) | y <- dta , x <- dta, x+y == trg]
+-- twosumI dta trg = head [(x ,y ) | y <- dta , x <- dta, x+y == trg]

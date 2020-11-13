@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1402fb688377cf19fb596362fcba36cc7b32937f3f522fabdf330e1fff355be7
+-- hash: 6093f85b1a17221283dd1ca9ed033852284197e27d9a52ffc0d72d14ff277215
 
 name:           catchallHaskell
 version:        0.1.0.0
@@ -37,6 +37,7 @@ library
     , QuickCheck
     , base >=4.7 && <5
     , containers
+    , csv-conduit
     , random
     , split
     , universum
@@ -56,6 +57,7 @@ executable catchallHaskell-exe
     , base >=4.7 && <5
     , catchallHaskell
     , containers
+    , csv-conduit
     , random
     , split
     , universum
@@ -76,6 +78,7 @@ test-suite catchallHaskell-test
     , base >=4.7 && <5
     , catchallHaskell
     , containers
+    , csv-conduit
     , random
     , split
     , universum

@@ -29,6 +29,7 @@ dependencies:
 - universum
 - QuickCheck
 - Chart-diagrams
+- csv-conduit
 
 library:
   source-dirs: src
