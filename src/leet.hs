@@ -840,7 +840,8 @@ twosumI dta trg = head [(x ,y ) | y <- dta , x <- dta, x+y == trg]
 
 arrPrt ns = sum $ map (minimum) $ chunksOf 2 $ sort ns
 
--- 1460. Make Two Arrays Equal by Reversing Sub-arrays
+-- https://leetcode.com/problems/unique-number-of-occurrences/
+-- 1207. Unique Number of Occurrences
 
--- rvrsSub ns trg = filter (\x -> () )
-
+dada = [1,2,2,2,1,1,3]
+unqNO ls = all ((==1).length) $ group $ map (length) $ group $ sort ls
