@@ -6,6 +6,8 @@ import Control.Applicative
 import Data.Function
 import Data.List
 import Test.QuickCheck
+
+import qualified Data.Set as St
 import Data.Maybe
 -- import qualified Data.Text as T
 import Data.Bool
@@ -843,5 +845,7 @@ arrPrt ns = sum $ map (minimum) $ chunksOf 2 $ sort ns
 -- https://leetcode.com/problems/unique-number-of-occurrences/
 -- 1207. Unique Number of Occurrences
 
-dada = [1,2,2,2,1,1,3]
+dada = [1,2,2,1,1,3]
 unqNO ls = all ((==1).length) $ group $ map (length) $ group $ sort ls
+
+unqNo_1 ls = (length $ St.fromList ls) == (length $ St.fromList $ map (length) $ group $ sort ls)
