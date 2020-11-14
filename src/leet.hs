@@ -849,3 +849,13 @@ dada = [1,2,2,1,1,3]
 unqNO ls = all ((==1).length) $ group $ map (length) $ group $ sort ls
 
 unqNo_1 ls = (length $ St.fromList ls) == (length $ St.fromList $ map (length) $ group $ sort ls)
+
+-- https://leetcode.com/problems/lucky-numbers-in-a-matrix/
+-- 1380. Lucky Numbers in a Matrix
+
+matrix = [[3,7,8],[9,11,13],[15,16,17]]
+minrows mtr = map (minimum) mtr
+mincols mtr = map (maximum) $ transpose mtr
+
+-- uncurry (St.intersection) $
+luckysolve mtx =  (St.intersection) (St.fromList (minrows mtx)) (St.fromList (mincols mtx))
