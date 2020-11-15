@@ -900,3 +900,19 @@ fairCandy aa bb =   [[a,b] | a <- aa, b <- bb, ((sum bb) + a)  == ((sum aa) + b)
 
 getAvg aa bb = (sum aa + sum bb) `div` 2
 fairC aa bb goal = [[x,z] | a <- aa, b <- bb,let xx = delete a aa, let zz = delete b bb, x <- xx, z <- zz, (sum (z:xx) == goal) && (sum (x:zz) == goal) ]
+
+fairC_ aa = do
+  a <- aa
+  zz <- map (\a -> delete a aa) aa
+  return (zz)
+
+separator aa = do
+  a <- aa
+  pure ((a),(delete a aa))
+
+-- (sum(aa) - sum(bb)) / 2 == a - b
+
+gg aa bb = ((sum aa) - sum (bb)) `div` 2 
+findAnswer aa bb goal = [(a,b) | a <- aa, b <- bb, (a - b) == goal ] 
+
+goalAndA aa bb = head $ findAnswer aa bb (gg aa bb)
