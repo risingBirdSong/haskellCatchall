@@ -859,3 +859,9 @@ mincols mtr = map (maximum) $ transpose mtr
 
 -- uncurry (St.intersection) $
 luckysolve mtx =  (St.intersection) (St.fromList (minrows mtx)) (St.fromList (mincols mtx))
+
+-- https://leetcode.com/problems/water-bottles/
+-- 1518. Water Bottles
+
+wtrbtl 0 _ acc = acc
+wtrbtl btls ex acc = wtrbtl (btls `div` ex) ex (acc + btls)
