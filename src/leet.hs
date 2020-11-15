@@ -895,4 +895,6 @@ mvz nums = (nonzeros nums) ++ (zeroes nums)
 -- Input: A = [1,1], B = [2,2]
 -- Output: [1,2]
 
-fairCandy aa bb = head [ (a,b) | a <- aa, b <- bb, ((a + b) == ((sum aa + sum bb) / 2 ) ) ]
+fairCandy [] _ = []
+fairCandy _ [] = []
+fairCandy aa bb = head  [[a,b] | a <- aa, b <- bb, ((a + b) == ((sum aa + sum bb) `div` 2 ) ) ]
