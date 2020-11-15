@@ -865,3 +865,28 @@ luckysolve mtx =  (St.intersection) (St.fromList (minrows mtx)) (St.fromList (mi
 
 wtrbtl 0 _ acc = acc
 wtrbtl btls ex acc = wtrbtl (btls `div` ex) ex (acc + btls)
+
+
+
+-- https://leetcode.com/problems/majority-element/
+-- 169. Majority Element
+
+-- Input: [3,2,3]
+-- [[2],[3,3]]
+-- Output: 3
+
+challd = [2,2,1,1,1,2,2]
+
+
+
+majorityNum :: Ord a => [a] -> a
+majorityNum ls = head $ last $ sortBy (compare `on` length) $ group $ sort ls
+
+-- 283. Move Zeroes
+
+-- Input: [0,1,0,3,12]
+-- Output: [1,3,12,0,0]
+
+zeroes nums = filter (\x-> x==0) nums
+nonzeros nums = filter (\x -> x /=0) nums
+mvz nums = (nonzeros nums) ++ (zeroes nums) 
