@@ -890,3 +890,9 @@ majorityNum ls = head $ last $ sortBy (compare `on` length) $ group $ sort ls
 zeroes nums = filter (\x-> x==0) nums
 nonzeros nums = filter (\x -> x /=0) nums
 mvz nums = (nonzeros nums) ++ (zeroes nums) 
+
+-- 888. Fair Candy Swap
+-- Input: A = [1,1], B = [2,2]
+-- Output: [1,2]
+
+fairCandy aa bb = head [ (a,b) | a <- aa, b <- bb, ((a + b) == ((sum aa + sum bb) / 2 ) ) ]
