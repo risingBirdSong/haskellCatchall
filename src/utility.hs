@@ -55,5 +55,4 @@ firstTest tup =  (first) tup
 secondTest tup = second tup
 --  secondTest  sum  ([3,4],[1,2]) -> ([3,4],3)
 
-andTest tup = join (&&&) tup
 
