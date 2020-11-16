@@ -954,3 +954,8 @@ simpletest ans nums = map (\x -> elemIndex x nums) ans
 testfunc ans = map (flip elemIndex [1,2,3,4,5]) ans
 
 testfunca subst origin = flip elemIndex origin <$> subst
+
+-- Input: distance = [1,2,3,4], start = 0, destination = 2
+
+
+-- distBust nums str dst = (take) zip [0..] nums

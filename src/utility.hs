@@ -21,3 +21,9 @@ solver' (r:rcs) (trgArr) arr cnt
 -- ans [] arr = ori == arr
 -- ans (g:goal) arr = ans goal (:) 
 --   where ori = (g:goal)
+
+
+distBust nums str dst = sum $ map (snd) $ takeUntil (\x -> (dst == (snd x))) $  zip [str..] nums
+
+distBustasc nums str dst = take (dst - str) $ zip [str..] nums
+distBustdes nums str dst = drop (dst - str) $ zip [str..] nums
