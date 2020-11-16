@@ -25,5 +25,7 @@ solver' (r:rcs) (trgArr) arr cnt
 
 distBust nums str dst = sum $ map (snd) $ takeUntil (\x -> (dst == (snd x))) $  zip [str..] nums
 
-distBustasc nums str dst = take (dst - str) $ zip [str..] nums
-distBustdes nums str dst = drop (dst - str) $ zip [str..] nums
+distBustasc nums str dst = sum $ map snd $ take (dst - str) $ zip [str..] nums
+distBustdes nums str dst = sum $ map snd $ drop (dst - str) $ zip [str..] nums
+
+distBusanswer nums str dst = min (distBustasc nums str dst) (distBustdes nums str dst)
