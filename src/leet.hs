@@ -950,3 +950,7 @@ simpletest ans nums = map (\x -> elemIndex x nums) ans
 
 -- map (\x -> elemIndex x [2,3]) [1,2,3,4,5]
 
+
+testfunc ans = map (flip elemIndex [1,2,3,4,5]) ans
+
+testfunca subst origin = flip elemIndex origin <$> subst
