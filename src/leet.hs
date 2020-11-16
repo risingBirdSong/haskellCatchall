@@ -936,3 +936,17 @@ symtrcl strs
   | (head strs == last strs) = symtrcl (drop 1 (init strs) )
 
 symtrclanswer nums = symtrcl (prepare nums)
+
+symtrcla nums = nums == (reverse nums)
+
+-- Input: nums = [1,2,7,11,15], target = 9
+doublesum ns trg = [[x,y] | x <- ns, y <- ns, (x+y) == trg]
+
+helper [] _ = []
+helper (a:ans) nums = (elemIndex a nums) : helper (ans) nums
+
+
+simpletest ans nums = map (\x -> elemIndex x nums) ans 
+
+-- map (\x -> elemIndex x [2,3]) [1,2,3,4,5]
+
