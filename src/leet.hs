@@ -916,3 +916,23 @@ gg aa bb = ((sum aa) - sum (bb)) `div` 2
 findAnswer aa bb goal = [(a,b) | a <- aa, b <- bb, (a - b) == goal ] 
 
 goalAndA aa bb = head $ findAnswer aa bb (gg aa bb)
+
+
+
+-- 22322
+-- [1,2,2,1]
+    -- [2,2]
+prepare nums =  chunksOf 1 $ show nums
+
+
+-- [1,2,3,2,1]
+-- [2,3,2]
+-- [3]
+-- True
+
+symtrcl [] = True
+symtrcl strs 
+  | (head strs /= last strs) = False
+  | (head strs == last strs) = symtrcl (drop 1 (init strs) )
+
+symtrclanswer nums = symtrcl (prepare nums)
