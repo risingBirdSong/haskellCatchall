@@ -124,7 +124,13 @@ rankThem tupls = snd $ mapAccumL (\cnt (i,v) -> (cnt + 1, (i, cnt))) 1 tupls
 sortThemBack tupls = sortBy (compare `on` fst) tupls
 -- [(0,4),(1,1),(2,2),(3,3)]
 rankLastStep tpls = map (snd) tpls
+
+-- redo the function now after learning
+ranked nums = map (snd) $ sortBy (compare `on` fst) $ snd $ mapAccumL (\cnt (i,v) -> (cnt+1, (i,cnt))) 1 $ sortBy (compare `on` snd) $ zip [0..] nums
 -- [4,1,2,3]
+
+-- tayacms = zip (map fst step_a) [1..]
+-- I try to never increment counters :smile:
 
 -- here's the problem 
 -- scantesta = scanl (\acc (x,y) -> (acc + 1) (_, acc + 1)) 0 rankdb
