@@ -34,7 +34,7 @@ distBustdes nums str dst = sum $ map snd $ drop (dst - str) $ zip [str..] nums
 
 distBusanswer nums str dst = min (distBustasc nums str dst) (distBustdes nums str dst)
 
-distBusanswera nums str dst =  uncurry (min) $ mapTuple_ (sum) $ splitAt (dst) nums
+distBusanswera nums str dst =  uncurry (min) $ mapTuple_ (sum) $ splitAt (dst - str) nums
 
 -- found great answer to what I was looking for, applying a function two a and b of a tuple
 -- just what I need for distBusanswera 
@@ -56,3 +56,10 @@ secondTest tup = second tup
 --  secondTest  sum  ([3,4],[1,2]) -> ([3,4],3)
 
 
+forward ls stt end = take (end - stt) (drop stt ls)  
+backward ls stt end = (take stt ls) ++ drop  (end) ls
+
+-- forward [1,2,3,4,5] 2 4 -> [3,4]
+-- backward  [1,2,3,4,5] 2 4  -> [1,2,5]
+
+slicer from to ls = take (to - from +1) $ drop from ls
