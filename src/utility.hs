@@ -74,10 +74,6 @@ slicer from to ls = take (to - from +1) $ drop from ls
 
 dif super sub = super \\ sub
 
--- 1331. Rank Transform of an Array
-rankt ls = sort $ map (\(i,v) -> (i,i+1)) $ sortBy (compare `on` snd) $  zip [0..] ls
-
-
 recycle bottles exc acc 
   | (bottles <= exc) = acc
   | (bottles >= 0) =  recycle (uncurry (+) (bottles `divMod` exc)) exc (acc + bottles `div` exc)
@@ -106,3 +102,37 @@ lrgSub_ ls = lrgSub_' ls (findDupe ls)
 lrgSub_' ls dupe 
   | ls == [] || dupe == [] = -1 
   | otherwise = length $ head $ filter (/= "") $ splitOn dupe ls 
+
+fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
+
+fibs_ = scanl (+) 0 (1:fibs_)
+
+scantest nums = scanl (+) 0 nums
+
+
+
+-- 1331. Rank Transform of an Array
+rankd = [40,10,20,30]
+rankt ls = sort $ map (\(i,v) -> (i,i+1)) $ sortBy (compare `on` snd) $  zip [0..] ls
+rankda = [(0,40),(1,10),(2,20),(3,30)]
+rankdb = [(1,10),(2,10),(3,30),(0,40)]
+rankgoal = [(1,1),(2,2),(3,3),(0,4)]
+rankthem tupls = mapAccumL (\cnt (i,v) -> (cnt + 1, (i, cnt))) 1 tupls
+-- (5,[(1,1),(2,2),(3,3),(0,4)])
+
+-- here's the problem 
+-- scantesta = scanl (\acc (x,y) -> (acc + 1) (_, acc + 1)) 0 rankdb
+
+-- here's a wonderful func suggestion i didn't know about 
+-- http://zvon.org/other/haskell/Outputlist/mapAccumL_f.html
+
+-- simple example 
+-- mapAccumL (\x y -> (x+1,y+x)) 1 [9,6,3]
+-- (4,[10,8,6])
+
+-- Input: arr = [40,10,20,30]
+
+
+
+-- Output: [4,1,2,3]
+
