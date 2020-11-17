@@ -56,10 +56,14 @@ secondTest tup = second tup
 --  secondTest  sum  ([3,4],[1,2]) -> ([3,4],3)
 
 
-forward ls stt end = take (end - stt) (drop stt ls)  
-backward ls stt end = (take stt ls) ++ drop  (end) ls
+forward  stt end ls = take (end - stt) (drop stt ls)  
+backward stt end ls= (take stt ls) ++ drop  (end) ls
 
 -- forward [1,2,3,4,5] 2 4 -> [3,4]
 -- backward  [1,2,3,4,5] 2 4  -> [1,2,5]
 
 slicer from to ls = take (to - from +1) $ drop from ls
+
+-- 389. Find the Difference
+
+dif super sub = super \\ sub
