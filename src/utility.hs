@@ -1,6 +1,8 @@
 import Data.List
 import Data.List.Split
 
+import Data.Maybe
+
 import qualified Data.Set as St
 -- https://leetcode.com/problems/make-two-arrays-equal-by-reversing-sub-arrays/
 import Control.Monad (join)
@@ -97,3 +99,10 @@ myFold f acc (l:ls) = myFold f (f l acc) ls
 
 -- myFold (+) 0 [1,2,3,4]
 -- 10
+
+lrgSub_ ls = lrgSub_' ls (findDupe ls)
+-- lrgSub_' [] _ = -1
+-- lrgSub_' _ [] = -1
+lrgSub_' ls dupe 
+  | ls == [] || dupe == [] = -1 
+  | otherwise = length $ head $ filter (/= "") $ splitOn dupe ls 
