@@ -3,6 +3,7 @@ import Data.List
 import Control.Monad (join)
 import Control.Arrow ((***))
 import Control.Arrow 
+import Data.Function
 takeUntil p = foldr (\x ys -> x : if p x then [] else ys) []
 
 
@@ -67,3 +68,11 @@ slicer from to ls = take (to - from +1) $ drop from ls
 -- 389. Find the Difference
 
 dif super sub = super \\ sub
+
+-- 1331. Rank Transform of an Array
+rankt ls = sort $ map (\(i,v) -> (i,i+1)) $ sortBy (compare `on` snd) $  zip [0..] ls
+
+
+recycle bottles exc acc 
+  | (bottles <= exc) = acc
+  | (bottles >= 0) =  recycle (uncurry (+) (bottles `divMod` exc)) exc (acc + bottles `div` exc)
