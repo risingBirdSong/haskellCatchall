@@ -90,3 +90,10 @@ findDupe ls = ls \\ (St.toList (St.fromList ls))
 lrgstSub word = lrgstSub' word (findDupe word)
 lrgstSub' word "" = -1
 lrgstSub' word dupe = foldl (\acc x -> if ([x] /= dupe) then (acc + 1) else acc) 0 word
+
+
+myFold f acc [] = acc 
+myFold f acc (l:ls) = myFold f (f l acc) ls 
+
+-- myFold (+) 0 [1,2,3,4]
+-- 10
