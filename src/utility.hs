@@ -117,8 +117,14 @@ rankt ls = sort $ map (\(i,v) -> (i,i+1)) $ sortBy (compare `on` snd) $  zip [0.
 rankda = [(0,40),(1,10),(2,20),(3,30)]
 rankdb = [(1,10),(2,10),(3,30),(0,40)]
 rankgoal = [(1,1),(2,2),(3,3),(0,4)]
-rankthem tupls = mapAccumL (\cnt (i,v) -> (cnt + 1, (i, cnt))) 1 tupls
+testMapAccum tupls = mapAccumL (\cnt (i,v) -> (cnt + 1, (i, cnt))) 1 tupls
 -- (5,[(1,1),(2,2),(3,3),(0,4)])
+rankThem tupls = snd $ mapAccumL (\cnt (i,v) -> (cnt + 1, (i, cnt))) 1 tupls
+-- [(1,1),(2,2),(3,3),(0,4)]
+sortThemBack tupls = sortBy (compare `on` fst) tupls
+-- [(0,4),(1,1),(2,2),(3,3)]
+rankLastStep tpls = map (snd) tpls
+-- [4,1,2,3]
 
 -- here's the problem 
 -- scantesta = scanl (\acc (x,y) -> (acc + 1) (_, acc + 1)) 0 rankdb
