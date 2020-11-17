@@ -86,8 +86,7 @@ recycle bottles exc acc
 
 findDupe ls = ls \\ (St.toList (St.fromList ls))
 
-lrgstSub [] cnt  = cnt 
-lrgstSub (s:ss) cnt 
-  | [s] /= dupe = lrgstSub (ss) (cnt+1) 
-  | [s] == dupe = lrgstSub (ss) (cnt)
-  where dupe = findDupe (s:ss) 
+-- lrgstSub [] cnt  = cnt 
+lrgstSub word = lrgstSub' word (findDupe word)
+lrgstSub' word "" = -1
+lrgstSub' word dupe = foldl (\acc x -> if ([x] /= dupe) then (acc + 1) else acc) 0 word
