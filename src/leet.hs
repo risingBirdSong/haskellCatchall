@@ -955,7 +955,8 @@ testfunc ans = map (flip elemIndex [1,2,3,4,5]) ans
 
 testfunca subst origin = flip elemIndex origin <$> subst
 
--- Input: distance = [1,2,3,4], start = 0, destination = 2
 
+-- https://leetcode.com/problems/largest-substring-between-two-equal-characters/
+-- 1624. Largest Substring Between Two Equal Characters
 
--- distBust nums str dst = (take) zip [0..] nums
+ 

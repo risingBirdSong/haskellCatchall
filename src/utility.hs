@@ -1,4 +1,7 @@
 import Data.List
+import Data.List.Split
+
+import qualified Data.Set as St
 -- https://leetcode.com/problems/make-two-arrays-equal-by-reversing-sub-arrays/
 import Control.Monad (join)
 import Control.Arrow ((***))
@@ -76,3 +79,15 @@ rankt ls = sort $ map (\(i,v) -> (i,i+1)) $ sortBy (compare `on` snd) $  zip [0.
 recycle bottles exc acc 
   | (bottles <= exc) = acc
   | (bottles >= 0) =  recycle (uncurry (+) (bottles `divMod` exc)) exc (acc + bottles `div` exc)
+
+-- recyclea bottles exc = foldl
+
+-- 1624. Largest Substring Between Two Equal Characters
+
+findDupe ls = ls \\ (St.toList (St.fromList ls))
+
+lrgstSub [] cnt  = cnt 
+lrgstSub (s:ss) cnt 
+  | [s] /= dupe = lrgstSub (ss) (cnt+1) 
+  | [s] == dupe = lrgstSub (ss) (cnt)
+  where dupe = findDupe (s:ss) 
