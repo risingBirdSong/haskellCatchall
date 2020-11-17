@@ -129,6 +129,8 @@ rankLastStep tpls = map (snd) tpls
 ranked nums = map (snd) $ sortBy (compare `on` fst) $ snd $ mapAccumL (\cnt (i,v) -> (cnt+1, (i,cnt))) 1 $ sortBy (compare `on` snd) $ zip [0..] nums
 -- [4,1,2,3]
 
+ranked_a nums = map (snd) $ sortBy (compare `on` fst) $ zip (map (fst) $ sortBy (compare `on` snd) $ zip [0..] nums) [1..]
+
 -- tayacms = zip (map fst step_a) [1..]
 -- I try to never increment counters :smile:
 
