@@ -14,6 +14,8 @@ import Data.Bool
 import Debug.Trace
 import qualified Data.Set as Set
 
+import Universum (hashNub) 
+
 -- this one worked!
 -- stack ghc --package QuickCheck -- MyProgram.hs
 -- https://stackoverflow.com/questions/53402263/could-not-find-module-test-quickcheck-on-windows
@@ -1020,7 +1022,6 @@ filterTwo f (x:y:ls)
 --filter over zip xs (tail xs)
 
 inner ls = init $ tail ls 
-fillOut strEnd = [(head strEnd).. (last strEnd)]
 
 dsprd nums =
            length $ concat $ map (inner) 
@@ -1035,3 +1036,26 @@ dsprda nums = [canidateSum,fullRangeSum]
           canidateSum = sum $ orgn
 
 -- ok interesting this will find the sum of the gap, but not not actual numbers...
+
+
+gapfinder :: (Eq a, Num a, Enum a) => [a] -> [[a]]
+gapfinder [] = []  
+gapfinder [x] = []  
+gapfinder (x:y:ls) 
+  | (x + 1 == y) = gapfinder (y:ls)
+  | otherwise = [(x+1)..(y-1)] : gapfinder (y:ls)  
+
+zipCompare :: (Num a, Enum a, Ord a) => [a] -> Int
+zipCompare nums = length $ concat $ gapfinder orgn
+  where orgn = nub $ sort nums
+
+
+-- My approach  ->
+-- clean the input, meaning remove duplicates and sort the list...
+-- then look for gaps in the numeric sequence, if there is a gap, fill the gap with the missing numbers and return how many numbers were inserted into gaps 😊 
+
+
+fillOut strEnd = [(head strEnd).. (last strEnd)]
+
+dsprded_ nums = (length $ fillOut cleaned) - (length cleaned) 
+  where cleaned = hashNub $ sort nums 
