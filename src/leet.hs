@@ -1001,3 +1001,25 @@ ctordrg_ s e = length $ map (odd) [s..e]
 --                  :: GHC.Types.Int ~R# ()))
 --         (GHC.Types.[] @ ())))
 -- 3
+
+-- 448. Find All Numbers Disappeared in an Array
+-- https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/
+
+dsprd_data = [4,3,2,7,8,2,3,1]
+dsprd_dataclean = [1,2,3,4,7,8]
+dsprd_dataclean2 = [1,2,3,4,7,8,9,13]
+-- filterTwo :: (a -> a -> Bool) -> [a] -> [a]
+-- note! hacky solution for near base case, reconsider later
+filterTwo f [] = [] 
+filterTwo f [x] = [] 
+filterTwo f (x:y:ls)
+  | (f x y) = x : y : filterTwo f (y:ls)
+  | otherwise = filterTwo f (y:ls)
+
+inner ls = init $ tail ls 
+
+fillOut strEnd = [(head strEnd).. (last strEnd)]
+
+-- inner $ fillOut $
+dsprd nums = filterTwo (\x y -> ((x + 1)/= y)) clnd 
+  where clnd = nub $ sort nums
