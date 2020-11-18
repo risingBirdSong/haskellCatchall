@@ -1027,3 +1027,11 @@ dsprd nums =
           $ map fillOut $ chunksOf 2 
           $ filterTwo (\x y -> ((x + 1)/= y)) clnd 
               where clnd = nub $ sort nums
+
+
+dsprda nums = [canidateSum,fullRangeSum]
+    where orgn = nub $ sort nums
+          fullRangeSum = sum $ fillOut $ orgn
+          canidateSum = sum $ orgn
+
+-- ok interesting this will find the sum of the gap, but not not actual numbers...
