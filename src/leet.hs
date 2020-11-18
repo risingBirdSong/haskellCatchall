@@ -965,3 +965,11 @@ excel idx
   | idx > 701 = "NA"
   | otherwise = ([[x] | x <- ltrs] ++ [[x,y] | x <- ltrs , y <- ltrs]) !! (idx - 1)
       where ltrs = ['A'..'Z']
+
+
+
+-- 1523. Count Odd Numbers in an Interval Range
+-- https://leetcode.com/problems/count-odd-numbers-in-an-interval-range/
+ctodrg s e = length $ [x | x <-[s..e], odd x]
+ctordrg_ s e = length $ map (odd) [s..e]
+
