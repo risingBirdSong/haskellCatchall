@@ -973,3 +973,31 @@ excel idx
 ctodrg s e = length $ [x | x <-[s..e], odd x]
 ctordrg_ s e = length $ map (odd) [s..e]
 
+-- i was curious to see the outputted compiled code, thanks to runtime-error and Tayacan for help
+-- possible flags
+-- https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/flags.html
+-- how to set the flags ->
+-- important !!! :set -ddump-simpl
+-- and the dumped low level code! ->
+-- ==================== Simplified expression ====================
+-- let {
+--   it_abJI :: GHC.Types.Int
+--   [LclId,
+--    Unf=Unf{Src=<vanilla>, TopLvl=False, Value=False, ConLike=False,
+--            WorkFree=False, Expandable=False, Guidance=IF_ARGS [] 240 0}]
+--   it_abJI
+--     = Main.ctodrg
+--         @ GHC.Integer.Type.Integer GHC.Real.$fIntegralInteger 3 7 } in
+-- GHC.Base.thenIO
+--   @ ()
+--   @ [()]
+--   (System.IO.print @ GHC.Types.Int GHC.Show.$fShowInt it_abJI)
+--   (GHC.Base.returnIO
+--      @ [()]
+--      (GHC.Types.:
+--         @ ()
+--         (it_abJI
+--          `cast` (UnsafeCo representational GHC.Types.Int ()
+--                  :: GHC.Types.Int ~R# ()))
+--         (GHC.Types.[] @ ())))
+-- 3
