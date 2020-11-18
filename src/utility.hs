@@ -146,7 +146,6 @@ ranked_a nums = map (snd) $ sortBy (compare `on` fst) $ zip (map (fst) $ sortBy 
 
 -- Input: arr = [40,10,20,30]
 
-
-
 -- Output: [4,1,2,3]
 
+excelTest = ['A'..]

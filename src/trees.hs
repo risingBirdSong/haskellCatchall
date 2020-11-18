@@ -12,6 +12,24 @@ insert (Node l v r) x
   | v > x = (Node l x (insert r v))
 
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 contains Nil _ = False
 contains (Node l v r) x
  | v == x = True
