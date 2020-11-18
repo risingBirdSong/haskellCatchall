@@ -959,4 +959,9 @@ testfunca subst origin = flip elemIndex origin <$> subst
 -- https://leetcode.com/problems/largest-substring-between-two-equal-characters/
 -- 1624. Largest Substring Between Two Equal Characters
 
- 
+--  171. Excel Sheet Column Number
+
+excel idx
+  | idx > 701 = "NA"
+  | otherwise = ([[x] | x <- ltrs] ++ [[x,y] | x <- ltrs , y <- ltrs]) !! (idx - 1)
+      where ltrs = ['A'..'Z']
