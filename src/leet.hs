@@ -1016,10 +1016,14 @@ filterTwo f (x:y:ls)
   | (f x y) = x : y : filterTwo f (y:ls)
   | otherwise = filterTwo f (y:ls)
 
-inner ls = init $ tail ls 
+-- brilliant idea 
+--filter over zip xs (tail xs)
 
+inner ls = init $ tail ls 
 fillOut strEnd = [(head strEnd).. (last strEnd)]
 
--- inner $ fillOut $
-dsprd nums = filterTwo (\x y -> ((x + 1)/= y)) clnd 
-  where clnd = nub $ sort nums
+dsprd nums =
+           length $ concat $ map (inner) 
+          $ map fillOut $ chunksOf 2 
+          $ filterTwo (\x y -> ((x + 1)/= y)) clnd 
+              where clnd = nub $ sort nums
