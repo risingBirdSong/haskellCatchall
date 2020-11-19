@@ -1080,3 +1080,19 @@ zzz = [0,1,0,1,1,1,0,0,1]
 takeForward val indx ls = takeWhile (val==) $  drop (indx) ls 
 takeBackward val indx ls = takeWhile (val==) $ reverse $ take indx ls
 -- takeWhile (val==) $
+
+
+replaceUntil newval trg (x:xs)
+  | x /= trg = (x:xs)
+  | x == trg = newval : replaceUntil newval trg xs 
+
+-- floodRow :: Eq a => a -> Int -> [a] -> ([a], [a])
+floodRow newval idx ls = uncurry (++) (newfront , newback)
+        where origval = ls !! idx
+              splitted = splitAt idx ls
+              front = reverse $ fst splitted 
+              back = snd splitted
+              newfront = reverse $ replaceUntil (newval) (head front) front 
+              newback = replaceUntil (newval) (head back) back 
+
+-- mapUntil_b
