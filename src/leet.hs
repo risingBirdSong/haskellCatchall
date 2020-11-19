@@ -7,6 +7,9 @@ import Data.Function
 import Data.List
 import Test.QuickCheck
 
+import Control.Monad
+
+
 import qualified Data.Set as St
 import Data.Maybe
 -- import qualified Data.Text as T
@@ -1096,3 +1099,49 @@ floodRow newval idx ls = uncurry (++) (newfront , newback)
               newback = replaceUntil (newval) (head back) back 
 
 -- mapUntil_b
+
+-- For example, findBonding (\x -> \y -> odd(x+y)) [2,3,4,5,6,7] may return
+-- Just [(2,3),(3,2),(4,5),(5,4),(6,7),(7,6)]
+
+removeNothing ls = filter (\x -> x /= Nothing) ls
+
+firsttestcase = (\x -> \y -> odd(x+y)) -- [2,3,4,5,6,7]
+--expected Just [(2,3),(3,2),(4,5),(5,4),(6,7),(7,6)]
+--     got Just [[(2,3),(3,2)],[(4,5),(5,4)],[(6,7),(7,6)]]
+currenttestcase = (\x -> \y -> x * y < 21) -- [2..7]
+-- expected Just [(2,7),(3,6),(4,5),(5,4),(6,3),(7,2)].
+--     got Just [[(2,7),(7,2)],[(3,6),(6,3)],[(4,5),(5,4)]]
+-- findBonding :: Eq b => (b -> b -> Bool) -> [b] -> [Maybe [[(b, b)]]]
+
+findBonding pred ls = head $ sort
+  $ sortBy (compare `on` length)
+  $ removeNothing $ map (findBonding' pred)
+  $ permutations ls 
+findBonding' _ [] = Just [] 
+findBonding' _ [x] = Just []
+findBonding' pred (x:y:ls)
+  | pred x y =  ((x,y):) <$> (((y,x)):) <$> findBonding' pred ls 
+  | otherwise = Nothing
+
+
+
+ 
+abcs = [[a,b,c]|a<-ltrs, b <- ltrs, c <- ltrs]
+      where ltrs = ['a'..'z' ]
+
+findBonding'' :: Eq a => (a -> a -> Bool) -> [a] -> Maybe [(a,a)]
+findBonding'' f l 
+  | null ret = Nothing
+  | otherwise = Just $ snd $ foldl red ([],[]) ret
+  where 
+    ret = [(b, a) | a <- l, b <- l, a /= b, f a b]
+    red (m, l) (al,ar) =
+      if al `elem` m && ar `elem` m
+      then (m, l)
+      else (al:ar:m, (al,ar):(ar,al):l)
+
+-- main = print $ findBonding'' (\x -> \y -> odd(x+y)) [2,3,4,5,6,7]
+main'' = print $ findBonding'' (\x -> \y -> x * y > 21) [2,3,4,5,6,7]
+
+-- main = print $ findBonding (\x -> \y -> odd(x+y)) [2,3,4,5,6,7]
+-- main'' = print $ findBonding'' (\x -> \y -> x * y < 21) [2,3,4,5,6,7]
