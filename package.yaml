@@ -31,6 +31,8 @@ dependencies:
 - Chart-diagrams
 - csv-conduit
 - utility-ht
+- matrix
+- array
 
 library:
   source-dirs: src

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 6efa52d498cc8e2ab956f36d7d9d5f4372b52e0dc950170d2da28675ed743bba
+-- hash: 702616e0b84941ab4448fbe7b93549383c300a45401c604559a8dd41ddef98ba
 
 name:           catchallHaskell
 version:        0.1.0.0
@@ -35,9 +35,11 @@ library
   build-depends:
       Chart-diagrams
     , QuickCheck
+    , array
     , base >=4.7 && <5
     , containers
     , csv-conduit
+    , matrix
     , random
     , split
     , universum
@@ -55,10 +57,12 @@ executable catchallHaskell-exe
   build-depends:
       Chart-diagrams
     , QuickCheck
+    , array
     , base >=4.7 && <5
     , catchallHaskell
     , containers
     , csv-conduit
+    , matrix
     , random
     , split
     , universum
@@ -77,10 +81,12 @@ test-suite catchallHaskell-test
   build-depends:
       Chart-diagrams
     , QuickCheck
+    , array
     , base >=4.7 && <5
     , catchallHaskell
     , containers
     , csv-conduit
+    , matrix
     , random
     , split
     , universum

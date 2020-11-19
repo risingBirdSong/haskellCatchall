@@ -1060,12 +1060,23 @@ fillOut strEnd = [(head strEnd).. (last strEnd)]
 dsprded_ nums = (length $ fillOut cleaned) - (length cleaned) 
   where cleaned = hashNub $ sort nums 
 
-dsprded_a nums = gap - (length cleaned) 
-  where cleaned = hashNub $ sort nums 
-        gap = last cleaned - (head cleaned -1)
+-- betterNub ls = fmap head . group . sort $ ls
+findGaps nums = fullrange - (length cleaned) 
+  where cleaned = betterNub nums 
+        fullrange = last cleaned - (head cleaned -1)
+        betterNub ls = fmap head . group . sort $ ls
 
 
 -- better alternatives to nub
 -- fmap head . group . sort is a faster nub
 -- The use of head is safe, you could also use Data.List.NonEmpty.group to make it look safer but meh
 -- Set.toAscList . Set.fromList will do the same thing
+
+image = [[1,1,1],[1,1,0],[1,0,1]]
+
+
+zzz = [0,1,0,1,1,1,0,0,1]
+-- takeForward :: Eq a => a -> Int -> [a] -> [a]
+takeForward val indx ls = takeWhile (val==) $  drop (indx) ls 
+takeBackward val indx ls = takeWhile (val==) $ reverse $ take indx ls
+-- takeWhile (val==) $
