@@ -1113,6 +1113,10 @@ currenttestcase = (\x -> \y -> x * y < 21) -- [2..7]
 --     got Just [[(2,7),(7,2)],[(3,6),(6,3)],[(4,5),(5,4)]]
 -- findBonding :: Eq b => (b -> b -> Bool) -> [b] -> [Maybe [[(b, b)]]]
 
+sumSquare = map (\x -> x*x) $ [1..60]
+
+isSumSquare ls =  (\x y -> elem (x+y) sumSquare ) ls 
+
 findBonding pred ls = head $ sort
   $ sortBy (compare `on` length)
   $ removeNothing $ map (findBonding' pred)
