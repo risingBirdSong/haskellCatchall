@@ -1059,3 +1059,13 @@ fillOut strEnd = [(head strEnd).. (last strEnd)]
 
 dsprded_ nums = (length $ fillOut cleaned) - (length cleaned) 
   where cleaned = hashNub $ sort nums 
+
+dsprded_a nums = gap - (length cleaned) 
+  where cleaned = hashNub $ sort nums 
+        gap = last cleaned - (head cleaned -1)
+
+
+-- better alternatives to nub
+-- fmap head . group . sort is a faster nub
+-- The use of head is safe, you could also use Data.List.NonEmpty.group to make it look safer but meh
+-- Set.toAscList . Set.fromList will do the same thing
