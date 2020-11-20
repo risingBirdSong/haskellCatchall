@@ -136,3 +136,8 @@ findRang lwr upr (x:xs)
 
 -- findRang 10 100 [1..100]
 -- [11,22,44]
+
+-- the way null is implemented on foldable is interesting / cool 
+-- null' :: t a -> Bool
+null' :: Foldable t => t a -> Bool
+null' a = foldr (\_ _ -> False) True a
