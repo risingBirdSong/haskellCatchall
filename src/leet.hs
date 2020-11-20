@@ -1149,3 +1149,21 @@ main'' = print $ findBonding'' (\x -> \y -> x * y > 21) [2,3,4,5,6,7]
 
 -- main = print $ findBonding (\x -> \y -> odd(x+y)) [2,3,4,5,6,7]
 -- main'' = print $ findBonding'' (\x -> \y -> x * y < 21) [2,3,4,5,6,7]
+
+fusionexample nums = filter (even) (map (2*) nums) 
+
+-- https://leetcode.com/problems/merge-two-sorted-lists/
+-- 21. Merge Two Sorted Lists
+mrgtwosrted aa bb = reverse $ mrgtwosrted' aa bb []
+mrgtwosrted' [] [] acc = acc 
+mrgtwosrted' [] bb acc =  reverse bb ++ acc 
+mrgtwosrted' aa [] acc = reverse aa ++ acc 
+mrgtwosrted' (a:aa) (b:bb) acc
+  | a < b = mrgtwosrted' (aa) (b:bb) (a:acc)
+  | b < a = mrgtwosrted' (a:aa) (bb) (b:acc)
+  | otherwise = mrgtwosrted' (aa) (bb) (a:b:acc  )
+
+-- 2,4,6,8
+-- 
+
+--  3 2 1
