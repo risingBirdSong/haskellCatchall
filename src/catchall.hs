@@ -1,4 +1,5 @@
 import Debug.Trace
+import Data.Bool
 import qualified Data.List as L
 import qualified Data.Map as M
 class C a where
@@ -103,3 +104,31 @@ interleave' a b =  concat (f a b)  where
 
 hello :: String -> IO ()
 hello x = putStrLn $ "hello " ++ x 
+
+truthyFalsy ls 
+  | length ls == 0 = False
+  | otherwise = True
+
+-- class TruthyFalse a where 
+--     toBool :: a -> Bool
+
+   
+
+-- triplet :: (Ord a, Fractional a) => [a] -> [[a]]
+triplet ns =  truthyFalsy $ head [[x,y,z] | x <-ns, y <- ns, z <- ns, let add = (x+y+z), 1.0 < add && add < 2.0 ] 
+
+-- findIt limit (x:xs) = (x:) <$> findIt (limit -x) xs
+
+findIt _ [] = []
+findIt limit (x:xs)
+    | (x < limit) = (x) : findIt (limit -x) xs
+    | otherwise = findIt (limit) xs
+
+
+findRang _ _ [] = []
+findRang lwr upr (x:xs)
+  | (x > lwr) && (x < upr) = x : findRang (lwr + x) (upr - x) xs
+  | otherwise = findRang (lwr) (upr) xs
+
+-- findRang 10 100 [1..100]
+-- [11,22,44]
