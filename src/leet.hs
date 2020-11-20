@@ -1163,7 +1163,3 @@ mrgtwosrted' (a:aa) (b:bb) acc
   | b < a = mrgtwosrted' (a:aa) (bb) (b:acc)
   | otherwise = mrgtwosrted' (aa) (bb) (a:b:acc  )
 
--- 2,4,6,8
--- 
-
---  3 2 1
