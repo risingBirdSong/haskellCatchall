@@ -109,10 +109,14 @@ truthyFalsy ls
   | length ls == 0 = False
   | otherwise = True
 
--- class TruthyFalse a where 
---     toBool :: a -> Bool
+class TruthyFalsy a where 
+    toBool :: a -> Bool
 
-   
+-- come back and implemente this later
+-- instance truthyFalsy List where 
+--     [] = False 
+
+  
 
 -- triplet :: (Ord a, Fractional a) => [a] -> [[a]]
 triplet ns =  truthyFalsy $ head [[x,y,z] | x <-ns, y <- ns, z <- ns, let add = (x+y+z), 1.0 < add && add < 2.0 ] 
