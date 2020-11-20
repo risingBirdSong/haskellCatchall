@@ -1,5 +1,6 @@
 import Data.List
 import Data.Bool
+import Data.Function
 
 
 automorphic_a :: Integer -> String
@@ -46,3 +47,8 @@ minSum nums = sum $ take half
 
 
 aa ls = (zip <*> reverse) $ sort ls 
+
+maxNumber :: Int -> Int 
+maxNumber n = read $ reverse $ sort $ show n 
+
+paddedNums n = "Value is " ++ (reverse $ take 5 $ reverse $ ("0000" ++ show n))
