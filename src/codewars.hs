@@ -1,4 +1,10 @@
 import Data.List
+import Data.Bool
+
+
+automorphic_a :: Integer -> String
+automorphic_a n = bool "Not!!" "Automorphic" $ show n `isSuffixOf` show (n^2)
+
 sortNumbers :: [Int] -> Maybe [Int]
 sortNumbers [] = Nothing
 sortNumbers xs =  Just (sort xs)
