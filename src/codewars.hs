@@ -38,9 +38,11 @@ strangeAdd a b = length (concat [ones a , ones b])
 -- ones n = take n $ repeat 1 
 -- Minimize Sum Of Array (Array Series #1)
 -- minSum :: Num b => [b] -> [b]
-minSum nums = sum $ take (length nums `div` 2) 
-             $ zipWith (*) (srted) (reverse srted)
-             where srted = sort nums
+minSum :: (Num a, Ord a) => [a] -> a
+minSum nums = sum $ take half 
+                  $ zipWith (*) (srted) (reverse srted)
+                  where srted = sort nums
+                        half = (length nums `div` 2)
 
 
 aa ls = (zip <*> reverse) $ sort ls 
