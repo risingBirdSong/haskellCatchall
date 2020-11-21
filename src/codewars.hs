@@ -76,3 +76,11 @@ counter item = length . filter (== item)
 isInt x = x == fromInteger (round x)
 
 consDuck x = not $ isInt (logBase 2 x)
+
+geoMetricSequence n = 1 : geoMetricSequence' n 1
+geoMetricSequence' cutoff acc
+  | cutoff <= 0 = [] 
+  | otherwise = (acc * 2) : geoMetricSequence' (cutoff - 1) (acc * 2)
+
+-- filter (not . consDuck) [1..10]
+-- [1.0,2.0,4.0,8.0]
