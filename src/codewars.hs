@@ -78,5 +78,6 @@ counter item = length . filter (== item)
 --sum 10 1 2 3 4
 --sum 15 1 2 3 4 5
 --sum 21 1 2 3 4 5 6
-scannedAccumulation = scanl (+) 0 [1..6]
--- [0,1,3,6,10,15,21]
+
+
+scanned n = takeWhile (<n `div` 2) $ scanl (+) 0 [1..n]
