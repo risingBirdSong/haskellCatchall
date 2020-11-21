@@ -70,3 +70,13 @@ manyanswers n = map cd [1..n]
 counterlong list item = foldl (\acc x -> if item == x then (acc+1) else acc  ) 0 list
 
 counter item = length . filter (== item)
+
+
+--sum 1 1
+--sum 3 1 2
+--sum 6 1 2 3
+--sum 10 1 2 3 4
+--sum 15 1 2 3 4 5
+--sum 21 1 2 3 4 5 6
+scannedAccumulation = scanl (+) 0 [1..6]
+-- [0,1,3,6,10,15,21]
