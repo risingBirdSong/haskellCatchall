@@ -82,5 +82,7 @@ geoMetricSequence' cutoff acc
   | cutoff <= 0 = [] 
   | otherwise = (acc * 2) : geoMetricSequence' (cutoff - 1) (acc * 2)
 
+
+geoMetricSequenceA n = take n ([ 2 ^ x | x<-[0..]])
 -- filter (not . consDuck) [1..10]
 -- [1.0,2.0,4.0,8.0]
