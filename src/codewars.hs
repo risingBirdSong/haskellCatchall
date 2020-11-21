@@ -52,3 +52,18 @@ maxNumber :: Int -> Int
 maxNumber n = read $ reverse $ sort $ show n 
 
 paddedNums n = "Value is " ++ (reverse $ take 5 $ reverse $ ("0000" ++ show n))
+
+getSum :: (Num a, Ord a, Enum a) => a -> a -> a
+getSum a b = sum [(min a b)..(max a b)]
+
+
+-- cnsPrs n = not . null $ filter (\(x,y) -> x + y == n) $ zip [1..n] (tail [1..n])
+consecutiveDucks n = n `elem` zipWith (+) rng (tail rng) 
+                  where rng = [1..n]
+
+cd n = filter (==n) $ zipWith (+) rng (tail rng) 
+                  where rng = [1..n+1]
+
+manyanswers n = map cd [1..n]                  
+
+-- hmm why doesn't this work?
