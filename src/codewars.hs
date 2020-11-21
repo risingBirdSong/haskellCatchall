@@ -71,13 +71,8 @@ counterlong list item = foldl (\acc x -> if item == x then (acc+1) else acc  ) 0
 
 counter item = length . filter (== item)
 
+-- stringMatch
 
---sum 1 1
---sum 3 1 2
---sum 6 1 2 3
---sum 10 1 2 3 4
---sum 15 1 2 3 4 5
---sum 21 1 2 3 4 5 6
+isInt x = x == fromInteger (round x)
 
-
-scanned n = takeWhile (<n `div` 2) $ scanl (+) 0 [1..n]
+consDuck x = not $ isInt (logBase 2 x)
