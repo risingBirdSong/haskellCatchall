@@ -58,8 +58,7 @@ getSum a b = sum [(min a b)..(max a b)]
 
 
 -- cnsPrs n = not . null $ filter (\(x,y) -> x + y == n) $ zip [1..n] (tail [1..n])
-consecutiveDucks n = n `elem` zipWith (+) rng (tail rng) 
-                  where rng = [1..n]
+-- consecutiveDucks n = 
 
 cd n = filter (==n) $ zipWith (+) rng (tail rng) 
                   where rng = [1..n+1]
@@ -67,3 +66,7 @@ cd n = filter (==n) $ zipWith (+) rng (tail rng)
 manyanswers n = map cd [1..n]                  
 
 -- hmm why doesn't this work?
+
+counterlong list item = foldl (\acc x -> if item == x then (acc+1) else acc  ) 0 list
+
+counter item = length . filter (== item)
