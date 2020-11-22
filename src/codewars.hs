@@ -100,3 +100,12 @@ keepH hrs = floor (hrs * 0.5)
 
 litres :: Double -> Integer
 litres d = floor (d * 0.5)
+
+-- https://www.codewars.com/kata/5727bb0fe81185ae62000ae3/haskell
+cleanString :: String -> String
+cleanString str = reverse $ cleanString' (reverse str) 0
+cleanString' [] _ = []
+cleanString' (s:ss) del 
+  | s == '#' = cleanString' (ss) (del+1)
+  | del > 0 = cleanString' (ss) (del-1)
+  | otherwise = s : cleanString' (ss) (del)
