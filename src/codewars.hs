@@ -69,13 +69,21 @@ manyanswers n = map cd [1..n]
 
 counterlong list item = foldl (\acc x -> if item == x then (acc+1) else acc  ) 0 list
 
-counter item = length . filter (== item)
+counter ls item = length $ filter (== item) ls 
 
 -- stringMatch
+-- stringMatch :: Eq a => [a] -> [a] -> [Int]
+stringMatch :: Eq a => [a] -> [a] -> [Int]
+stringMatch as bs = map (counter as) bs
 
+isInt :: RealFrac a => a -> Bool
 isInt x = x == fromInteger (round x)
+-- isInt x = x == (round x)
 
-consDuck x = not $ isInt (logBase 2 x)
+consecutiveDucks :: Int -> Bool
+consecutiveDucks x = not $ isInt (logBase 2 (fromIntegral x))
+
+convert x = fromIntegral x :: Float 
 
 geoMetricSequence n = 1 : geoMetricSequence' n 1
 geoMetricSequence' cutoff acc
