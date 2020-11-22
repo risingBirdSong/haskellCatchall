@@ -72,6 +72,7 @@ counterlong list item = foldl (\acc x -> if item == x then (acc+1) else acc  ) 0
 counter ls item = length $ filter (== item) ls 
 
 -- stringMatch
+-- https://www.codewars.com/kata/59ca8e8e1a68b7de740001f4/train/haskell
 -- stringMatch :: Eq a => [a] -> [a] -> [Int]
 stringMatch :: Eq a => [a] -> [a] -> [Int]
 stringMatch as bs = map (counter as) bs
