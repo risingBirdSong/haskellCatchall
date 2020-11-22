@@ -102,6 +102,7 @@ litres :: Double -> Integer
 litres d = floor (d * 0.5)
 
 -- https://www.codewars.com/kata/5727bb0fe81185ae62000ae3/haskell
+-- Backspaces in string
 cleanString :: String -> String
 cleanString str = reverse $ cleanString' (reverse str) 0
 cleanString' [] _ = []
