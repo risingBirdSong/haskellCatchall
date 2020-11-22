@@ -110,3 +110,9 @@ cleanString' (s:ss) del
   | s == '#' = cleanString' (ss) (del+1)
   | del > 0 = cleanString' (ss) (del-1)
   | otherwise = s : cleanString' (ss) (del)
+
+-- brilliant solution from code wars community!
+cleanString_a :: String -> String
+cleanString_a = reverse . foldl t ""
+  where t cs '#' = drop 1 cs
+        t cs  c  = c : cs
