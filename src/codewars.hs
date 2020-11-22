@@ -95,3 +95,8 @@ geoMetricSequence' cutoff acc
 geoMetricSequenceA n = take n ([ 2 ^ x | x<-[0..]])
 -- filter (not . consDuck) [1..10]
 -- [1.0,2.0,4.0,8.0]
+
+keepH hrs = floor (hrs * 0.5)
+
+litres :: Double -> Integer
+litres d = floor (d * 0.5)
