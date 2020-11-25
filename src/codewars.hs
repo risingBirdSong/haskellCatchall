@@ -1,6 +1,6 @@
 import Data.List
 import Data.Bool
-import Data.Function
+import qualified Data.Set as St
 
 
 automorphic_a :: Integer -> String
@@ -125,6 +125,13 @@ pendulum' left right [] = left ++ reverse right
 pendulum' left right [x] = x:left ++ reverse right
 pendulum' left right (x:y:ls) = pendulum' (x:left) (y:right) ls 
 
+
+isHappyYear ys = length ls == length (St.fromList ls ) where ls = show ys
+
+nextHappYear yr = nextHappYear' (yr + 1) 
+nextHappYear' yr 
+  | isHappyYear yr = yr
+  | otherwise = nextHappYear' (yr + 1)
   
 -- start [1,2,3,4,5,6]
 -- 1 : rec ls ++ [2]
