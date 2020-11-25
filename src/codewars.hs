@@ -116,3 +116,31 @@ cleanString_a :: String -> String
 cleanString_a = reverse . foldl t ""
   where t cs '#' = drop 1 cs
         t cs  c  = c : cs
+
+
+-- https://www.codewars.com/kata/5bd776533a7e2720c40000e5
+input = reverse [9,4,6,4,10,5]
+pendulum xs = pendulum' [] [] (sort xs)
+pendulum' left right [] = left ++ reverse right
+pendulum' left right [x] = x:left ++ reverse right
+pendulum' left right (x:y:ls) = pendulum' (x:left) (y:right) ls 
+
+  
+-- start [1,2,3,4,5,6]
+-- 1 : rec ls ++ [2]
+-- 3 : rec ls ++ [4]
+-- 5 : rec ls ++ [6]
+--      []
+-- outputs
+-- [1,3,5,6,4,2]
+
+--  ([6, 6, 8 ,5 ,10]) ==> [10, 6, 5, 6, 8]
+--  [5,6,6,8,10] ==> [10, 6, 5, 6, 8]
+
+
+-- [5,6,6,8,10]
+-- 5 
+-- 5 6
+-- 6 5 6
+-- 6 5 6 8
+-- 10 6 5 6 8
