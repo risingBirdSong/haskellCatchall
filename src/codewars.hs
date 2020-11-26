@@ -160,8 +160,15 @@ primes = map head $ scanl (\\) [2..] [[p, p+p..] | p <- primes]
 primesTo n = sieve [2..n]
         where sieve (x:xs) = x : sieve (xs \\ [x, x * 2..n]) 
               sieve [] = []
+isPrime k = if k > 1 then null [ x | x <- [2..k - 1], k `mod` x == 0] else False
+
 
 findNextPrime x = findNextPrime' x (length $ primesTo x)
 findNextPrime' x orgn
   | length (primesTo x) > orgn = primesTo x
   | otherwise = findNextPrime'(succ x) orgn  
+
+
+minimumNumber xs 
+  | isPrime $ sum xs = 0 
+  | otherwise = last (findNextPrime (sum xs)) - sum xs
