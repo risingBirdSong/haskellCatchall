@@ -1,4 +1,5 @@
 import Data.List
+
 import Data.Bool
 import qualified Data.Set as St
 
@@ -128,11 +129,13 @@ pendulum' left right (x:y:ls) = pendulum' (x:left) (y:right) ls
 
 isHappyYear ys = length ls == length (St.fromList ls ) where ls = show ys
 
-nextHappYear yr = nextHappYear' (yr + 1) 
-nextHappYear' yr 
+nextHappyYear yr = nextHappyYear' (yr + 1) 
+nextHappyYear' yr 
   | isHappyYear yr = yr
-  | otherwise = nextHappYear' (yr + 1)
+  | otherwise = nextHappyYear' (yr + 1)
   
+
+
 -- start [1,2,3,4,5,6]
 -- 1 : rec ls ++ [2]
 -- 3 : rec ls ++ [4]
@@ -151,3 +154,14 @@ nextHappYear' yr
 -- 6 5 6
 -- 6 5 6 8
 -- 10 6 5 6 8
+
+primes = map head $ scanl (\\) [2..] [[p, p+p..] | p <- primes]
+                    
+primesTo n = sieve [2..n]
+        where sieve (x:xs) = x : sieve (xs \\ [x, x * 2..n]) 
+              sieve [] = []
+
+findNextPrime x = findNextPrime' x (length $ primesTo x)
+findNextPrime' x orgn
+  | length (primesTo x) > orgn = primesTo x
+  | otherwise = findNextPrime'(succ x) orgn  
