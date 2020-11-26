@@ -172,3 +172,5 @@ findNextPrime' x orgn
 minimumNumber xs 
   | isPrime $ sum xs = 0 
   | otherwise = last (findNextPrime (sum xs)) - sum xs
+
+  
