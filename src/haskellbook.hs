@@ -1,3 +1,4 @@
+
 -- let vs where
 
 plusTwowhere n = print $ f n 
@@ -33,3 +34,20 @@ crry = "Curry is awesome"
 aag = take 1 $ drop 4 crry -- "y"
 
 takerdroper t d s= take t $ drop d s 
+
+thirdLetter :: String -> Char
+thirdLetter str = str !! 2 
+
+letterIndex idx = "curry is awesome" !! idx 
+
+rvrswrds str = unwords $ reverse $ words str
+
+data Mood = Blah | Woot deriving (Show , Eq)
+
+notM :: Mood -> Mood
+notM m 
+  | m == Blah = Woot 
+  |otherwise = Blah
+
+-- changeMood :: Mood -> Mood 
+-- changeMood m = not m 
