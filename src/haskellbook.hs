@@ -98,3 +98,16 @@ myTupleHead = \ (x,y) -> x
 
 
 -- Chapter 4 Exercises End
+
+
+-- Exercises: Parametricity , pg 140 / 172
+
+
+aai :: a -> a -> a
+aai a b = a
+
+aaj :: a -> a -> a 
+aaj a b = b 
+
+aak :: a -> b -> b 
+aak a b = b 
