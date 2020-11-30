@@ -66,3 +66,13 @@ data MyTuple a b =
 
 instance (Eq a, Eq b) => Eq (MyTuple a b) where 
   (MyTuple a b) == (MyTuple a' b') = a == a' && b == b'
+
+data Which a =
+  ThisOne a
+  | ThatOne a
+
+instance Eq a => Eq (Which a) where 
+  (ThisOne a) == (ThisOne a') = a == a'
+  (ThatOne a) == (ThatOne a') = a == a'
+  (ThisOne a) == (ThatOne a') = a == a'
+  (ThatOne a) == (ThisOne a') = a == a'
