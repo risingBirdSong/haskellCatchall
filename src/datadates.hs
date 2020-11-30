@@ -38,7 +38,26 @@ newtype TisAnInteger = TisAn Integer deriving (Show)
 -- the Eq instance is on the TisAnInteger type constructor
 -- the int n parameterized with data constructor Tisan supplies the equality check
 -- and this is possible because GHCI knows TisAn n is an Integer from where it was defined
-instance Eq (TisAnInteger) where 
+instance Eq TisAnInteger where 
     (==) (TisAn n) (TisAn n') = n == n'
 
     
+data TwoIntegers = Two Integer Integer deriving (Show)
+instance Eq TwoIntegers where
+  (==) (Two a b) (Two a' b') = a == a' && b == b'
+
+data StringOrInt =
+  TisAnInt Int
+  | TisAString String
+
+instance Eq StringOrInt where 
+   (TisAnInt n) == (TisAnInt n') = n == n' 
+   (TisAString s) == (TisAString s') = s == s' 
+   _ == _ = False
+
+
+-- instance Eq (StringOrInt) where 
+--   (==) (TisAnInt n) (TisAnInt n') =  n == n' 
+ 
+-- instance Eq (StringOrInt) where 
+--   (==) (TisAString s) (TisAString s') = s == s'  
