@@ -38,3 +38,5 @@ sumOfParts' [] acc = 0 : acc
 sumOfParts' (ls) acc = sumOfParts' (drop 1 ls) (sum ls : acc )
 
 partsSum ls = scanl (-) (sum ls) ls
+
+partsSum' = scanr (+) 0
