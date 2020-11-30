@@ -55,9 +55,14 @@ instance Eq StringOrInt where
    (TisAString s) == (TisAString s') = s == s' 
    _ == _ = False
 
+data Pair a =
+  Pair a a deriving Show
 
--- instance Eq (StringOrInt) where 
---   (==) (TisAnInt n) (TisAnInt n') =  n == n' 
- 
--- instance Eq (StringOrInt) where 
---   (==) (TisAString s) (TisAString s') = s == s'  
+instance Eq a => Eq (Pair a) where 
+  (Pair a b) == (Pair a' b') = a == a' && b == b' 
+
+data MyTuple a b =
+  MyTuple a b
+
+instance (Eq a, Eq b) => Eq (MyTuple a b) where 
+  (MyTuple a b) == (MyTuple a' b') = a == a' && b == b'
