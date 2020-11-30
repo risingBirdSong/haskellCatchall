@@ -30,3 +30,15 @@ newtype Identity a = Identity a deriving (Show)
 --   (==) (Identity v) (Identity v') = v == v'
 instance Eq a => Eq (Identity a) where
   (==) (Identity v) (Identity v') = v == v'
+
+newtype TisAnInteger = TisAn Integer deriving (Show)
+
+
+-- cool i wasn't sure, but it works :) 
+-- the Eq instance is on the TisAnInteger type constructor
+-- the int n parameterized with data constructor Tisan supplies the equality check
+-- and this is possible because GHCI knows TisAn n is an Integer from where it was defined
+instance Eq (TisAnInteger) where 
+    (==) (TisAn n) (TisAn n') = n == n'
+
+    
