@@ -12,6 +12,17 @@ hghLow_ ls = zip (sort ls) (reverse $ sort ls)
 listy a b = [a,b]
 
 hghLow ls = init $ concat $ take (length ls `div` 2 + 1)  $ reverse $  zipWith listy (sort ls) (reverse $ sort ls) 
+hacky but I just wanted to see if it would pass all the tests, all tests passing :)
+solve ls 
+  | length (hghLow ls) == length ls =  hghLow ls 
+  | otherwise = init $ hghLow ls 
+
+h_l ls = reverse $ h_l' (sort ls) (reverse $ sort ls) [] 
+h_l' [] _ acc = acc  
+h_l' _ [] acc = acc  
+h_l' (l:ls) (h:hs) acc  
+  | l == h =  acc 
+  | otherwise = h_l' ls hs (l:h:acc)
 
 
 -- firstNonCons [] = Nothing 
