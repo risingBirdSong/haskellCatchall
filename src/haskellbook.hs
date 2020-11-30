@@ -1,4 +1,6 @@
 
+{-# LANGUAGE NoMonomorphismRestriction #-}
+
 -- let vs where
 import Data.Tuple
 
@@ -111,3 +113,28 @@ aaj a b = b
 
 aak :: a -> b -> b 
 aak a b = b 
+
+aal = 1
+
+aam =  (* 9) 6
+aan =  head [(0,"doge"),(1,"kitteh")]
+
+aao =  head [(0 :: Integer ,"doge"),(1,"kitteh")]
+
+aap = if False then True else False
+aaq = length [1, 2, 3, 4, 5]
+
+aar = (length [1, 2, 3, 4]) > (length "TACOCAT")
+
+
+i :: a -> a
+i a = a 
+
+
+data Woot
+data Blah
+f :: Woot -> Blah
+f = undefined
+g :: (Blah, Woot) -> (Blah, Blah)
+g (a , b) = (a, f b) 
+
