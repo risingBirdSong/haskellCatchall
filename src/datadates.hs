@@ -1,11 +1,25 @@
-data DayOfWeek = Mon | Tue | Weds | Thu | Fri | Sat | Sun deriving (Show , Eq)
 
 
-data Date = Date DayOfWeek Int deriving (Eq)
+f :: Int -> Bool
+f 1 = True
+f 2 = True
+f 9 = True
+f _ = False
 
-instance Show Date where 
-  show (Date Mon 1) = "monday the first"
-  show (Date Tue 2) = "tuesday the second"
+data DayOfWeek = Mon | Tue | Weds | Thu | Fri | Sat | Sun deriving (Show)
 
-dayOne = Date Mon 1
-dayTwo = Date Tue 2
+-- https://stackoverflow.com/questions/28125038/no-explict-implementation-warning/28125833
+instance Eq DayOfWeek where
+  (==) Mon Mon = True
+  (==) Tue Tue = True
+  (==) Weds Weds = True
+  (==) Thu Thu = True
+  (==) Fri Fri = True
+  (==) Sat Sat = True
+  (==) Sun Sun = True
+  (==) _ _ = False
+
+data Date = Date DayOfWeek Int deriving (Eq, Show)
+
+newtype Identity a = Identity a deriving (Show, Eq)
+
