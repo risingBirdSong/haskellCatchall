@@ -85,3 +85,5 @@ instance (Eq x, Eq y) => Eq (EitherOr x y) where
   Hello x == Hello x' = x == x'
   Goodbye y == Goodbye y' = y == y'
   _ == _ = False
+
+  
