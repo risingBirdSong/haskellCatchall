@@ -21,5 +21,12 @@ instance Eq DayOfWeek where
 
 data Date = Date DayOfWeek Int deriving (Eq, Show)
 
-newtype Identity a = Identity a deriving (Show, Eq)
+newtype Identity a = Identity a deriving (Show)
 
+-- the following wont work, (==) won't work by defauly since a is an unknown type
+-- and therefore Haskell wont assume that its eqautable
+-- constraining it like the next example works.
+-- instance Eq (Identity a) where
+--   (==) (Identity v) (Identity v') = v == v'
+instance Eq a => Eq (Identity a) where
+  (==) (Identity v) (Identity v') = v == v'
