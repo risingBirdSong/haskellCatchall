@@ -12,10 +12,12 @@ hghLow_ ls = zip (sort ls) (reverse $ sort ls)
 listy a b = [a,b]
 
 hghLow ls = init $ concat $ take (length ls `div` 2 + 1)  $ reverse $  zipWith listy (sort ls) (reverse $ sort ls) 
-hacky but I just wanted to see if it would pass all the tests, all tests passing :)
+-- hacky but I just wanted to see if it would pass all the tests, all tests passing :)
 solve ls 
   | length (hghLow ls) == length ls =  hghLow ls 
   | otherwise = init $ hghLow ls 
+
+taking ls = take (length ls) $ concat $ zipWith (listy) (reverse $ sort ls) (sort ls)
 
 h_l ls = reverse $ h_l' (sort ls) (reverse $ sort ls) [] 
 h_l' [] _ acc = acc  
@@ -32,5 +34,7 @@ firstNonCons (x:y:ls)
   | otherwise = firstNonCons (y:ls)
 
 sumOfParts ls = reverse $ sumOfParts' ls []
-sumOfParts' [] acc = acc  
-sumOfParts' (x:ls) acc = sumOfParts' ls (sum ls : acc )
+sumOfParts' [] acc = 0 : acc  
+sumOfParts' (ls) acc = sumOfParts' (drop 1 ls) (sum ls : acc )
+
+partsSum ls = scanl (-) (sum ls) ls
