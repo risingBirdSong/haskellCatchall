@@ -182,12 +182,15 @@ maxMultiple' divby cur
   | otherwise = maxMultiple' divby (pred cur)
    
 
-specialNumber :: Int -> Bool
+specialNumber :: Int -> String
 specialNumber n = f (toListNums n)
- where f [] = True     
+ where f [] = "Special!!"     
        f (n:ns)     
          | n `elem` specials = f ns
-         | otherwise = False
+         | otherwise = "NOT!!"
           where specials = [0,1,2,3,4,5] 
 
 toListNums strnum = map (\x -> read [x] :: Int ) $ show strnum 
+
+specialNum n = if all (<='5') $ show n then "Special!!" else "NOT!!"
+
