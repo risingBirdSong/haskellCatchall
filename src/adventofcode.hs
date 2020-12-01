@@ -5,7 +5,7 @@ main = do
     contents <- hGetContents handle 
     let singlewords =  words contents 
         list = cnvrt singlewords
-    let dd = [ x * y | x <- list, y <- list, x + y == 2020] 
+    let dd = [ x * y * z | x <- list, y <- list, z <- list,  x + y + z == 2020] 
     print $ head dd
     hClose handle 
 cnvrt :: [String] -> [Int]
