@@ -1,13 +1,12 @@
 import System.IO
-import Control.Monad
 
 main = do 
     handle <- openFile "adventexpenses.txt" ReadMode
     contents <- hGetContents handle 
     let singlewords =  words contents 
         list = cnvrt singlewords
-    print list 
+    let dd = [ x * y | x <- list, y <- list, x + y == 2020] 
+    print $ head dd
     hClose handle 
-
 cnvrt :: [String] -> [Int]
 cnvrt = map read 
