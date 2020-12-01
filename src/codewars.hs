@@ -181,3 +181,13 @@ maxMultiple' divby cur
   | snd (cur `divMod` divby) == 0 = cur
   | otherwise = maxMultiple' divby (pred cur)
    
+
+-- specialNumber :: Int -> Bool
+-- specialNumber n = f (show n)
+--  where f [] = False     
+--        f (n:ns)     
+--          | n `elem` specials = f ns
+--          | otherwise = False
+--           where specials = [0,1,2,3,4,5] 
+
+toListNums strnum = map (\x -> read [x] :: Int ) $ drop 1 $ init $ show strnum 
