@@ -173,4 +173,11 @@ minimumNumber xs
   | isPrime $ sum xs = 0 
   | otherwise = last (findNextPrime (sum xs)) - sum xs
 
-  
+reverseSeq n = [n,n-1..1] 
+
+maxMultiple :: Int -> Int -> Int
+maxMultiple dvby bound = maxMultiple' dvby bound 
+maxMultiple' divby cur 
+  | snd (cur `divMod` divby) == 0 = cur
+  | otherwise = maxMultiple' divby (pred cur)
+   

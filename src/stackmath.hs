@@ -7,7 +7,9 @@ evalInst [] _ = []
 -- evalInst [x] _ = [x] 
 evalInst stack [] = stack 
 evalInst (top:scnd:stack) (p:programs) 
-  | top == Nothing || scnd == Nothing = evalInst (Nothing:stack) programs
+  | top == Nothing || scnd == Nothing && p == Add || p == Sub || p == Mul || p == Div = evalInst (Nothing:stack) programs
+  | top == Nothing && p == Dup = evalInst (top:top:scnd:stack) programs
+  | top == Nothing && p == Pop = evalInst (scnd:stack) programs
   | p == Add = evalInst (((+) <$> top <*> scnd) : stack ) programs 
   | p == Sub = evalInst (((-) <$> top <*> scnd) : stack ) programs
   | p == Mul = evalInst (((*) <$> top <*> scnd) : stack) programs
