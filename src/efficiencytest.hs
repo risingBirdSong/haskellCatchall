@@ -1,11 +1,13 @@
+{-# LANGUAGE BangPatterns #-}
+
 import System.CPUTime
+import Control.Exception
+import Control.DeepSeq 
 
 main = do 
-  a <-  getCPUTime
-  let thelast = last [1..100000000]
-  b <-  getCPUTime 
-  print a
-  print b
-  print thelast
+  start <-  getCPUTime
+  let !thelast = last [1..1000000]
+  end <- getCPUTime 
+  print (end - start)
   putStr "done" 
 
