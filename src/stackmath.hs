@@ -4,7 +4,6 @@ type SMProg = [Instruction]
 
 evalInst :: Stack -> SMProg -> Stack 
 evalInst [] _ = [] 
--- evalInst [x] _ = [x] 
 evalInst stack [] = stack 
 evalInst (top:scnd:stack) (p:programs) 
   | top == Nothing || scnd == Nothing && p == Add || p == Sub || p == Mul || p == Div = evalInst (Nothing:stack) programs
