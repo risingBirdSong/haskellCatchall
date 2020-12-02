@@ -12,11 +12,17 @@ toNum = map read
 
 bounds str = toNum $ splitOn "-" $ (!!) (clean str) 0
 ltr str = take 1 $ (!!) (clean str) 1
+
 psswrd str = (!!) (clean str) 2
+
+password str = psswrd str
+flt letter str = filter (==letter) (password str )
 
 solution str = do 
    let bnds = bounds str 
    let letter = ltr str 
    let password = psswrd str 
-   print (bnds, letter, password)
+   let count = filter (==letter) password 
+   print count
    return ()
+
