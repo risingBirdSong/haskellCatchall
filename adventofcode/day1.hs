@@ -1,7 +1,7 @@
 import System.IO
 
 main = do 
-    handle <- openFile "adventexpenses.txt" ReadMode
+    handle <- openFile "day1.txt" ReadMode
     contents <- hGetContents handle 
     let singlewords =  words contents 
         list = cnvrt singlewords

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 702616e0b84941ab4448fbe7b93549383c300a45401c604559a8dd41ddef98ba
+-- hash: 880ab0adba8db127e114e1890fb79a71c1d1aadcac2ee31a386c20b6ac8abec2
 
 name:           catchallHaskell
 version:        0.1.0.0
@@ -28,6 +28,7 @@ source-repository head
 library
   exposed-modules:
       Lib
+      Myfirstmod
   other-modules:
       Paths_catchallHaskell
   hs-source-dirs:
