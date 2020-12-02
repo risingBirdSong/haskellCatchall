@@ -146,3 +146,44 @@ g (a , b) = (a, f b)
 --         check' :: forall a. a -> a -> Bool
 check' :: Eq a => a -> a -> Bool
 check' a a' = a == a'
+
+
+x :: Int -> Int
+x blah = blah + 20
+
+-- printIt :: IO ()
+printIt :: Show a => a -> IO ()
+printIt x = putStrLn (show x)
+
+-- the fix was deriving show
+data Person = Person Bool deriving Show 
+printPerson :: Person -> IO ()
+printPerson person = putStrLn (show person)
+
+data Mood_ = Blah_
+  | Woot_ deriving (Show , Eq, Ord)
+
+-- ah! i thought that this would work, but I missed that it also needs to derive Eq
+settleDown :: Mood_ -> Mood_
+settleDown x = if x == Woot_
+  then Blah_
+  else x
+
+
+type Subject = String
+type Subject_ = String
+type Verb = String
+type Verb_ = String
+type Object = String
+data Sentence = Sentence Subject Verb Object | Sentence_ Subject_ Verb_
+  deriving (Eq, Show)
+
+-- s1 = Sentence "dogs" "drool"
+-- s2 = Sentence "Julie" "loves" "dogs"
+
+data Rocks = Rocks String deriving (Eq, Show)
+data Yeah = Yeah Bool deriving (Eq, Show)
+
+data Papu = Papu Rocks Yeah deriving (Eq, Show)
+-- Papu (Rocks "hey") (Yeah True)
+-- Papu (Rocks "hey") (Yeah True)
