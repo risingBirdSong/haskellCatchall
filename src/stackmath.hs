@@ -1,7 +1,7 @@
 data Instruction = Add | Sub | Mul | Div | Dup | Pop deriving (Show , Eq, Ord, Read)
 type Stack = [Maybe Int]
 type SMProg = [Instruction]
-
+-- may want to come back and clean this up, but happily heard back from Penelkata and this passes 100% of tests!
 evalInst :: Stack -> SMProg -> Stack 
 evalInst [] _ = error "empty stack!"
 evalInst stack [] = stack  

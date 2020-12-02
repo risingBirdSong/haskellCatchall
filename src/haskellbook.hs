@@ -138,3 +138,11 @@ f = undefined
 g :: (Blah, Woot) -> (Blah, Blah)
 g (a , b) = (a, f b) 
 
+
+-- • No instance for (Eq a) arising from a use of ‘==’
+--   Possible fix:
+--     add (Eq a) to the context of
+--       the type signature for:
+--         check' :: forall a. a -> a -> Bool
+check' :: Eq a => a -> a -> Bool
+check' a a' = a == a'
