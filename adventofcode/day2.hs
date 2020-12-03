@@ -3,17 +3,7 @@ import Data.List.Split
 toNum :: [String] -> [Int]
 toNum = map read 
 
--- example input = 1-7 q: qqqqxvqrkbqqztlqlzq
--- bnds, letter and password all are parsing the string input 
--- bnds -> [1,7]
--- letter -> 'q'
--- password -> "qqqqxvqrkbqqztlqlzq"
--- count is the count of letters found in password
--- solve is if the count is in between the bounds (low and high)
-
---main is the IO function, the primary function that runs the solver with each line of input and counts how many correct solutions were found
-
-solveOne str = solve
+validPassword str = solve
   where bnds = toNum $ splitOn "-" $ (!!) (words str) 0
         letter = head $ take 1 $ (!!) (words str) 1
         password = (!!) (words str) 2
@@ -22,9 +12,11 @@ solveOne str = solve
       
 main = do 
   listof <- lines <$> readFile "adventofcode//day2data.txt"
-  let passwordCount = length $ filter ( solveOne) listof
+  let passwordCount = length $ filter ( validPassword) listof
   print passwordCount
   return ()
+
+
 
 
 
