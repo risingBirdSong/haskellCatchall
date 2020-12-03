@@ -208,4 +208,5 @@ addOneIfOdd n = case odd n of
   where f = (+ 1)
 
 -- addFive = ((\x y -> if x > y then y else x))
-addFive a b = 5 + (\x y -> if x > y then y else x) a b
+addFive = (\x y -> (if x > y then y + 5 else x))
+addFive_ a b = 5 + (\x y -> if x > y then y else x) a b
