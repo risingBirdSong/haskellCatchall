@@ -195,3 +195,17 @@ chk f a b = (f a) == b
 
 arith :: Num b => (a -> b) -> Integer -> a -> b
 arith f n a = f a  
+
+-- all equivalent
+mTha x y z = x * y * z
+mThb x y = \z -> x * y * z
+mThc x = \y -> \z -> x * y * z
+mThd = \x -> \y -> \z -> x * y * z
+
+addOneIfOdd n = case odd n of
+  True -> f n
+  False -> n
+  where f = (+ 1)
+
+-- addFive = ((\x y -> if x > y then y else x))
+addFive = (\x y -> (if x > y then y + 5 else x) + 5)

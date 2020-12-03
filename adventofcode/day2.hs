@@ -23,8 +23,6 @@ main = do
 
 
 
-
-
 bounds str = toNum $ splitOn "-" $ (!!) (words str) 0
 ltr str = head $ take 1 $ (!!) (words str) 1
 psswrd str = (!!) (words str) 2
