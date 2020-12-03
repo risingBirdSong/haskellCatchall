@@ -210,3 +210,31 @@ addOneIfOdd n = case odd n of
 -- addFive = ((\x y -> if x > y then y else x))
 addFive = (\x y -> (if x > y then y + 5 else x))
 addFive_ a b = 5 + (\x y -> if x > y then y else x) a b
+
+mflip f x y = f y x
+
+k (x, y) = x
+k1 = k ((4-1), 10)
+k2 = k ("three", (1 + 2))
+k3 = k (3, True)
+
+ 
+tupling :: (a, b, c) -> (d, e, f) -> ((a, d), (c, f))
+tupling (a, b, c) (d , e , f) = ((a, d), (c, f))
+-- tupling (1,2,3) (4,5,6)
+-- ((1,4),(3,6))
+
+-- case practice 
+-- functionC x y = if (x > y) then x else y
+
+functionC_case x y =
+  case x > y of
+    True -> x
+    False -> y  
+
+-- ifEvenAdd2 n = if even n then (n+2) else n
+
+ifEvenAdd2 n = 
+  case even n of
+    True -> n + 2
+    False -> n
