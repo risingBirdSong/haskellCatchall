@@ -334,3 +334,5 @@ tensDigit x = d
         d = xLast `mod` 10
 -- tnsDgt with divMod
 tnsDgt n = (\x -> read x :: Int) . (:[]) . last $ show . fst $ n `divMod` 10
+
+tnsDgtAgain n = fst $ snd (n `divMod` 100) `divMod` 10 
