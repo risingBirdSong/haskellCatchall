@@ -26,8 +26,8 @@ slopeMatrix mtr x y = (!!) ((!!) mtr x) y
 countTrees mtr = countTrees' mtr 0 0 0 
 countTrees' mtr x y count 
   | x >= 90 || y >= 30 = count
-  | slopeMatrix mtr x y == '#' = countTrees' mtr (x + 3) (y + 1) (count + 1)  
-  | slopeMatrix mtr x y == '.' = countTrees' mtr (x + 3) (y + 1) (count + 0) 
+  | slopeMatrix mtr x y == '#' = countTrees' mtr (x + 1) (y + 3) (count + 1)  
+  | slopeMatrix mtr x y == '.' = countTrees' mtr (x + 1) (y + 3) (count + 0) 
 
 aStr = "..#..#......#..#.......#...#.#."
 discoveryStr str x 

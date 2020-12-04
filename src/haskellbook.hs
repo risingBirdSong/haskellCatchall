@@ -238,3 +238,64 @@ ifEvenAdd2 n =
   case even n of
     True -> n + 2
     False -> n
+
+nums x =
+  case compare x 0 of
+  LT -> -1
+  EQ -> 0
+  GT -> 1
+
+
+myFlip :: (a -> b -> c) -> b -> a -> c
+myFlip f a b = f b a 
+
+returnLast :: a -> b -> c -> d -> d
+returnLast _ _ _ d = d
+
+returnLast' :: a -> (b -> (c -> (d -> d)))
+returnLast' a b c d = d 
+
+-- returnBroke :: (((a -> b) -> c) -> d) -> d
+-- returnBroke _ _ _ d = d
+dodgy :: Num a => a -> a -> a
+dodgy x y = x + y * 10
+
+oneIsOne :: Num a => a -> a
+oneIsOne = dodgy 1
+
+oneIsTwo :: Num a => a -> a
+oneIsTwo = (flip dodgy) 2
+ 
+avgGrade :: (Fractional a, Ord a) => a -> Char
+avgGrade x
+  | y >= 0.59 = 'D'
+  | y >= 0.9 = 'A'
+  | y >= 0.8 = 'B'
+  | y >= 0.7 = 'C'
+  | y < 0.59 = 'F'
+  where y = x / 100
+
+-- 4. What types of arguments can pal take?
+-- I was right thinking it's a generic list [a], but In addition to my thought
+-- the as must be constrained by the Eq class 
+pal xs
+  | xs == reverse xs = True
+  | otherwise = False
+
+
+numbers :: (Ord a, Num a, Num p) => a -> p
+numbers x
+  | x < 0 = -1
+  | x == 0 = 0
+  | x > 0 = 1
+
+
+-- great explanations of $ and . from book! The clearest explanation for me and I understand them much better now
+cmpseA  = negate . sum $ [1, 2, 3, 4, 5]
+cmpseB =  take 5 . reverse $ [1..10]
+
+cmpseC = take 5 . enumFrom $ 10
+
+cmposeD =  take 5 . filter odd . enumFrom $ 7
+cmposeE = take 10 . filter odd $ [7..]
+-- c) an indication of whether its argument is a positive or negative number or zero
