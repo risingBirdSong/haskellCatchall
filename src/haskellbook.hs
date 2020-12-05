@@ -406,3 +406,10 @@ digitsToList n = reverse $ go n
 
 digitsSolve n = intercalate "-" $ map digitLookup $ digitsToList n
 
+recursiveSum n = go n 0
+  where go 0 acc = acc 
+        go n acc = go (n - 1) (acc + n) 
+
+multBySum x y = go x y 0 
+  where go 0 _ acc = acc 
+        go x y acc = go (x-1) y (acc + y)
