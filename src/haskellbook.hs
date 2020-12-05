@@ -2,7 +2,9 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 
 -- let vs where
-import Data.Tuple
+
+-- import Data.String.Utils
+import Data.List
 
 plusTwowhere n = print $ f n 
     where f n = n + 2 
@@ -336,3 +338,71 @@ tensDigit x = d
 tnsDgt n = (\x -> read x :: Int) . (:[]) . last $ show . fst $ n `divMod` 10
 
 tnsDgtAgain n = fst $ snd (n `divMod` 100) `divMod` 10 
+
+hunsD x = (x `div` 100) `mod` 10
+
+foldBool :: a -> a -> Bool -> a
+foldBool x y first 
+  | first = x
+  | otherwise = y
+
+foldBoolCase x y first =
+  case first of 
+    True -> x 
+    False -> y 
+
+gg :: (a -> b) -> (a, c) -> (b, c)
+gg f (a,c) = (f a, c)
+
+-- *Main> show (1,2)
+-- "(1,2)"
+-- *Main> read "(1,2)" :: (Int, Int)
+-- (1,2)
+roundTrip :: (Show a, Read a) => a -> a
+roundTrip a = read (show a)
+
+
+-- 5. Next, write a pointfree version of roundTrip. (n.b., this refers to
+-- the function definition, not to its application in main)
+
+rndTrpPF :: (Show a, Read a) => a -> a
+rndTrpPF = read . show 
+
+rndTrpPF_ = (\x -> read x :: Int) . show
+
+add' :: (Int, Int) -> Int
+add' (x, y) = x + y
+
+curriedAdd = curry add'
+
+
+
+nestedComp :: Num b => [[b]] -> [[b]]
+nestedComp xxs = [ map (*2) x | x <- xxs]
+
+testComp xxs = [y * 2 | x <- xxs, y <- x]
+
+nestedData = [[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10]]
+
+
+ff' True = Just 1
+ff' _ = Nothing
+
+digitLookup n 
+  | n == 1 = "one"
+  | n == 2 = "two"
+  | n == 3 = "three"
+  | n == 4 = "four"
+  | n == 5 = "five"
+  | n == 6 = "six"
+  | n == 7 = "seven"
+  | n == 8 = "eight"
+  | n == 9 = "nine"
+  | otherwise = "???"
+
+digitsToList n = reverse $ go n
+  where go 0 = [] 
+        go n = n `mod` 10 : go (n `div` 10)
+
+digitsSolve n = intercalate "-" $ map digitLookup $ digitsToList n
+
