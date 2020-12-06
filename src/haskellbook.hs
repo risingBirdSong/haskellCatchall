@@ -453,3 +453,15 @@ dropping ls = drop 1 $ dropWhile (/='\n') ls
 taking ls = takeWhile (/='\n') ls
 -- droppingLtr ls = dropWhile (/='ab') ls
 
+
+shouldEqual = [ "Tyger Tyger, burning bright"
+  , "In the forests of the night"
+  , "What immortal hand or eye"
+  , "Could frame thy fearful symmetry?"
+  ]
+
+squares = [x^2|x<-[1..5]]
+cubes = [x^3|x<-[1..5]]
+sqCbTups = [(s, c) | s <- squares, c <- cubes]
+sqCbTupsSml = [(s, c) | s <- squares, c <- cubes, s < 50, c < 50]
+sqCbTupsSmlLength = length  [(s, c) | s <- squares, c <- cubes, s < 50, c < 50]
