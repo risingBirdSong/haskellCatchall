@@ -413,3 +413,43 @@ recursiveSum n = go n 0
 multBySum x y = go x y 0 
   where go 0 _ acc = acc 
         go x y acc = go (x-1) y (acc + y)
+
+
+myHead' [] = Nothing
+myHead' (x:xs) = Just x
+
+myTail' [] = []
+myTail' (x:xs) = xs
+
+myRange start stop = go start stop []
+  where go start stop acc 
+          | start == stop = acc 
+          | start < stop = go (start + 1) stop (acc ++ [start])
+          | start > stop = go (start - 1) stop (acc ++ [start])
+
+-- "all i wanna do is have some fun"
+myWords words = go words []
+  where go [] acc = acc 
+        go words acc = go (drop 1 (dropWhile (/=' ') words)) (acc ++ [takeWhile (/=' ') words])
+
+firstSen = "Tyger Tyger, burning bright\n"
+secondSen = "In the forests of the night\n"
+thirdSen = "What immortal hand or eye\n"
+fourthSen = "Could frame thy fearful symmetry?"
+sentences = firstSen ++ secondSen
+  ++ thirdSen ++ fourthSen
+
+myLines words = reverse $ go words []
+  where go [] acc = acc 
+        go words acc = go (drop 1(dropWhile (/='\n') words)) ((takeWhile (/='\n') words) :acc)
+
+-- Hey why is does this work?
+-- My understanding was Char can only be a single character. Is this a special exemption because of the escape character \ ? 
+
+-- \n is a single character, the compiler translates it into ascii 10
+-- \n is just the name given to it so it can easily be typed
+
+dropping ls = drop 1 $ dropWhile (/='\n') ls
+taking ls = takeWhile (/='\n') ls
+-- droppingLtr ls = dropWhile (/='ab') ls
+
