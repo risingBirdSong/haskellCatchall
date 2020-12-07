@@ -274,3 +274,7 @@ sofartuple =  uncurry lengthCompare ([1],[1,2,3])
 
 -- this will not work, a Sum type requires a Data Constructor on every branch
 -- data ModifyMaybe a = a | Nada
+
+outlier nums = head $ go (partition even nums)
+    where go ((a:b:ls), (c)) = c
+          go ((c), (a:b:ls)) = c 
