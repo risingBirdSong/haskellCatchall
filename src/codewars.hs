@@ -240,4 +240,9 @@ getMiddle s
   | even $ length s = take 2 $ drop (length s `div` 2 - 1 ) s
   | otherwise = take 1 $ drop (length s `div` 2) s
 
--- oddDrop s = 
+-- highAndLow :: String -> String
+highAndLow input = unwords $ map show [maximum parsed, minimum parsed] 
+        where parsed =  map (\x -> read x :: Int) $ words input
+
+-- duplicateCount :: String -> Int
+duplicateCount str = length $ filter (\x -> length x > 1) $ groupBy (==) $ sort $ map toLower str 
