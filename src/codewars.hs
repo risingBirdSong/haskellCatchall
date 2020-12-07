@@ -1,6 +1,7 @@
 import Data.List
 import Data.Char
 import Data.Bool
+import Data.List.Split
 import qualified Data.Set as St
 
 
@@ -230,3 +231,6 @@ persistence n = go (map (\x -> read [x] :: Int) $ show n) 0
           where go n count
                   | length n == 1 = count 
                   | otherwise = go (map (\x -> read [x] :: Int) $ show (product n)) (count + 1)
+
+-- spinWords :: String -> String
+spinWords str = unwords $ map (\x -> if length x >= 5 then reverse x else x) $ words str
