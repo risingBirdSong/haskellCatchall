@@ -194,3 +194,5 @@ toListNums strnum = map (\x -> read [x] :: Int ) $ show strnum
 
 specialNum n = if all (<='5') $ show n then "Special!!" else "NOT!!"
 
+getCount :: String -> Int
+getCount str = length $ filter (`elem` "aeiou") str 
