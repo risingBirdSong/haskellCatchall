@@ -287,3 +287,11 @@ findOutlier_ xs
 anotherOutlier ns = case partition even ns of
    ([n], _) -> n 
    (_, [n]) -> n 
+
+-- squareDigit :: Int -> Int
+-- squareDigit :: Int -> Int
+squareDigit ns = go ns 
+            where go ns 
+                    | ns > 0 = logic ns
+                    | otherwise = negate $ logic (negate ns)
+                  logic ns = (\x -> read x :: Int) $ concat $ map (\x -> show x) $ map (\x -> (read [x] :: Int) ^ 2) $ show ns
