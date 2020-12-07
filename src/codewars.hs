@@ -295,3 +295,9 @@ squareDigit ns = go ns
                     | ns > 0 = logic ns
                     | otherwise = negate $ logic (negate ns)
                   logic ns = (\x -> read x :: Int) $ concat $ map (\x -> show x) $ map (\x -> (read [x] :: Int) ^ 2) $ show ns
+
+reject p = filter (not . p)
+
+disemvowel :: String -> String
+disemvowel = reject (`elem` "aeiouAEIOU") 
+
