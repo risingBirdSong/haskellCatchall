@@ -1,5 +1,5 @@
 import Data.List
-
+import Data.Char
 import Data.Bool
 import qualified Data.Set as St
 
@@ -196,3 +196,12 @@ specialNum n = if all (<='5') $ show n then "Special!!" else "NOT!!"
 
 getCount :: String -> Int
 getCount str = length $ filter (`elem` "aeiou") str 
+
+mult3or5 n = sum $ filter (\x -> x `mod` 3 == 0 || x `mod` 5 == 0) [1..(n-1)]
+
+oddExample = [1,1,2,2,3,3,3,4,4,4,4,3,3]
+-- findOdd :: [Int] -> Int
+findOdd xs = head $ head $ filter (odd . length) $ groupBy (==) $ sort xs
+
+pangram str = all (`elem` lwrCaseStr) ['a'..'z']
+          where lwrCaseStr = map toLower str
