@@ -205,3 +205,10 @@ findOdd xs = head $ head $ filter (odd . length) $ groupBy (==) $ sort xs
 
 pangram str = all (`elem` lwrCaseStr) ['a'..'z']
           where lwrCaseStr = map toLower str
+
+
+digitalRoot :: Integer -> Integer
+digitalRoot n = head $ go ( map (\x-> read [x] :: Integer) $ show n)
+  where go n   
+          | length n == 1 = n
+          | otherwise = go ( map (\x-> read [x] :: Integer) $ show (sum n))
