@@ -234,3 +234,10 @@ persistence n = go (map (\x -> read [x] :: Int) $ show n) 0
 
 -- spinWords :: String -> String
 spinWords str = unwords $ map (\x -> if length x >= 5 then reverse x else x) $ words str
+
+getMiddle :: String -> String
+getMiddle s 
+  | even $ length s = take 2 $ drop (length s `div` 2 - 1 ) s
+  | otherwise = take 1 $ drop (length s `div` 2) s
+
+-- oddDrop s = 
