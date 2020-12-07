@@ -1,5 +1,6 @@
-import GHC.Generics (Generic,Generic1)
 {-# LANGUAGE DeriveGeneric #-}
+import GHC.Generics (Generic,Generic1)
+import Data.List
 
 data Instruction = Add | Sub | Mul | Div | Dup | Pop deriving (Show , Eq, Ord, Read, Generic)
 type Stack = [Maybe Integer]
@@ -62,3 +63,14 @@ findMaxReducers  stack = map fst allthehighest
     where transformed = map (\x -> (x, evalInst stack x))  [findReducerA stack, findReducerB stack]
           themax = maximum $ map (snd) transformed
           allthehighest = filter (\(ins, stack) -> stack == themax) transformed
+
+
+optionalMath [x] mathacc = mathacc
+optionalMath (a:b:ls) mathacc = optionalMath ((maximum candidates):ls) ((mxmWithTie candidates) : mathacc)
+  where sub_ = a - b
+        add_ = a + b 
+        mult_ = a * b
+        pop_ = b 
+        candidates = [sub_, add_, mult_, pop_ ]
+
+mxmWithTie ns = head $ group $ reverse $ sort ns
