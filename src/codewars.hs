@@ -278,3 +278,12 @@ sofartuple =  uncurry lengthCompare ([1],[1,2,3])
 outlier nums = head $ go (partition even nums)
     where go ((a:b:ls), (c)) = c
           go ((c), (a:b:ls)) = c 
+
+findOutlier_ :: [Int] -> Int 
+findOutlier_ xs 
+  | [n] <- filter even xs = n
+  | [n] <- filter odd  xs = n
+
+anotherOutlier ns = case partition even ns of
+   ([n], _) -> n 
+   (_, [n]) -> n 
