@@ -272,3 +272,5 @@ maxLengthList ls = last $ sortBy (compare `on` length) ls
 
 sofartuple =  uncurry lengthCompare ([1],[1,2,3])
 
+-- this will not work, a Sum type requires a Data Constructor on every branch
+-- data ModifyMaybe a = a | Nada

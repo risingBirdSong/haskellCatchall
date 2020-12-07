@@ -1,4 +1,7 @@
-data Instruction = Add | Sub | Mul | Div | Dup | Pop deriving (Show , Eq, Ord, Read)
+import GHC.Generics (Generic,Generic1)
+{-# LANGUAGE DeriveGeneric #-}
+
+data Instruction = Add | Sub | Mul | Div | Dup | Pop deriving (Show , Eq, Ord, Read, Generic)
 type Stack = [Maybe Integer]
 type SMProg = [Instruction]
 -- may want to come back and clean this up, but happily heard back from Penelkata and this passes 100% of tests!
