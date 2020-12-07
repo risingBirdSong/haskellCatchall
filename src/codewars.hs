@@ -212,3 +212,21 @@ digitalRoot n = head $ go ( map (\x-> read [x] :: Integer) $ show n)
   where go n   
           | length n == 1 = n
           | otherwise = go ( map (\x-> read [x] :: Integer) $ show (sum n))
+
+cleverRoot :: Integral a => a -> a
+cleverRoot 0 = 0
+cleverRoot n = 1 + (n - 1) `mod` 9
+
+-- accum :: [Char] -> [Char]
+accum s = intercalate "-" $ map (\x -> toUpper (fst x) : replicate (snd x) (toLower (fst x)) ) $ zip s [0,1..]
+
+evenOrOdd :: Integral a => a -> [Char]
+evenOrOdd n 
+  | even n = "Even"
+  | otherwise = "Odd"
+
+persistence :: Int -> Int
+persistence n = go (map (\x -> read [x] :: Int) $ show n) 0
+          where go n count
+                  | length n == 1 = count 
+                  | otherwise = go (map (\x -> read [x] :: Int) $ show (product n)) (count + 1)
