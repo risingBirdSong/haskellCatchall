@@ -2,6 +2,7 @@ import Data.List
 import Data.Char
 import Data.Bool
 import Data.List.Split
+import Data.Function
 import qualified Data.Set as St
 
 
@@ -246,3 +247,28 @@ highAndLow input = unwords $ map show [maximum parsed, minimum parsed]
 
 -- duplicateCount :: String -> Int
 duplicateCount str = length $ filter (\x -> length x > 1) $ groupBy (==) $ sort $ map toLower str 
+
+-- Find The Parity Outlier
+
+prtyexample = [2, 4, 0, 100, 4, 11, 2602, 36]
+findOutlier ns 
+          | all even quickcheck = extract $ find odd ns
+          | otherwise = extract $ find even ns
+        where quickcheck = uncurry lengthCompare $ partition even $ take 10 ns  
+
+lengthCompare :: Foldable t => t a -> t a -> t a
+lengthCompare x y 
+  | length x > length y = x
+  | otherwise = y
+
+-- extract x 
+extract :: Maybe p -> p
+extract (Just x) = x
+extract Nothing = error "bad"
+
+-- maxLengthList :: [[a]] -> [a]
+-- maxLengthList :: Foldable t => t a -> Int -> Int
+maxLengthList ls = last $ sortBy (compare `on` length) ls 
+
+sofartuple =  uncurry lengthCompare ([1],[1,2,3])
+
