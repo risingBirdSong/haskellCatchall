@@ -18,4 +18,3 @@ mostOfChained x y = maxWithTie $ chainedFuncs x y
 
 -- [Just 0,Just 9,Just 4,Just 0]
 
-upToN n = [1..n]

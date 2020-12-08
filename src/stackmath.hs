@@ -1,6 +1,7 @@
 {-# LANGUAGE DeriveGeneric #-}
 import GHC.Generics (Generic,Generic1)
 import Data.List
+import Data.Ord
 
 data Instruction = Add | Sub | Mul | Div | Dup | Pop deriving (Show , Eq, Ord, Read, Generic)
 type Stack = [Maybe Integer]
@@ -58,19 +59,17 @@ example1 = [Just 0, Just 1, Just 4, Just 5]
 example2 = [Just 10, Just (-1), Just 4, Just 5]
 instructions1 = [Add,Add,Mul]
 
-findMaxReducers :: Stack -> [SMProg]
-findMaxReducers  stack = map fst allthehighest
-    where transformed = map (\x -> (x, evalInst stack x))  [findReducerA stack, findReducerB stack]
-          themax = maximum $ map (snd) transformed
-          allthehighest = filter (\(ins, stack) -> stack == themax) transformed
+-- part two 
 
+caller mybnums = handler mybnums [] [] 
+handler [] acc options = (acc,options)
+handler [x] acc options = (acc,options)
+handler (a:b:ns) acc options = handler ((head $ mostOfChained a b):ns) ((head $ mostOfChained a b):ns) (mostOfChained a b :options)
+   
+maxWithTie ls = head $ group $ sortBy (comparing Down)  ls
 
-optionalMath [x] mathacc = mathacc
-optionalMath (a:b:ls) mathacc = optionalMath ((maximum candidates):ls) ((mxmWithTie candidates) : mathacc)
-  where sub_ = a - b
-        add_ = a + b 
-        mult_ = a * b
-        pop_ = b 
-        candidates = [sub_, add_, mult_, pop_ ]
+chainedFuncs x y = map (\f -> f x y) [multMybe,addMyb,subMyb, take2nd]
 
-mxmWithTie ns = head $ group $ reverse $ sort ns
+take2nd _ y = y
+
+mostOfChained x y = maxWithTie $ chainedFuncs x y

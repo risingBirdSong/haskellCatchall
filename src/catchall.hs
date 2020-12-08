@@ -2,6 +2,8 @@ import Debug.Trace
 import Data.Bool
 import qualified Data.List as L
 import qualified Data.Map as M
+import Data.Ord 
+
 class C a where
   m                     :: Show b => a -> b
 
@@ -141,3 +143,5 @@ findRang lwr upr (x:xs)
 -- null' :: t a -> Bool
 null' :: Foldable t => t a -> Bool
 null' a = foldr (\_ _ -> False) True a
+
+
