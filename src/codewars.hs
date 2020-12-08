@@ -301,3 +301,18 @@ reject p = filter (not . p)
 disemvowel :: String -> String
 disemvowel = reject (`elem` "aeiouAEIOU") 
 
+
+-- findingOutlier xs = go 0 0 xs 
+--   where
+--     go e o (x:xs)
+--       | even x = if e == 0 then if o >= 2 then x else go 1 o xs else if e >= 1 then head (filter odd xs)
+--       | odd x = if o == 0  then if e >= 2 then x else go e 1 xs else if o >= 1 then head (filter even xs)
+
+difference :: Eq a => [a] -> [a] -> [a]
+difference as [] = as 
+difference as (b:bs) = difference (deleteAll b as) bs 
+
+deleteAll dlt [] = []
+deleteAll dlt (v:vs) 
+  | dlt == v = deleteAll dlt (vs)
+  | otherwise = v : deleteAll dlt (vs)
