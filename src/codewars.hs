@@ -316,3 +316,5 @@ deleteAll dlt [] = []
 deleteAll dlt (v:vs) 
   | dlt == v = deleteAll dlt (vs)
   | otherwise = v : deleteAll dlt (vs)
+
+difference_a as bs = filter (`notElem` bs) as
