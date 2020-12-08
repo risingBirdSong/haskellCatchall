@@ -33,6 +33,7 @@ dependencies:
 - utility-ht
 - matrix
 - array
+- sort 
 
 library:
   source-dirs: src

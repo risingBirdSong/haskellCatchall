@@ -1,7 +1,8 @@
 import Data.List
 import Data.Char
 import Data.Bool
-import Data.List.Split
+import Data.List.Split 
+import Data.Ord 
 import Data.Function
 import qualified Data.Set as St
 
@@ -328,3 +329,6 @@ difference_a as bs = filter (`notElem` bs) as
 
 yourOrderFirstStep ls = map (\x -> (find isDigit x, x)) $ words ls
 yourOrderPlease ls = unwords $ map (snd) $ sort $ map (\x -> (find isDigit x, x)) $ words ls
+
+yourOrderPleaseA :: String -> String
+yourOrderPleaseA = unwords . sortBy (comparing $ find isNumber) . words
