@@ -60,15 +60,20 @@ example2 = [Just 10, Just (-1), Just 4, Just 5]
 instructions1 = [Add,Add,Mul]
 
 -- part two 
+specializedoutput tup = (\(x , y) -> (x, reverse y)) tup
 
-caller mybnums = handler mybnums [] [] 
+-- findMaxReducers [] = specializedoutput $ handler mybnums [] [] 
+findMaxReducers mybnums = specializedoutput $ handler mybnums [] [] 
 handler [] acc options = (acc,options)
 handler [x] acc options = (acc,options)
 handler (a:b:ns) acc options = handler ((head $ mostOfChained a b):ns) ((head $ mostOfChained a b):ns) (mostOfChained a b :options)
    
 maxWithTie ls = head $ group $ sortBy (comparing Down)  ls
-
+maxWithTieIns ls = head $ groupBy (\(a,_) (aa,_) -> a == aa ) $ sortBy (comparing Down)  ls
+comparisonTestA = (Just 1) == (Just 2)
+comparisonTestB = (Just 2) == (Just 2)
 chainedFuncs x y = map (\f -> f x y) [multMybe,addMyb,subMyb, take2nd]
+chainedFuncsInst x y = map (\(f, ins) -> (f x y, ins) ) [(multMybe, Mul),(addMyb, Add),(subMyb, Sub), (take2nd, Pop)]
 
 take2nd _ y = y
 
