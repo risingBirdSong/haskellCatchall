@@ -332,3 +332,20 @@ yourOrderPlease ls = unwords $ map (snd) $ sort $ map (\x -> (find isDigit x, x)
 
 yourOrderPleaseA :: String -> String
 yourOrderPleaseA = unwords . sortBy (comparing $ find isNumber) . words
+
+dltAll src rmv = filter (`notElem` rmv) src
+
+-- tribonacci :: Num a => (a, a, a) -> Int -> [a]
+tribonacci (a, b, c) 0 = a 
+tribonacci (a, b, c) 1 = b
+tribonacci (a, b, c) 2 = c
+tribonacci (a, b, c) n = tribonacci (a,b,c) (n-3) + tribonacci (a,b,c) (n-2) + tribonacci (a,b,c) (n-1) 
+
+-- tribTest a b c = 
+
+-- fibs = 1 : 1 : 1 : zipWith (+) fibs (tail fibs) 
+
+fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
+
+-- https://wiki.haskell.org/The_Fibonacci_sequence
+fibby3 = 1 : 1 : 1 : zipWith3 (\x y z -> x + y + z) fibby3 (tail fibby3) (tail $ tail fibby3 )
