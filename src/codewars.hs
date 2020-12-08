@@ -360,16 +360,15 @@ fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
 l1 = [2,4,3]
 l2 = [5,6,4]
 
-addTwoNumbers as bs = (go as) + (go bs)  
-  where go ls = (\x -> read x :: Integer) $ reverse ls
+-- https://leetcode.com/problems/add-two-numbers/
+addTwoNumbers as bs = reverse $ numToDigits ((go as) + (go bs))  
+  where go ls = digitsConvert (reverse ls)
 
-go_ ls = read (reverse ls) :: [Char] 
-
--- [0,1,1,2,3,5..]
 digitsConvert ns = foldl (\acc x -> acc * 10 + x ) 0 ns
 
-
-
+numToDigits num = go num []
+  where go 0 acc = acc
+        go num acc = go (num `div` 10) (num `mod` 10 : acc)
 
 
 
