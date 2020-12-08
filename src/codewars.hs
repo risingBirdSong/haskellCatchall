@@ -1,5 +1,6 @@
 import Data.List
 import Data.Char
+import Debug.Trace
 import Data.Bool
 import Data.List.Split 
 import Data.Ord 
@@ -345,7 +346,47 @@ tribonacci (a, b, c) n = tribonacci (a,b,c) (n-3) + tribonacci (a,b,c) (n-2) + t
 
 -- fibs = 1 : 1 : 1 : zipWith (+) fibs (tail fibs) 
 
-fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
+-- fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
 
 -- https://wiki.haskell.org/The_Fibonacci_sequence
 fibby3 = 1 : 1 : 1 : zipWith3 (\x y z -> x + y + z) fibby3 (tail fibby3) (tail $ tail fibby3 )
+-- tribonacci (a, b, c) n = go  
+
+
+
+
+fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
+
+l1 = [2,4,3]
+l2 = [5,6,4]
+
+addTwoNumbers as bs = (go as) + (go bs)  
+  where go ls = (\x -> read x :: Integer) $ reverse ls
+
+go_ ls = read (reverse ls) :: [Char] 
+
+-- [0,1,1,2,3,5..]
+digitsConvert ns = foldl (\acc x -> acc * 10 + x ) 0 ns
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
