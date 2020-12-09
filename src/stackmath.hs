@@ -64,17 +64,24 @@ instructions1 = [Add,Add,Mul]
 specializedoutput tup = (\(x , y) -> (x, reverse y)) tup
 
 -- findMaxReducers [] = specializedoutput $ handler mybnums [] [] 
-findMaxReducers mybnums =  handler mybnums [] [] 
-handler [] (recent:acc) insAcc = (recent,insAcc)
-handler [x] (recent:r) insAcc = (recent,insAcc)
-handler (a:b:ns) acc insAcc 
-    | length (mostOfChainedIns a b) == 1 = handler ((head $ mostOfChained a b):ns) ((head $ mostOfChained a b):acc) ( instructionSingle  (map snd (mostOfChainedIns a b )) insAcc)
-    | length  (mostOfChainedIns a b) > 1 = handler ((head $ mostOfChained a b):ns) ((head $ mostOfChained a b):acc) ( instructionCombos (map snd (mostOfChainedIns a b )) insAcc)
+findMaxReducers mybnums = output $ handler mybnums [] [] 0 0 
+  where handler [] (recent:acc) insAcc count splits = (insAcc, splits)
+        handler [x] (recent:r) insAcc count splits = (insAcc, splits)
+        handler (a:b:ns) acc insAcc count splits
+          | length (mostOfChainedIns a b) == 1 = handler ((head $ mostOfChained a b):ns) ((head $ mostOfChained a b):acc) ( instructionSingle  (map snd (mostOfChainedIns a b )) insAcc) (count + 1) (splits)
+          | length  (mostOfChainedIns a b) > 1 = handler ((head $ mostOfChained a b):ns) ((head $ mostOfChained a b):acc) ( instructionCombos (map snd (mostOfChainedIns a b )) insAcc) (count + length  (mostOfChainedIns a b)) (splits + 1)
+        output = (\(accum, splits) -> take (splits + 1) accum)
+findMaxReducers_debug mybnums =  handler mybnums [] [] 0 0 
+  where handler [] (recent:acc) insAcc count splits = (recent,insAcc, "count -> " ++ show count , "splits -> " ++ show  splits)
+        handler [x] (recent:r) insAcc count splits = (recent,insAcc, "count -> " ++ show count, "splits -> " ++ show  splits)
+        handler (a:b:ns) acc insAcc count splits
+          | length (mostOfChainedIns a b) == 1 = handler ((head $ mostOfChained a b):ns) ((head $ mostOfChained a b):acc) ( instructionSingle  (map snd (mostOfChainedIns a b )) insAcc) (count + 1) (splits)
+          | length  (mostOfChainedIns a b) > 1 = handler ((head $ mostOfChained a b):ns) ((head $ mostOfChained a b):acc) ( instructionCombos (map snd (mostOfChainedIns a b )) insAcc) (count + length  (mostOfChainedIns a b)) (splits + 1)
    
 instructionCombos [] acc = acc
 instructionCombos (i:ins) acc = instructionCombos (ins) ([i]:acc)
 
-instructionSingle ins [] = []  
+instructionSingle ins [] = [ins]  
 instructionSingle ins (sub:subs) =  (sub ++ ins) : instructionSingle ins (subs)  
 
 instructionSingle_exclusive ins acc = (ins:acc)  
