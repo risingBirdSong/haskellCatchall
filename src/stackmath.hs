@@ -63,13 +63,19 @@ instructions1 = [Add,Add,Mul]
 specializedoutput tup = (\(x , y) -> (x, reverse y)) tup
 
 -- findMaxReducers [] = specializedoutput $ handler mybnums [] [] 
-findMaxReducers mybnums = specializedoutput $ handler mybnums [] [] 
-handler [] (recent:acc) options = (recent,options)
-handler [x] (recent:r) options = (recent,options)
-handler (a:b:ns) acc options 
-    | length (mostOfChainedIns a b) == 1 = handler ((head $ mostOfChained a b):ns) ((head $ mostOfChained a b):acc) ( map snd (mostOfChainedIns a b ):options)
-    | length  (mostOfChainedIns a b) > 1 = handler ((head $ mostOfChained a b):ns) ((head $ mostOfChained a b):acc) ( map snd (mostOfChainedIns a b ):options)
+findMaxReducers mybnums =  handler mybnums [] [] 
+handler [] (recent:acc) insAcc = (recent,insAcc)
+handler [x] (recent:r) insAcc = (recent,insAcc)
+handler (a:b:ns) acc insAcc 
+    | length (mostOfChainedIns a b) == 1 = handler ((head $ mostOfChained a b):ns) ((head $ mostOfChained a b):acc) ( instructionSingle  (map snd (mostOfChainedIns a b )) insAcc)
+    | length  (mostOfChainedIns a b) > 1 = handler ((head $ mostOfChained a b):ns) ((head $ mostOfChained a b):acc) ( instructionCombos (map snd (mostOfChainedIns a b )) insAcc)
    
+instructionCombos [] acc = acc
+instructionCombos (i:ins) acc = instructionCombos (ins) ([i]:acc)
+
+instructionSingle ins [] = []  
+instructionSingle ins (sub:subs) =  (sub ++ ins) : instructionSingle ins (subs)  
+
 maxWithTie ls = head $ group $ sortBy (comparing Down)  ls
 maxWithTieIns ls = head $ groupBy (\(a,_) (aa,_) -> a == aa ) $ sortBy (comparing Down)  ls
 comparisonTestA = (Just 1) == (Just 2)
