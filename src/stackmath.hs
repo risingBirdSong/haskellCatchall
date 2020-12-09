@@ -64,9 +64,11 @@ specializedoutput tup = (\(x , y) -> (x, reverse y)) tup
 
 -- findMaxReducers [] = specializedoutput $ handler mybnums [] [] 
 findMaxReducers mybnums = specializedoutput $ handler mybnums [] [] 
-handler [] acc options = (acc,options)
-handler [x] acc options = (acc,options)
-handler (a:b:ns) acc options = handler ((head $ mostOfChained a b):ns) ((head $ mostOfChained a b):ns) (mostOfChained a b :options)
+handler [] (recent:acc) options = (recent,options)
+handler [x] (recent:r) options = (recent,options)
+handler (a:b:ns) acc options 
+    | length (mostOfChainedIns a b) == 1 = handler ((head $ mostOfChained a b):ns) ((head $ mostOfChained a b):acc) ( map snd (mostOfChainedIns a b ):options)
+    | length  (mostOfChainedIns a b) > 1 = handler ((head $ mostOfChained a b):ns) ((head $ mostOfChained a b):acc) ( map snd (mostOfChainedIns a b ):options)
    
 maxWithTie ls = head $ group $ sortBy (comparing Down)  ls
 maxWithTieIns ls = head $ groupBy (\(a,_) (aa,_) -> a == aa ) $ sortBy (comparing Down)  ls
@@ -78,3 +80,4 @@ chainedFuncsInst x y = map (\(f, ins) -> (f x y, ins) ) [(multMybe, Mul),(addMyb
 take2nd _ y = y
 
 mostOfChained x y = maxWithTie $ chainedFuncs x y
+mostOfChainedIns x y = maxWithTieIns $ chainedFuncsInst x y
