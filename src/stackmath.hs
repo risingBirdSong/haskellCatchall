@@ -1,6 +1,7 @@
 {-# LANGUAGE DeriveGeneric #-}
 import GHC.Generics (Generic,Generic1)
 import Data.List
+import Data.List.Split
 import Data.Ord
 
 data Instruction = Add | Sub | Mul | Div | Dup | Pop deriving (Show , Eq, Ord, Read, Generic)
@@ -63,10 +64,10 @@ example2expected = [Sub, Mul, Mul]
 example3 = [Just 1, Just 2, Just 3, Just 4, Just 5]
 example3expected = [Add,Mul,Mul,Mul]
 
---run it through 
+--run it through A
 -- [Just 0,Just 9,Just 4,Just 0]
-------------------------------------------------------------------------
 -- acc []
+------------------------------------------------------------------------
 -- encounter 1 -> 0 9
 -- ins -> [Add, Pop] 
 --since the accumulator is empty, split the instructions into sublists
@@ -84,6 +85,53 @@ example3expected = [Add,Mul,Mul,Mul]
 -- since the accumulator already has sublists, and we have more than one instruction (2) we must duplicate the accumulated sublists, each sublist must get each new ins, while keeping the instructions separate, (meaning in this case that Sub, and Add wont be added to the same sublist at the same time)
 -- acc ->  [[Add,Mul,Sub],[Pop, Mul,Sub],[Add,Mul,Add],[Pop, Mul,Add]]
 -- stack -> [36]
+------------------------------------------------------------------------
+
+--run it through B
+-- [Just 0, Just 1, Just 4, Just 5]
+-- acc -> []
+------------------------------------------------------------------------
+-- encounter 1 -> 0 1
+-- ins -> [Pop, Add]
+-- length of ins is > 1, therefore split the ins, there are no sublists to duplicate, so insert both into the acc
+-- acc -> [[Pop], [Add]]
+-- stack -> [1,4,5] 
+------------------------------------------------------------------------
+-- encounter 2 -> 1 4
+-- ins -> [Add]
+-- length of ins is 1, the single instruction should be appended to each sublist
+-- acc -> [[Pop, Add], [Add,Add]]
+-- stack -> [5,5]
+------------------------------------------------------------------------
+-- encounter 3 -> 5 5
+-- ins -> [Mul]
+-- single instruction, and the accum has sublists, therefore append Mul to each sublist
+-- acc -> [[Pop, Add, Mul], [Add,Add, Mul]]
+-- stack [25]
+-- Checks Out 😌 (though order is different)
+------------------------------------------------------------------------
+
+--run it through C
+-- [Just 10, Just (-1), Just 4, Just 5]
+-- acc -> []
+------------------------------------------------------------------------
+-- encounter 1 -> 10 (-1)
+-- ins -> [Sub]
+-- the accumulator is empty, there for add the single instruction in
+-- acc -> [Sub]
+-- stack --> [11,4,5]
+------------------------------------------------------------------------
+-- encounter 2 -> 11 4
+-- ins -> [Mul]
+-- the accumulator is not split, therefore append Mul to the accum
+-- acc -> [Sub, Mul]
+-- stack --> [44,5]
+------------------------------------------------------------------------
+--encounter 3 -> 44 5
+-- ins -> [Mul]
+-- the accumulator is flat, therefore append the flat instruction to the end
+-- acc -> [Sub, Mul, Mul]
+--stack --> [220]
 ------------------------------------------------------------------------
 
 
@@ -122,29 +170,13 @@ specializedoutput tup = (\(x , y) -> (x, reverse y)) tup
 -- findMaxReducers [] = specializedoutput $ handler mybnums [] [] 
 -- findMaxReducers :: (Ord (f b), Applicative f, Num b) => [f b] -> [[Instruction]]
 
-findMaxReducers :: Stack -> [[Instruction]]
-findMaxReducers [] = [[]]
-findMaxReducers [x] = [[]]
+-- findMaxReducers :: Stack -> [[Instruction]]
+-- findMaxReducers stack = handler stack []
+--   where handler [] acc = acc 
+--         handler [x] acc = acc 
+--         handler (a:b:ls) acc 
+--           | length (getPairIns a b) == 1 =  
 
-
-findMaxReducersA :: Stack -> [[Instruction]]
-findMaxReducersA [] = [] 
-findMaxReducersA [x] = [[]] 
-findMaxReducersA [Just 0,Just 9,Just 4,Just 0] = [[Add,Mul,Sub],[Pop, Mul,Sub],[Add,Mul,Add],[Pop, Mul,Add]]
-findMaxReducersA mybnums = output $ handler mybnums [] [] 0 0 
-  where handler [] (recent:acc) insAcc count splits = (insAcc, splits)
-        handler [x] (recent:r) insAcc count splits = (insAcc, splits)
-        handler (a:b:ns) acc insAcc count splits
-          | length (mostOfChainedIns a b) == 1 = handler ((head $ mostOfChained a b):ns) ((head $ mostOfChained a b):acc) ( instructionSingle  (map snd (mostOfChainedIns a b )) insAcc) (count + 1) (splits)
-          | length  (mostOfChainedIns a b) > 1 = handler ((head $ mostOfChained a b):ns) ((head $ mostOfChained a b):acc) ( instructionCombos (map snd (mostOfChainedIns a b )) insAcc) (count + length  (mostOfChainedIns a b)) (splits + 1)
-        output = (\(accum, splits) -> take (splits + 1) accum)
-
-findMaxReducers_debug mybnums =  handler mybnums [] [] 0 0 
-  where handler [] (recent:acc) insAcc count splits = (recent,insAcc, "count -> " ++ show count , "splits -> " ++ show  splits)
-        handler [x] (recent:r) insAcc count splits = (recent,insAcc, "count -> " ++ show count, "splits -> " ++ show  splits)
-        handler (a:b:ns) acc insAcc count splits
-          | length (mostOfChainedIns a b) == 1 = handler ((head $ mostOfChained a b):ns) ((head $ mostOfChained a b):acc) ( instructionSingle  (map snd (mostOfChainedIns a b )) insAcc) (count + 1) (splits)
-          | length  (mostOfChainedIns a b) > 1 = handler ((head $ mostOfChained a b):ns) ((head $ mostOfChained a b):acc) ( instructionCombos (map snd (mostOfChainedIns a b )) insAcc) (count + length  (mostOfChainedIns a b)) (splits + 1)
    
 instructionCombos [] acc = acc
 instructionCombos (i:ins) acc = instructionCombos (ins) ([i]:acc)
@@ -160,11 +192,12 @@ maxWithTieIns ls = head $ groupBy (\(a,_) (aa,_) -> a == aa ) $ sortBy (comparin
 comparisonTestA = (Just 1) == (Just 2)
 comparisonTestB = (Just 2) == (Just 2)
 chainedFuncs x y = map (\f -> f x y) [multMybe,addMyb,subMyb, take2nd]
+chainedFuncsInst :: (Applicative f, Num b) => f b -> f b -> [(f b, Instruction)]
 chainedFuncsInst x y = map (\(f, ins) -> (f x y, ins) ) [(multMybe, Mul),(addMyb, Add),(subMyb, Sub), (take2nd, Pop)]
 
 take2nd _ y = y
 
-mostOfChained x y = maxWithTie $ chainedFuncs x y
+mostOfChained x y = head $ maxWithTie $ chainedFuncs x y
 mostOfChainedIns x y = maxWithTieIns $ chainedFuncsInst x y
 
 getPairIns x y = map (snd) $ mostOfChainedIns x y
