@@ -57,6 +57,7 @@ subMyb a b = ((-) <$> a <*> b)
 
 example1 = [Just 0, Just 1, Just 4, Just 5]
 example2 = [Just 10, Just (-1), Just 4, Just 5]
+example3 = [Just 1, Just 2, Just 3, Just 4, Just 5]
 instructions1 = [Add,Add,Mul]
 
 -- part two 
@@ -75,6 +76,9 @@ instructionCombos (i:ins) acc = instructionCombos (ins) ([i]:acc)
 
 instructionSingle ins [] = []  
 instructionSingle ins (sub:subs) =  (sub ++ ins) : instructionSingle ins (subs)  
+
+instructionSingle_exclusive ins acc = (ins:acc)  
+-- instructionSingle_exclusive ins (sub:subs) =  (sub ++ ins) : instructionSingle_exclusive ins (subs)  
 
 maxWithTie ls = head $ group $ sortBy (comparing Down)  ls
 maxWithTieIns ls = head $ groupBy (\(a,_) (aa,_) -> a == aa ) $ sortBy (comparing Down)  ls
