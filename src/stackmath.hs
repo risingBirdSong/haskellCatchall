@@ -61,6 +61,16 @@ example2 = [Just 10, Just (-1), Just 4, Just 5]
 -- HEADS UP!! , hey expected the stack to be 44, I got 220, and that makes more sense to me!  
 example2expected = [Sub, Mul, Mul]
 example3 = [Just 1, Just 2, Just 3, Just 4, Just 5]
+example3expected = [Add,Mul,Mul,Mul]
+
+example4 = [Just 0,Just 9,Just 4,Just 0]
+example5 =  [Just (-1),Just 5,Just (-7),Just 1,Just (-3),Just 8,Just 1]
+example6 = [Just 0,Just 0,Just 1]
+example7 = [Just 0,Just 0,Just 0,Just 0,Just 0,Just 1]
+example8 = [Just 0,Just 0,Just 0,Just 0,Just 0]
+-- experimenting with how to get 978 combos out of example 7 ...
+expr1 = subsequences example7
+expr2 =  map length expr1
 instructions1 = [Add,Add,Mul]
 
 -- part two 
