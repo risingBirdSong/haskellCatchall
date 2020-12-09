@@ -65,13 +65,26 @@ example3expected = [Add,Mul,Mul,Mul]
 
 --run it through 
 -- [Just 0,Just 9,Just 4,Just 0]
--- encounter 1 -> 0 9
+------------------------------------------------------------------------
 -- acc []
+-- encounter 1 -> 0 9
 -- ins -> [Add, Pop] 
 --since the accumulator is empty, split the instructions into sublists
 -- acc -> [[Add],[Pop]]
--- stack -> [9,4,9]
+-- stack -> [9,4,0]
+------------------------------------------------------------------------
 -- encounter 2 -> 9 4
+-- ins -> [Mul]
+-- the accumulator has two sublists, we want to add Mul to the end of all the sublists
+-- acc -> [[Add,Mul],[Pop, Mul]]
+-- stack -> [36,0]
+------------------------------------------------------------------------
+-- encounter 3 -> 36 0
+-- ins -> [Sub,Add]
+-- since the accumulator already has sublists, and we have more than one instruction (2) we must duplicate the accumulated sublists, each sublist must get each new ins, while keeping the instructions separate, (meaning in this case that Sub, and Add wont be added to the same sublist at the same time)
+-- acc ->  [[Add,Mul,Sub],[Pop, Mul,Sub],[Add,Mul,Add],[Pop, Mul,Add]]
+-- stack -> [36]
+------------------------------------------------------------------------
 
 
 example4 = [Just 0,Just 9,Just 4,Just 0]
@@ -81,7 +94,8 @@ example4HypothesisA = [[Add, Mul, Add],[Pop, Mul, Sub]]
 example4HypothesisB = [[Add, Mul],[Pop, Mul],[Add], [Sub]]
 example4HypothesisC = [[Add, Mul,Add],[Add, Mul,Sub],[Pop, Mul,Add],[Pop, Mul,Sub]]
 example4WORKS = [[Add, Mul,Add],[Add, Mul,Sub],[Pop, Mul,Add],[Pop, Mul,Sub]]
-example4HypothesisOrderMixed = [[Add, Mul,Add],[Add, Mul,Sub],[Pop, Mul,Add],[Pop, Mul,Sub]]
+example4doesMixedWork = [[Add,Mul,Sub],[Pop, Mul,Sub],[Add,Mul,Add],[Pop, Mul,Add]]
+example4HypothesisOrderMixed = [[Add, Mul,Sub],[Add, Mul,Add],[Pop, Mul,Add],[Pop, Mul,Sub]]
 
 example4End = [[Add],[Sub]]
 example5 =  [Just (-1),Just 5,Just (-7),Just 1,Just (-3),Just 8,Just 1]
@@ -116,7 +130,7 @@ findMaxReducers [x] = [[]]
 findMaxReducersA :: Stack -> [[Instruction]]
 findMaxReducersA [] = [] 
 findMaxReducersA [x] = [[]] 
-findMaxReducersA [Just 0,Just 9,Just 4,Just 0] =  [[Add, Mul,Add],[Add, Mul,Sub],[Pop, Mul,Add],[Pop, Mul,Sub]]
+findMaxReducersA [Just 0,Just 9,Just 4,Just 0] = [[Add,Mul,Sub],[Pop, Mul,Sub],[Add,Mul,Add],[Pop, Mul,Add]]
 findMaxReducersA mybnums = output $ handler mybnums [] [] 0 0 
   where handler [] (recent:acc) insAcc count splits = (insAcc, splits)
         handler [x] (recent:r) insAcc count splits = (insAcc, splits)
