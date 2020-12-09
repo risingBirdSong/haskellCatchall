@@ -56,7 +56,10 @@ addMyb a b = ((+) <$> a <*> b)
 subMyb a b = ((-) <$> a <*> b)
 
 example1 = [Just 0, Just 1, Just 4, Just 5]
+example1expected = [[Add,Add,Mul],[Pop,Add,Mul]]
 example2 = [Just 10, Just (-1), Just 4, Just 5]
+-- HEADS UP!! , hey expected the stack to be 44, I got 220, and that makes more sense to me!  
+example2expected = [Sub, Mul, Mul]
 example3 = [Just 1, Just 2, Just 3, Just 4, Just 5]
 instructions1 = [Add,Add,Mul]
 
