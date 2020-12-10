@@ -173,14 +173,15 @@ specializedoutput tup = (\(x , y) -> (x, reverse y)) tup
 
 -- im realizing I need a thoughtful way to know whether the accumulator is flat or nest.. I think the simplest way is to have a flag, defaulted to flat, if we ever get an insruction longer than 1, then we change the flag to nested...
 
--- findMaxReducers :: Stack -> [[Instruction]]
--- findMaxReducers stack = handler stack [] False
---   where handler [] acc nested = acc 
---         handler [x] acc nested = acc 
---         handler (a:b:ls) acc nested 
---           | length (getPairIns a b) == 1 && not nested = handler ((mostOfChained a b):ls) (acc ++[(getPairIns a b )]) nested
---           | length (getPairIns a b) == 1 && nested = handler ((mostOfChained a b):ls) (map (++ getPairIns a b) acc) nested
---           | length (getPairIns a b) > 1 && 
+findMaxReducers :: Stack -> [[Instruction]]
+findMaxReducers stack = handler stack [] False
+  where handler [] acc nested = acc 
+        handler [x] acc nested = acc 
+        handler (a:b:ls) acc nested 
+          | length (getPairIns a b) == 1 && not nested = handler ((mostOfChained a b):ls) (acc ++[(getPairIns a b )]) nested
+          | length (getPairIns a b) == 1 && nested = handler ((mostOfChained a b):ls) (map (++ getPairIns a b) acc) nested
+          | length (getPairIns a b) > 1 && nested = handler ((mostOfChained a b):ls) (handleSeveralInstructions acc (getPairIns a b)) True 
+          | length (getPairIns a b) > 1 && not nested = handler ((mostOfChained a b):ls) (acc ++ map (:[]) (getPairIns a b)) True 
 
    
 instructionCombos [] acc = acc
@@ -209,6 +210,7 @@ getPairIns x y = map (snd) $ mostOfChainedIns x y
 
 --  map (++[10]) [[1],[2],[3]]
 -- [[1,10],[2,10],[3,10]]
-handleSeveralInstructions originalAcc instructions = handler originalAcc [] instructions
+handleSeveralInstructions :: [[a]] -> [a] -> [[a]]
+handleSeveralInstructions originalAcc instructions = concat $ handler originalAcc [] instructions
     where handler originalAcc bigAccum [] = bigAccum  
-          handler originalAcc bigAccum (i:ins) = handler originalAcc ((map(++i)originalAcc):bigAccum) ins
+          handler originalAcc bigAccum (i:ins) = handler originalAcc ((map(++[i])originalAcc):bigAccum) ins
