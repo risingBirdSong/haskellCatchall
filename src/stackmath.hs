@@ -170,12 +170,14 @@ specializedoutput tup = (\(x , y) -> (x, reverse y)) tup
 -- findMaxReducers [] = specializedoutput $ handler mybnums [] [] 
 -- findMaxReducers :: (Ord (f b), Applicative f, Num b) => [f b] -> [[Instruction]]
 
+-- im realizing I need a thoughtful way to know whether the accumulator is flat or nest.. I think the simplest way is to have a flag, defaulted to flat, if we ever get an insruction longer than 1, then we change the flag to nested...
+
 -- findMaxReducers :: Stack -> [[Instruction]]
 -- findMaxReducers stack = handler stack []
 --   where handler [] acc = acc 
 --         handler [x] acc = acc 
 --         handler (a:b:ls) acc 
---           | length (getPairIns a b) == 1 =  
+--           | length (getPairIns a b) == 1 =  ((mostOfChained a b):ls) (:acc)
 
    
 instructionCombos [] acc = acc
