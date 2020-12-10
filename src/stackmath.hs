@@ -173,10 +173,10 @@ specializedoutput tup = (\(x , y) -> (x, reverse y)) tup
 
 -- im realizing I need a thoughtful way to know whether the accumulator is flat or nest.. I think the simplest way is to have a flag, defaulted to flat, if we ever get an insruction longer than 1, then we change the flag to nested...
 
-findMaxReducers :: Stack -> [[Instruction]]
+-- findMaxReducers :: Stack -> [[Instruction]]
 findMaxReducers stack = handler stack [] False
-  where handler [] acc nested = acc 
-        handler [x] acc nested = acc 
+  where handler [] acc nested = (acc, nested) 
+        handler [x] acc nested = (acc, nested) 
         handler (a:b:ls) acc nested 
           | length (getPairIns a b) == 1 && not nested = handler ((mostOfChained a b):ls) (acc ++[(getPairIns a b )]) nested
           | length (getPairIns a b) == 1 && nested = handler ((mostOfChained a b):ls) (map (++ getPairIns a b) acc) nested
