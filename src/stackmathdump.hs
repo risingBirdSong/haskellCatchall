@@ -17,3 +17,25 @@
 --         handler (a:b:ns) acc insAcc count splits
 --           | length (mostOfChainedIns a b) == 1 = handler ((head $ mostOfChained a b):ns) ((head $ mostOfChained a b):acc) ( instructionSingle  (map snd (mostOfChainedIns a b )) insAcc) (count + 1) (splits)
 --           | length  (mostOfChainedIns a b) > 1 = handler ((head $ mostOfChained a b):ns) ((head $ mostOfChained a b):acc) ( instructionCombos (map snd (mostOfChainedIns a b )) insAcc) (count + length  (mostOfChainedIns a b)) (splits + 1)
+
+-- findReducerB vals = reverse $ go vals []
+--   where go [x] acc = acc 
+--         go [] acc = acc
+--         go (a:b:ls) acc 
+--           | a > (Just 1) && b > (Just 1) = go ((multMybe a b):ls) (Mul:acc)
+--           | a == (Just 0) =  go (b:ls) (Pop:acc)
+--           | a == (Just 1) || b == (Just 1) = go (addMyb a b:ls) (Add:acc)
+--           | a >= (Just 0) && b < (Just 0) = go (subMyb a b:ls) (Sub:acc)
+--           | a < (Just 0) && a >= b = go (subMyb a b :ls) (Sub:acc)
+--           | a < (Just 0) && a < b = go (b:ls) (Pop:acc)
+
+-- findReducerA vals = reverse $ go vals []
+--   where go [x] acc = acc 
+--         go [] acc = acc
+--         go (a:b:ls) acc 
+--           | a > (Just 1) && b > (Just 1) = go ((multMybe a b):ls) (Mul:acc)
+--           | a == (Just 0) = go ((addMyb a b):ls) (Add:acc)
+--           | a == (Just 1) || b == (Just 1) = go ((addMyb a b):ls) (Add:acc)
+--           | a >= (Just 0) && b < (Just 0) = go ((subMyb a b):ls) (Sub:acc)
+--           | a < (Just 0) && a >= b = go ((subMyb a b):ls) (Sub:acc)
+--           | a < (Just 0) && a < b = go (b:ls) (Pop:acc)

@@ -1,7 +1,6 @@
 {-# LANGUAGE DeriveGeneric #-}
 import GHC.Generics (Generic,Generic1)
 import Data.List
-import Data.List.Split
 import Data.Ord
 
 data Instruction = Add | Sub | Mul | Div | Dup | Pop deriving (Show , Eq, Ord, Read, Generic)
@@ -27,34 +26,16 @@ evalInst (top:stack) (p:programs)
 myDiv :: Maybe Int
 myDiv = div <$> Just 30 <*> Just 3
 
-
-findReducerA vals = reverse $ go vals []
-  where go [x] acc = acc 
-        go [] acc = acc
-        go (a:b:ls) acc 
-          | a > (Just 1) && b > (Just 1) = go ((multMybe a b):ls) (Mul:acc)
-          | a == (Just 0) = go ((addMyb a b):ls) (Add:acc)
-          | a == (Just 1) || b == (Just 1) = go ((addMyb a b):ls) (Add:acc)
-          | a >= (Just 0) && b < (Just 0) = go ((subMyb a b):ls) (Sub:acc)
-          | a < (Just 0) && a >= b = go ((subMyb a b):ls) (Sub:acc)
-          | a < (Just 0) && a < b = go (b:ls) (Pop:acc)
-
-findReducerB vals = reverse $ go vals []
-  where go [x] acc = acc 
-        go [] acc = acc
-        go (a:b:ls) acc 
-          | a > (Just 1) && b > (Just 1) = go ((multMybe a b):ls) (Mul:acc)
-          | a == (Just 0) =  go (b:ls) (Pop:acc)
-          | a == (Just 1) || b == (Just 1) = go (addMyb a b:ls) (Add:acc)
-          | a >= (Just 0) && b < (Just 0) = go (subMyb a b:ls) (Sub:acc)
-          | a < (Just 0) && a >= b = go (subMyb a b :ls) (Sub:acc)
-          | a < (Just 0) && a < b = go (b:ls) (Pop:acc)
 -- -5 -1 -> pop, because its greater than subtraction
 -- -1 -4 -> sub, because its greater than two pops
 
+multMybe :: (Applicative f, Num b) => f b -> f b -> f b
 multMybe a b = ((*) <$> a <*> b )
 addMyb a b = ((+) <$> a <*> b)
 subMyb a b = ((-) <$> a <*> b)
+
+divMyb (Just 0) (Just 0) = Nothing
+divMyb a b = ((div) <$> a <*> b)
 
 
 --run it through A
@@ -132,6 +113,7 @@ example1 = [Just 0, Just 1, Just 4, Just 5]
 example1expected = [[Add,Add,Mul],[Pop,Add,Mul]]
 example2 = [Just 10, Just (-1), Just 4, Just 5]
 -- HEADS UP!! , hey expected the stack to be 44, I got 220, and that makes more sense to me!  
+example2expected :: [Instruction]
 example2expected = [Sub, Mul, Mul]
 example3 = [Just 1, Just 2, Just 3, Just 4, Just 5]
 example3expected = [Add,Mul,Mul,Mul]
@@ -173,16 +155,21 @@ specializedoutput tup = (\(x , y) -> (x, reverse y)) tup
 
 -- im realizing I need a thoughtful way to know whether the accumulator is flat or nest.. I think the simplest way is to have a flag, defaulted to flat, if we ever get an insruction longer than 1, then we change the flag to nested...
 
--- findMaxReducers :: Stack -> [[Instruction]]
-findMaxReducers stack = handler stack [] False
-  where handler [] acc nested = (acc, nested) 
-        handler [x] acc nested = (acc, nested) 
-        handler (a:b:ls) acc nested 
-          | length (getPairIns a b) == 1 && not nested = handler ((mostOfChained a b):ls) (acc ++[(getPairIns a b )]) nested
-          | length (getPairIns a b) == 1 && nested = handler ((mostOfChained a b):ls) (map (++ getPairIns a b) acc) nested
-          | length (getPairIns a b) > 1 && nested = handler ((mostOfChained a b):ls) (handleSeveralInstructions acc (getPairIns a b)) True 
-          | length (getPairIns a b) > 1 && not nested = handler ((mostOfChained a b):ls) (acc ++ map (:[]) (getPairIns a b)) True 
-
+-- findMaxReducers :: Stack -> [SMProg]
+findMaxReducers :: Stack -> [SMProg]
+findMaxReducers [] = [] 
+findMaxReducers [x] = [[]]
+findMaxReducers stack = output $ handler stack [] False
+  where handler [] acc nested  = (acc, nested) 
+        handler [x] acc nested  = (acc, nested) 
+        handler (a:b:ls) acc nested  
+          | length (getPairIns a b) == 1 && not nested = handler ((mostOfChained a b):ls) (acc ++[(getPairIns a b )]) nested 
+          | length (getPairIns a b) == 1 && nested = handler ((mostOfChained a b):ls) (map (++ getPairIns a b) acc) nested 
+          | length (getPairIns a b) > 1 && nested = handler ((mostOfChained a b):ls) (handleSeveralInstructions acc (getPairIns a b)) True  
+          | length (getPairIns a b) > 1 && not nested =  handler ((mostOfChained a b):ls) (acc ++ map (:[]) (getPairIns a b)) True 
+        output (acc, isNested)  
+              | isNested = acc 
+              | not isNested = [(concat acc)]
    
 instructionCombos [] acc = acc
 instructionCombos (i:ins) acc = instructionCombos (ins) ([i]:acc)
@@ -197,13 +184,14 @@ maxWithTie ls = head $ group $ sortBy (comparing Down)  ls
 maxWithTieIns ls = head $ groupBy (\(a,_) (aa,_) -> a == aa ) $ sortBy (comparing Down)  ls
 comparisonTestA = (Just 1) == (Just 2)
 comparisonTestB = (Just 2) == (Just 2)
-chainedFuncs x y = map (\f -> f x y) [multMybe,addMyb,subMyb, take2nd]
-chainedFuncsInst :: (Applicative f, Num b) => f b -> f b -> [(f b, Instruction)]
-chainedFuncsInst x y = map (\(f, ins) -> (f x y, ins) ) [(multMybe, Mul),(addMyb, Add),(subMyb, Sub), (take2nd, Pop)]
+chainedFuncs x y = map (\f -> f x y) [multMybe,addMyb,subMyb, take2nd, divMyb]
+-- chainedFuncsInst :: (Applicative f, Num b) => f b -> f b -> [(f b, Instruction)]
+chainedFuncsInst x y = map (\(f, ins) -> (f x y, ins) ) [(multMybe, Mul),(addMyb, Add),(subMyb, Sub), (take2nd, Pop), (divMyb, Div)]
 
 take2nd _ y = y
 
 mostOfChained x y = head $ maxWithTie $ chainedFuncs x y
+
 mostOfChainedIns x y = maxWithTieIns $ chainedFuncsInst x y
 
 getPairIns x y = map (snd) $ mostOfChainedIns x y
@@ -214,3 +202,7 @@ handleSeveralInstructions :: [[a]] -> [a] -> [[a]]
 handleSeveralInstructions originalAcc instructions = concat $ handler originalAcc [] instructions
     where handler originalAcc bigAccum [] = bigAccum  
           handler originalAcc bigAccum (i:ins) = handler originalAcc ((map(++[i])originalAcc):bigAccum) ins
+
+
+summoning 0 = 0
+summoning n = (sum $ map (2^) [1..n]) + summoning (n-1)  
