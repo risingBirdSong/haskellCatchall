@@ -56,13 +56,6 @@ multMybe a b = ((*) <$> a <*> b )
 addMyb a b = ((+) <$> a <*> b)
 subMyb a b = ((-) <$> a <*> b)
 
-example1 = [Just 0, Just 1, Just 4, Just 5]
-example1expected = [[Add,Add,Mul],[Pop,Add,Mul]]
-example2 = [Just 10, Just (-1), Just 4, Just 5]
--- HEADS UP!! , hey expected the stack to be 44, I got 220, and that makes more sense to me!  
-example2expected = [Sub, Mul, Mul]
-example3 = [Just 1, Just 2, Just 3, Just 4, Just 5]
-example3expected = [Add,Mul,Mul,Mul]
 
 --run it through A
 -- [Just 0,Just 9,Just 4,Just 0]
@@ -135,6 +128,14 @@ example3expected = [Add,Mul,Mul,Mul]
 ------------------------------------------------------------------------
 
 
+example1 = [Just 0, Just 1, Just 4, Just 5]
+example1expected = [[Add,Add,Mul],[Pop,Add,Mul]]
+example2 = [Just 10, Just (-1), Just 4, Just 5]
+-- HEADS UP!! , hey expected the stack to be 44, I got 220, and that makes more sense to me!  
+example2expected = [Sub, Mul, Mul]
+example3 = [Just 1, Just 2, Just 3, Just 4, Just 5]
+example3expected = [Add,Mul,Mul,Mul]
+
 example4 = [Just 0,Just 9,Just 4,Just 0]
 example4first = [[Add],[Pop]]
 example4Middle = [[Mul]]  
@@ -173,11 +174,13 @@ specializedoutput tup = (\(x , y) -> (x, reverse y)) tup
 -- im realizing I need a thoughtful way to know whether the accumulator is flat or nest.. I think the simplest way is to have a flag, defaulted to flat, if we ever get an insruction longer than 1, then we change the flag to nested...
 
 -- findMaxReducers :: Stack -> [[Instruction]]
--- findMaxReducers stack = handler stack []
---   where handler [] acc = acc 
---         handler [x] acc = acc 
---         handler (a:b:ls) acc 
---           | length (getPairIns a b) == 1 =  ((mostOfChained a b):ls) (:acc)
+-- findMaxReducers stack = handler stack [] False
+--   where handler [] acc nested = acc 
+--         handler [x] acc nested = acc 
+--         handler (a:b:ls) acc nested 
+--           | length (getPairIns a b) == 1 && not nested = handler ((mostOfChained a b):ls) (acc ++[(getPairIns a b )]) nested
+--           | length (getPairIns a b) == 1 && nested = handler ((mostOfChained a b):ls) (map (++ getPairIns a b) acc) nested
+--           | length (getPairIns a b) > 1 && 
 
    
 instructionCombos [] acc = acc
@@ -203,3 +206,9 @@ mostOfChained x y = head $ maxWithTie $ chainedFuncs x y
 mostOfChainedIns x y = maxWithTieIns $ chainedFuncsInst x y
 
 getPairIns x y = map (snd) $ mostOfChainedIns x y
+
+--  map (++[10]) [[1],[2],[3]]
+-- [[1,10],[2,10],[3,10]]
+handleSeveralInstructions originalAcc instructions = handler originalAcc [] instructions
+    where handler originalAcc bigAccum [] = bigAccum  
+          handler originalAcc bigAccum (i:ins) = handler originalAcc ((map(++i)originalAcc):bigAccum) ins
