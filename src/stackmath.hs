@@ -34,7 +34,7 @@ multMybe a b = ((*) <$> a <*> b )
 addMyb a b = ((+) <$> a <*> b)
 subMyb a b = ((-) <$> a <*> b)
 
-divMyb (Just 0) (Just 0) = Nothing
+divMyb a (Just 0) = Nothing
 divMyb a b = ((div) <$> a <*> b)
 
 
@@ -192,8 +192,13 @@ take2nd _ y = y
 
 mostOfChained x y = head $ maxWithTie $ chainedFuncs x y
 
+-- mostOfChainedIns (Just 0) (Just 0) = [
 mostOfChainedIns x y = maxWithTieIns $ chainedFuncsInst x y
 
+
+
+-- getPairIns (Just 0) (Just 0) = map (snd) $ mostOfChainedIns x y
+getPairIns (Just 0)(Just 0) = [Pop,Mul,Sub,Add, Div]
 getPairIns x y = map (snd) $ mostOfChainedIns x y
 
 --  map (++[10]) [[1],[2],[3]]
@@ -203,6 +208,8 @@ handleSeveralInstructions originalAcc instructions = concat $ handler originalAc
     where handler originalAcc bigAccum [] = bigAccum  
           handler originalAcc bigAccum (i:ins) = handler originalAcc ((map(++[i])originalAcc):bigAccum) ins
 
+--  length $ filter ((==) Div) [Div,Sub,Div]
+singleDivSubLists subl = length $ filter ((==) Div) subl
 
 summoning 0 = 0
 summoning n = (sum $ map (2^) [1..n]) + summoning (n-1)  
