@@ -208,8 +208,14 @@ handleSeveralInstructions originalAcc instructions = concat $ handler originalAc
     where handler originalAcc bigAccum [] = bigAccum  
           handler originalAcc bigAccum (i:ins) = handler originalAcc ((map(++[i])originalAcc):bigAccum) ins
 
+
 --  length $ filter ((==) Div) [Div,Sub,Div]
 singleDivSubLists subl = length $ filter ((==) Div) subl
+mapOfDivSubLists =  map (singleDivSubLists) (findMaxReducers example7)
+
+grouped =  group (reverse $ sort mapOfDivSubLists)
+
+sumsOfGroups = [8,96,384,512,0]
 
 summoning 0 = 0
 summoning n = (sum $ map (2^) [1..n]) + summoning (n-1)  
