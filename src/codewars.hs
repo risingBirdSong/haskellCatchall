@@ -373,12 +373,11 @@ numToDigits num = go num []
 
 
 
+isSquare :: Integral n => n -> Bool
 
+isSquare n = ((round (sqrt (fromIntegral n))) ^ 2) == round (fromIntegral n)
 
-
-
-
-
+getTheSquares n = filter (isSquare) [1..n]
 
 
 
