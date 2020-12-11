@@ -388,11 +388,13 @@ mapper str = go str M.empty
           | (M.member s m) == True = go ls (M.insert s ((fromMaybe 1000 (M.lookup s m)) + 1) m )
           | otherwise = go ls (M.insert s 1 m)
 
+duplicateEncode :: String -> String
 duplicateEncode str = go str 
-    where mapped = mapper str 
+    where mapped = mapper $ map toLower str
           go [] = [] 
-          go (s:ls) = (if M.lookup s mapped == (Just 1) then '(' else ')') : go ls
+          go (s:ls) = (if M.lookup (toLower s) mapped == (Just 1) then '(' else ')') : go ls
 
 
 
-
+isIsogram :: String -> Bool
+isIsogram str = length str == length (St.fromList str)
