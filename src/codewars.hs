@@ -427,13 +427,14 @@ dnaconvert C = G
 
 -- xo :: String -> Bool
 
-xo str 
-  | containsAnother str > 0 && (noXs str) `xor` (noOs str) = False
-  | (noOs str) && noXs str = True
-  | otherwise = uncurry (\a b -> length a == length b) $ partition (=='x') $ map toLower str
+-- xo str = mapped str
+  -- where mapped str = 
 
-containsAnother str = length $  filter (`notElem` "xoXO") str
-noXs ls = 0 == (length $ filter (`elem` "xX") ls)
-noOs ls = 0 == (length $ filter (`elem` "oO")ls)
-xotes str = partition (=='x') str
+count :: (Ord a, Integral b) => [a] -> M.Map a b
+count =
+  foldr updateMap M.empty
+    where updateMap v counts
+            | M.member v counts = M.adjust succ v counts
+            | otherwise           = M.insert v 1 counts 
+
 -- uncry val = uncurry (\a b -> length a == length b) $ map toLower val
