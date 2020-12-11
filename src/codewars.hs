@@ -403,3 +403,12 @@ createPhoneNumber :: [Int] -> String
 createPhoneNumber ls = "(" ++ l 0 ++ l 1 ++ l 2 ++ ") " ++ l 3 ++ l 4 ++ l 5 ++ "-" ++ l 6 ++ l 7 ++ l 8 ++ l 9 
   where s n = show n 
         l n = s (ls !! n)
+
+
+stringplaya =  map (\[x] -> x) ["1","2","3"]
+
+format :: String -> String
+format [a,b,c,d,e,f,g,h,i,j] = ['(',a,b,c,')',' ',d,e,f,'-',g,h,i,j]
+
+createPhoneNumberA :: [Int] -> String
+createPhoneNumberA = format . map intToDigit 
