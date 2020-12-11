@@ -4,6 +4,7 @@ import Debug.Trace
 import Data.Bool
 import Data.List.Split 
 import Data.Ord 
+import qualified Data.Map as M 
 import Data.Function
 import qualified Data.Set as St
 
@@ -380,7 +381,8 @@ isSquare n = ((round (sqrt (fromIntegral n))) ^ 2) == round (fromIntegral n)
 getTheSquares n = filter (isSquare) [1..n]
 
 
-
+mapper [] m = m 
+mapper (l:ls) m = mapper ls (M.insert l l m)
 
 
 
