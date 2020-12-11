@@ -388,13 +388,10 @@ mapper str = go str M.empty
           | (M.member s m) == True = go ls (M.insert s ((fromMaybe 1000 (M.lookup s m)) + 1) m )
           | otherwise = go ls (M.insert s 1 m)
 
-
-
-
-  -- | M.lookup l m  
-  -- | M.insert l l
-
-
+duplicateEncode str = go str 
+    where mapped = mapper str 
+          go [] = [] 
+          go (s:ls) = (if M.lookup s mapped == (Just 1) then '(' else ')') : go ls
 
 
 
