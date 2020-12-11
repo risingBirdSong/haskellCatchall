@@ -397,4 +397,9 @@ duplicateEncode str = go str
 
 
 isIsogram :: String -> Bool
-isIsogram str = length str == length (St.fromList str)
+isIsogram str = length str == length (St.fromList $ map toLower str)
+
+createPhoneNumber :: [Int] -> String
+createPhoneNumber ls = "(" ++ l 0 ++ l 1 ++ l 2 ++ ") " ++ l 3 ++ l 4 ++ l 5 ++ "-" ++ l 6 ++ l 7 ++ l 8 ++ l 9 
+  where s n = show n 
+        l n = s (ls !! n)
