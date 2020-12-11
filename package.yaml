@@ -34,7 +34,6 @@ dependencies:
 - matrix
 - array
 - sort 
-- text-format-simple
 
 library:
   source-dirs: src

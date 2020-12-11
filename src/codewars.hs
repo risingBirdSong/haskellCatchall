@@ -8,6 +8,7 @@ import Data.Ord
 import qualified Data.Map as M 
 import Data.Function
 import qualified Data.Set as St
+import Data.Bits
 
 
 automorphic_a :: Integer -> String
@@ -412,3 +413,27 @@ format [a,b,c,d,e,f,g,h,i,j] = ['(',a,b,c,')',' ',d,e,f,'-',g,h,i,j]
 
 createPhoneNumberA :: [Int] -> String
 createPhoneNumberA = format . map intToDigit 
+
+data Base = A | T | G | C deriving Show
+type DNA = [Base]
+
+dnaStrand :: DNA -> DNA
+dnaStrand dna = map dnaconvert dna 
+
+dnaconvert A = T
+dnaconvert T = A
+dnaconvert G = C
+dnaconvert C = G
+
+-- xo :: String -> Bool
+
+xo str 
+  | containsAnother str > 0 && (noXs str) `xor` (noOs str) = False
+  | (noOs str) && noXs str = True
+  | otherwise = uncurry (\a b -> length a == length b) $ partition (=='x') $ map toLower str
+
+containsAnother str = length $  filter (`notElem` "xoXO") str
+noXs ls = 0 == (length $ filter (`elem` "xX") ls)
+noOs ls = 0 == (length $ filter (`elem` "oO")ls)
+xotes str = partition (=='x') str
+-- uncry val = uncurry (\a b -> length a == length b) $ map toLower val
