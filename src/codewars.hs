@@ -3,6 +3,7 @@ import Data.Char
 import Debug.Trace
 import Data.Bool
 import Data.List.Split 
+import Data.Maybe
 import Data.Ord 
 import qualified Data.Map as M 
 import Data.Function
@@ -381,9 +382,17 @@ isSquare n = ((round (sqrt (fromIntegral n))) ^ 2) == round (fromIntegral n)
 getTheSquares n = filter (isSquare) [1..n]
 
 
-mapper [] m = m 
-mapper (l:ls) m = mapper ls (M.insert l l m)
+mapper str = go str M.empty      
+  where go [] m = m 
+        go (s:ls) m 
+          | (M.member s m) == True = go ls (M.insert s ((fromMaybe 1000 (M.lookup s m)) + 1) m )
+          | otherwise = go ls (M.insert s 1 m)
 
+
+
+
+  -- | M.lookup l m  
+  -- | M.insert l l
 
 
 
