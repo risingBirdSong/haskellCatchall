@@ -445,8 +445,11 @@ count =
 buildingAPile 1 = 1
 buildingAPile n = (n^3) + buildingAPile (n-1)
 
-buildingAPileList 1 = []
-buildingAPileList n = (n^3) : buildingAPileList (n-1)
+buildingAPileList cutoff  = go 0 0
+    where go n acc
+            | n >= cutoff = [] 
+            | otherwise = (n^3 + acc) : go (n+1) (n ^ 3)
+
 
 findNb :: Integer -> Integer
 findNb n = reduced
@@ -462,11 +465,17 @@ reversingAPile m = go m 0
 reversingAPileList m = go m 0  
   where go m n 
           | m <= 0 = []
-          | otherwise = ((m - n ^ 3), n ) : go (m - n ^ 3) (n + 1)
+          | otherwise = ((m - n ^ 3), n ^ 3 ) : go (m - n ^ 3) (n + 1)
 
-builtPile_1000 = buildingAPileList 1000
-builtPile_100 = buildingAPileList 100
-builtPile_10 = buildingAPileList 10
+-- builtPile_1000 = reverse $ buildingAPileList 1000
+-- builtPile_100 = reverse $ buildingAPileList 100
+-- builtPile_50 = reverse $ buildingAPileList 50
+-- builtPile_10 = buildingAPileList 10
+
+buildingListGrowth lst = go lst
+  where go [] = [] 
+        go [x] = [x] 
+        go (a:b:ls) = (b-a) : go ((b-a):ls)  
 
 findNbFirstAttempt_inefficient n 
       | builtpile == n = reversedpile
@@ -474,10 +483,23 @@ findNbFirstAttempt_inefficient n
     where builtpile = buildingAPile reversedpile 
           reversedpile = reversingAPile n
 
-
+-- https://stackoverflow.com/questions/58481565/how-to-test-if-a-number-is-a-power-of-2
 isItAPowerOfTwo n = go n 10
     where go n count 
             | not (isInt n) = (False, n)
             | count == 0 || n == 1 = (True, n)
             | otherwise = go ((/) n 2) (count - 1)
 
+isPot :: (RealFrac b, Floating b) => b -> Bool
+isPot = ((==) <*> (fromInteger . round)) . logBase 2
+
+isPwer3 = ((==) <*> (fromInteger . round)) . logBase 3
+
+interesting_logBaseOfPowersOfTwo =  map (\x -> (logBase 2 x, (round x))) $ map (2^) [1..20]
+-- [(1.0,2),(2.0,4),(3.0,8),(4.0,16),(5.0,32),(6.0,64),(7.0,128),(8.0,256),(9.0,512),(10.0,1024),(11.0,2048),(12.0,4096),(13.0,8192),(14.0,16384),(15.0,32768),(16.0,65536),(17.0,131072),(18.0,262144),(19.0,524288),(20.0,1048576)]
+
+justMPile n = St.fromList $ map fst $ reversingAPileList n 
+
+
+pileScanElem m n = m `elem` (scanl (+) 0 $ map (^3) [1..n])
+pileScan n = (scanl (+) 0 $ map (^3) [1..n])
