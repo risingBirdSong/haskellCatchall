@@ -475,7 +475,9 @@ findNbFirstAttempt_inefficient n
           reversedpile = reversingAPile n
 
 
-decimalValue n = n - (fromIntegral(floor(n)))
-
--- isItAPowerOfTwo n count 
+isItAPowerOfTwo n = go n 10
+    where go n count 
+            | not (isInt n) = (False, n)
+            | count == 0 || n == 1 = (True, n)
+            | otherwise = go ((/) n 2) (count - 1)
 
