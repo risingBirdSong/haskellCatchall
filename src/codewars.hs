@@ -519,3 +519,12 @@ findNb m = fromMaybe (-1) $ M.lookup m myBigPileMap
 
 addtorial 0 = 0 
 addtorial n = n + addtorial (n-1)
+
+
+sumOfN n = n * (n+1) 
+            `div` 2 
+-- sumofNSqr :: Int -> Int
+sumOfNSqr n = n * (n + 1) * (2 * n + 1) 
+              `div` 6  
+
+sumOfNCube n = (n ^ 2) * ((n + 1) ^ 2) `div` 4
