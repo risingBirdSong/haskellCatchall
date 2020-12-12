@@ -445,6 +445,9 @@ count =
 buildingAPile 1 = 1
 buildingAPile n = (n^3) + buildingAPile (n-1)
 
+buildingAPileList 1 = []
+buildingAPileList n = (n^3) : buildingAPileList (n-1)
+
 findNb :: Integer -> Integer
 findNb n = reduced
   where reduced = reversingAPile n
@@ -461,6 +464,10 @@ reversingAPileList m = go m 0
           | m <= 0 = []
           | otherwise = ((m - n ^ 3), n ) : go (m - n ^ 3) (n + 1)
 
+builtPile_1000 = buildingAPileList 1000
+builtPile_100 = buildingAPileList 100
+builtPile_10 = buildingAPileList 10
+
 findNbFirstAttempt_inefficient n 
       | builtpile == n = reversedpile
       | otherwise = (-1)
@@ -468,4 +475,7 @@ findNbFirstAttempt_inefficient n
           reversedpile = reversingAPile n
 
 
+decimalValue n = n - (fromIntegral(floor(n)))
+
+-- isItAPowerOfTwo n count 
 
