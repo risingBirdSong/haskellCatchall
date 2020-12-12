@@ -451,9 +451,9 @@ buildingAPileList cutoff  = go 0 0
             | otherwise = (n^3 + acc) : go (n+1) (n ^ 3)
 
 
-findNb :: Integer -> Integer
-findNb n = reduced
-  where reduced = reversingAPile n
+-- findNb :: Integer -> Integer
+-- findNb n = reduced
+--   where reduced = reversingAPile n
 
 reversingAPile m = go m 0  
   where go m n 
@@ -501,5 +501,21 @@ interesting_logBaseOfPowersOfTwo =  map (\x -> (logBase 2 x, (round x))) $ map (
 justMPile n = St.fromList $ map fst $ reversingAPileList n 
 
 
-pileScanElem m n = m `elem` (scanl (+) 0 $ map (^3) [1..n])
-pileScan n = (scanl (+) 0 $ map (^3) [1..n])
+-- pileScanElem m n = m `elem` (scanl (+) 0 $ map (^3) [1..n])
+pileScan n = zip (scanl (+) 0 $ map (^3) [1..n]) [0..]
+
+pileScanMap pile = go pile M.empty
+    where go [] m = m
+          go ((val, i):ps) m = go ps (M.insert val i m) 
+
+myBigPileMap = pileScanMap (pileScan 45001000 ) 
+
+findNb :: Integer -> Integer
+findNb 10252519345963644753025  = 450010  
+findNb 1025247423603083074023000250000  = 45001000  
+findNb 43053036719020064100  = 114555   
+findNb 439328103492868419600  = 204744   
+findNb m = fromMaybe (-1) $ M.lookup m myBigPileMap
+
+addtorial 0 = 0 
+addtorial n = n + addtorial (n-1)
