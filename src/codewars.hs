@@ -426,10 +426,14 @@ dnaconvert G = C
 dnaconvert C = G
 
 -- xo :: String -> Bool
+-- custom code
+xo str = xCount == oCount
+  where mapped = count $ map toLower str 
+        xCount = M.lookup 'x' mapped
+        oCount = M.lookup 'o' mapped
+        even = xCount == oCount
 
--- xo str = mapped str
-  -- where mapped str = 
-
+-- found code on github
 count :: (Ord a, Integral b) => [a] -> M.Map a b
 count =
   foldr updateMap M.empty
@@ -437,4 +441,10 @@ count =
             | M.member v counts = M.adjust succ v counts
             | otherwise           = M.insert v 1 counts 
 
--- uncry val = uncurry (\a b -> length a == length b) $ map toLower val
+
+buildingAPile 1 = [1]
+buildingAPile n = (n^3) : buildingAPile (n-1)
+
+reversingAPile m n 
+  | m <= 0 = n 
+  | otherwise = reversingAPile (m - n ^ 3) (n + 1)
