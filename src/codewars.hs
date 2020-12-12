@@ -445,13 +445,27 @@ count =
 buildingAPile 1 = 1
 buildingAPile n = (n^3) + buildingAPile (n-1)
 
+findNb :: Integer -> Integer
+findNb n = reduced
+  where reduced = reversingAPile n
+
 reversingAPile m = go m 0  
   where go m n 
-          | m <= 0 = n - 1
+          | m == 0 = n - 1
+          | m < 0 = (- 1)
           | otherwise = go (m - n ^ 3) (n + 1)
 
-findNb n 
+
+reversingAPileList m = go m 0  
+  where go m n 
+          | m <= 0 = []
+          | otherwise = ((m - n ^ 3), n ) : go (m - n ^ 3) (n + 1)
+
+findNbFirstAttempt_inefficient n 
       | builtpile == n = reversedpile
       | otherwise = (-1)
     where builtpile = buildingAPile reversedpile 
           reversedpile = reversingAPile n
+
+
+
