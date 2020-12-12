@@ -442,9 +442,16 @@ count =
             | otherwise           = M.insert v 1 counts 
 
 
-buildingAPile 1 = [1]
-buildingAPile n = (n^3) : buildingAPile (n-1)
+buildingAPile 1 = 1
+buildingAPile n = (n^3) + buildingAPile (n-1)
 
-reversingAPile m n 
-  | m <= 0 = n 
-  | otherwise = reversingAPile (m - n ^ 3) (n + 1)
+reversingAPile m = go m 0  
+  where go m n 
+          | m <= 0 = n - 1
+          | otherwise = go (m - n ^ 3) (n + 1)
+
+findNb n 
+      | builtpile == n = reversedpile
+      | otherwise = (-1)
+    where builtpile = buildingAPile reversedpile 
+          reversedpile = reversingAPile n
