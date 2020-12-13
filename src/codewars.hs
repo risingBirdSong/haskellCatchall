@@ -540,7 +540,7 @@ bbb = [121, 14641, 20736, 361, 25921, 361, 20736, 361]
 aaa_ = [121, 144, 19, 161, 19, 144, 19, 11]  
 bbb_ = [132, 14641, 20736, 361, 25921, 361, 20736, 361]
 
--- areTheySame a b = (sort $ map (^2) a) == sort b
+areTheySame a b = (sort $ map (^2) a) == sort b
 
 
 -- Example
@@ -551,3 +551,18 @@ arr = [1,3,5,7,9]
 miniMax ls = ( sum (init sorted), sum ( tail sorted)) 
     where sorted = sort ls 
      
+
+-- how to make this infinite list and be able to take n amount ?
+-- fromInfinite strt acc = fromInfinite (strt + 1) (strt:acc) 
+
+
+range str end = go str
+  where go str
+          | str == end = [end] 
+          | otherwise = str : go (str + 1) 
+
+rangeGrowth strt grow end = go strt
+  where go strt 
+          | strt >= end = [end]
+          | otherwise = strt : go (strt + diff)
+        diff = grow - strt 
