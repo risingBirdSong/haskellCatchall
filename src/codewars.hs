@@ -528,3 +528,26 @@ sumOfNSqr n = n * (n + 1) * (2 * n + 1)
               `div` 6  
 
 sumOfNCube n = (n ^ 2) * ((n + 1) ^ 2) `div` 4
+
+splitStrings [] = []
+splitStrings [x] = [[x,'_']]
+splitStrings (a:b:ls) = ([a,b]) : splitStrings ls
+
+
+aaa = [121, 144, 19, 161, 19, 144, 19, 11]  
+bbb = [121, 14641, 20736, 361, 25921, 361, 20736, 361]
+
+aaa_ = [121, 144, 19, 161, 19, 144, 19, 11]  
+bbb_ = [132, 14641, 20736, 361, 25921, 361, 20736, 361]
+
+-- areTheySame a b = (sort $ map (^2) a) == sort b
+
+
+-- Example
+-- The minimum sum is  and the maximum sum is . The function prints
+-- 16 24
+-- Mini-Max Sum
+arr = [1,3,5,7,9]
+miniMax ls = ( sum (init sorted), sum ( tail sorted)) 
+    where sorted = sort ls 
+     

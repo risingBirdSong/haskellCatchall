@@ -77,7 +77,7 @@ oneMoreThanLength xs = lngth + 1 where lngth = length xs
 
 l x = x
 
-myHead xs = xs !! 0 
+myHead_ xs = xs !! 0 
 
 myTupleHead = \ (x,y) -> x
 
@@ -465,3 +465,20 @@ cubes = [x^3|x<-[1..5]]
 sqCbTups = [(s, c) | s <- squares, c <- cubes]
 sqCbTupsSml = [(s, c) | s <- squares, c <- cubes, s < 50, c < 50]
 sqCbTupsSmlLength = length  [(s, c) | s <- squares, c <- cubes, s < 50, c < 50]
+
+
+myHead [] = (-1)
+myHead (a:_) = a 
+
+myLast [] = (-1)
+myLast [x] = x
+myLast (a:ls) = myLast ls
+
+myInit [] = [] 
+myInit [x] = [] 
+myInit (a:ls) = a : myInit ls 
+
+-- could just drop 1, b
+
+myTail [] = []
+myTail (_:ls) = ls 
