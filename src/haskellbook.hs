@@ -528,11 +528,54 @@ basicCypher ltr
       | otherwise = chr conversion
   where conversion = (ord ltr + 3) `mod` 122
 
+-- take 52 $ cycle $ map ord alphabet
+
 basicUncypher ltr 
           | not $ isLetter ltr = ltr
           | conversion <= 97 = chr (122 - (97 - conversion))
           | otherwise = chr (conversion)
     where conversion = (ord ltr) - 3
 
+myAnd :: [Bool] -> Bool
+myAnd [] = True
+myAnd (x:xs) = x && myAnd xs
 
--- conversion = (ord ltr) `mod` 122 -
+myOr :: [Bool] -> Bool
+myOr [] = False 
+myOr (True:_) = True   
+myOr (_:bs) = myOr bs   
+
+myAny :: (a -> Bool) -> [a] -> Bool
+myAny f [] = False 
+myAny f (v:ls) 
+  | f v = True 
+  | otherwise = myAny f ls   
+
+
+myElem qry [] = False
+myElem qry (s:ls) 
+  | qry == s = True 
+  | otherwise = myElem qry ls
+
+myElemGo qry lst = go lst 
+  where go [] = False   
+        go (a:as) 
+            | a == qry = True
+            | otherwise = go as
+
+-- thats cool how for the following two myElemAny funcs, you can put the qry on either side and it works...
+myElemAny qry lst = any (qry==) lst
+myElemAny_ qry lst = any (==qry) lst
+
+thisWorks qry lst = any (qry==) lst
+thisAlsoWorks qry lst = any (==qry) lst
+
+myReverse [] = []
+myReverse (a:as) = myReverse as ++ [a]
+
+-- wow interesting this reverse is built into prelude base
+rvrse = foldl (flip (:)) []
+
+reverse_ lst = go lst []
+  where go [] acc = acc 
+        go (x:xs) acc = go xs (x:acc)
