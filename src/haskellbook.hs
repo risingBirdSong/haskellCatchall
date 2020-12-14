@@ -579,3 +579,22 @@ rvrse = foldl (flip (:)) []
 reverse_ lst = go lst []
   where go [] acc = acc 
         go (x:xs) acc = go xs (x:acc)
+
+cypher offset val 
+  | isSeparator val = val
+  | otherwise = chr (((((ord val) - 97) + offset) `mod` 26) + 97)
+
+uncypher offset val 
+  | isSeparator val = val
+  | otherwise = chr (((((ord val) - 97) - offset) `mod` 26) + 97)
+
+makeSecret msg offset = map (cypher offset) msg
+
+handleSub lst = reverse $ go lst []
+  where go [] acc = acc
+        go (x:xs) acc = go xs (x:acc) 
+
+-- squish :: [[a]] -> [a]
+squish lst = go lst []
+  where go [] acc = acc
+        go (sub:lst) acc = go lst (acc ++ (handleSub sub)) 
