@@ -598,3 +598,17 @@ handleSub lst = reverse $ go lst []
 squish lst = go lst []
   where go [] acc = acc
         go (sub:lst) acc = go lst (acc ++ (handleSub sub)) 
+
+
+needsSquishing nums = map (\x -> [1..x]) nums 
+
+squishMap f lst = squish $ map f lst
+
+
+myMaximum lst = go lst (head lst) 
+  where go [] themax = themax 
+        go (x:xs) themax = go xs (max themax x)
+
+myComparator f lst = go lst (head lst)
+  where go [] cur = cur 
+        go (x:xs) cur = go xs (f cur x) 
