@@ -519,3 +519,20 @@ capAll (s:ss) = (toUpper s) : capAll ss
 upperHead (s:ss) = toUpper s
 upperHead_ ss = toUpper . head ss   
 upperHead__ = toUpper . head   
+
+alphabet = ['a'..'z']
+
+basicCypher ltr 
+      | not $ isLetter ltr = ltr
+      | conversion <= 97 = chr (conversion + 97)
+      | otherwise = chr conversion
+  where conversion = (ord ltr + 3) `mod` 122
+
+basicUncypher ltr 
+          | not $ isLetter ltr = ltr
+          | conversion <= 97 = chr (122 - (97 - conversion))
+          | otherwise = chr (conversion)
+    where conversion = (ord ltr) - 3
+
+
+-- conversion = (ord ltr) `mod` 122 -
