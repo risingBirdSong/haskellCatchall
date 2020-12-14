@@ -482,3 +482,13 @@ myInit (a:ls) = a : myInit ls
 
 myTail [] = []
 myTail (_:ls) = ls 
+
+-- filter exercises 
+
+multipleOf mult x  = x `mod` mult == 0
+
+multsOfThree ls = filter (multipleOf 3) ls
+
+multsThreeLength ls = length $ multsOfThree ls
+
+rmveArticles ls = filter (\x -> x `notElem` ["an", "a", "the"]) $ words ls
