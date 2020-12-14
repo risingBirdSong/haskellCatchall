@@ -5,6 +5,7 @@
 
 -- import Data.String.Utils
 import Data.List
+import Data.Char
 
 plusTwowhere n = print $ f n 
     where f n = n + 2 
@@ -507,3 +508,14 @@ myZipWith f xs [] = []
 myZipWith f (x:xs) (y:ys) = f x y : myZipWith f xs ys 
 
 myZip_ xs ys = myZipWith (,) xs ys
+
+getTheUppers ls = filter isUpper ls
+
+capFirst (s:ss) = toUpper s : ss 
+
+capAll [] = []
+capAll (s:ss) = (toUpper s) : capAll ss
+
+upperHead (s:ss) = toUpper s
+upperHead_ ss = toUpper . head ss   
+upperHead__ = toUpper . head   
