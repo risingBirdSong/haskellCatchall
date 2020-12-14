@@ -497,3 +497,13 @@ rmveArticles ls = filter (\x -> x `notElem` ["an", "a", "the"]) $ words ls
 -- [(1,333),(2,334),(3,335),(4,336),(5,337),(6,338),(7,339),(8,340),(9,341),(10,342)]
 -- *Main> unzip [(1,333),(2,334),(3,335),(4,336),(5,337),(6,338),(7,339),(8,340),(9,341),(10,342)]
 -- ([1,2,3,4,5,6,7,8,9,10],[333,334,335,336,337,338,339,340,341,342])
+
+myZip [] ys = []
+myZip xs [] = [] 
+myZip (x:xs) (y:ys) = (x,y) : myZip xs ys 
+
+myZipWith f [] ys = []
+myZipWith f xs [] = []
+myZipWith f (x:xs) (y:ys) = f x y : myZipWith f xs ys 
+
+myZip_ xs ys = myZipWith (,) xs ys
