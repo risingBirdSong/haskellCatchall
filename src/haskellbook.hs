@@ -604,6 +604,9 @@ needsSquishing nums = map (\x -> [1..x]) nums
 
 squishMap f lst = squish $ map f lst
 
+myConcat [] = []
+myConcat  (lst:lsts) = lst ++ myConcat lsts
+
 
 myMaximum lst = go lst (head lst) 
   where go [] themax = themax 
@@ -612,3 +615,16 @@ myMaximum lst = go lst (head lst)
 myComparator f lst = go lst (head lst)
   where go [] cur = cur 
         go (x:xs) cur = go xs (f cur x) 
+
+foldr_ :: (a -> b -> b) -> b -> [a] -> b
+foldr_ f z [] = z
+foldr_ f z (x:xs) = f x (foldr_ f z xs)
+
+-- let xs = map show [1..5]
+xs = map show [1..5]
+-- :{
+-- foldr (\x y -> concat ["(",x,"+",y,")"])
+-- "0" xs
+-- :}
+
+showing = foldr (\x y -> concat ["(",x,"+",y,")"]) "0" xs
