@@ -727,12 +727,22 @@ theDatabase =
 
 -- getDbDate (DbDate x) = x   
 
-filterDbDate :: [DatabaseItem] -> [DatabaseItem]
+filterDbDate :: [DatabaseItem] -> [UTCTime]
 filterDbDate [] = []
-filterDbDate ((DbDate x):ls) = (DbDate x) : filterDbDate ls 
+filterDbDate ((DbDate x):ls) = (x) : filterDbDate ls 
 filterDbDate (_:ls) = filterDbDate ls
 
+filterUTC (DbDate x) = True  
+filterUTC _ = False  
 
+filterFold :: [DatabaseItem] -> [DatabaseItem]
+filterFold ls = foldr (\x acc -> if (filterUTC x) then (x:acc) else acc ) [] ls
+
+filterUTC_fold (DbDate x) acc = (x:acc)  
+filterUTC_fold _ acc = acc  
+
+filterFold_ :: Foldable t => t DatabaseItem -> [UTCTime]
+filterFold_ ls = foldr filterUTC_fold [] ls 
 
 someTime = DbDate (UTCTime
   (fromGregorian 1911 5 1)
