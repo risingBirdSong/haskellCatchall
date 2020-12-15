@@ -757,7 +757,6 @@ someTime = DbDate (UTCTime
 dbNums (DbNumber x) acc = [x] 
 dbNums _ acc = acc 
 
-filterDbNumber :: [DatabaseItem] -> [Integer]
 filterDbNumber ls = foldr dbNums [] ls  
 
 dateRelated (DbDate x) acc = (DbDate x:acc)
@@ -767,3 +766,18 @@ mostRecent db = foldr dateRelated [] db
 
 dateOutput = mostRecent theDatabase
 greatestDate = maximum $ mostRecent theDatabase
+
+sumDb db = sum $ filterDbNumber db
+
+lengthOf db = length $ filterDbNumber db
+-- avgDb db = (sumDb db) `div` (length (filterDbNumber db))
+-- avgDb db = (sumDb db) `div` (lengthOf db)
+
+
+simpleDivide = 5 `div` (length [1,2,3])
+
+integerDiv :: Integer -> Integer -> Integer
+integerDiv a b = a `div` b
+
+divTest :: Integer -> Int -> Integer
+divTest x y =  x `div` (toInteger y)
