@@ -770,8 +770,7 @@ greatestDate = maximum $ mostRecent theDatabase
 sumDb db = sum $ filterDbNumber db
 
 lengthOf db = length $ filterDbNumber db
--- avgDb db = (sumDb db) `div` (length (filterDbNumber db))
--- avgDb db = (sumDb db) `div` (lengthOf db)
+avgDb db = (sumDb db) `div` ( toInteger (length (filterDbNumber db)))
 
 
 simpleDivide = 5 `div` (length [1,2,3])
