@@ -780,3 +780,10 @@ integerDiv a b = a `div` b
 
 divTest :: Integer -> Int -> Integer
 divTest x y =  x `div` (toInteger y)
+
+-- demonstrating associativity  
+demonstrateA = foldl (\acc x -> (x:acc)) [] [1..5]
+demonstrateB = foldl (flip(:)) [] [1..5]
+-- [5,4,3,2,1]
+demonstrateC = foldr (:) [] [1..5]
+-- [1,2,3,4,5]
