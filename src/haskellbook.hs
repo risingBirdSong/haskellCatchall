@@ -620,6 +620,11 @@ foldr_ :: (a -> b -> b) -> b -> [a] -> b
 foldr_ f z [] = z
 foldr_ f z (x:xs) = f x (foldr_ f z xs)
 
+foldl_ :: (b -> a -> b) -> b -> [a] -> b
+foldl_ f acc [] = acc
+foldl_ f acc (x:xs) = foldl_ f (f acc x) xs
+
+
 -- let xs = map show [1..5]
 xs = map show [1..5]
 -- :{
@@ -627,4 +632,66 @@ xs = map show [1..5]
 -- "0" xs
 -- :}
 
-showing = foldr (\x y -> concat ["(",x,"+",y,")"]) "0" xs
+foldrshowing xs = foldr showing "0" xs
+-- "(1+(2+(3+(4+(5+0)))))"
+foldlshowing = foldl showing "0" xs
+-- "(((((0+1)+2)+3)+4)+5)"
+showing = (\x y -> concat ["(",x,"+",y,")"])
+
+
+
+myAny_ f ls = foldr (\x acc -> f x || acc) False ls
+
+mostlyOnes = (take 100 $ repeat 1) ++ [2]
+
+-- walk through example of how the myAny "short circuits" and doesnt 
+-- evaluate the infinite list
+
+-- myAny even [1..]
+-- = foldr (\x b -> even x || b) [1..]
+-- = foldr (\x b -> even x || b) (1 : [2..])
+-- = (\x b -> even x || b) 1 (foldr (\x b -> even x || b) [2..])
+-- = even 1 || foldr (\x b -> even x || b) [2..]
+-- = False || foldr (\x b -> even x || b) [2..]
+-- = foldr (\x b -> even x || b) [2..]
+-- = foldr (\x b -> even x || b) (2 : [3..])
+-- = (\x b -> even x || b) 2 (foldr (\x b -> even x || b) [3..])
+-- = even 2 || foldr (\x b -> even x || b) [3..]
+-- = True || foldr (\x b -> even x || b) [3..] 
+-- = True
+
+shortCircuitWhenConditionIsMet = foldr (\b acc -> if acc > 50 then acc else acc + b) 0 [1..]
+
+-- foldr f z [1, 2, 3]
+-- 1 `f` (foldr f z [2, 3])
+-- 1 `f` (2 `f` (foldr f z [3]))
+-- 1 `f` (2 `f` (3 `f` (foldr f z [])))
+-- 1 `f` (2 `f` (3 `f` z))
+
+
+data Persona = Persona { firstName :: String  
+                     , lastName :: String  
+                    --  , age :: Int  
+                    --  , height :: Float  
+                    --  , phoneNumber :: String  
+                    --  , flavor :: String  
+                     } deriving (Show) 
+
+myPersonA = Persona {
+  firstName = "gladys",
+  lastName = "mushrin"
+}
+myPersonB = Persona {
+  firstName = "gunsho",
+  lastName = "madrid"
+}
+myPersonC = Persona {
+  firstName = "halfva",
+  lastName = "ohbear"
+}
+
+peoples = [myPersonA,myPersonB,myPersonC]
+firstNames = map (firstName) peoples
+-- ["gladys","gunsho","halfva"]
+lastNames = map (lastName) peoples
+-- ["mushrin","madrid","ohbear"]
