@@ -6,6 +6,8 @@
 -- import Data.String.Utils
 import Data.List
 import Data.Char
+import Data.Time
+
 
 plusTwowhere n = print $ f n 
     where f n = n + 2 
@@ -670,26 +672,31 @@ shortCircuitWhenConditionIsMet = foldr (\b acc -> if acc > 50 then acc else acc 
 
 
 data Persona = Persona { firstName :: String  
-                     , lastName :: String  
+                     , lastName :: String  ,
+                     height :: Int
                      } deriving (Show) 
 
 myPersonA = Persona {
   firstName = "gladys",
-  lastName = "mushrin"
+  lastName = "mushrin",
+  height = 1
 }
 myPersonB = Persona {
   firstName = "gunsho",
-  lastName = "madrid"
+  lastName = "madrid",
+  height = 2
 }
 myPersonC = Persona {
   firstName = "halfva",
-  lastName = "ohbear"
+  lastName = "ohbear",
+  height = 3
 }
 
 upperCasePerson :: Persona -> Persona 
 upperCasePerson person = Persona {
                           firstName = ( map toUpper (firstName person) ),
-                          lastName = (map toUpper (lastName person))
+                          lastName = (map toUpper (lastName person)),
+                          height = height person
                         }
 
 
@@ -698,4 +705,35 @@ firstNames = map (firstName) peoples
 -- ["gladys","gunsho","halfva"]
 lastNames = map (lastName) peoples
 -- ["mushrin","madrid","ohbear"]
--- names = map ({ map toUpper firstName, map toUpper lastName}) peoples
+names = map (upperCasePerson) peoples
+
+data DatabaseItem = DbString String
+  | DbNumber Integer
+  | DbDate UTCTime
+  deriving (Eq, Ord, Show)
+
+theDatabase :: [DatabaseItem]
+theDatabase =
+  [ DbDate (UTCTime
+  (fromGregorian 1911 5 1)
+  (secondsToDiffTime 34123))
+  , DbNumber 9001
+  , DbString "Hello, world!"
+  , DbDate (UTCTime
+  (fromGregorian 1921 5 1)
+  (secondsToDiffTime 34123))
+  ]
+
+
+-- getDbDate (DbDate x) = x   
+
+filterDbDate :: [DatabaseItem] -> [DatabaseItem]
+filterDbDate [] = []
+filterDbDate ((DbDate x):ls) = (DbDate x) : filterDbDate ls 
+filterDbDate (_:ls) = filterDbDate ls
+
+
+
+someTime = DbDate (UTCTime
+  (fromGregorian 1911 5 1)
+  (secondsToDiffTime 34123))
