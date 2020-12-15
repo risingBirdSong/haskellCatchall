@@ -671,10 +671,6 @@ shortCircuitWhenConditionIsMet = foldr (\b acc -> if acc > 50 then acc else acc 
 
 data Persona = Persona { firstName :: String  
                      , lastName :: String  
-                    --  , age :: Int  
-                    --  , height :: Float  
-                    --  , phoneNumber :: String  
-                    --  , flavor :: String  
                      } deriving (Show) 
 
 myPersonA = Persona {
@@ -690,8 +686,16 @@ myPersonC = Persona {
   lastName = "ohbear"
 }
 
+upperCasePerson :: Persona -> Persona 
+upperCasePerson person = Persona {
+                          firstName = ( map toUpper (firstName person) ),
+                          lastName = (map toUpper (lastName person))
+                        }
+
+
 peoples = [myPersonA,myPersonB,myPersonC]
 firstNames = map (firstName) peoples
 -- ["gladys","gunsho","halfva"]
 lastNames = map (lastName) peoples
 -- ["mushrin","madrid","ohbear"]
+-- names = map ({ map toUpper firstName, map toUpper lastName}) peoples
