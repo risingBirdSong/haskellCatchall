@@ -724,6 +724,11 @@ theDatabase =
   (secondsToDiffTime 34123))
   ]
 
+dateCompare = DbDate (UTCTime
+  (fromGregorian 1921 5 1)
+  (secondsToDiffTime 34123)) > DbDate (UTCTime
+  (fromGregorian 1911 5 1)
+  (secondsToDiffTime 34123))
 
 -- getDbDate (DbDate x) = x   
 
@@ -747,3 +752,18 @@ filterFold_ ls = foldr filterUTC_fold [] ls
 someTime = DbDate (UTCTime
   (fromGregorian 1911 5 1)
   (secondsToDiffTime 34123))
+
+
+dbNums (DbNumber x) acc = [x] 
+dbNums _ acc = acc 
+
+filterDbNumber :: [DatabaseItem] -> [Integer]
+filterDbNumber ls = foldr dbNums [] ls  
+
+dateRelated (DbDate x) acc = (DbDate x:acc)
+dateRelated _ acc = acc 
+
+mostRecent db = foldr dateRelated [] db 
+
+dateOutput = mostRecent theDatabase
+greatestDate = maximum $ mostRecent theDatabase
