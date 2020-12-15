@@ -787,3 +787,35 @@ demonstrateB = foldl (flip(:)) [] [1..5]
 -- [5,4,3,2,1]
 demonstrateC = foldr (:) [] [1..5]
 -- [1,2,3,4,5]
+
+-- 3. Works with infinite lists. We know this because:
+worksWithInifinite = foldr const 0 [1..]
+-- 1
+
+
+-- another way to
+fibs = 1 : scanl (+) 1 fibs
+firstTenFibs =  take 10 fibs
+fibsN x = fibs !! x
+
+under100Fibs = takeWhile (<100) fibs 
+
+-- factorialScan n =  scanl (*) n (factorialScan (n+1))
+
+-- *Main> take 10 factorialScan
+-- [1,2,2,4,8,32,256,8192,2097152,17179869184]
+
+--  scanl (*) 1 [1..5]
+
+stops = "pbtdkg"
+vowels = "aeiou"
+combos = [ (s,v,sa) | s <- stops, sa <-stops , v <- vowels ]
+
+seekritFunc x =
+  div (sum (map length (words x)))
+  (length (words x))
+
+seekritFunc_precise x =
+      (/) (fromIntegral (sum (map length (words x))))
+  (fromIntegral (length (words x)) )
+
