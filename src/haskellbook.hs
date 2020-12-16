@@ -1087,3 +1087,8 @@ isDairyFarmerRec :: FarmerRec -> Bool
 isDairyFarmerRec farmer = case farmerType farmer of 
     DairyFarmer -> True 
     _           -> False 
+
+-- isDairyFarmerTest (FarmerRec { _ , _, farmerType = DairyFarmer}) = True 
+-- isDairyFarmerTest _ = False 
+
+isDairyFarmerTest FarmerRec { farmerType = DairyFarmer} = True
