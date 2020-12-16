@@ -926,3 +926,122 @@ data BigSmall =
 
 tracer 0 = 0
 tracer n = trace ("n = " ++ show n) tracer (n - 1) 
+
+data Product a b =
+  Product a b deriving (Eq, Show)
+
+data Sum a b =
+  First a
+  | Second b
+  deriving (Eq, Show)
+
+data RecordProduct a b = 
+  RecordProduct { pfirst :: a
+                , psecond :: b }
+                deriving (Eq, Show)
+
+newtype NumCow =
+  NumCow Int
+  deriving (Eq, Show)
+newtype NumPig =
+  NumPig Int
+  deriving (Eq, Show)
+
+data Farmhouse =
+  Farmhouse NumCow NumPig
+  deriving (Eq, Show)
+
+type Farmhouse' = Product NumCow NumPig
+
+newtype NumSheep =
+  NumSheep Int
+  deriving (Eq, Show)
+data BigFarmhouse =
+  BigFarmhouse NumCow NumPig NumSheep
+  deriving (Eq, Show)
+type BigFarmhouse' =
+  Product NumCow (Product NumPig NumSheep)
+
+type Name = String
+type Age = Int
+type LovesMud = Bool
+type PoundsOfWool = Int
+
+data CowInfo =
+  CowInfo Name Age
+  deriving (Eq, Show)
+
+data PigInfo =
+  PigInfo Name Age LovesMud
+  deriving (Eq, Show)
+
+data SheepInfo =
+  SheepInfo Name Age PoundsOfWool
+  deriving (Eq, Show)
+
+data Animal =
+  Cow CowInfo
+  | Pig PigInfo
+  | Sheep SheepInfo
+  deriving (Eq, Show)
+
+type Animal' =
+  Sum CowInfo (Sum PigInfo SheepInfo)
+
+cowa = CowInfo "patri" 12
+pigi = PigInfo "pigi" 9 True 
+shep = SheepInfo "shep" 5 33
+
+cowaAnimal = Cow cowa 
+
+bess = First (CowInfo "Bess" 4) :: Animal'
+
+elmer' = Second (SheepInfo "Elmer" 5 5)
+elmer = Second elmer' :: Animal'
+-- Second (Second (SheepInfo "Elmer" 5 5))
+
+data Id a =
+  MkId a deriving (Eq, Show)
+
+
+idInt :: Id Integer
+idInt = MkId 10
+
+idL :: Id (a -> a)
+idL = MkId (\x -> x) 
+
+simpleLambda = (\x -> x)
+
+
+data OperatingSystem =
+    GnuPlusLinux
+    | OpenBSDPlusNevermindJustBSDStill
+    | Mac
+    | Windows
+    deriving (Eq, Show)
+data ProgrammingLanguage =
+    Haskell
+    | Agda
+    | Idris
+    | PureScript
+    deriving (Eq, Show)
+
+data Programmer =
+  Programmer { os :: OperatingSystem
+            , lang :: ProgrammingLanguage }
+            deriving (Eq, Show)
+
+gus = Programmer { os = Windows, lang = PureScript}
+harry = Programmer {os = GnuPlusLinux, lang = Haskell}
+
+allOperatingSystems :: [OperatingSystem]
+allOperatingSystems =
+  [ GnuPlusLinux
+  , OpenBSDPlusNevermindJustBSDStill
+  , Mac
+  , Windows
+  ]
+allLanguages :: [ProgrammingLanguage]
+allLanguages = [Haskell, Agda, Idris, PureScript]
+
+progLangVarieties = [(o,l) | o <- allOperatingSystems, l <- allLanguages]
