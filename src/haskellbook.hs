@@ -876,14 +876,15 @@ data Airline =
   | TakeYourChancesUnited
   deriving (Eq, Show, Ord)
 
+data PlaneSize = PlaneSmall | PlaneMedium | PlaneLarge deriving (Show, Eq) 
 
 data Vehicle = Car Manufacturer Price 
-            | Plane Airline deriving (Show, Eq)
+            | Plane Airline PlaneSize deriving (Show, Eq)
 
 
 myCar = Car Mazda (Price 999)
 almostMyCar = Car Mazda (Price 999)
-urPlane = Plane CatapultsR'Us
+urPlane = Plane CatapultsR'Us PlaneLarge
 
 
 isCar :: Vehicle -> Bool
@@ -892,7 +893,7 @@ isCar _  = False
 
 
 isPlane :: Vehicle -> Bool
-isPlane (Plane _) = True 
+isPlane (Plane _ _) = True 
 isPlane _ = False
 
 garage = [myCar, almostMyCar, urPlane]
@@ -902,3 +903,7 @@ areCars ls = map isCar ls
 
 -- *Main> areCars garage
 -- [True,True,False]
+
+-- warning its not a total function
+getManu :: Vehicle -> Manufacturer
+getManu (Car m p) = m 
