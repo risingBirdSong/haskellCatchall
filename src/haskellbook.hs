@@ -962,21 +962,21 @@ data BigFarmhouse =
 type BigFarmhouse' =
   Product NumCow (Product NumPig NumSheep)
 
-type Name = String
+type AnimalName = String
 type Age = Int
 type LovesMud = Bool
 type PoundsOfWool = Int
 
 data CowInfo =
-  CowInfo Name Age
+  CowInfo AnimalName Age
   deriving (Eq, Show)
 
 data PigInfo =
-  PigInfo Name Age LovesMud
+  PigInfo AnimalName Age LovesMud
   deriving (Eq, Show)
 
 data SheepInfo =
-  SheepInfo Name Age PoundsOfWool
+  SheepInfo AnimalName Age PoundsOfWool
   deriving (Eq, Show)
 
 data Animal =
@@ -1045,3 +1045,45 @@ allLanguages :: [ProgrammingLanguage]
 allLanguages = [Haskell, Agda, Idris, PureScript]
 
 progLangVarieties = [(o,l) | o <- allOperatingSystems, l <- allLanguages]
+
+data ThereYet =
+  There Integer Float String Bool
+  deriving (Eq, Show)
+
+buildingA = There 4
+buildingB = buildingA 3.0
+buildingC = buildingB "a lil something"
+allBuilt = buildingC True 
+
+newtype Name = Name String deriving Show
+newtype Acres = Acres Int deriving Show
+-- FarmerType is a Sum
+data FarmerType =
+   DairyFarmer
+  | WheatFarmer
+  | SoybeanFarmer deriving Show
+
+data Farmer =
+  Farmer Name Acres FarmerType deriving Show
+
+
+-- *Main> Farmer (Name "Graeic") (Acres 99) DairyFarmer
+jubwil = Farmer (Name "jubwil") (Acres 99) DairyFarmer
+loris = Farmer (Name "loris") (Acres 100) DairyFarmer
+calft = Farmer (Name "calft") (Acres 101) WheatFarmer
+jash = Farmer (Name "jash") (Acres 98) WheatFarmer
+
+isDairyFarmer (Farmer _ _ DairyFarmer) = True   
+isDairyFarmer (Farmer _ _ _) = False   
+
+data FarmerRec =
+  FarmerRec { name :: Name
+  , acres :: Acres
+  , farmerType :: FarmerType } deriving Show
+
+someRecFarmer = FarmerRec {name = Name "joshua", acres = Acres 10, farmerType = DairyFarmer}
+
+isDairyFarmerRec :: FarmerRec -> Bool
+isDairyFarmerRec farmer = case farmerType farmer of 
+    DairyFarmer -> True 
+    _           -> False 
