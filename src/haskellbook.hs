@@ -7,7 +7,8 @@
 import Data.List
 import Data.Char
 import Data.Time
-
+import Data.Int
+import Debug.Trace
 
 plusTwowhere n = print $ f n 
     where f n = n + 2 
@@ -907,3 +908,21 @@ areCars ls = map isCar ls
 -- warning its not a total function
 getManu :: Vehicle -> Manufacturer
 getManu (Car m p) = m 
+
+data Example = MakeExample deriving Show
+data ExampleA = MakeExampleA Int deriving Show
+
+
+newtype Goats =
+  Goats Int deriving (Eq, Show)
+newtype Cows =
+  Cows Int deriving (Eq, Show)
+
+data BigSmall =
+    Big Bool  
+  | Small Bool
+  deriving (Eq, Show)
+
+
+tracer 0 = 0
+tracer n = trace ("n = " ++ show n) tracer (n - 1) 
