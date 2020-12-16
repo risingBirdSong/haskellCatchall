@@ -819,3 +819,32 @@ seekritFunc_precise x =
       (/) (fromIntegral (sum (map length (words x))))
   (fromIntegral (length (words x)) )
 
+
+foldAnd :: [Bool] -> Bool
+foldAnd = foldr (&&) True
+
+
+-- OrFold :: [Bool] -> Bool
+orFold bools = foldr (||) False bools 
+
+anyFold :: (a -> Bool) -> [a] -> Bool
+anyFold f ls = foldr (\x acc -> if f x || acc == True then True else False) False $ ls
+
+
+elemFold :: Eq a => a -> [a] -> Bool
+elemFold qry ls = foldr (\x acc -> if (x == qry) || acc == True then True else False ) False ls
+
+reverseAgain ls = foldl (flip(:)) [] ls
+
+mapFold f ls = foldr (\x acc -> (f x) : acc ) [] ls
+
+foldFilter f ls = foldr (\x acc -> if (f x) then (x : acc) else acc ) [] ls
+
+squishFold ls = foldr (\x acc -> x ++ acc) [] ls
+
+squishMapFold f ls = foldr (\x acc -> (f x)++acc ) [] ls
+
+-- myMaximumBy :: (a -> a -> Ordering) -> [a] -> a
+myMaximumBy ls = foldr (\x acc -> if ((x `compare` acc) == GT) then x else acc) (head ls) ls
+
+-- someOrdering 
