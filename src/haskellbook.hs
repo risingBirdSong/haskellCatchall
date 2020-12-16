@@ -847,4 +847,58 @@ squishMapFold f ls = foldr (\x acc -> (f x)++acc ) [] ls
 -- myMaximumBy :: (a -> a -> Ordering) -> [a] -> a
 myMaximumBy ls = foldr (\x acc -> if ((x `compare` acc) == GT) then x else acc) (head ls) ls
 
--- someOrdering 
+
+-- algebraic data types
+
+data PugType = PugData deriving (Show, Eq)
+data HuskyType a = HuskyData deriving(Show, Eq)
+data DogueDeBordeaux doge = DogueDeBordeaux doge deriving (Show)
+data SomeType a = SomeData a deriving Show
+
+data Doggies a =
+  Husky a
+  | Mastiff a
+  deriving (Eq, Show)
+
+data Price =
+  Price Integer deriving (Eq, Show)
+
+
+data Manufacturer =
+    Mini
+  | Mazda
+  | Tata
+  deriving (Eq, Show, Ord)
+
+data Airline =
+  PapuAir
+  | CatapultsR'Us
+  | TakeYourChancesUnited
+  deriving (Eq, Show, Ord)
+
+
+data Vehicle = Car Manufacturer Price 
+            | Plane Airline deriving (Show, Eq)
+
+
+myCar = Car Mazda (Price 999)
+almostMyCar = Car Mazda (Price 999)
+urPlane = Plane CatapultsR'Us
+
+
+isCar :: Vehicle -> Bool
+isCar (Car _ _) = True
+isCar _  = False
+
+
+isPlane :: Vehicle -> Bool
+isPlane (Plane _) = True 
+isPlane _ = False
+
+garage = [myCar, almostMyCar, urPlane]
+
+areCars :: [Vehicle] -> [Bool]
+areCars ls = map isCar ls
+
+-- *Main> areCars garage
+-- [True,True,False]
