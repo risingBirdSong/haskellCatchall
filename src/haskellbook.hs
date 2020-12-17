@@ -1180,3 +1180,24 @@ foldTree f acc (Node l v r) = (f v ( foldTree f (foldTree f acc l) r ))
  
 foldTest :: (a -> b -> b) -> b -> a -> b
 foldTest f acc v = f v acc
+
+
+-- vinigerciph ls keyword
+-- vcA kw = map ((-)97) $ map (ord) kw
+vcAdd ls = map (flip(-)97) $ map (ord) ls
+-- vcB ls = map (+(negate 97)) $ map (ord) ls 
+
+
+
+repeatKW kw = concat $ repeat kw 
+zipMsg_KwChar ms kw = zip (filter (isAlpha) ms) (repeatKW kw) 
+zipMsg_KwNum ms kw = insertSpaces ms $ map (chr) $ map (+97) $ map (uncurry (\x y -> ((x+y) `mod` 26))) $ zip (vcAdd $ filter (isAlpha) ms) (vcAdd $ repeatKW kw) 
+
+insertSpaces [] _ = [] 
+insertSpaces [x] _ = [x] 
+insertSpaces _ [] = [] 
+insertSpaces _ [x] = [x] 
+insertSpaces (o:ori) (i:ins)
+  | isSpace o = ' ' : i : insertSpaces (ori) (ins)
+  | otherwise = i : insertSpaces (ori) (ins)
+  
