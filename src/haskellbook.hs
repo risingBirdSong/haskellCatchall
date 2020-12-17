@@ -1140,7 +1140,7 @@ preorder :: BinaryTree a -> [a]
 preorder Leaf = [] 
 preorder (Node l v r) = [v] ++ (preorder l) ++ (preorder r)
 
-inorder :: BinaryTree a -> [a]
+-- inorder :: BinaryTree a -> [a]
 inorder Leaf = []
 inorder Leaf = []
 inorder (Node l v r) = (inorder l) ++ [v] ++ (inorder r)
@@ -1172,3 +1172,11 @@ maina = do
   testInorder
   testPostorder
   pure ()
+
+foldTree :: (a -> b -> b) -> b -> BinaryTree a -> b 
+foldTree f acc Leaf = acc
+foldTree f acc (Node l v r) = (f v ( foldTree f (foldTree f acc l) r ))
+
+ 
+foldTest :: (a -> b -> b) -> b -> a -> b
+foldTest f acc v = f v acc
