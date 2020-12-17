@@ -1138,12 +1138,17 @@ mapOkay =
 
 preorder :: BinaryTree a -> [a]
 preorder Leaf = [] 
--- preorder  
+preorder (Node l v r) = [v] ++ (preorder l) ++ (preorder r)
+
 inorder :: BinaryTree a -> [a]
 inorder Leaf = []
-inorder (Node l v r) = [] ++ (inorder l) ++ ([v]) ++ (inorder r)
+inorder Leaf = []
+inorder (Node l v r) = (inorder l) ++ [v] ++ (inorder r)
+
 postorder :: BinaryTree a -> [a]
-postorder = undefined
+postorder Leaf = [] 
+postorder (Node l v r) = (postorder l) ++ (postorder r) ++ [v]
+
 testTree :: BinaryTree Integer
 testTree = Node (Node Leaf 1 Leaf) 2 (Node Leaf 3 Leaf)
 testPreorder :: IO ()
@@ -1166,3 +1171,4 @@ maina = do
   testPreorder
   testInorder
   testPostorder
+  pure ()
