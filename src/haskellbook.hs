@@ -1092,3 +1092,46 @@ isDairyFarmerRec farmer = case farmerType farmer of
 -- isDairyFarmerTest _ = False 
 
 isDairyFarmerTest FarmerRec { farmerType = DairyFarmer} = True
+
+data Quantum =
+  Yes
+  | No
+  | Both
+  deriving (Eq, Show)
+
+quantSum1 :: Either Quantum Quantum
+quantSum1 = Right Yes
+quantSum2 :: Either Quantum Quantum
+quantSum2 = Right No
+quantSum3 :: Either Quantum Quantum
+quantSum3 = Right Both
+quantSum4 :: Either Quantum Quantum
+quantSum4 = Left Yes
+
+data BinaryTree a =
+  Leaf
+  | Node (BinaryTree a) a (BinaryTree a)
+  deriving (Eq, Ord, Show)
+
+
+insert' :: Ord a => a -> BinaryTree a -> BinaryTree a
+insert' b Leaf = Node Leaf b Leaf
+insert' b (Node left a right)
+  | b == a = Node left a right
+  | b < a = Node (insert' b left) a right
+  | b > a = Node left a (insert' b right)
+
+
+testTree' :: BinaryTree Integer
+testTree' = Node (Node Leaf 3 Leaf) 1 (Node Leaf 4 Leaf)
+mapExpected = Node (Node Leaf 4 Leaf) 2 (Node Leaf 5 Leaf)
+
+
+mapTree :: (a -> b) -> BinaryTree a -> BinaryTree b
+mapTree f Leaf = Leaf
+mapTree f (Node l v r) = Node (mapTree f l) (f v) (mapTree f r)
+
+mapOkay =
+  if mapTree (+1) testTree' == mapExpected
+  then print "yup okay!"
+  else error "test failed!"
