@@ -5,6 +5,7 @@
 
 -- import Data.String.Utils
 import Data.List
+import Data.List.Split
 import Data.Char
 import Data.Time
 import Data.Int
@@ -1201,3 +1202,19 @@ insertSpaces (o:ori) (i:ins)
   | isSpace o = ' ' : i : insertSpaces (ori) (ins)
   | otherwise = i : insertSpaces (ori) (ins)
   
+
+inputTest tup@(x,y,z) = [tup, tup]
+
+isSubsequenceOf_ :: (Eq a) => [a] -> [a] -> Bool
+isSubsequenceOf_ ls@(a:as) ks@(b:bs) = all (`elem` ks) ls
+
+capitalizeWord :: String -> String
+capitalizeWord [] = [] 
+capitalizeWord (a:as) = toUpper a : as 
+
+cpt = "blah. woot ha."
+
+strat = split (keepDelimsR $ oneOf ". ") 
+-- capitalizeParagraph :: String -> String
+capitalizeParagraph sn = intercalate "" $ map (capitalizeWord) $ strat sn
+
