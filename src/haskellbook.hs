@@ -1243,10 +1243,20 @@ ltrsNums = [("ABC",2),("DEF",3),("GHI",4),("JKL",5),("MNO",6),("PQRS",7),("TUV",
 
 tupleFind ltr = find ((\(ltrs,num) -> ltr `elem` ltrs)) ltrsNums
 
-getNum ltr = go justTup
+makeLtrNumTuple ltr = go justTup
   where go (Just (ltrs, num)) = ltrAndNumsGrow ltrs num 
         justTup = tupleFind ltr
 
+-- numFnd l = find (fst . (==l) ) $ makeLtrNumTuple l
+
+-- tupleEqlty =(fst (=='A')) $ ('A', 2) 
+tupleEqlty =((=='B') . fst) $ ('A', 2) 
+fndNum l = snd <$> (find ( (==l) . fst) $ makeLtrNumTuple l) 
+
+solvePhone ltrs = go (map toUpper ltrs) []
+    where go [] acc = acc
+          go [x] acc = acc
+          go (l:ls) acc = go ls (acc ++ [(fndNum l)])
 
 numGrowth n acc = numGrowth n (n:acc) 
 -- If you write numGrowth n acc = numGrowth n (n:acc) there's just no way to find the first element of the result
