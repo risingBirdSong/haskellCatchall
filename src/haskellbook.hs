@@ -1246,8 +1246,9 @@ tupleFindLtr ltr = find ((\(ltrs,num) -> ltr `elem` ltrs)) ltrsNums
 
 makeLtrNumTuple ltr = go justTup
   where go (Just (ltrs, num)) = ltrAndNumsGrow ltrs num 
-        justTup = tupleFindLtr ltr
+        justTup = tupleFindLtr (toUpper ltr)
 
+reverseTaps ltr = find ((==ltr) . fst) $ makeLtrNumTuple ltr
 -- numFnd l = find (fst . (==l) ) $ makeLtrNumTuple l
 
 -- tupleEqlty =(fst (=='A')) $ ('A', 2) 
