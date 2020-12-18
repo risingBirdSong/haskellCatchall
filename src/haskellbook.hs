@@ -10,6 +10,8 @@ import Data.Char
 import Data.Time
 import Data.Int
 import Debug.Trace
+import qualified Data.Map as M 
+
 
 plusTwowhere n = print $ f n 
     where f n = n + 2 
@@ -1218,3 +1220,57 @@ strat = split (keepDelimsR $ oneOf ". ")
 -- capitalizeParagraph :: String -> String
 capitalizeParagraph sn = intercalate "" $ map (capitalizeWord) $ strat sn
 
+-- oldPhone 
+
+-- -----------------------------------------
+-- | 1 | 2 ABC | 3 DEF |
+-- _________________________________________
+-- | 4 GHI | 5 JKL | 6 MNO |
+-- -----------------------------------------
+-- | 7 PQRS | 8 TUV | 9 WXYZ |
+-- -----------------------------------------
+-- | * ^ | 0 + _ | # ., |
+
+-- phoneMap = M.fromList [('A', 2), (),(),(),(),(),(),(),(),(),(),(),(),(),(),(),(),]
+
+ltrSplit [] acc _ = acc 
+ltrSplit (a:b:c:d:ltrs) acc cnt
+  | a == 'P' = ltrSplit (ltrs) (acc++[([a,b,c,d], cnt)]) (succ cnt)
+  | a == 'W' = ltrSplit [] (acc++[([a,b,c,d], cnt)]) (succ cnt)
+  | otherwise = ltrSplit (d:ltrs) (acc++[([a,b,c], cnt)]) (succ cnt)
+
+ltrsNums = [("ABC",2),("DEF",3),("GHI",4),("JKL",5),("MNO",6),("PQRS",7),("TUV",8),("WXYZ",9)]
+
+tupleFind ltr = find ((\(ltrs,num) -> ltr `elem` ltrs)) ltrsNums
+
+getNum ltr = (\(a,b) -> (zip a [1..], b)) <$> tupleFind ltr
+
+
+numGrowth n acc = numGrowth n (n:acc) 
+-- If you write numGrowth n acc = numGrowth n (n:acc) there's just no way to find the first element of the result
+-- Just loops forever
+-- Generally to produce infinite lists nicely, you want the consumer to be able to find out the element at a particular position in the list with a finite amount of work
+-- The only thing that takes an infinite amount of work is finding all of the elements in the list
+
+-- Yeah like... what is the first element of numGrowth 1 []
+-- Well, it's the first element of numGrowth 1 (1:[])
+-- Which is the first element of numGrowth 1 (1:1:[])
+-- Etc
+-- Not useful
+
+repeat_ x = x : repeat_ x
+
+
+
+-- numbers
+
+
+-- ["Wanna play 20 questions",
+-- "Ya",
+-- "U 1st haha",
+-- "Lol ok. Have u ever tasted alcohol lol",
+-- "Lol ya",
+-- "Wow ur cool haha. Ur turn",
+-- "Ok. Do u think I am pretty Lol",
+-- "Lol ya",
+-- "Haha thanks just making sure rofl ur turn"]
