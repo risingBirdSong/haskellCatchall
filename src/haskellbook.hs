@@ -1239,16 +1239,17 @@ ltrSplit (a:b:c:d:ltrs) acc cnt
   | a == 'W' = ltrSplit [] (acc++[([a,b,c,d], cnt)]) (succ cnt)
   | otherwise = ltrSplit (d:ltrs) (acc++[([a,b,c], cnt)]) (succ cnt)
 
-ltrsNums = [("ABC2",2),("DEF3",3),("GHI4",4),("JKL5",5),("MNO6",6),("PQRS7",7),("TUV8",8),("WXYZ9",9),("0 ", 0), ("1", 1)]
+ltrsNums = [("ABC2",2),("DEF3",3),("GHI4",4),("JKL5",5),("MNO6",6),("PQRS7",7),("TUV8",8),("WXYZ9",9),("0", 0), (". 1", 1)]
 
 tupleFindLtr ltr = find ((\(ltrs,num) -> ltr `elem` ltrs)) ltrsNums
 
 
+-- makeLtrNumTuple '' =  
 makeLtrNumTuple ltr = go justTup
   where go (Just (ltrs, num)) = ltrAndNumsGrow ltrs num 
         justTup = tupleFindLtr (toUpper ltr)
 
-reverseTaps ltr = find ((==ltr) . fst) $ makeLtrNumTuple ltr
+reverseTaps ltr = find ((==(toUpper ltr)) . fst) $ makeLtrNumTuple (toUpper ltr)
 -- numFnd l = find (fst . (==l) ) $ makeLtrNumTuple l
 
 -- tupleEqlty =(fst (=='A')) $ ('A', 2) 
@@ -1259,15 +1260,30 @@ countTaps nm = go nm 0
  where go 0 cnt = cnt 
        go nm cnt = go (nm `div` 10) (succ cnt) 
 
-fingerTaps = sum $ concatMap (map countTaps) solveConvo
+totalLength cnvo = sum $ concatMap (map countTaps) $ solveConvo cnvo
 
 solvePhone ltrs = go (map toUpper ltrs) []
     where go [] acc = acc
-          go [x] acc = acc
+          -- go [x] acc = acc
           go (l:ls) acc = go ls (acc ++ [(fndNum l)])
+
+-- mostPopularWordA = snd . last . sort . map (\x -> (length x, head x)) . group . sort . concat $ convo 
+mostPopularWordA cnvo = snd . maximum . map (\x -> (length x, head x)) . group . sort . concat $ cnvo  
+-- mostPopularWordB :: (Ord a, Foldable t) => a -> t [a] -> Maybe [a]
+mostPopularWordBroken ltr cnvo = length <$> find (ltr`elem`) . group . sort . concat $ cnvo  
+-- why broken wasnt working \/
+-- $ has a lower precedence than <$>
+-- so it's parsed as (length <$> find (...)) $ (group $ ...)
+-- the fix \/
+mostPopularWordB ltr cnvo = (length <$>) $ find (ltr`elem`) . group . sort . concat $ cnvo  
+-- mostPopularWordB :: (Ord a, Foldable t) => a -> t [a] -> Maybe [a]
+-- mostPopularWordB ltr cnvo = find (ltr`elem`) $ group $ sort . concat $ cnvo  
+
+groupSort = group . sort
+
 solveSentencePhone snt = map solvePhone $ words snt
 
-solveConvo = map (map maybeConvo) $ concatMap solveSentencePhone convo
+solveConvo cnvo = map (map maybeConvo) $ concatMap solveSentencePhone cnvo 
 
 maybeConvo myb 
   | (Just v) <- myb = v
@@ -1283,6 +1299,8 @@ convo =
   "Ok. Do u think I am pretty Lol",
   "Lol ya",
   "Haha thanks just making sure rofl ur turn"]
+
+convoA = map (concat . words) $ convo
 
 numGrowth n acc = numGrowth n (n:acc) 
 -- If you write numGrowth n acc = numGrowth n (n:acc) there's just no way to find the first element of the result
