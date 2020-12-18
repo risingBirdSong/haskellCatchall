@@ -1241,17 +1241,24 @@ ltrSplit (a:b:c:d:ltrs) acc cnt
 
 ltrsNums = [("ABC2",2),("DEF3",3),("GHI4",4),("JKL5",5),("MNO6",6),("PQRS7",7),("TUV8",8),("WXYZ9",9),("0 ", 0), ("1", 1)]
 
-tupleFind ltr = find ((\(ltrs,num) -> ltr `elem` ltrs)) ltrsNums
+tupleFindLtr ltr = find ((\(ltrs,num) -> ltr `elem` ltrs)) ltrsNums
+
 
 makeLtrNumTuple ltr = go justTup
   where go (Just (ltrs, num)) = ltrAndNumsGrow ltrs num 
-        justTup = tupleFind ltr
+        justTup = tupleFindLtr ltr
 
 -- numFnd l = find (fst . (==l) ) $ makeLtrNumTuple l
 
 -- tupleEqlty =(fst (=='A')) $ ('A', 2) 
 tupleEqlty =((=='B') . fst) $ ('A', 2) 
 fndNum l = snd <$> (find ( (==l) . fst) $ makeLtrNumTuple l) 
+
+countTaps nm = go nm 0
+ where go 0 cnt = cnt 
+       go nm cnt = go (nm `div` 10) (succ cnt) 
+
+fingerTaps = sum $ concatMap (map countTaps) solveConvo
 
 solvePhone ltrs = go (map toUpper ltrs) []
     where go [] acc = acc
