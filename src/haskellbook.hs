@@ -1243,7 +1243,9 @@ ltrsNums = [("ABC",2),("DEF",3),("GHI",4),("JKL",5),("MNO",6),("PQRS",7),("TUV",
 
 tupleFind ltr = find ((\(ltrs,num) -> ltr `elem` ltrs)) ltrsNums
 
-getNum ltr = (\(a,b) -> (zip a [1..], b)) <$> tupleFind ltr
+getNum ltr = go justTup
+  where go (Just (ltrs, num)) = ltrAndNumsGrow ltrs num 
+        justTup = tupleFind ltr
 
 
 numGrowth n acc = numGrowth n (n:acc) 
@@ -1260,10 +1262,11 @@ numGrowth n acc = numGrowth n (n:acc)
 
 repeat_ x = x : repeat_ x
 
+ltrAndNumsGrow ltrs n = go ltrs n []  
+  where go [] num acc = acc 
+        go (a:as) num acc = go as ((num*10)+n) (acc ++ [(a,num)]) 
 
-
--- numbers
-
+makeTup (Just (ltrs, num)) = num
 
 -- ["Wanna play 20 questions",
 -- "Ya",
