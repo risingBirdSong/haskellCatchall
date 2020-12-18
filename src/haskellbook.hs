@@ -12,6 +12,7 @@ import Data.Time
 import Data.Int
 import Debug.Trace
 import Data.Maybe
+import Data.Ord
 import qualified Data.Map as M 
 
 
@@ -1282,6 +1283,10 @@ mostPopularWordB ltr cnvo = uncurry (*) . (\x->((fromMaybe 0 x) , fromMaybe 0 ( 
 -- mostPopularWordB :: (Ord a, Foldable t) => a -> t [a] -> Maybe [a]
 -- mostPopularWordB ltr cnvo = find (ltr`elem`) $ group $ sort . concat $ cnvo  
 -- getLengthInMyb :: Char -> Maybe Int
+
+mostPopSolve convo = mostPopularWordB ltr convo
+    where ltr = mostPopularWordA convo 
+
 getLengthInMyb ltr = countTaps <$> fndNum ltr
 
 groupSort = group . sort
@@ -1326,13 +1331,3 @@ ltrAndNumsGrow ltrs n = go ltrs n []
         go (a:as) num acc = go as ((num*10)+n) (acc ++ [(a,num)]) 
 
 makeTup (Just (ltrs, num)) = num
-
--- ["Wanna play 20 questions",
--- "Ya",
--- "U 1st haha",
--- "Lol ok. Have u ever tasted alcohol lol",
--- "Lol ya",
--- "Wow ur cool haha. Ur turn",
--- "Ok. Do u think I am pretty Lol",
--- "Lol ya",
--- "Haha thanks just making sure rofl ur turn"]
