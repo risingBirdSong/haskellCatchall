@@ -1,5 +1,6 @@
 
 {-# LANGUAGE NoMonomorphismRestriction #-}
+-- {-# language OverloadedStrings #-}
 
 -- let vs where
 
@@ -10,6 +11,7 @@ import Data.Char
 import Data.Time
 import Data.Int
 import Debug.Trace
+import Data.Maybe
 import qualified Data.Map as M 
 
 
@@ -1254,13 +1256,14 @@ reverseTaps ltr = find ((==(toUpper ltr)) . fst) $ makeLtrNumTuple (toUpper ltr)
 
 -- tupleEqlty =(fst (=='A')) $ ('A', 2) 
 tupleEqlty =((=='B') . fst) $ ('A', 2) 
-fndNum l = snd <$> (find ( (==l) . fst) $ makeLtrNumTuple l) 
+fndNum l = snd <$> (find ( (==ltr) . fst) $ makeLtrNumTuple ltr) 
+    where ltr = toUpper l
 
 countTaps nm = go nm 0
  where go 0 cnt = cnt 
        go nm cnt = go (nm `div` 10) (succ cnt) 
 
-totalLength cnvo = sum $ concatMap (map countTaps) $ solveConvo cnvo
+totalLength cnvo = sum $ concatMap (map countTaps) $ solveConvo (cnvo)
 
 solvePhone ltrs = go (map toUpper ltrs) []
     where go [] acc = acc
@@ -1275,9 +1278,11 @@ mostPopularWordBroken ltr cnvo = length <$> find (ltr`elem`) . group . sort . co
 -- $ has a lower precedence than <$>
 -- so it's parsed as (length <$> find (...)) $ (group $ ...)
 -- the fix \/
-mostPopularWordB ltr cnvo = (length <$>) $ find (ltr`elem`) . group . sort . concat $ cnvo  
+mostPopularWordB ltr cnvo = uncurry (*) . (\x->((fromMaybe 0 x) , fromMaybe 0 ( getLengthInMyb ltr) )) . (length <$>) . find (ltr`elem`) . group . sort . concat $ cnvo  
 -- mostPopularWordB :: (Ord a, Foldable t) => a -> t [a] -> Maybe [a]
 -- mostPopularWordB ltr cnvo = find (ltr`elem`) $ group $ sort . concat $ cnvo  
+-- getLengthInMyb :: Char -> Maybe Int
+getLengthInMyb ltr = countTaps <$> fndNum ltr
 
 groupSort = group . sort
 
