@@ -1331,3 +1331,29 @@ ltrAndNumsGrow ltrs n = go ltrs n []
         go (a:as) num acc = go as ((num*10)+n) (acc ++ [(a,num)]) 
 
 makeTup (Just (ltrs, num)) = num
+
+
+data Expr
+  = Lit Integer
+  | Add Expr Expr deriving (Show, Eq)
+
+-- instance Show Expr where 
+  -- Lit x = "heres x" ++ 
+
+evalled = (Add (Lit 1) (Lit 9001))
+
+myeval (Add x y) = adder x y  
+
+adder (Lit x) (Lit y) = trace ("x" ++ show (x) ++  "y" ++ show (y)  ) (Lit (x + y)) 
+-- adder (Lit x) _ = (Lit (x)) 
+-- adder val (Lit y) = val + y 
+-- adder (Lit x) y = x + y 
+
+printedExpr =  (Add (Lit 1) (Lit 9001)) 
+printExpr (Add (Lit x) (Lit y) ) = show x ++ "+" ++ show y 
+
+a1 = Add (Lit 9001) (Lit 1)
+mya2 = Add (Lit 9002) (Lit 20001) 
+a2 = Add a1 (Lit 20001)
+a3 = Add (Lit 1) a2
+mya3 = Add (Lit 1) (Lit 29003)

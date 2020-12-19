@@ -146,13 +146,12 @@ null' :: Foldable t => t a -> Bool
 null' a = foldr (\_ _ -> False) True a
 
 
-data Item a = One a | Many [Item a]
+data Item a = One a | Many [Item a] deriving (Show, Eq, Ord)
+
+flatten (One x) = [x]
+flatten (Many xs) = concatMap flatten xs
 
 example1 = Many [One 1,One 2,Many [One 3,Many [One 4,Many [One 5,One 6,Many []]]]]
 emptyExample = Many [Many [Many []]]
 
 onesExample = Many [One 1, One 2, One 3]
-
-
-flatten (One x) = [x]
-flatten (Many xs) = concatMap flatten xs

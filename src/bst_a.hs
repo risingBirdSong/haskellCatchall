@@ -11,7 +11,9 @@ nsrt (Node l a r) v
 --   | v 
 
 -- foldl :: Foldable t => (b -> a -> b) -> b -> t a -> b
+
 fld_a = foldl (nsrt) Nil [5,4,6,3,7,2,8]
+tree_tups = foldl (nsrt) Nil [(10,[1,2,3]),(5,[1,2,3]),(7,[1,2,3]),(15,[1,2,3]),(1,[1,2,3]), (13,[1,2,3]) ,(20,[1,2,3])]
 --  (Node (Node (Node Nil 2 Nil) 3 Nil) 4 Nil) 5 (Node Nil 6 (Node Nil 7 (Node Nil 8 Nil)))
 
 -- foldr :: Foldable t => (a -> b -> b) -> b -> t a -> b
@@ -44,3 +46,6 @@ rmvrChlrdn (Node l v r) qry
   | v == qry = Node Nil v Nil
   | qry < v = Node (rmvrChlrdn l qry) v r
   | qry > v = Node l v (rmvrChlrdn r qry) 
+
+
+
