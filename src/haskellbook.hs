@@ -1342,7 +1342,9 @@ data Expr
 
 evalled = (Add (Lit 1) (Lit 9001))
 
-myeval (Add x y) = adder x y  
+myeval (Add (Lit x) (Lit y)) = x + y   
+myeval (Add x (Lit y)) = (myeval x) + y   
+myeval (Add (Lit x) y ) = x + (myeval y)   
 
 adder (Lit x) (Lit y) = trace ("x" ++ show (x) ++  "y" ++ show (y)  ) (Lit (x + y)) 
 -- adder (Lit x) _ = (Lit (x)) 
