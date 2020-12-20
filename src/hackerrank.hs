@@ -47,3 +47,10 @@ f :: [Int] -> [Int]
 f lst = map snd $ filter (\(i,v) -> even i ) $ zip [0..] lst
 
 fn n = map (\x -> fromIntegral x :: Int) [0..n-1]
+
+
+century n = (year `div` 100 ) + 1
+  where year = n - 1
+
+
+  
