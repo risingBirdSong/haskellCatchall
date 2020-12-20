@@ -10,8 +10,8 @@ tripletCompare (x,y) (a,b)
 compareTriplets a b = pairToList $ foldr tripletCompare (0,0) $ zip a b 
 pairToList (a,b) = [a,b]
 
-main :: IO()
-main = do 
+maina :: IO()
+maina = do 
   aTemp <- getLine 
   let a = map (read :: String -> Int) $ words aTemp
   bTemp <- getLine  
@@ -21,3 +21,13 @@ main = do
   let result = intercalate " " $ map show ans
   putStrLn result
   return ()
+
+hello_world = putStrLn "hello world"
+
+-- f :: Int -> [Int] -> [Int]
+fb n arr = concatMap (replicate  n ) arr
+
+-- This part handles the Input and Output and can be used as it is. Do not modify this part.
+main :: IO ()
+main = getContents >>=
+       mapM_ print. (\(n:arr) -> fb n arr). map read. words
