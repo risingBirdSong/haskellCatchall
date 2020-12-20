@@ -31,3 +31,8 @@ fb n arr = concatMap (replicate  n ) arr
 main :: IO ()
 main = getContents >>=
        mapM_ print. (\(n:arr) -> fb n arr). map read. words
+
+myFilter pred [] = [] 
+myFilter pred (l:ls) 
+  | pred l = l : myFilter pred ls
+  | otherwise  = myFilter pred ls
