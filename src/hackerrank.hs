@@ -53,4 +53,19 @@ century n = (year `div` 100 ) + 1
   where year = n - 1
 
 
-  
+safeIndex idx lst = go zipped 
+  where zipped = zip [0..] lst
+        go [] = Nothing 
+        go  ((i, val):ls)
+            | idx == i = (Just val) 
+            | otherwise = go ls    
+matrixA = [
+  [1,2,3],
+  [4,5,6],
+  [7,8,9]
+  ] 
+
+-- safeIndex idx lst = ( safeIndex idx (safeIndex (idx) lst) ) : go (succ idx) idx
+
+-- diagonalDiff_primary lst = go 0 
+--   where go idx lst
