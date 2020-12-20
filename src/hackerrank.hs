@@ -36,3 +36,14 @@ myFilter pred [] = []
 myFilter pred (l:ls) 
   | pred l = l : myFilter pred ls
   | otherwise  = myFilter pred ls
+
+fc :: Int -> [Int] -> [Int]
+fc n [] = [] 
+fc n (a:arr) 
+  | a < n = a : fc n arr
+  | otherwise = fc n arr
+
+f :: [Int] -> [Int]
+f lst = map snd $ filter (\(i,v) -> even i ) $ zip [0..] lst
+
+fn n = map (\x -> fromIntegral x :: Int) [0..n-1]
