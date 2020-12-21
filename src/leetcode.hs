@@ -59,3 +59,23 @@ myDelim lst dlm = go lst dlm []
 
 -- Thousand Separator
 thssep num = reverse . intercalate "." . chunksOf 3 . reverse $ show num
+
+
+-- example of custom sort 
+subsortGT a b
+  | a <= b = GT
+  | a > b = LT
+
+sortGT (a1, b1) (a2, b2)
+  | a1 + b1 < a2 + b2 = GT
+  | a1 + b1 > a2 + b2 = LT
+  | a1 + b1 ==  a2 + b2= subsortGT a1 a2
+
+sortetest = sortBy sortGT [(0,1),(0,3),(1,1),(1,3),(2,0),(2,1),(2,3),(4,1),(4,2)]
+
+
+mveZeroes a b 
+  | a == 0 = GT 
+  | otherwise = LT 
+
+movedz ls = sortBy mveZeroes ls
