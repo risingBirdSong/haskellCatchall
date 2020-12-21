@@ -64,8 +64,32 @@ matrixA = [
   [4,5,6],
   [7,8,9]
   ] 
+matrixB = [
+  [11 ,2 ,4],
+  [4 ,5 ,6],
+  [10 ,8 ,-12]
+  ] 
 
 -- safeIndex idx lst = ( safeIndex idx (safeIndex (idx) lst) ) : go (succ idx) idx
 
--- diagonalDiff_primary lst = go 0 
---   where go idx lst
+diagonalDiffPrimary lst = go 0 []
+  where go idx acc
+         | idx == length lst = acc
+         | otherwise =  go (succ idx) (( (!!) ((!!) lst idx ) idx ) : acc)
+
+diagonalDiffSecondary lst = go 0 [] 
+  where go idx acc
+         | idx == length lst = acc
+         | otherwise =  go (succ idx) (( (!!) ((!!) lst ((length lst)-idx-1) ) idx ) : acc)
+
+diagonalDifference lst = abs (sum (diagonalDiffPrimary lst) - sum (diagonalDiffSecondary lst))
+
+gradingStudents _ stdnts = map grading stdnts
+
+grading xs 
+       | xs < 40 = xs 
+       | (upper - xs) < 3 = upper 
+       |  (upper - xs) >= 3 = xs
+    where upper = (xs - (xs `mod` 5)) + 5 
+
+
