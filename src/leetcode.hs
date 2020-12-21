@@ -85,3 +85,14 @@ addDgts dig
         | (adder dig ) < 10 = adder dig 
         | otherwise = adder (adder dig)
   where adder val = sum $ map (digitToInt) $ show val
+
+
+-- impEmply emp id = dropWhile (\x -> head x /= id ) emp
+-- this will break because of the invalid type, and needs a different data type like
+-- a tree... which i'll implement, but was wondering how to go about parsing something like 
+-- this, unsafe, untyped data from something like an API. how to go about cleaning it
+-- up to use with haskell?
+-- empTest = [ [1, 5, (2, 3)], [2, 3, ], [3, 3, ]]
+
+data RoseTree a = RoseTree a [RoseTree a] deriving (Show, Eq,Ord)
+data RT a = RT a [RT a] deriving (Show, Eq, Ord)

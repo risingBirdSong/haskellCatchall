@@ -155,3 +155,4 @@ example1 = Many [One 1,One 2,Many [One 3,Many [One 4,Many [One 5,One 6,Many []]]
 emptyExample = Many [Many [Many []]]
 
 onesExample = Many [One 1, One 2, One 3]
+
