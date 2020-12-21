@@ -1,5 +1,7 @@
 import Debug.Trace
 import Data.List
+import Data.Char
+import Data.List.Split
 a = [1,1]
 b = [2,2]
 c = [1,2] 
@@ -24,3 +26,32 @@ smaller_ as bs
   | otherwise = bs 
 
 theOtherList theOne choice@[as,bs] = head $ filter ((/=) theOne ) choice 
+
+
+-- Reverse Only Letters
+rol input = go input onlylttrs 
+    where onlylttrs = reverse $ filter (isAlpha) input
+          go [] _ = []
+          go ori [] = [] ++ ori
+          go (a:all) (l:ltrs) 
+              | (not . isAlpha) a = a : go all (l:ltrs)
+              | otherwise = l : go all ltrs 
+
+onlyLettersRev input = reverse $ filter (isAlpha) input
+  
+lettertest = "a-bC-dEf-ghIj"
+
+lttrHandler [] _ = []
+lttrHandler _ [] = []
+lttrHandler (a:all) (l:ltrs) 
+    | (not . isAlpha) a = a : lttrHandler all (l:ltrs)
+    | otherwise = l : lttrHandler all ltrs 
+
+
+
+-- rol ltrs = myDelim ltrs (notAlphas ltrs)
+myDelim lst dlm = go lst dlm []
+  where go [] dlm acc = [acc]
+        go (a:ls) dlm acc
+          | a `elem` dlm = acc : [a] : go ls dlm []
+          | otherwise = go ls dlm (acc++[a]) 
