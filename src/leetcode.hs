@@ -55,3 +55,7 @@ myDelim lst dlm = go lst dlm []
         go (a:ls) dlm acc
           | a `elem` dlm = acc : [a] : go ls dlm []
           | otherwise = go ls dlm (acc++[a]) 
+
+
+-- Thousand Separator
+thssep num = reverse . intercalate "." . chunksOf 3 . reverse $ show num
