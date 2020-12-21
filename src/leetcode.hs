@@ -79,3 +79,9 @@ mveZeroes a b
   | otherwise = LT 
 
 movedz ls = sortBy mveZeroes ls
+
+-- Add Digits
+addDgts dig 
+        | (adder dig ) < 10 = adder dig 
+        | otherwise = adder (adder dig)
+  where adder val = sum $ map (digitToInt) $ show val
