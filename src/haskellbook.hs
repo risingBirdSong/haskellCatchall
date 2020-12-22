@@ -1361,3 +1361,46 @@ a3 = Add (Lit 1) a2
 mya3 = Add (Lit 1) (Lit 29003)
 
 data MyId a = MyId a
+
+
+theTest = "the goose ran down the hillside"           
+
+theToA str = unwords $ map go $ words str
+  where go wrd  
+          | wrd == "the" = "a"
+          | otherwise  = wrd
+
+countTheBeforeVowel str = go (words str) 0
+                where go [] cnt = cnt
+                      go [x] cnt = cnt
+                      go (a:b:ls) cnt
+                          | a == "the" && head b `elem` "aeiou" = go (b:ls) (succ cnt)
+                          | otherwise  = go (b:ls) cnt 
+
+isVowel_ ltr 
+    | ltr `elem` "aeiou" = True 
+    | otherwise  = False 
+
+isVowel = (`elem` "aeiou")
+
+countVowelsOrCons f str = length $ concatMap (filter f) $ words str
+
+countVowels str = countVowelsOrCons isVowel str 
+countCons str = countVowelsOrCons (not . isVowel) str 
+
+
+validateWord str 
+  | countVowels str > countCons str = False 
+  | otherwise  = True 
+
+
+isJust_ :: Maybe a -> Bool
+isJust_ (Just x ) = True 
+isJust_ Nothing = False 
+
+isNothing_ = not . isJust_ 
+
+
+mayybee :: b -> (a -> b) -> Maybe a -> b
+mayybee acc f Nothing = acc
+mayybee acc f (Just x) = f x  

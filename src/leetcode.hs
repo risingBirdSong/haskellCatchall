@@ -171,26 +171,4 @@ dspra lst = go (nub . sort $ lst)
           go (a:b:ls) 
             | a == (b-1) = go (b:ls)
             | otherwise = [a+1..b-1] : go (b:ls)  
-theTest = "the goose ran down the hillside"           
-
-theToA str = unwords $ map go $ words str
-  where go wrd  
-          | wrd == "the" = "a"
-          | otherwise  = wrd
-
-countTheBeforeVowel str = go (words str) 0
-                where go [] cnt = cnt
-                      go [x] cnt = cnt
-                      go (a:b:ls) cnt
-                          | a == "the" && head b `elem` "aeiou" = go (b:ls) (succ cnt)
-                          | otherwise  = go (b:ls) cnt 
-
-isVowel ltr 
-    | ltr `elem` "aeiou" = True 
-    | otherwise  = False 
-
-countVowelsOrCons f str = length $ concatMap (filter f) $ words str
-
-countVowels str = countVowelsOrCons isVowel str 
-countCons str = countVowelsOrCons (not . isVowel) str 
 
