@@ -150,3 +150,6 @@ mrgtwosrtA as bs = go as bs
     where go [] bs = bs 
           go as []  = as 
           go (a:as) (b:bs)  = a : b : go as bs
+
+-- Count Odd Numbers in an Interval Range
+cntOddRange l h =  length $ filter  odd $ [l..h]
