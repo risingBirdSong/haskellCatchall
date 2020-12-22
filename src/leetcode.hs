@@ -177,3 +177,10 @@ theToA str = unwords $ map go $ words str
   where go wrd  
           | wrd == "the" = "a"
           | otherwise  = wrd
+
+countTheBeforeVowel str = go (words str) 0
+                where go [] cnt = cnt
+                      go [x] cnt = cnt
+                      go (a:b:ls) cnt
+                          | a == "the" && head b `elem` "aeiou" = go (b:ls) (succ cnt)
+                          | otherwise  = go (b:ls) cnt 
