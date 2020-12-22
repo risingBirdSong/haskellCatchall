@@ -1359,3 +1359,5 @@ mya2 = Add (Lit 9002) (Lit 20001)
 a2 = Add a1 (Lit 20001)
 a3 = Add (Lit 1) a2
 mya3 = Add (Lit 1) (Lit 29003)
+
+data MyId a = MyId a

@@ -140,3 +140,13 @@ mntnc (a:b:lst)
 rankT lst = map ((+1).(fromMaybe 0 .) (`S.lookupIndex` setsort)) lst
     where setsort = S.fromList lst
 
+
+-- . Merge Two Sorted Lists
+l1 = [1,2,4]
+l2 = [1,3,4,5]
+mrgtwosrt as bs =concatMap (\(x,y) -> [x,y]) $ zip as bs 
+
+mrgtwosrtA as bs = go as bs
+    where go [] bs = bs 
+          go as []  = as 
+          go (a:as) (b:bs)  = a : b : go as bs
