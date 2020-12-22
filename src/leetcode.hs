@@ -184,3 +184,13 @@ countTheBeforeVowel str = go (words str) 0
                       go (a:b:ls) cnt
                           | a == "the" && head b `elem` "aeiou" = go (b:ls) (succ cnt)
                           | otherwise  = go (b:ls) cnt 
+
+isVowel ltr 
+    | ltr `elem` "aeiou" = True 
+    | otherwise  = False 
+
+countVowelsOrCons f str = length $ concatMap (filter f) $ words str
+
+countVowels str = countVowelsOrCons isVowel str 
+countCons str = countVowelsOrCons (not . isVowel) str 
+
