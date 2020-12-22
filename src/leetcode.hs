@@ -133,3 +133,6 @@ mntnc (a:b:lst)
         go (a:b:ls) 
           | a <= b = go (b:ls)
           | otherwise = False 
+
+rankT lst = map (\x -> (+1) <$> (elemIndex x sorted)) lst
+    where sorted = sort lst 
