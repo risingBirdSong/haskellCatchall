@@ -164,3 +164,11 @@ dspr lst = go (minimum lst) cleaned
           go cnt (a:as) 
               | cnt == a = go (succ cnt) (as)
               | cnt < a = [cnt..a-1] : go (a) (a:as) 
+
+dspra lst = go (nub . sort $ lst)
+    where go [] = []
+          go [x] = []
+          go (a:b:ls) 
+            | a == (b-1) = go (b:ls)
+            | otherwise = [a+1..b-1] : go (b:ls)  
+              
