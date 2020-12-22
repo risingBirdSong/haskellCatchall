@@ -1,6 +1,9 @@
 import Debug.Trace
 import Data.List
+import Data.Maybe
+import qualified Data.Set as S
 import Data.Char
+import qualified Data.Map as M
 import Data.List.Split
 a = [1,1]
 b = [2,2]
@@ -134,5 +137,6 @@ mntnc (a:b:lst)
           | a <= b = go (b:ls)
           | otherwise = False 
 
-rankT lst = map (\x -> (+1) <$> (elemIndex x sorted)) lst
-    where sorted = sort lst 
+rankT lst = map ((+1).(fromMaybe 0 .) (`S.lookupIndex` setsort)) lst
+    where setsort = S.fromList lst
+
