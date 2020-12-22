@@ -171,4 +171,9 @@ dspra lst = go (nub . sort $ lst)
           go (a:b:ls) 
             | a == (b-1) = go (b:ls)
             | otherwise = [a+1..b-1] : go (b:ls)  
-              
+theTest = "the goose ran down the hillside"           
+
+theToA str = unwords $ map go $ words str
+  where go wrd  
+          | wrd == "the" = "a"
+          | otherwise  = wrd
