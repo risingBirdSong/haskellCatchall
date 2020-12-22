@@ -153,3 +153,14 @@ mrgtwosrtA as bs = go as bs
 
 -- Count Odd Numbers in an Interval Range
 cntOddRange l h =  length $ filter  odd $ [l..h]
+
+--  Find All Numbers Disappeared in an Array
+ddd = [4,3,2,7,8,2,3,1]
+eee = [4,6,8,9,11,14,20]
+-- [2,3] [5] [7] [10] [12,13] [15,16,17,18,19]
+dspr lst = go (minimum lst) cleaned 
+    where cleaned = (nub $ sort lst)
+          go cnt [] = []
+          go cnt (a:as) 
+              | cnt == a = go (succ cnt) (as)
+              | cnt < a = [cnt..a-1] : go (a) (a:as) 
