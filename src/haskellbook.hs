@@ -1401,6 +1401,33 @@ isJust_ Nothing = False
 isNothing_ = not . isJust_ 
 
 
+-- it type checks, but what is the point of having the accumulator and then not even
+-- using it in the Just case? 
 mayybee :: b -> (a -> b) -> Maybe a -> b
 mayybee acc f Nothing = acc
 mayybee acc f (Just x) = f x  
+
+fromMaybe_ :: a -> Maybe a -> a
+fromMaybe_ x Nothing = x
+fromMaybe_ x (Just y) = y 
+
+listToMaybe_ [] = Nothing 
+listToMaybe_ [a] = Just a
+
+maybeToList_ :: Maybe a -> [a]
+maybeToList_ Nothing = []
+maybeToList_ (Just x) = [x]
+
+--  catMaybes [Just 1, Nothing, Just 2]
+
+catMaybes_ mybLst = foldl (\acc cur -> acc ++ maybeToList_ cur) [] mybLst 
+
+-- >>> flipMaybe [Just 1, Just 2, Just 3]
+-- Just [1, 2, 3]
+-- >>> flipMaybe [Just 1, Nothing, Just 3]
+-- Nothing
+
+flipMaybe :: [Maybe a] -> Maybe [a]
+flipMaybe [] = Just [] 
+flipMaybe (Nothing:mybs) = Nothing 
+flipMaybe ((Just x):mybs) = (x :) <$>  (flipMaybe mybs)    
