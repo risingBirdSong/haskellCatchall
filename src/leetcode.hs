@@ -123,3 +123,13 @@ stocksort tupa tupb
     | ((snd tupa)-(fst tupa) > (snd tupb)-(fst tupb)) = GT 
     | ((snd tupa)-(fst tupa) < (snd tupb)-(fst tupb)) = LT  
     | otherwise  = EQ 
+
+-- https://leetcode.com/problems/monotonic-array/
+mntnc (a:b:lst) 
+  | a < b = go (a:b:lst)
+  | a > b = go (reverse (a:b:lst))
+  where go [] = True 
+        go [x] = True 
+        go (a:b:ls) 
+          | a <= b = go (b:ls)
+          | otherwise = False 
