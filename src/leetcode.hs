@@ -93,6 +93,33 @@ addDgts dig
 -- this, unsafe, untyped data from something like an API. how to go about cleaning it
 -- up to use with haskell?
 -- empTest = [ [1, 5, (2, 3)], [2, 3, ], [3, 3, ]]
+data Item a = One a | Many [Item a] deriving (Show, Eq, Ord)
+
+empTest =  [ Many [One 1, One 5, Many [One 2,One 3]], Many [One 2, One 3, Many []], Many [One 3,One 3, Many []]]
+
+manyAccess (Many x) = x
+manyAccess _ = error "try different"
+oneAcces (One x) = x
+
+
+impEmply lst emp = dropWhile (\x ->  emp(/=)( empAccess x) ) lst
+
+empAccess x = oneAcces $ head (manyAccess x) 
 
 data RoseTree a = RoseTree a [RoseTree a] deriving (Show, Eq,Ord)
 data RT a = RT a [RT a] deriving (Show, Eq, Ord)
+
+stockinput = [7,1,5,3,6,4]
+-- Output: 7
+
+-- https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/
+stocking [] acc = acc 
+stocking [x] acc = acc 
+stocking (a:b:ls) acc 
+  | b > a = stocking (b:ls) (acc +( b - a)) 
+  | otherwise = stocking (b:ls) acc
+
+stocksort tupa tupb 
+    | ((snd tupa)-(fst tupa) > (snd tupb)-(fst tupb)) = GT 
+    | ((snd tupa)-(fst tupa) < (snd tupb)-(fst tupb)) = LT  
+    | otherwise  = EQ 
