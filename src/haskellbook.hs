@@ -1445,12 +1445,16 @@ rights' lst = foldr go [] lst
           where go (Right x) acc =  x : acc 
                 go _ acc = acc 
 
-eithers = [ Left "foo", Right 3, Left "bar", Right 7, Left "baz" ]        
-partitionEithers' es = foldr go ([],[]) es
-                    where go [] acc = acc 
-                          go (Right x : ls) (l, r) = (l, (x):r)
-                          go (Left x : ls) (l,r) = (x:l, r)
+-- partitionEithers' es = foldr go ([],[]) es
+--                     where go [] acc = acc 
+--                           go (Right x : ls) (l, r) = (l, (x):r)
+--                           go (Left x : ls) (l,r) = (x:l, r)
 
-prtHelp [] acc = acc 
-prtHelp (Right x : ls) (l, r) = (l, (x):r)
-prtHelp (Left x : ls) (l,r) = (x:l, r)
+-- prtHelp [] acc = acc 
+-- prtHelp (Right x : ls) (l, r) = (l, (x):r)
+-- prtHelp (Left x : ls) (l,r) = (x:l, r)
+
+partitionEithers' es = go es ([],[])
+          where go [] acc = acc
+                go  ((Right x):ls) (l,r) = go ls (l,x:r) 
+                go  ((Left x):ls) (l,r) = go ls (x:l,r) 
