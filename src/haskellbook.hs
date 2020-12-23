@@ -1458,3 +1458,26 @@ partitionEithers' es = go es ([],[])
           where go [] acc = acc
                 go  ((Right x):ls) (l,r) = go ls (l,x:r) 
                 go  ((Left x):ls) (l,r) = go ls (x:l,r) 
+
+eitherMaybe' :: (b -> c) -> Either a b -> Maybe c
+eitherMaybe' f (Left a) = Nothing 
+eitherMaybe' f (Right b) = Just (f b) 
+
+
+-- interesting, b -> c, totally unconstrained, works generically with various funcs
+something :: (b -> c) -> b -> c 
+something f v = f v 
+
+either' :: (a -> c) -> (b -> c) -> Either a b -> c
+either' f g (Left aa) = f aa
+either' f g (Right bb) = g bb
+
+myIterate :: (a -> a) -> a -> [a]
+myIterate f v = f v : myIterate f (f v) 
+
+myUnfoldr :: (b -> Maybe (a, b)) -> b -> [a]
+myUnfoldr f cur = go (f cur)
+          where go (Just (a, b)) = a : go (f b)
+                go Nothing = []
+
+myUnfoldTest = myUnfoldr (\b -> if b <= 0 then Nothing else Just (b,b-1)) 10
