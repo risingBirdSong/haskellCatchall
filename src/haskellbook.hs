@@ -1483,3 +1483,22 @@ myUnfoldr f cur = go (f cur)
 myUnfoldTest = myUnfoldr (\b -> if b <= 0 then Nothing else Just (b,b-1)) 10
 
 reIterate f v = myUnfoldr (\b -> Just (b,f b)) v 
+
+
+-- unfoldBT :: (a -> Maybe (a,b,a)) -> a -> BinaryTree b
+-- unfoldBT f cur = go (f cur) Leaf 
+--           where go (Just (l, b , r)) t = go (f b) (insert' b t)
+--                 go Nothing t = t
+-- bnryUnfold = 
+
+unfoldTree:: (b -> Maybe (b, a, b)) -> b -> BinaryTree a
+unfoldTree f b =
+    case f b of
+      Nothing -> Leaf
+      Just (lt, x, rt) -> Node (unfoldTree f lt) x (unfoldTree f rt)
+
+
+treeBuild :: Int -> BinaryTree Int
+treeBuild n = unfoldTree (\b -> if b < 2^n - 1
+                                   then Just (2*b+1, b, 2*b+2)
+                                   else Nothing) 0
