@@ -1481,3 +1481,5 @@ myUnfoldr f cur = go (f cur)
                 go Nothing = []
 
 myUnfoldTest = myUnfoldr (\b -> if b <= 0 then Nothing else Just (b,b-1)) 10
+
+reIterate f v = myUnfoldr (\b -> Just (b,f b)) v 
