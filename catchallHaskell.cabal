@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 2357dddb8ac086fa1fb4485db1a7c153c2217ec5a8d3a95b0c7a39ad7b6c6a07
+-- hash: bb3718847fecb6a68961dc1937cb25c4a9188238facd46bc8bc85a8c9a0aaa5a
 
 name:           catchallHaskell
 version:        0.1.0.0
@@ -44,6 +44,7 @@ library
     , random
     , sort
     , split
+    , time
     , universum
     , utility-ht
     , vector
@@ -68,6 +69,7 @@ executable catchallHaskell-exe
     , random
     , sort
     , split
+    , time
     , universum
     , utility-ht
     , vector
@@ -93,6 +95,7 @@ test-suite catchallHaskell-test
     , random
     , sort
     , split
+    , time
     , universum
     , utility-ht
     , vector

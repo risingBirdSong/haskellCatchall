@@ -13,7 +13,11 @@ import Data.Int
 import Debug.Trace
 import Data.Maybe
 import Data.Ord
+import System.Exit 
 import qualified Data.Map as M 
+import Control.Monad
+
+
 
 
 plusTwowhere n = print $ f n 
@@ -1502,3 +1506,14 @@ treeBuild :: Int -> BinaryTree Int
 treeBuild n = unfoldTree (\b -> if b < n
                                    then Just (b+1, b, b+1)
                                    else Nothing) 0
+
+mainPali :: IO ()
+mainPali = forever $ do
+  putStrLn "enter a word and ill determine if its a palindrome"
+  line1 <- getLine
+  case (line1 == reverse line1) of
+    True -> putStrLn "It's a palindrome!"
+    False -> do 
+      putStrLn "not a palindrome"
+      exitSuccess 
+

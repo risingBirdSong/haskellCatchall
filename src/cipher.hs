@@ -18,3 +18,4 @@ main = do
   offset <- getLine
   let num = (\x -> read x :: Int) offset
   putStrLn $ makeSecret msg num 
+
