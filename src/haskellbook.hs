@@ -1499,6 +1499,6 @@ unfoldTree f b =
 
 
 treeBuild :: Int -> BinaryTree Int
-treeBuild n = unfoldTree (\b -> if b < 2^n - 1
-                                   then Just (2*b+1, b, 2*b+2)
+treeBuild n = unfoldTree (\b -> if b < n
+                                   then Just (b+1, b, b+1)
                                    else Nothing) 0
