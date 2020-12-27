@@ -1511,7 +1511,9 @@ mainPali :: IO ()
 mainPali = forever $ do
   putStrLn "enter a word and ill determine if its a palindrome"
   line1 <- getLine
-  case (line1 == reverse line1) of
+  let cleaned = filter isAlpha $ map toLower line1
+  putStrLn cleaned
+  case (cleaned == reverse cleaned) of
     True -> putStrLn "It's a palindrome!"
     False -> do 
       putStrLn "not a palindrome"
