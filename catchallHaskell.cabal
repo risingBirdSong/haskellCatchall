@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: bb3718847fecb6a68961dc1937cb25c4a9188238facd46bc8bc85a8c9a0aaa5a
+-- hash: cbe193fac0a533a93c0d1368305e246d5655ab7347f78886a489d783172417a7
 
 name:           catchallHaskell
 version:        0.1.0.0
@@ -40,6 +40,7 @@ library
     , base >=4.7 && <5
     , containers
     , csv-conduit
+    , hspec
     , matrix
     , random
     , sort
@@ -65,6 +66,7 @@ executable catchallHaskell-exe
     , catchallHaskell
     , containers
     , csv-conduit
+    , hspec
     , matrix
     , random
     , sort
@@ -91,6 +93,7 @@ test-suite catchallHaskell-test
     , catchallHaskell
     , containers
     , csv-conduit
+    , hspec
     , matrix
     , random
     , sort
