@@ -166,3 +166,11 @@ listOrdered xs =
 
 qcorderedlists  = quickCheck ((listOrdered :: [Integer] -> Bool ) . sort )
 qcorderedlistsa  = quickCheck ((listOrdered :: [String] -> Bool ) . sort )
+
+assocTpl x y z = ((x + (y + z)) , ((x + y) + z))
+plusAssociative x y z = (x + (y + z)) == ((x + y) + z)
+qcassoc = quickCheck (plusAssociative :: Int -> Int -> Int -> Bool)
+-- https://stackoverflow.com/questions/588004/is-floating-point-math-broken
+-- https://stackoverflow.com/questions/33161504/how-to-calculate-floating-point-numbers-in-haskell
+qcassoca = quickCheck (plusAssociative :: Float -> Float -> Float -> Bool)
+qcassocb = quickCheck (plusAssociative :: Rational -> Rational -> Rational -> Bool)
