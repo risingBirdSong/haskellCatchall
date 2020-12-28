@@ -160,4 +160,4 @@ onesExample = Many [One 1, One 2, One 3]
 -- How do I achieve that.
 
 anyCleanDivision n divisors = any (\x -> n `mod` x == 0) divisors
-anyCleanDivision n divisors = any ((== 0) . (mod) n ) divisors
+anyCleanDivision' n  = any ((== 0) . (mod) n ) 

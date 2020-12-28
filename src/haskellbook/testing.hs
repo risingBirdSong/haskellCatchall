@@ -141,3 +141,16 @@ prop_additionGreater :: Int -> Bool
 prop_additionGreater x = x + 1 > x
 runQc :: IO ()
 runQc = quickCheck prop_additionGreater
+
+testhalf :: Int -> Bool 
+testhalf x = (abs x) `div` 2 <= (abs x)
+
+qcHalf :: IO ()
+qcHalf = quickCheck testhalf 
+
+halfAnddouble = (*2) .(/2)
+halfAnddoublepointed x = 2 * (x/2) 
+halfidentity :: Double -> Bool
+halfidentity x = x == (halfAnddouble x)
+
+qcHalfId = quickCheck halfidentity
