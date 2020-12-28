@@ -1,6 +1,7 @@
 module Addition where
 import Test.Hspec
 import Test.QuickCheck
+import Data.List
 
 main :: IO ()
 main = hspec $ do
@@ -154,3 +155,14 @@ halfidentity :: Double -> Bool
 halfidentity x = x == (halfAnddouble x)
 
 qcHalfId = quickCheck halfidentity
+
+-- listOrdered :: [Integer ] -> Bool
+listOrdered :: (Foldable t, Ord a) => t a -> Bool
+listOrdered xs =
+  snd $ foldr go (Nothing, True) xs
+  where go _ status@(_, False) = status
+        go y (Nothing, t) = (Just y, t)
+        go y (Just x, t) = (Just y, x >= y)
+
+qcorderedlists  = quickCheck ((listOrdered :: [Integer] -> Bool ) . sort )
+qcorderedlistsa  = quickCheck ((listOrdered :: [String] -> Bool ) . sort )
