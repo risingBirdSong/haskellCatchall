@@ -183,8 +183,9 @@ qcpcb = quickCheck (plusCommutative :: Float -> Float -> Bool)
 qoutRemEqual _ 0 = True  
 qoutRemEqual x y = (quot x y)*y + (rem x y) == x 
 qoutRemTest = quickCheck (qoutRemEqual :: Integer -> Integer -> Bool)
--- (quot x y)*y + (rem x y) == x
--- (div x y)*y + (mod x y) == x
--- data PosInt = [1..] 
 
--- data PosInt = 1 | 2 | 3 
+genPosNum :: Gen Int
+genPosNum = elements [1..1000]
+
+ttt = quickCheck (forAll genPosNum qoutRemEqual)
+
