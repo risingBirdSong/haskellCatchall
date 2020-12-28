@@ -37,7 +37,7 @@ dependencies:
 - time 
 - hspec
 - QuickCheck
-
+- process 
 library:
   source-dirs: src
 
