@@ -156,3 +156,8 @@ emptyExample = Many [Many [Many []]]
 
 onesExample = Many [One 1, One 2, One 3]
 
+-- Say I wanna write a funciton that takes a number as input, then checks if that number is evenly divisible by any number in a given list.
+-- How do I achieve that.
+
+anyCleanDivision n divisors = any (\x -> n `mod` x == 0) divisors
+anyCleanDivision n divisors = any ((== 0) . (mod) n ) divisors

@@ -6,6 +6,8 @@ import System.Environment
 import System.Exit
 import Data.List
 import System.IO
+import Test.QuickCheck
+import Debug.Trace
 
 clear = system "cls"
 
@@ -131,3 +133,24 @@ main = do
                   \ 'to' morse,\
                   \ such as: morse to"
         exitFailure
+
+allowedChars :: [Char]
+allowedChars = M.keys letterToMorse
+
+allowedMorse :: [Morse]
+allowedMorse = M.elems letterToMorse
+
+charGen :: Gen Char
+charGen = elements allowedChars
+
+morseGen :: Gen Morse
+morseGen = elements allowedMorse
+
+prop_thereAndBackAgain :: Property
+prop_thereAndBackAgain =
+  forAll charGen
+  (\c -> trace (show c) ((charToMorse c)
+  >>= morseToChar) == Just c)
+
+testmain :: IO ()
+testmain = quickCheck ( prop_thereAndBackAgain)
