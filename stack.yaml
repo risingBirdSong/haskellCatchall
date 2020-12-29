@@ -17,7 +17,11 @@
 #
 # resolver: ./custom-snapshot.yaml
 # resolver: https://example.com/snapshots/2018-01-01.yaml
-resolver: lts-16.18
+# the resolver ive been using this whole time
+# resolver: lts-16.18
+resolver: nightly-2020-12-14
+
+
 
 # User packages to be built.
 # Various formats can be used as shown in the example below.
@@ -35,8 +39,10 @@ packages:
 # forks / in-progress versions pinned to a git hash. For example:
 #
 extra-deps:
-- text-format-simple-1.1.0@sha256:5815236396328f556b9896fdcb949d15b485ef05394c9dc846e94b0306cb4036,735
-
+  # - random-1.2.0
+  # - splitmix-0.1.0.3
+  # - random-1.1@sha256:7b67624fd76ddf97c206de0801dc7e888097e9d572974be9b9ea6551d76965df,1777
+  # - splitmix-0.0.5@sha256:4a49661be63f5aea0e132e9ab51be918789bb4dceb4ab9b15b85ba9cbbef5999,5412
 # - acme-missiles-0.3
 # - git: https://github.com/commercialhaskell/stack.git
 #   commit: e7b331f14bcffb8367cd58fbfc8b40ec7642100a

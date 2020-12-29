@@ -3,8 +3,12 @@ import Data.List
 import Data.Maybe
 import qualified Data.Set as S
 import Data.Char
+import Control.Monad
 import qualified Data.Map as M
 import Data.List.Split
+import  System.Random
+import Test.QuickCheck
+
 a = [1,1]
 b = [2,2]
 c = [1,2] 
@@ -172,3 +176,12 @@ dspra lst = go (nub . sort $ lst)
             | a == (b-1) = go (b:ls)
             | otherwise = [a+1..b-1] : go (b:ls)  
 
+
+richestCust xs = sum $ maximum xs 
+
+sortedRich xs = sum $ last $ sortOn sum  xs
+
+-- richCompare :: (NonEmptyList [[Integer ]]) -> Bool
+richCompare (NonEmpty xs) = (sortedRich xs ) == (richestCust xs)
+
+-- richTest = quickChec (richCompare )

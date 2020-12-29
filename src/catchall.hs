@@ -3,6 +3,7 @@ import Data.Bool
 import qualified Data.List as L
 import qualified Data.Map as M
 import Control.Monad
+import Data.Numbers.Primes
 import Data.Ord 
 
 class C a where

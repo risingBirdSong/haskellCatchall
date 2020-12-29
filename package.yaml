@@ -28,8 +28,6 @@ dependencies:
 - vector
 - universum
 - QuickCheck
-- Chart-diagrams
-- csv-conduit
 - utility-ht
 - matrix
 - array
@@ -38,6 +36,7 @@ dependencies:
 - hspec
 - QuickCheck
 - process 
+- primes 
 library:
   source-dirs: src
 

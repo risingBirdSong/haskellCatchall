@@ -64,6 +64,8 @@ genOrdering = elements [LT, EQ, GT]
 genChar :: Gen Char
 genChar = elements ['a'..'z']
 
+-- genPos :: Gen 
+
 genTuple :: (Arbitrary a, Arbitrary b) => Gen (a, b)
 genTuple = do
   a <- arbitrary
@@ -143,6 +145,13 @@ prop_additionGreater :: Int -> Bool
 prop_additionGreater x = x + 1 > x
 runQc :: IO ()
 runQc = quickCheck prop_additionGreater
+
+nonnegs ::  NonNegative Int -> Bool
+nonnegs (NonNegative a) = (a + a) == a * 2  
+
+prop_Myfunc :: [Int] -> (NonNegative Int, NonNegative Int) -> Bool
+prop_Myfunc ints (NonNegative i, NonNegative j) = ints !! i == ints !! j
+
 
 testhalf :: Int -> Bool 
 testhalf x = (abs x) `div` 2 <= (abs x)
@@ -235,8 +244,23 @@ data Fool =
 foolGen :: Gen Fool 
 foolGen = oneof [return Fulse, return Frue, return Fraw]
 
+-- https://stackoverflow.com/questions/27171979/how-can-i-constraint-quickcheck-parameters-e-g-only-use-non-negative-ints
 foolGen' :: Gen Fool 
 foolGen' = frequency [(2,return Fulse), (3,return Frue), (6,return Fraw)]
 -- genBool :: Gen Bool
 -- genBool = choose (False, True)
+
+-- https://stackoverflow.com/questions/59306230/how-to-define-a-function-that-takes-natural-numbers-of-a-data-type-and-return-th
+data Nat = Z | S Nat deriving (Show, Eq, Ord)
+
+-- will fail due to out of bounds
+prop_Index_v2 :: (NonEmptyList Integer) -> NonNegative Int -> Bool
+prop_Index_v2 (NonEmpty xs) (NonNegative n) = xs !! n == head (drop n xs)
+
+prop_Index_v3 :: (NonEmptyList Integer) -> NonNegative Int -> Property
+prop_Index_v3 (NonEmpty xs) (NonNegative n) =
+  n < length xs ==> xs !! n == head (drop n xs)
+
+prop_Index_v4 (NonEmpty xs) =
+  forAll (choose (0, length xs-1)) $ \n -> xs !! n == head (drop n xs)
 
