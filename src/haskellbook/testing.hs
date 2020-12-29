@@ -2,6 +2,7 @@ module Addition where
 import Test.Hspec
 import Test.QuickCheck
 import Data.List
+import Debug.Trace
 
 main :: IO ()
 main = hspec $ do
@@ -189,3 +190,28 @@ genPosNum = elements [1..1000]
 
 ttt = quickCheck (forAll genPosNum qoutRemEqual)
 
+pwrComm x y = x ^ y == y ^ x
+-- pwrCommTest = quickCheck (pwrComm :: Int -> Int -> Bool) fails, understandably
+pwrAssoc x y z = trace  (show $ (x ^ y) ^ z) (x ^ y) ^ z == trace (show $ x ^ (y ^ z)) x ^ (y ^ z)
+-- fails 
+powerAssocTest = quickCheck (pwrAssoc :: Int -> Int -> Int -> Bool)
+
+revId xs = (reverse . reverse $ xs) == id xs
+revIdTest = quickCheck (revId :: [Int] -> Bool)
+
+
+folded xs ys = foldr (:) ys xs
+appended xs ys = xs ++ ys
+
+foldedAndAppended xs ys = (folded xs ys) == (appended xs ys)
+foldedAndAppendedTest = quickCheck (foldedAndAppended :: [Int] -> [Int] -> Bool)
+
+myconcat xs = foldr (++) [] xs
+concatting xs = (concat xs) == (myconcat xs) 
+concattingTest = quickCheck (concatting :: [[Int]] -> Bool)
+
+f n = length (take n [1..]) == n
+fTest = quickCheck (f :: Int -> Bool)
+
+yyy = quickCheck $ forAll genPosNum f 
+-- ttt = quickCheck (forAll genPosNum qoutRemEqual)
