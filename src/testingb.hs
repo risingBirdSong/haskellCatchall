@@ -49,6 +49,7 @@ prop_split_invC xs
       unsplit c (split c xs) == xs
 
 maintestC = quickCheck prop_split_invC
+verbosetest = verboseCheck prop_split_invC
 
 -- *Main> maintest
 -- +++ OK, passed 100 tests.
