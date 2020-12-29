@@ -215,3 +215,28 @@ fTest = quickCheck (f :: Int -> Bool)
 
 yyy = quickCheck $ forAll genPosNum f 
 -- ttt = quickCheck (forAll genPosNum qoutRemEqual)
+
+ff x = (read (show x)) == x
+ffTesta = quickCheck (ff :: Int -> Bool)
+ffTestb = quickCheck (ff :: [Float] -> Bool)
+ffTestc = quickCheck (ff :: [Bool] -> Bool)
+
+square x = x * x
+-- why does this property not hold? Examine the type of sqrt.
+squareIdentity = square . sqrt
+-- these wont work because of the floating point problem
+
+data Fool =
+  Fulse
+  | Frue
+  | Fraw
+  deriving (Eq, Show)
+
+foolGen :: Gen Fool 
+foolGen = oneof [return Fulse, return Frue, return Fraw]
+
+foolGen' :: Gen Fool 
+foolGen' = frequency [(2,return Fulse), (3,return Frue), (6,return Fraw)]
+-- genBool :: Gen Bool
+-- genBool = choose (False, True)
+

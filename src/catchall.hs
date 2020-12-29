@@ -161,3 +161,5 @@ onesExample = Many [One 1, One 2, One 3]
 
 anyCleanDivision n divisors = any (\x -> n `mod` x == 0) divisors
 anyCleanDivision' n  = any ((== 0) . (mod) n ) 
+
+tup4_toList = (\(a,b,c,d) -> [a,b,c,d])
