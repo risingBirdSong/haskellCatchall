@@ -36,9 +36,7 @@ grtstcheck = verboseCheck (grtsttest)
 -- 1470. Shuffle the Array
 
 myshuffle ls = concat $ lstZip xs zs 
-        where xs = fst half
-              zs = snd half 
-              half = splitAt n ls
+        where (xs, zs) = splitAt n ls
               n = (length ls) `div` 2
 
 myunshuffle ls = uncurry (++) $ lstUnzip $ chunksOf 2 ls
