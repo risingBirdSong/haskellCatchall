@@ -1,5 +1,6 @@
 import Test.QuickCheck
 import Data.List
+import Data.List.Split
 import Data.Maybe
 
 myScan f init acc [] = acc 
@@ -31,3 +32,23 @@ grtsttest :: (NonEmptyList Integer) -> (NonNegative Integer) -> Property
 -- grtsttest :: (Ord a, Num a) => NonEmptyList a -> NonNegative a -> Property
 grtsttest (NonEmpty ls) (NonNegative e) = (minimum ls + e < maximum ls)  ==> (grtstrsmax ls e) == True && (grtstrsmin ls e ) == True 
 grtstcheck = verboseCheck (grtsttest)
+
+-- 1470. Shuffle the Array
+
+myshuffle ls = concatMap (\(a,b)->[a,b]) $ zip xs zs 
+        where xs = take n ls
+              zs = drop n ls
+              n = (length ls) `div` 2
+
+myunshuffle ls = uncurry (++) $ unzip $ map (\[x,y] -> (x,y)) $ chunksOf 2 ls
+
+shuffletest ls = even (length ls) ==> myunshuffle (myshuffle ls) == ls
+shufflecheck = quickCheck (shuffletest :: [Integer] -> Property)
+
+lstZip xs [] = [] 
+lstZip [] ys = []
+lstZip (x:xs) (y:ys) = [x,y] : lstZip xs ys
+
+lstUnzip ls = (\(xs,ys) -> (reverse xs, reverse ys)) $ go ls ([],[]) 
+  where go [] acc = acc 
+        go ([x,y]:ls) (l,r) = go ls (x:l,y:r)
