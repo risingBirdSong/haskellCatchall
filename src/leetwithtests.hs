@@ -35,12 +35,13 @@ grtstcheck = verboseCheck (grtsttest)
 
 -- 1470. Shuffle the Array
 
-myshuffle ls = concatMap (\(a,b)->[a,b]) $ zip xs zs 
-        where xs = take n ls
-              zs = drop n ls
+myshuffle ls = concat $ lstZip xs zs 
+        where xs = fst half
+              zs = snd half 
+              half = splitAt n ls
               n = (length ls) `div` 2
 
-myunshuffle ls = uncurry (++) $ unzip $ map (\[x,y] -> (x,y)) $ chunksOf 2 ls
+myunshuffle ls = uncurry (++) $ lstUnzip $ chunksOf 2 ls
 
 shuffletest ls = even (length ls) ==> myunshuffle (myshuffle ls) == ls
 shufflecheck = quickCheck (shuffletest :: [Integer] -> Property)
