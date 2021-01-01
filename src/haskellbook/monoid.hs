@@ -103,3 +103,16 @@ type FirstMappendTest =
 
 type FstIdTest =
   First' String -> Bool
+
+data NonEmpty a = a :| [a]
+  deriving (Eq, Ord, Show)
+
+ne :: NonEmpty Integer
+ne =  1 :| [2,3]
+
+-- huh so how to recurse with the NonEmpty list?
+-- takeout :: (Num a, Ord a) => NonEmpty a -> a -> NonEmpty a 
+-- takeout (xs) n
+--   | n > 10 = xs 
+--   | otherwise = takeout (  n :| xs) (n + 1)
+-- takeout (x :| xs) = takeout (xs)
