@@ -116,3 +116,31 @@ ne =  1 :| [2,3]
 --   | n > 10 = xs 
 --   | otherwise = takeout (  n :| xs) (n + 1)
 -- takeout (x :| xs) = takeout (xs)
+
+data Trivial = Trivial deriving (Eq, Show)
+instance Semigroup Trivial where
+ Trivial <> Trivial  = Trivial
+instance Arbitrary Trivial where
+  arbitrary = return Trivial
+
+semigroupAssoc :: (Eq m, Semigroup m) => m -> m -> m -> Bool
+semigroupAssoc a b c = (a <> (b <> c)) == ((a <> b) <> c)
+
+type TrivialAssoc = Trivial -> Trivial -> Trivial -> Bool
+
+-- quickCheck  (semigroupAssoc  :: TrivialAssoc )
+-- +++ OK, passed 100 tests.
+
+newtype Identity a = Identity a deriving (Show, Eq, Ord)
+
+instance Semigroup a => Semigroup (Identity a) where 
+  Identity x <> Identity y = Identity (x <> y)
+
+instance Arbitrary a => Arbitrary (Identity a) where 
+  arbitrary = do Identity <$> arbitrary
+
+assocTestIdentity :: (Eq a, Semigroup a) => Identity a -> Identity a -> Identity a -> Bool
+assocTestIdentity (Identity a) (Identity b) (Identity c) = ( Identity a <> Identity b) <> Identity c == Identity a <> ( Identity b <> Identity c)
+
+assocCheckIdentityA = quickCheck (assocTestIdentity :: Identity [Int] -> Identity [Int] -> Identity [Int] ->  Bool)
+assocCheckIdentityB = quickCheck (assocTestIdentity :: Identity String -> Identity String -> Identity String ->  Bool)
