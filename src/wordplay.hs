@@ -13,7 +13,7 @@ shuffle xs
   . sortBy (compare `on` snd) 
   . zip xs <$> replicateM (length xs) (randomRIO (1 :: Int, 2 :: Int))
 
-shuffleA xs = replicateM (length xs) (randomRIO (1 :: Int, 3 :: Int))
+shuffleA xs = replicateM (length xs) (randomRIO (1 :: Int, 2 :: Int))
 
 shuffler xs = do 
   let input = words xs

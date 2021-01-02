@@ -182,14 +182,16 @@ bbb = [3,3]
 
 -- (1 + 2) + 3 = 6 == 1 + (2 + 3)
 
-p8 :: Eq b => [b] -> [b]
-p8 a = do
-        tup <- zip (init a) (tail a) 
-        -- trace (tup) (1+1)
-        if (fst tup /= snd tup) then (return (fst tup))
-            else []
-main :: IO ()
-main = do
-     let lst = "aaaabccaadeeee"
-        in print (p8 lst)
+data Three a b c = Three a b c deriving (Show, Eq)
+instance (Semigroup a, Semigroup b, Semigroup c) => Semigroup (Three a b c) where 
+  Three a b c <> Three aa bb cc = (Three (a <> aa)(b <> bb)(c <> cc))  
 
+instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) where 
+  arbitrary = do 
+    a <- arbitrary 
+    b <- arbitrary 
+    c <- arbitrary 
+    return (Three a b c)
+
+threeTest (Three a b c) (Three aa bb cc) (Three aaa bbb ccc) = Three a b c <> (Three aa bb cc <> Three aaa bbb ccc) == (Three a b c <> Three aa bb cc) <> Three aaa bbb ccc
+threeCheck = quickCheck (threeTest :: Three [Int] [Int] [Int] -> Three [Int] [Int] [Int] -> Three [Int] [Int] [Int] -> Bool)
