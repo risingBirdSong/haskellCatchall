@@ -37,6 +37,7 @@ dependencies:
 - QuickCheck
 - process 
 - primes 
+- random-shuffle
 library:
   source-dirs: src
 

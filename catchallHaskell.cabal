@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 3fdc53a7bfedb6e3289a549470a83aa920b8a43ae3be9321e270fd3656e4162e
+-- hash: 91b2301c485602a4f02bd8552279263c35a0cb60e9ed94b00bbb90d8359f103f
 
 name:           catchallHaskell
 version:        0.1.0.0
@@ -43,6 +43,7 @@ library
     , primes
     , process
     , random
+    , random-shuffle
     , sort
     , split
     , time
@@ -69,6 +70,7 @@ executable catchallHaskell-exe
     , primes
     , process
     , random
+    , random-shuffle
     , sort
     , split
     , time
@@ -96,6 +98,7 @@ test-suite catchallHaskell-test
     , primes
     , process
     , random
+    , random-shuffle
     , sort
     , split
     , time

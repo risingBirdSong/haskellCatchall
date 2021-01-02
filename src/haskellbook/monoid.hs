@@ -1,5 +1,6 @@
 import Data.Monoid
 import Test.QuickCheck
+import Debug.Trace
 
 
 -- (Product 2) <> (Product 2) <> (Product 2)
@@ -180,3 +181,15 @@ aaa = [3]
 bbb = [3,3]
 
 -- (1 + 2) + 3 = 6 == 1 + (2 + 3)
+
+p8 :: Eq b => [b] -> [b]
+p8 a = do
+        tup <- zip (init a) (tail a) 
+        -- trace (tup) (1+1)
+        if (fst tup /= snd tup) then (return (fst tup))
+            else []
+main :: IO ()
+main = do
+     let lst = "aaaabccaadeeee"
+        in print (p8 lst)
+
