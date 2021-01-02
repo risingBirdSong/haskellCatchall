@@ -2,7 +2,6 @@ import System.Random
 import Data.List
 import Control.Monad () 
 -- import System.Random.Stateful
-import System.Random.Shuffle 
 import Debug.Trace
 import Control.Monad (replicateM, (>=>))
 import Data.List (sortBy)
@@ -12,8 +11,15 @@ import Data.Function (on)
 shuffle xs 
   = fmap fst 
   . sortBy (compare `on` snd) 
-  . zip xs <$> replicateM (length xs) (randomRIO (1 :: Int, 1000 :: Int))
+  . zip xs <$> replicateM (length xs) (randomRIO (1 :: Int, 2 :: Int))
 
+shuffleA xs = replicateM (length xs) (randomRIO (1 :: Int, 3 :: Int))
+
+shuffler xs = do 
+  let input = words xs
+  mapped <- mapM shuffle input  
+  print (unwords mapped)
+  return ()
 aa = do
   g <- newStdGen
   print . take 10 $ (randomRs (1 :: Int, 10 :: Int) g)
