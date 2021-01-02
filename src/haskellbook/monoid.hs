@@ -144,3 +144,39 @@ assocTestIdentity (Identity a) (Identity b) (Identity c) = ( Identity a <> Ident
 
 assocCheckIdentityA = quickCheck (assocTestIdentity :: Identity [Int] -> Identity [Int] -> Identity [Int] ->  Bool)
 assocCheckIdentityB = quickCheck (assocTestIdentity :: Identity String -> Identity String -> Identity String ->  Bool)
+
+data Two a b = Two a b deriving (Show, Eq )
+
+instance (Semigroup a , Semigroup b) => Semigroup (Two a b) where
+  Two a b  <> Two aa bb = Two (a <> aa) (b <> bb)
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where 
+  arbitrary = do 
+  a <- arbitrary
+  b <- arbitrary 
+  return (Two a b)
+
+assocTestTwo :: (Eq a, Semigroup a) => Two a a -> Two a a -> Two a a -> Bool 
+assocTestTwo (Two a b) (Two aa bb) (Two aaa bbb) = (Two a b <> Two aa bb) <> Two aaa bbb  == Two a b <> (Two aa bb <> Two aaa bbb)
+assocCheckTwo = quickCheck (assocTestTwo :: Two [Int] [Int] -> Two [Int] [Int] -> Two [Int] [Int] -> Bool)
+
+assocTwoA = (Two [1] [1] <> Two [2] [2]) <> Two [3] [3] 
+assocTwoB = Two [1] [1] <> (Two [2] [2] <> Two [3] [3] )
+
+-- since the smallest constituent part of Two, a <> aa (and b <> bb) is a Semigroup then Two itself is also a Semigroup, because it is just a container for two Semigroups, (self similar / recursive) and it combines its parts according to Semigroup law. a binary operation that is associative. 
+
+-- -> (definition of <> for Two)
+-- Two (a <> aa) (b <> bb) <> Two aaa bbb == Two a b <> Two (aa <> aaa) (bb <> bbb
+
+stepA =(Two a b <> Two aa bb) <> Two aaa bbb == Two a b <> (Two aa bb <> Two aaa bbb)
+stepB = (Two (a <> aa) (b <> bb)) <> Two aaa bbb == Two a b <> (Two (aa <> aaa) (bb <> bbb))
+stepC = Two (a <> aa <> aaa) (b <> bb <> bbb) == Two (a <> aa <> aaa) (b <> bb <> bbb)
+
+a = [1]
+b = [1,1]
+aa = [2] 
+bb = [2,2]
+aaa = [3]
+bbb = [3,3]
+
+-- (1 + 2) + 3 = 6 == 1 + (2 + 3)
