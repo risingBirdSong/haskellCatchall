@@ -164,3 +164,13 @@ anyCleanDivision n divisors = any (\x -> n `mod` x == 0) divisors
 anyCleanDivision' n  = any ((== 0) . (mod) n ) 
 
 tup4_toList = (\(a,b,c,d) -> [a,b,c,d])
+
+
+s = "codeleet" 
+indices = [4,5,6,7,0,2,1,3]
+unshuffle str ind = map snd $ L.sort $ zip ind str
+
+
+myFst (a,b) = a
+mySnd (a,b) = b
+thr (a,b,c) = c 

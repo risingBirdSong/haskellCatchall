@@ -51,3 +51,11 @@ lstZip (x:xs) (y:ys) = [x,y] : lstZip xs ys
 lstUnzip ls = (\(xs,ys) -> (reverse xs, reverse ys)) $ go ls ([],[]) 
   where go [] acc = acc 
         go ([x,y]:ls) (l,r) = go ls (x:l,y:r)
+
+
+dfgLgc x
+  | x == "." = "[.]"
+  | otherwise = x
+
+dfg lst = intercalate "" $ map dfgLgc $ chunksOf 1 lst 
+

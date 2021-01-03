@@ -195,3 +195,11 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) wher
 
 threeTest (Three a b c) (Three aa bb cc) (Three aaa bbb ccc) = Three a b c <> (Three aa bb cc <> Three aaa bbb ccc) == (Three a b c <> Three aa bb cc) <> Three aaa bbb ccc
 threeCheck = quickCheck (threeTest :: Three [Int] [Int] [Int] -> Three [Int] [Int] [Int] -> Three [Int] [Int] [Int] -> Bool)
+
+a1 = ["ab", "c"]
+a2 = ["a", "bc"]
+
+-- js :: (Foldable t, Eq a) => t a -> [a] -> Int
+js j s = length $ filter (\x -> x `elem` j) s
+
+
