@@ -2,6 +2,7 @@ import Test.QuickCheck
 import Data.List
 import Data.List.Split
 import Data.Maybe
+import Data.Char
 
 myScan f init acc [] = acc 
 myScan f init acc (l:ls) = myScan f (f init l) (acc ++ [(f init l)]) ls 
@@ -58,4 +59,10 @@ dfgLgc x
   | otherwise = x
 
 dfg lst = intercalate "" $ map dfgLgc $ chunksOf 1 lst 
+
+dfgRev (a:b:c:[]) = []
+dfgRev (a:b:c:ls) 
+  | [a,b,c] == "[.]" = "." : dfgRev (b:c:ls) 
+  | isAlphaNum a = [a] : dfgRev (b:c:ls) 
+  | otherwise  = dfgRev (b:c:ls) 
 

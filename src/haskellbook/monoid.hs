@@ -203,3 +203,18 @@ a2 = ["a", "bc"]
 js j s = length $ filter (\x -> x `elem` j) s
 
 
+newtype BoolConj =
+  BoolConj Bool deriving (Show, Eq)
+
+instance Semigroup BoolConj where
+  BoolConj True <> BoolConj True = BoolConj True 
+  BoolConj True <> BoolConj False = BoolConj False 
+  BoolConj False <> BoolConj False = BoolConj False 
+  BoolConj False <> BoolConj True = BoolConj False 
+
+instance Arbitrary BoolConj where 
+  arbitrary = do BoolConj <$> arbitrary
+
+
+boolConjTest (BoolConj a) (BoolConj b) (BoolConj c) = BoolConj a <> (BoolConj b <> BoolConj c) == (BoolConj a <> BoolConj b) <> BoolConj c  
+boolConjCheck = quickCheck (boolConjTest :: BoolConj -> BoolConj -> BoolConj -> Bool)
