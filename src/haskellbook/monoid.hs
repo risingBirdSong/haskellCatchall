@@ -218,3 +218,21 @@ instance Arbitrary BoolConj where
 
 boolConjTest (BoolConj a) (BoolConj b) (BoolConj c) = BoolConj a <> (BoolConj b <> BoolConj c) == (BoolConj a <> BoolConj b) <> BoolConj c  
 boolConjCheck = quickCheck (boolConjTest :: BoolConj -> BoolConj -> BoolConj -> Bool)
+instance Semigroup Bool where 
+  True <> True = True 
+  _ <> _  = False 
+
+newtype BoolDisj =
+  BoolDisj Bool deriving (Show, Eq)
+
+instance Semigroup BoolDisj where 
+  BoolDisj True <> BoolDisj True = BoolDisj True 
+  BoolDisj True <> BoolDisj False = BoolDisj True 
+  BoolDisj False  <> BoolDisj True = BoolDisj True 
+  _ <> _  = BoolDisj False 
+
+instance Arbitrary BoolDisj where
+  arbitrary = do BoolDisj <$> arbitrary 
+
+boolDisjTest (BoolDisj a)(BoolDisj b)(BoolDisj c) = BoolDisj a <> (BoolDisj b <> BoolDisj c) == (BoolDisj a <> BoolDisj b) <> BoolDisj c 
+boolDisjCheck = quickCheck boolDisjTest
