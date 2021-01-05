@@ -327,3 +327,6 @@ instance Monoid (BoolConj) where
 
 instance Monoid BoolDisj where 
   mempty = BoolDisj False
+
+instance (Monoid b) => Monoid (Combine a b) where 
+  mempty = Combine (\ x -> mempty) 
