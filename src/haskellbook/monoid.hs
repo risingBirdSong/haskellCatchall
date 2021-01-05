@@ -315,5 +315,12 @@ instance Monoid Trivial where
 -- newtype MyIdentity a = MyIdentity a deriving (Show, Eq, Ord)
 
 instance Monoid a => Monoid (MyIdentity a) where 
-  mempty = MyIdentity (mempty a)
+  mempty = MyIdentity mempty
  
+instance (Monoid a, Monoid b) => Monoid (Two a b) where 
+  mempty = Two (mempty a) (mempty b)
+
+-- newtype BoolConj =
+-- BoolConj Bool
+instance Monoid (BoolConj) where 
+  mempty = BoolConj True 
