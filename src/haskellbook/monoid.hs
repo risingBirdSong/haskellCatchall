@@ -297,3 +297,11 @@ sumAb = Comp $ \x -> x <> Sum 2
 combedtest = unComp (sumAa <> sumAb) $ 0
 instance Semigroup a => Semigroup (Comp a) where 
   Comp f <> Comp g = Comp (\x -> f x <> g x)
+
+
+data Validation a b = SuccessV a | FailureV b deriving (Show, Eq)
+
+instance Semigroup a => Semigroup (Validation a b) where 
+  SuccessV a <> SuccessV b = SuccessV (a <> b)
+  _ <> FailureV b = FailureV b 
+  FailureV b <> _ = FailureV b 
