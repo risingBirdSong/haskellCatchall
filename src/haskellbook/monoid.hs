@@ -288,3 +288,12 @@ ff = \n -> Sum (n + 1)
 gg = \n -> Sum (n - 1)
 
 hh = ff <> gg
+
+newtype Comp a =
+  Comp { unComp :: (a -> a) }
+
+sumAa = Comp $ \x -> x <> Sum 1
+sumAb = Comp $ \x -> x <> Sum 2
+combedtest = unComp (sumAa <> sumAb) $ 0
+instance Semigroup a => Semigroup (Comp a) where 
+  Comp f <> Comp g = Comp (\x -> f x <> g x)
