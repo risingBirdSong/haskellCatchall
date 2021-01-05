@@ -132,19 +132,19 @@ type TrivialAssoc = Trivial -> Trivial -> Trivial -> Bool
 -- quickCheck  (semigroupAssoc  :: TrivialAssoc )
 -- +++ OK, passed 100 tests.
 
-newtype Identity a = Identity a deriving (Show, Eq, Ord)
+newtype MyIdentity a = MyIdentity a deriving (Show, Eq, Ord)
 
-instance Semigroup a => Semigroup (Identity a) where 
-  Identity x <> Identity y = Identity (x <> y)
+instance Semigroup a => Semigroup (MyIdentity a) where 
+  MyIdentity x <> MyIdentity y = MyIdentity (x <> y)
 
-instance Arbitrary a => Arbitrary (Identity a) where 
-  arbitrary = do Identity <$> arbitrary
+instance Arbitrary a => Arbitrary (MyIdentity a) where 
+  arbitrary = do MyIdentity <$> arbitrary
 
-assocTestIdentity :: (Eq a, Semigroup a) => Identity a -> Identity a -> Identity a -> Bool
-assocTestIdentity (Identity a) (Identity b) (Identity c) = ( Identity a <> Identity b) <> Identity c == Identity a <> ( Identity b <> Identity c)
+assocTestMyIdentity :: (Eq a, Semigroup a) => MyIdentity a -> MyIdentity a -> MyIdentity a -> Bool
+assocTestMyIdentity (MyIdentity a) (MyIdentity b) (MyIdentity c) = ( MyIdentity a <> MyIdentity b) <> MyIdentity c == MyIdentity a <> ( MyIdentity b <> MyIdentity c)
 
-assocCheckIdentityA = quickCheck (assocTestIdentity :: Identity [Int] -> Identity [Int] -> Identity [Int] ->  Bool)
-assocCheckIdentityB = quickCheck (assocTestIdentity :: Identity String -> Identity String -> Identity String ->  Bool)
+assocCheckMyIdentityA = quickCheck (assocTestMyIdentity :: MyIdentity [Int] -> MyIdentity [Int] -> MyIdentity [Int] ->  Bool)
+assocCheckMyIdentityB = quickCheck (assocTestMyIdentity :: MyIdentity String -> MyIdentity String -> MyIdentity String ->  Bool)
 
 data Two a b = Two a b deriving (Show, Eq )
 
@@ -305,3 +305,15 @@ instance Semigroup a => Semigroup (Validation a b) where
   SuccessV a <> SuccessV b = SuccessV (a <> b)
   _ <> FailureV b = FailureV b 
   FailureV b <> _ = FailureV b 
+
+
+instance Monoid Trivial where
+  mempty = Trivial
+  mappend = (<>)
+
+
+-- newtype MyIdentity a = MyIdentity a deriving (Show, Eq, Ord)
+
+instance Monoid a => Monoid (MyIdentity a) where 
+  mempty = MyIdentity (mempty a)
+ 
