@@ -324,3 +324,6 @@ instance (Monoid a, Monoid b) => Monoid (Two a b) where
 -- BoolConj Bool
 instance Monoid (BoolConj) where 
   mempty = BoolConj True 
+
+instance Monoid BoolDisj where 
+  mempty = BoolDisj False
