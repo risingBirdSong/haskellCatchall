@@ -269,3 +269,22 @@ orB = Fst 1 <> (Snd 2 <> Fst 3) == (Fst 1 <> Snd 2) <> Fst 3
 
 -- orTest :: Gen (Or Bool Bool)
 -- orTest = arbitrary 
+
+newtype Combine a b =
+  Combine { unCombine :: (a -> b) } 
+
+instance Semigroup b => Semigroup (Combine a b) where 
+  Combine f <> Combine g = Combine (\x -> f x <> g x )
+
+-- my first attempt
+-- instance Semigroup b => Semigroup (Combine a b) where 
+--   Combine aa <> Combine bb = Combine (aa <> bb)
+
+f = Combine $ \n -> Sum (n + 1)
+g = Combine $ \n -> Sum (n - 1)
+uncombineTest = unCombine (f <> g) $ 0
+
+ff = \n -> Sum (n + 1)
+gg = \n -> Sum (n - 1)
+
+hh = ff <> gg
