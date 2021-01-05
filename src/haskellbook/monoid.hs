@@ -236,3 +236,36 @@ instance Arbitrary BoolDisj where
 
 boolDisjTest (BoolDisj a)(BoolDisj b)(BoolDisj c) = BoolDisj a <> (BoolDisj b <> BoolDisj c) == (BoolDisj a <> BoolDisj b) <> BoolDisj c 
 boolDisjCheck = quickCheck boolDisjTest
+
+data Or a b = 
+  Fst a | Snd b deriving (Show, Eq)
+
+instance Semigroup (Or a b ) where 
+  Snd x <> _ = Snd x 
+  _ <> Snd y = Snd y 
+  Fst x <> Fst y = Fst y 
+
+
+-- Not in scope: type constructor or class ‘Fst’
+-- instance (Arbitrary a) => Arbitrary (Fst a) where 
+--   arbitrary = do
+--   a <- arbitrary 
+--   return (Fst a)
+  
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Or a b) where 
+  arbitrary = do
+  a <- arbitrary 
+  b <- arbitrary 
+  oneof [return (Fst a), return (Snd b)] 
+
+-- Not in scope: data constructor ‘Or’
+-- orTest (Or a aa)(Or b bb)(Or c cc) = (Or a aa) <> ((Or b bb) <> (Or c cc)) == (Or a aa <> Or b bb) <> Or c cc 
+
+-- orTestA :: (Eq a, Semigroup a) => Or a a-> Or a a-> Or a a-> Bool 
+genericAssocTest a b c = (a <> ( b <> c)) == (( a <>  b) <>  c)
+orCheck = quickCheck (genericAssocTest :: Or String Int -> Or String Int -> Or String Int -> Bool)
+orA = Snd 1 <> (Snd 2 <> Fst 3)  == (Snd 1 <> Snd 2) <> Fst 3
+orB = Fst 1 <> (Snd 2 <> Fst 3) == (Fst 1 <> Snd 2) <> Fst 3
+
+-- orTest :: Gen (Or Bool Bool)
+-- orTest = arbitrary 
