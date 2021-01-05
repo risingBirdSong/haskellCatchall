@@ -280,7 +280,7 @@ instance Semigroup b => Semigroup (Combine a b) where
 -- instance Semigroup b => Semigroup (Combine a b) where 
 --   Combine aa <> Combine bb = Combine (aa <> bb)
 
-f = Combine $ \n -> Sum (n + 1)
+f = Combine $ \n -> Sum (n + 1) 
 g = Combine $ \n -> Sum (n - 1)
 uncombineTest = unCombine (f <> g) $ 0
 
