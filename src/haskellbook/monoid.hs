@@ -364,3 +364,5 @@ instance (Monoid a, Monoid s) => Monoid (Mem s a) where
 -- ((),Sum {getSum = 0})
 -- *Main> runMem mempty ""
 -- ((),"")
+
+isConcat xxs = [x | xs <- xxs, x <- xs]
