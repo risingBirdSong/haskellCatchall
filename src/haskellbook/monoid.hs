@@ -329,4 +329,38 @@ instance Monoid BoolDisj where
   mempty = BoolDisj False
 
 instance (Monoid b) => Monoid (Combine a b) where 
-  mempty = Combine (\ x -> mempty) 
+  mempty = Combine (\ x -> mempty)
+
+-- newtype Comp a =
+--   Comp (a -> a)
+
+instance (Monoid a) => Monoid (Comp a) where 
+  mempty = Comp (\ x -> mempty x) 
+
+compTest = Comp $ \x -> x <> Sum 1
+compTesta = Comp $ \x -> x <> Sum 0 
+compTestb = unComp (compTest `mappend` compTesta) $ (Sum 1)
+compTestc = unComp (compTest <> mempty) $ (Sum 0)
+
+newtype Mem s a =
+  Mem {
+  runMem :: s -> (a,s)
+  }
+
+instance (Semigroup s, Semigroup a) => Semigroup (Mem s a) where 
+  Mem f <> Mem g = Mem (\x -> f x <> g x ) 
+
+f' = Mem $ \s -> ("hi", s <> (Sum 1))
+
+ff'' = runMem (f' <> f') $ (Sum 1)
+
+-- *Main> ff''
+-- ("hihi",Sum {getSum = 4})
+
+instance (Monoid a, Monoid s) => Monoid (Mem s a) where
+  mempty = Mem (\x -> mempty)
+
+-- *Main> runMem mempty (Sum 0)
+-- ((),Sum {getSum = 0})
+-- *Main> runMem mempty ""
+-- ((),"")
