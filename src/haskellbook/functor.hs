@@ -1,6 +1,6 @@
 import Test.QuickCheck
 import Test.QuickCheck.Function
-
+import Debug.Trace
 -- fmap (+1) (Just 1)
 -- Just 2
 
@@ -81,6 +81,8 @@ newtype Identity a = Identity a deriving (Show, Eq)
 instance Functor Identity where 
   fmap f (Identity a) = Identity (f a)
 
+
+
 functorIdentity :: (Functor f, Eq (f a)) =>
                           f a
                           -> Bool
@@ -93,3 +95,21 @@ instance (Arbitrary a) => Arbitrary (Identity a) where
    return (Identity a)
 
 identityCheck = quickCheck $ \x -> functorIdentity (x :: (Identity Int))
+
+
+functorCompose' :: (Eq (f c), Functor f) =>
+  f a
+  -> Fun a b
+  -> Fun b c
+  -> Bool
+functorCompose' x (Fun _ f) (Fun _ g) =
+  (fmap (g . f) x) == (fmap g . fmap f $ x)
+
+testa = fmap ((+1).(*5)) (Identity 1) 
+testb = fmap (+1) . fmap (*5) $ (Identity 1) 
+
+-- https://github.com/isaiaholoyede/HaskellBook
+
+type IntToInt = Fun Int Int
+type IntFC = Identity Int -> IntToInt -> IntToInt -> Bool
+aaa = quickCheck (functorCompose' :: IntFC)
