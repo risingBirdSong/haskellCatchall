@@ -55,3 +55,19 @@ instance Functor FixMePls where
 -- f has to be something accepting one more parameter
 -- without higher kinded types
 -- like you can't even express this polymorphism
+
+b = (fmap.fmap)(++ "lol") (Just ["Hi,", "Hello"])
+bb =fmap (fmap (++ "lol")) (Just ["Hi,", "Hello"])
+
+c = fmap (*2) (\x -> x - 2)
+
+d = fmap ((return '1' ++) . show) (\x -> [x, 1..3])
+
+ee :: IO Integer
+ee = let ioi = readIO "1" :: IO Integer
+         changed = fmap read $ fmap ("123"++) $ fmap show ioi
+     in fmap (*3) changed
+
+-- ioi = readIO "1" :: IO Integer
+-- changed = fmap (read :: [Char] -> Integer) $ fmap ("123"++) $ fmap show ioi
+-- changed =  fmap  show ioi
