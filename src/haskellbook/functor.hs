@@ -1,3 +1,6 @@
+import Test.QuickCheck
+import Test.QuickCheck.Function
+
 -- fmap (+1) (Just 1)
 -- Just 2
 
@@ -71,3 +74,22 @@ ee = let ioi = readIO "1" :: IO Integer
 -- ioi = readIO "1" :: IO Integer
 -- changed = fmap (read :: [Char] -> Integer) $ fmap ("123"++) $ fmap show ioi
 -- changed =  fmap  show ioi
+
+
+newtype Identity a = Identity a deriving (Show, Eq)
+
+instance Functor Identity where 
+  fmap f (Identity a) = Identity (f a)
+
+functorIdentity :: (Functor f, Eq (f a)) =>
+                          f a
+                          -> Bool
+functorIdentity f =
+  fmap id f == f
+
+instance (Arbitrary a) => Arbitrary (Identity a) where 
+  arbitrary = do 
+   a <- arbitrary
+   return (Identity a)
+
+identityCheck = quickCheck $ \x -> functorIdentity (x :: (Identity Int))
