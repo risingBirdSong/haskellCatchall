@@ -135,3 +135,17 @@ data Three' a b = Three' a b b deriving (Show, Eq)
 
 instance Functor (Three' a ) where 
   fmap f (Three' a b c) = Three' a (f b ) (f c)
+
+data Four a b c d = Four a b c d deriving (Show, Eq)
+
+instance Functor (Four a b c) where 
+  fmap f (Four a b c d) = Four a b c (f d)
+
+data Four' a b = Four' a a a b deriving (Show, Eq)
+
+instance Functor (Four' a) where 
+  fmap f (Four' a aa aaa b) = Four' a aa aaa (f b)
+
+-- 8. Can you implement one for this type? Why? Why not?
+data Trivial = Trivial
+-- no, because Trivial is kind *, not * -> * 
