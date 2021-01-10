@@ -3,7 +3,7 @@ import Test.QuickCheck
 import Test.QuickCheck.Function
 import Debug.Trace
 import Data.Semigroup
-
+-- :set -XDeriveFunctor
 -- fmap (+1) (Just 1)
 -- Just 2
 
@@ -322,3 +322,9 @@ instance Functor (TalkToMe) where
   fmap f (Halt) = Halt
   fmap f (Print s a) = Print s (f a) 
   fmap f (Read (sa)) = Read (f . sa) 
+
+
+f :: a -> b
+f = undefined
+g :: b -> c
+g= undefined
