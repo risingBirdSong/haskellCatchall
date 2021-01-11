@@ -97,3 +97,21 @@ maybeAddy = (mkAddress "old macs")
 mkPersonBetter :: String -> String -> Maybe Person
 mkPersonBetter n a =
   Person <$> mkName n <*> mkAddress a
+
+
+work1 = const <$> Just "Hello" <*> pure "World"
+
+-- "Tierness" [1, 2, 3]
+work2A =  (,) <$> Just 90 <*> Just 10
+--  map (\x -> pure x :: Maybe Int) [1,2,3]
+work2B =  (,) <$>Just 10 <*> fmap (map(\x -> pure x :: Maybe Int)) (Just [1,2,3])
+
+sameA = fmap (*2) [1..10]
+
+-- see how pure lifts (*2) into the same structure we <*> over
+sameB = pure (*2) <*> [1..10]
+-- and here is manually lifting into the list structure
+sameC = [(*2)] <*> [1..10]
+-- heres another example using Maybe, same concept, pure lifting and manual lifting
+moreA = pure (*3) <*> (Just 3)
+moreB = Just (*3) <*> (Just 3)
