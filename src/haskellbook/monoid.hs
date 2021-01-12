@@ -1,6 +1,10 @@
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 import Data.Monoid
 import Test.QuickCheck
 import Debug.Trace
+import Test.QuickCheck.Checkers
+import Test.QuickCheck.Classes
+
 
 
 -- (Product 2) <> (Product 2) <> (Product 2)

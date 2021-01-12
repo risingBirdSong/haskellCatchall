@@ -1,9 +1,11 @@
+{-# LANGUAGE DerivingVia #-}
 import Control.Applicative
 import Data.List
 import Data.Monoid
 import Test.QuickCheck
 import Test.QuickCheck.Checkers
 import Test.QuickCheck.Classes
+import Data.Semigroup.Generic
 
 
 -- oooh interesting
@@ -142,13 +144,19 @@ appendL (Cons v xs ) ys = Cons v (appendL xs ys)
 
 
 
+-- data Pair a = MkPair a a
+--   deriving (Semigroup, Monoid) via (GenericSemigroupMonoid (Pair a))
 
-data Lst a = Na | Cns a (Lst a) deriving (Show, Eq, Ord)
+
+data Lst a = Na | Cns a (Lst a) deriving (Show, Eq, Ord) 
 
 instance Semigroup (Lst a) where 
   (<>) Na xs = xs 
   (<>) xs Na = xs 
   (<>) (Cns a xs) ys = Cns a ((<>) xs ys)
+
+instance Arbitrary a => Arbitrary (Lst a) where 
+  arbitrary = frequency [(1, pure Na), (10, Cns <$> arbitrary <*> arbitrary)]
 
 instance Functor (Lst) where 
   fmap f Na = Na 
@@ -160,4 +168,10 @@ appnd (Cns x xs) ys= Cns x (appnd xs ys)
 instance Applicative (Lst) where
   pure v = Cns v Na 
   (<*>) Na _ = Na
-  (<*>) (Cns f fs) (vs) = appnd (fmap f vs) (fs <*> vs) 
+  (<*>) (Cns f fs) (vs) = (<>) (fmap f vs) (fs <*> vs) 
+
+testappa = (Cns (*3) (Cns (*10) Na )) <*> Cns 10 (Cns 5 (Cns 100 Na))
+
+-- data Line a = Not | With a (Line a) deriving (Show, Eq, Ord)
+
+

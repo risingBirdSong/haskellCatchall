@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 2a9bddd1b4cc9e886d7e4ca15c085ec4c74caab04962e49f44c0ac9bbce629a8
+-- hash: bc429b65fd8b7e0347f9cd41d88fc61058261edf93d66bd8c9281e266ea08e79
 
 name:           catchallHaskell
 version:        0.1.0.0
@@ -45,6 +45,7 @@ library
     , process
     , random
     , random-shuffle
+    , semigroups
     , sort
     , split
     , time
@@ -73,6 +74,7 @@ executable catchallHaskell-exe
     , process
     , random
     , random-shuffle
+    , semigroups
     , sort
     , split
     , time
@@ -102,6 +104,7 @@ test-suite catchallHaskell-test
     , process
     , random
     , random-shuffle
+    , semigroups
     , sort
     , split
     , time

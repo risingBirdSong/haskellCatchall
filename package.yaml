@@ -39,6 +39,7 @@ dependencies:
 - primes 
 - random-shuffle
 - checkers
+- semigroups
 library:
   source-dirs: src
 
