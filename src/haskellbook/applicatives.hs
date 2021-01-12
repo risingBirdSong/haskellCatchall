@@ -141,3 +141,23 @@ appendL Nil xs = xs
 appendL (Cons v xs ) ys = Cons v (appendL xs ys)
 
 
+
+
+data Lst a = Na | Cns a (Lst a) deriving (Show, Eq, Ord)
+
+instance Semigroup (Lst a) where 
+  (<>) Na xs = xs 
+  (<>) xs Na = xs 
+  (<>) (Cns a xs) ys = Cns a ((<>) xs ys)
+
+instance Functor (Lst) where 
+  fmap f Na = Na 
+  fmap f (Cns v ls) = Cns (f v) (fmap f ls)
+
+appnd Na _ = Na 
+appnd (Cns x xs) ys= Cns x (appnd xs ys)
+
+instance Applicative (Lst) where
+  pure v = Cns v Na 
+  (<*>) Na _ = Na
+  (<*>) (Cns f fs) (vs) = appnd (fmap f vs) (fs <*> vs) 
