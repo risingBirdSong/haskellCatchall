@@ -84,7 +84,7 @@ instance Semigroup (First' a) where
 instance Monoid (First' a) where 
   mempty = First' Nada
 
-instance EqProp (First' a ) where (=-=) = eq
+-- instance EqProp (First' a ) where (=-=) = eq
 
 -- Instance Arbitrary (First' (a)) where 
 --   arbitrary = do
@@ -231,6 +231,17 @@ instance Semigroup Bool where
 newtype BoolDisj =
   BoolDisj Bool deriving (Show, Eq)
 
+instance EqProp (BoolDisj) where (=-=) = eq
+
+-- *Main> quickBatch (monoid BoolDisj )
+
+-- monoid:
+--   left  identity: +++ OK, passed 500 tests.
+--   right identity: +++ OK, passed 500 tests.
+--   associativity:  +++ OK, passed 500 tests.
+--   mappend = (<>): +++ OK, passed 500 tests.
+--   mconcat:        +++ OK, passed 500 tests.
+
 instance Semigroup BoolDisj where 
   BoolDisj True <> BoolDisj True = BoolDisj True 
   BoolDisj True <> BoolDisj False = BoolDisj True 
@@ -318,6 +329,14 @@ instance Monoid Trivial where
   mappend = (<>)
 
 instance EqProp Trivial where (=-=) = eq
+-- *Main> quickBatch (monoid Trivial)
+
+-- monoid:
+--   left  identity: +++ OK, passed 500 tests.
+--   right identity: +++ OK, passed 500 tests.
+--   associativity:  +++ OK, passed 500 tests.
+--   mappend = (<>): +++ OK, passed 500 tests.
+--   mconcat:        +++ OK, passed 500 tests.
 
 -- newtype MyIdentity a = MyIdentity a deriving (Show, Eq, Ord)
 
@@ -337,6 +356,8 @@ instance Monoid BoolDisj where
 
 instance (Monoid b) => Monoid (Combine a b) where 
   mempty = Combine (\ x -> mempty)
+
+
 
 -- newtype Comp a =
 --   Comp (a -> a)
