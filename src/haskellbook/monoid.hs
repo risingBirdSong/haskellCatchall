@@ -84,6 +84,8 @@ instance Semigroup (First' a) where
 instance Monoid (First' a) where 
   mempty = First' Nada
 
+instance EqProp (First' a ) where (=-=) = eq
+
 -- Instance Arbitrary (First' (a)) where 
 --   arbitrary = do
 --     a <- arbitrary 
@@ -315,6 +317,7 @@ instance Monoid Trivial where
   mempty = Trivial
   mappend = (<>)
 
+instance EqProp Trivial where (=-=) = eq
 
 -- newtype MyIdentity a = MyIdentity a deriving (Show, Eq, Ord)
 
