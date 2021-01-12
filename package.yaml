@@ -38,6 +38,7 @@ dependencies:
 - process 
 - primes 
 - random-shuffle
+- checkers
 library:
   source-dirs: src
 

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 91b2301c485602a4f02bd8552279263c35a0cb60e9ed94b00bbb90d8359f103f
+-- hash: 2a9bddd1b4cc9e886d7e4ca15c085ec4c74caab04962e49f44c0ac9bbce629a8
 
 name:           catchallHaskell
 version:        0.1.0.0
@@ -37,6 +37,7 @@ library
       QuickCheck
     , array
     , base >=4.7 && <5
+    , checkers
     , containers
     , hspec
     , matrix
@@ -64,6 +65,7 @@ executable catchallHaskell-exe
     , array
     , base >=4.7 && <5
     , catchallHaskell
+    , checkers
     , containers
     , hspec
     , matrix
@@ -92,6 +94,7 @@ test-suite catchallHaskell-test
     , array
     , base >=4.7 && <5
     , catchallHaskell
+    , checkers
     , containers
     , hspec
     , matrix

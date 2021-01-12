@@ -1,5 +1,10 @@
 import Control.Applicative
 import Data.List
+import Data.Monoid
+import Test.QuickCheck
+import Test.QuickCheck.Checkers
+import Test.QuickCheck.Classes
+
 
 -- oooh interesting
 testing = do 
@@ -115,3 +120,24 @@ sameC = [(*2)] <*> [1..10]
 -- heres another example using Maybe, same concept, pure lifting and manual lifting
 moreA = pure (*3) <*> (Just 3)
 moreB = Just (*3) <*> (Just 3)
+
+data Listy a =
+  Nil
+  | Cons a (Listy a)
+  deriving (Eq, Show)
+
+instance Functor Listy where
+  fmap f Nil = Nil 
+  fmap f (Cons v (lst)) = Cons (f v) (fmap f lst)  
+
+instance Applicative Listy where
+  pure v = Cons v (Nil) 
+  (<*>) Nil _ = Nil 
+  (<*>) (Cons f ffs) (vals) = appendL (fmap f vals) (ffs <*> vals)
+
+
+-- https://z0ltan.wordpress.com/2018/01/27/implementing-applicative-for-a-custom-list-type-in-haskell/
+appendL Nil xs = xs 
+appendL (Cons v xs ) ys = Cons v (appendL xs ys)
+
+
