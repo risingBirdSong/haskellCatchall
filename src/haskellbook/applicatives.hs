@@ -175,3 +175,46 @@ testappa = (Cns (*3) (Cns (*10) Na )) <*> Cns 10 (Cns 5 (Cns 100 Na))
 -- data Line a = Not | With a (Line a) deriving (Show, Eq, Ord)
 
 
+-- 1. -- Type
+-- []
+-- Methods
+
+-- pure :: a -> [a]
+-- (<*>) :: [(a -> b)] -> [a] ->  [b]
+
+
+-- pure :: a -> IO a
+-- (<*>) :: IO (a -> b) -> IO a -> IO b
+
+data Pair a = Pair a a deriving (Show, Eq)
+
+instance Functor Pair where 
+  fmap f (Pair x y) = Pair (f x)(f y) 
+
+instance Applicative (Pair) where 
+  pure x = Pair x x
+  (<*>) (Pair f _) (Pair v vv) = Pair (f v) (f vv)
+
+genPair :: Arbitrary a => Gen (Pair a)
+genPair = do 
+  aa <- arbitrary
+  pure (Pair aa aa)
+
+instance Arbitrary a => Arbitrary (Pair a) where 
+  arbitrary = genPair
+
+instance (Eq a) => EqProp (Pair a) where 
+  (=-=) = eq
+
+
+pairtest = quickBatch $ applicative (Pair ("_", "_", "_")("_", "_", "_")) 
+
+-- applicative:
+--   identity:     +++ OK, passed 500 tests.
+--   composition:  +++ OK, passed 500 tests.
+--   homomorphism: +++ OK, passed 500 tests.
+--   interchange:  +++ OK, passed 500 tests.
+--   functor:      +++ OK, passed 500 tests.
+
+-- *Main> pure 4 :: Pair Int
+-- Pair 4 4
