@@ -43,3 +43,4 @@ triggerB = undefined
 
 triggerC :: (Num a) => Validation String (Sum a, Sum a, Sum a)
 triggerC = undefined
+
