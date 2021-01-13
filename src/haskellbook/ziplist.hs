@@ -48,5 +48,16 @@ instance Functor List where
 instance Applicative List where
   pure v = Cons v Nil 
   (<*>) (Cons f fs) Nil = Nil
-  -- (<*>) (Cons f fs) (Cons b bs) = Nil
-  (<*>) (Cons f fs) (Cons b bs) = Cons (f b) (<*> fs bs)
+  (<*>) Nil (Cons b bs) = Nil
+  (<*>) Nil Nil = Nil
+  (<*>) (Cons f fs) (Cons b bs) = Cons (f b) (fs <*> bs)
+
+newtype ZipList' a =
+  ZipList' (List a)
+  deriving (Eq, Show)
+
+ziptA = Cons (+1) (Cons (*5) (Cons (*10) Nil))
+ziptB = Cons (1) (Cons (5) (Cons (10) Nil))
+
+-- *Main> ziptA <*> ziptB
+-- Cons 2 (Cons 25 (Cons 100 Nil))
