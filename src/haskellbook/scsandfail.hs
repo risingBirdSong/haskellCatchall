@@ -9,7 +9,10 @@ instance Functor (Validation e) where
 -- This is different
 instance Monoid e => Applicative (Validation e) where
   pure v = Success v 
-  (<*>) = undefined
+  (<*>) (Success f) (Success v) = Success (f v) 
+  (<*>) (Failure e) (Success v) = Failure e 
+  (<*>) (Success f) (Failure e) = Failure e 
+  (<*>) (Failure e) (Failure ee) = Failure (e <> ee) 
 
 -- *Main> pure 3 :: Validation String Int
 -- Success 3
