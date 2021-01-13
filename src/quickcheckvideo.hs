@@ -1,0 +1,2 @@
+-- https://www.youtube.com/watch?v=5Jfa5-D7vNw&ab_channel=FPCompleteCorporation
+--  quickCheck $ \ls -> reverse (reverse ls) == ls
