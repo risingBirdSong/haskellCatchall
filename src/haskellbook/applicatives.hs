@@ -8,6 +8,7 @@ import Test.QuickCheck.Classes
 import Data.Semigroup.Generic
 
 
+
 -- oooh interesting
 testing = do 
   let result = (++) <$> getLine <*> getLine
@@ -313,3 +314,10 @@ testThree' = quickBatch (applicative (Three' dummyThree dummyThree dummyThree))
 --   homomorphism: +++ OK, passed 500 tests.
 --   interchange:  +++ OK, passed 500 tests.
 --   functor:      +++ OK, passed 500 tests.
+
+stops :: String
+stops = "pbtdkg"
+vowels :: String
+vowels = "aeiou"
+combos :: [a] -> [b] -> [c] -> [(a, b, c)]
+combos a b c = (,,) <$> a <*> b <*> c

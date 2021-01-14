@@ -174,3 +174,11 @@ unshuffle str ind = map snd $ L.sort $ zip ind str
 myFst (a,b) = a
 mySnd (a,b) = b
 thr (a,b,c) = c 
+
+
+data Tree a = Node a [Tree a] deriving (Show)
+
+instance Functor Tree where 
+  fmap f (Node a aa) = (Node (f a) (fmap (fmap f) aa) ) 
+
+myTree = Node 100 [Node 12 [], Node 46 [Node 66 [Node 99 []]], Node 123 [Node 9 []]]
