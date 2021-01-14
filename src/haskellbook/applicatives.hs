@@ -218,3 +218,36 @@ pairtest = quickBatch $ applicative (Pair ("_", "_", "_")("_", "_", "_"))
 
 -- *Main> pure 4 :: Pair Int
 -- Pair 4 4
+
+data Two a b = Two a b deriving (Show, Eq)
+
+instance Functor (Two a) where 
+  fmap f (Two aa bb) = Two aa (f bb)
+
+instance (Monoid a) => Applicative (Two a) where 
+  pure y = Two mempty y 
+  (<*>) (Two a ff) (Two aa bb) = (Two (a <> aa) (ff bb))
+
+-- *Main> pure "abc" :: Two String String
+-- Two "" "abc"
+-- *Main> pure "abc" :: Two [Int] String
+-- Two [] "abc"
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where 
+  arbitrary = do 
+  a <- arbitrary
+  b <- arbitrary
+  pure (Two a b)  
+
+dummy = ("a", "b", "c")
+
+instance (Eq a, Eq b) => EqProp (Two a b) where  
+  (=-=) = eq
+
+-- *Main> quickBatch (applicative (Two dummy dummy) )
+-- applicative:
+--   identity:     +++ OK, passed 500 tests.
+--   composition:  +++ OK, passed 500 tests.
+--   homomorphism: +++ OK, passed 500 tests.
+--   interchange:  +++ OK, passed 500 tests.
+--   functor:      +++ OK, passed 500 tests.
