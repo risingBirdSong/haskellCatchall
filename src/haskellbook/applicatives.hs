@@ -251,3 +251,36 @@ instance (Eq a, Eq b) => EqProp (Two a b) where
 --   homomorphism: +++ OK, passed 500 tests.
 --   interchange:  +++ OK, passed 500 tests.
 --   functor:      +++ OK, passed 500 tests.
+
+data Three a b c = Three a b c deriving (Show, Eq)
+
+instance Functor (Three a b) where 
+  fmap f (Three a b c) = Three a b (f c)
+
+instance (Monoid a, Monoid b) => Applicative (Three a b) where 
+  pure c = Three mempty mempty c
+  (<*>) (Three a b f) (Three aa bb c) = Three (a <> aa) (b <> bb) (f c)
+
+genThree :: (Monoid a, Monoid b, Arbitrary a, Arbitrary b, Arbitrary c) => Gen (Three a b c)
+genThree = do 
+  a <- arbitrary
+  b <- arbitrary
+  c <- arbitrary
+  pure (Three a b c)
+
+instance (Monoid a, Monoid b, Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) where 
+  arbitrary = genThree
+
+instance (Eq a, Eq b, Eq c) => EqProp (Three a b c) where
+  (=-=) = eq  
+
+dummyThree = ("x", "y", "z")
+threetest = quickBatch (applicative (Three dummyThree dummyThree dummyThree))
+
+-- *Main> threetest
+-- applicative:
+--   identity:     +++ OK, passed 500 tests.
+--   composition:  +++ OK, passed 500 tests.
+--   homomorphism: +++ OK, passed 500 tests.
+--   interchange:  +++ OK, passed 500 tests.
+--   functor:      +++ OK, passed 500 tests.
