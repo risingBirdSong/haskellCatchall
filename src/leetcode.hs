@@ -185,3 +185,21 @@ sortedRich xs = sum $ last $ sortOn sum  xs
 richCompare (NonEmpty xs) = (sortedRich xs ) == (richestCust xs)
 
 -- richTest = quickChec (richCompare )
+
+-- 1021. Remove Outermost Parentheses
+
+l x = x == '('
+r x = x == ')'
+
+inner x y = (l x) && (r y)    
+-- pf inner = (. r) . (&&) . l
+
+-- rmvOut ps = nubBy (\x y -> if inner x y == True then [x,y] else []) ps
+
+iffy = (\x y -> if inner x y == True then [x,y] else [])
+
+filterTwo f [] = [] 
+filterTwo f [x] = [] 
+filterTwo f (x:y:ls)
+  | (f x y) = x : y : filterTwo f (y:ls)
+  | otherwise = filterTwo f (y:ls)
