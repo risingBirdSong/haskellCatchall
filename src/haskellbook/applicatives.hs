@@ -284,3 +284,32 @@ threetest = quickBatch (applicative (Three dummyThree dummyThree dummyThree))
 --   homomorphism: +++ OK, passed 500 tests.
 --   interchange:  +++ OK, passed 500 tests.
 --   functor:      +++ OK, passed 500 tests.
+
+data Three' a b = Three' a b b deriving (Show, Eq)
+
+instance Functor (Three' a) where 
+  fmap f (Three' a b bb) = Three' a (f b) (f bb)
+
+instance (Monoid a) => Applicative (Three' a) where 
+  pure b = Three' mempty b b
+  (<*>) (Three' a f ff) (Three' b c cc) = Three' (a <> b) (f c) (ff cc)
+
+instance (Monoid a, Arbitrary a, Arbitrary b) => Arbitrary (Three' a b) where 
+  arbitrary = do 
+  a <- arbitrary
+  b <- arbitrary
+  c <- arbitrary
+  pure (Three' a b c)
+
+instance (Eq a , Eq b) => EqProp (Three' a b) where 
+  (=-=) = eq
+
+testThree' = quickBatch (applicative (Three' dummyThree dummyThree dummyThree))
+
+-- *Main> testThree'
+-- applicative:
+--   identity:     +++ OK, passed 500 tests.
+--   composition:  +++ OK, passed 500 tests.
+--   homomorphism: +++ OK, passed 500 tests.
+--   interchange:  +++ OK, passed 500 tests.
+--   functor:      +++ OK, passed 500 tests.
