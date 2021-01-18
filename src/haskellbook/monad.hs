@@ -1,7 +1,9 @@
 import Control.Monad
+import Control.Monad.HT
 import Test.QuickCheck
 import Test.QuickCheck.Checkers
 import Test.QuickCheck.Classes
+import Debug.Trace
 -- andOne x = [x, 1]
 
 -- (>>=) :: m a -> (a -> m b) -> m b
@@ -212,3 +214,27 @@ instance Arbitrary a => Arbitrary (List a) where
 
 instance (Eq a) => EqProp (List a) where
   (=-=) = eq 
+
+j :: Monad m => m (m a) -> m a
+j = join
+-- Expecting the following behavior:
+-- Prelude> j [[1, 2], [], [3]]
+-- [1,2,3]
+-- Prelude> j (Just (Just 1))
+-- Just 1
+-- Prelude> j (Just Nothing)
+-- Nothing
+-- Prelude> j Nothing
+-- Nothing
+
+l1 :: Monad m => (a -> b) -> m a -> m b
+l1 = liftM
+l2 :: Monad m => (a -> b -> c) -> m a -> m b -> m c
+l2 = liftM2
+aa :: Monad m => m a -> m (a -> b) -> m b
+aa = flip ap
+
+meh :: Monad m => [a] -> (a -> m b) -> m [b]
+meh = forM
+flipType :: (Monad m) => [m a] -> m [a]
+flipType = sequence
