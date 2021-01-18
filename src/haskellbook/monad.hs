@@ -160,3 +160,33 @@ myidtest = do
   a <- getLine
   let test = (Identity a) 
   return (test)
+
+data List a =
+  Nil
+  | Cons a (List a) deriving (Show)
+
+instance Semigroup (List a) where 
+  (<>) Nil xs = xs 
+  (<>) xs Nil = xs 
+  (<>) (Cons x xs) (ys) = Cons x (xs <> ys)
+
+instance Monoid (List a) where 
+  mempty = Nil
+
+instance Functor List where
+  fmap f Nil = Nil
+  fmap f (Cons aa ls) = (Cons (f aa) (fmap f ls))
+
+-- instance Monoid
+
+instance Applicative List where 
+  pure x = (Cons x Nil)
+  (<*>) _ Nil = Nil  
+  (<*>) Nil _ = Nil 
+  (<*>) (Cons f fs) (Cons x xs) =  Cons (f x) ((<*>) fs xs)
+   
+
+instance Monad (List) where 
+  return = pure 
+  (>>=) (Nil) _ = Nil 
+  (>>=) (Cons x xs) f = join ((f x) <> ((>>=) xs f))
