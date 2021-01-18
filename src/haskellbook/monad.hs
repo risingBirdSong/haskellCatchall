@@ -173,6 +173,15 @@ instance Semigroup (List a) where
 instance Monoid (List a) where 
   mempty = Nil
 
+-- *Main> quickBatch $ monoid (undefined :: List (String))
+
+-- monoid:
+--   left  identity: +++ OK, passed 500 tests.
+--   right identity: +++ OK, passed 500 tests.
+--   associativity:  +++ OK, passed 500 tests.
+--   mappend = (<>): +++ OK, passed 500 tests.
+--   mconcat:        +++ OK, passed 500 tests.
+
 instance Functor List where
   fmap f Nil = Nil
   fmap f (Cons aa ls) = (Cons (f aa) (fmap f ls))
@@ -189,7 +198,8 @@ instance Applicative List where
 instance Monad (List) where 
   return = pure 
   (>>=) (Nil) _ = Nil 
-  (>>=) mn f = join (fmap f mn)
+  (>>=) (Cons x Nil) f = f x
+  (>>=) (Cons x xs) f = (f x) <> ((>>=) xs f)
 
 genList :: (Arbitrary a) => Gen (List a) 
 genList = do 
