@@ -163,7 +163,7 @@ myidtest = do
 
 data List a =
   Nil
-  | Cons a (List a) deriving (Show)
+  | Cons a (List a) deriving (Show, Eq)
 
 instance Semigroup (List a) where 
   (<>) Nil xs = xs 
@@ -189,4 +189,16 @@ instance Applicative List where
 instance Monad (List) where 
   return = pure 
   (>>=) (Nil) _ = Nil 
-  (>>=) (Cons x xs) f = join ((f x) <> ((>>=) xs f))
+  (>>=) mn f = join (fmap f mn)
+
+genList :: (Arbitrary a) => Gen (List a) 
+genList = do 
+  a <- arbitrary
+  l <- genList
+  frequency [(1, return Nil), (5, return (Cons a l))]
+
+instance Arbitrary a => Arbitrary (List a) where
+  arbitrary = genList
+
+instance (Eq a) => EqProp (List a) where
+  (=-=) = eq 
