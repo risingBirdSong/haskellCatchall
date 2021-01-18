@@ -192,7 +192,7 @@ instance Applicative List where
   pure x = (Cons x Nil)
   (<*>) _ Nil = Nil  
   (<*>) Nil _ = Nil 
-  (<*>) (Cons f fs) (Cons x xs) =  Cons (f x) ((<*>) fs xs)
+  (<*>) (Cons f fs) xs = (<>) (fmap f xs) ((<*>) fs xs)
    
 
 instance Monad (List) where 
