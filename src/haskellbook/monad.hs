@@ -1,4 +1,7 @@
 import Control.Monad
+import Test.QuickCheck
+import Test.QuickCheck.Checkers
+import Test.QuickCheck.Classes
 -- andOne x = [x, 1]
 
 -- (>>=) :: m a -> (a -> m b) -> m b
@@ -98,3 +101,62 @@ instance Monad (Sum a) where
   return = pure  
   (>>=) mn f = join (fmap f mn) 
 
+
+data Nope a =
+  NopeDotJpg deriving (Show, Eq)
+
+instance Functor Nope where 
+  fmap _ NopeDotJpg = NopeDotJpg
+
+
+instance Applicative Nope where 
+  pure x = NopeDotJpg
+  (<*>) (NopeDotJpg) (NopeDotJpg) = NopeDotJpg
+
+instance Monad Nope where 
+  return x = NopeDotJpg
+  (>>=) _ _ = NopeDotJpg
+
+instance Arbitrary a => Arbitrary (Nope a) where
+  arbitrary = return NopeDotJpg
+
+instance Eq a => EqProp (Nope a) where
+  (=-=) = eq
+
+
+testWithTrigger trigger = do
+  quickBatch $ functor trigger
+  quickBatch $ applicative trigger
+  quickBatch $ monad trigger
+
+
+monadSpec :: IO ()
+monadSpec = do
+  testWithTrigger (undefined :: Nope (Int, Int, Int))
+
+newtype Identity a = Identity a
+  deriving (Eq, Ord, Show)
+instance Functor Identity where
+  fmap f (Identity a) = Identity (f a) 
+instance Applicative Identity where
+  pure v = Identity v 
+  (<*>) (Identity f) (Identity v) = Identity (f v) 
+instance Monad Identity where
+  return = pure
+  -- (>>=) m f = join (fmap f m)
+  (>>=) (Identity a) f = f a
+
+
+instance Arbitrary a => Arbitrary (Identity a) where 
+  arbitrary = do 
+  a <- arbitrary
+  return (Identity a)
+
+instance (Eq a) => EqProp (Identity a) where 
+  (=-=) = eq
+
+myidtest = do
+  putStrLn "type" 
+  a <- getLine
+  let test = (Identity a) 
+  return (test)
