@@ -59,3 +59,30 @@ myFoldMap f xs = foldr (<>) mempty $ fmap f xs
 
 foldMap' :: (Foldable t, Monoid m) => (a -> m) -> t a -> m
 foldMap' f = foldr (\b a -> (f b) <> a) mempty
+
+data Two a b =
+  Two a b
+
+instance Foldable (Two a) where 
+  foldMap f (Two _ bb) = f bb
+
+data Three a b c =
+  Three a b c
+
+instance Foldable (Three a b) where 
+  foldMap f (Three a b c) = f c
+
+data Three' a b =
+  Three' a b b
+
+instance Foldable (Three' a) where 
+  foldMap f (Three' a b bb) = (f b) <> (f bb)
+
+
+data Four' a b =
+  Four' a b b b
+
+instance Foldable (Four' a) where
+  foldMap f (Four' a b bb bbb) = (f b)<>(f bb)<>(f bbb)
+
+
