@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: bc429b65fd8b7e0347f9cd41d88fc61058261edf93d66bd8c9281e266ea08e79
+-- hash: dcf8178e2f4ed1a26627e68ffb159db7dc8aacfcca014df076ba4c7b65c29463
 
 name:           catchallHaskell
 version:        0.1.0.0
@@ -37,18 +37,25 @@ library
       QuickCheck
     , array
     , base >=4.7 && <5
+    , bytestring
     , checkers
     , containers
+    , hedis
     , hspec
     , matrix
+    , mtl
+    , network-uri
     , primes
     , process
     , random
     , random-shuffle
+    , scotty
     , semigroups
     , sort
     , split
+    , text
     , time
+    , transformers
     , universum
     , utility-ht
     , vector
@@ -65,19 +72,26 @@ executable catchallHaskell-exe
       QuickCheck
     , array
     , base >=4.7 && <5
+    , bytestring
     , catchallHaskell
     , checkers
     , containers
+    , hedis
     , hspec
     , matrix
+    , mtl
+    , network-uri
     , primes
     , process
     , random
     , random-shuffle
+    , scotty
     , semigroups
     , sort
     , split
+    , text
     , time
+    , transformers
     , universum
     , utility-ht
     , vector
@@ -95,19 +109,26 @@ test-suite catchallHaskell-test
       QuickCheck
     , array
     , base >=4.7 && <5
+    , bytestring
     , catchallHaskell
     , checkers
     , containers
+    , hedis
     , hspec
     , matrix
+    , mtl
+    , network-uri
     , primes
     , process
     , random
     , random-shuffle
+    , scotty
     , semigroups
     , sort
     , split
+    , text
     , time
+    , transformers
     , universum
     , utility-ht
     , vector
