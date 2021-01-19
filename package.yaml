@@ -41,12 +41,7 @@ dependencies:
 - checkers
 - semigroups
 - bytestring
-- hedis
-- mtl
-- network-uri
-- scotty
 - text
-- transformers
 
 library:
   source-dirs: src

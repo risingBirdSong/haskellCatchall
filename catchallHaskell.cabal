@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: dcf8178e2f4ed1a26627e68ffb159db7dc8aacfcca014df076ba4c7b65c29463
+-- hash: b0665ae92ac34454415622363a1a0a14139b58e2e7ab43a52d1db8d1750ed6f7
 
 name:           catchallHaskell
 version:        0.1.0.0
@@ -40,22 +40,17 @@ library
     , bytestring
     , checkers
     , containers
-    , hedis
     , hspec
     , matrix
-    , mtl
-    , network-uri
     , primes
     , process
     , random
     , random-shuffle
-    , scotty
     , semigroups
     , sort
     , split
     , text
     , time
-    , transformers
     , universum
     , utility-ht
     , vector
@@ -76,22 +71,17 @@ executable catchallHaskell-exe
     , catchallHaskell
     , checkers
     , containers
-    , hedis
     , hspec
     , matrix
-    , mtl
-    , network-uri
     , primes
     , process
     , random
     , random-shuffle
-    , scotty
     , semigroups
     , sort
     , split
     , text
     , time
-    , transformers
     , universum
     , utility-ht
     , vector
@@ -113,22 +103,17 @@ test-suite catchallHaskell-test
     , catchallHaskell
     , checkers
     , containers
-    , hedis
     , hspec
     , matrix
-    , mtl
-    , network-uri
     , primes
     , process
     , random
     , random-shuffle
-    , scotty
     , semigroups
     , sort
     , split
     , text
     , time
-    , transformers
     , universum
     , utility-ht
     , vector

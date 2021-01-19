@@ -1,5 +1,5 @@
--- import Control.Monad (replicateM)
--- import Control.Monad.IO.Class (liftIO)
+import Control.Monad (replicateM)
+import Control.Monad.IO.Class (liftIO)
 -- import qualified Data.ByteString.Char8 as BC
 -- import Data.Text.Encoding (decodeUtf8, encodeUtf8)
 -- import qualified Data.Text.Lazy as TL
@@ -18,3 +18,7 @@ randomElement xs = do
   -- Right of arrow is IO Int, so randomDigit is Int
   randomDigit <- SR.randomRIO (0, maxIndex) :: IO Int
   return (xs !! randomDigit)
+
+
+shortyGen :: IO [Char]
+shortyGen = replicateM 7 (randomElement alphaNum)
