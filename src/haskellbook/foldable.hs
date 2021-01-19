@@ -55,3 +55,7 @@ myconvert :: (Foldable t , Functor t, Monoid m) => (a -> m) -> t a -> t m
 myconvert f xs = fmap f xs
 myFoldMap :: (Foldable t, Functor t, Monoid m) => (a -> m) -> t a -> m
 myFoldMap f xs = foldr (<>) mempty $ fmap f xs
+
+
+foldMap' :: (Foldable t, Monoid m) => (a -> m) -> t a -> m
+foldMap' f = foldr (\b a -> (f b) <> a) mempty
