@@ -36,3 +36,22 @@ snull :: (Foldable t) => t a -> Bool
 snull = foldr (\_ _ -> True) False
 mynull :: (Foldable t) => t a -> Bool
 mynull = foldr (\_ _ -> False) True
+
+mylength :: (Foldable t) => t a -> Int
+mylength xs = foldr (\_ ac -> succ ac) 0 xs
+
+myToList :: (Foldable t) => t a -> [a]
+myToList xs = foldr (\v ac -> v : ac) [] xs
+
+myfold :: (Foldable t, Monoid m) => t m -> m
+myfold xs = foldr (<>) mempty xs
+
+refold f xs = foldMap f xs
+
+fold' :: (Foldable t, Monoid m) => t m -> m
+fold' = foldMap id
+
+myconvert :: (Foldable t , Functor t, Monoid m) => (a -> m) -> t a -> t m
+myconvert f xs = fmap f xs
+myFoldMap :: (Foldable t, Functor t, Monoid m) => (a -> m) -> t a -> m
+myFoldMap f xs = foldr (<>) mempty $ fmap f xs
