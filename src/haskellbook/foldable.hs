@@ -14,3 +14,7 @@ myproduct d = getProduct (foldMap Product d)
 
 myelem :: (Foldable t, Eq a) => a -> t a -> Bool
 myelem = any . (==)
+
+-- myminimum xs = foldr (min) (1/0) xs
+myminimum [] = Nothing
+myminimum xs = Just (foldr (min) (head xs) xs)
