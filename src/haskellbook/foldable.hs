@@ -28,7 +28,11 @@ myminimum xs = Just (foldr (min) (head xs))
 mymaximum [] = Nothing
 mymaximum xs = Just (foldr max 0 xs)
 
-mynull :: (Foldable t, Eq (t a), Monoid (t a)) => t a -> Bool
-mynull xs 
-  | xs == mempty = True
-  | otherwise = False
+-- mynull :: (Foldable t, Eq (t a), Monoid (t a)) => t a -> Bool
+-- mynull xs 
+--   | xs == mempty = True
+--   | otherwise = False
+snull :: (Foldable t) => t a -> Bool
+snull = foldr (\_ _ -> True) False
+mynull :: (Foldable t) => t a -> Bool
+mynull = foldr (\_ _ -> False) True
