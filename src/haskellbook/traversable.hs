@@ -105,3 +105,40 @@ t_o_a = quickBatch $ applicative (undefined :: Optional (String, String , String
 
 -- testing Optional Traversable 
 t_o_t = quickBatch $ traversable (undefined :: Optional (String, String, String))
+
+
+
+data List a =
+  Nil
+  | Cons a (List a) deriving (Show, Eq)
+
+instance (Monoid a) =>  Semigroup (List a) where 
+  (<>) Nil _ = Nil 
+  (<>) _ Nil = Nil 
+  (<>) (Cons x xs) (Cons y ys) = Cons (x <> y) (xs <> ys)
+genList :: Arbitrary a => Gen (List a)
+genList  = do 
+  a <- arbitrary
+  lst <- genList
+  frequency [(1, pure Nil), (5, pure (Cons a lst))]
+
+instance Arbitrary a => Arbitrary (List a) where
+  arbitrary = genList
+  
+-- instance Arbitrary a => Arbitrary (List a) where
+--   arbitrary = do 
+--   a <- arbitrary
+--   elements [Nil, Cons (a) Nil]
+
+instance (Eq a) => EqProp (List a) where (=-=) = eq
+
+-- testing semigroup List - passing :)
+-- quickBatch $ semigroup (undefined :: (List String , Int))
+
+-- semigroup:
+--   associativity: +++ OK, passed 500 tests.
+--   sconcat:       +++ OK, passed 500 tests.
+--   stimes:        +++ OK, passed 500 tests.
+
+-- instance Monoid (List a) where 
+  -- mempty = Nil
