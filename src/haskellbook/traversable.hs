@@ -1,3 +1,5 @@
+{-# LANGUAGE FlexibleContexts #-}
+
 import Test.QuickCheck
 import Test.QuickCheck.Checkers
 import Test.QuickCheck.Classes
@@ -59,3 +61,47 @@ instance (Arbitrary a) => Arbitrary (MyConstant a b) where
 
 instance (Eq a) => EqProp (MyConstant a b) where 
   (=-=) = eq
+
+data Optional a =
+  Nada
+  | Yep a deriving (Show, Eq)
+
+instance (Semigroup a) => Semigroup (Optional a) where 
+  (<>) Nada _ = Nada
+  (<>)  _ Nada = Nada
+  (<>) (Yep a) (Yep b) = Yep (a<>b)
+
+instance (Semigroup a) => Monoid (Optional a) where 
+  mempty = Nada
+
+instance Functor (Optional) where 
+  fmap f Nada = Nada 
+  fmap f (Yep a) = Yep (f a)
+
+instance Applicative (Optional) where 
+  pure x = Yep x
+  (<*>) Nada _ = Nada
+  (<*>) _ Nada = Nada
+  (<*>) (Yep f) (Yep a) = Yep (f a)
+
+instance Foldable (Optional) where
+  foldr f ac (Nada) = ac 
+  foldr f ac (Yep x) = f x ac 
+
+instance Traversable (Optional) where 
+  -- traverse f (Yep a) = f (Yep a) cannot construct infinite type
+  traverse f (Yep a) = Yep <$> (f a)
+  traverse f Nada =  pure Nada 
+
+instance Arbitrary a => Arbitrary (Optional a) where 
+  arbitrary = frequency [(1, pure Nada), (5, Yep <$> arbitrary )]
+
+instance Eq a => EqProp (Optional a) where (=-=) = eq
+
+-- ex :: Int 
+
+-- testing Optional applicative 
+t_o_a = quickBatch $ applicative (undefined :: Optional (String, String , String ))
+
+-- testing Optional Traversable 
+t_o_t = quickBatch $ traversable (undefined :: Optional (String, String, String))
