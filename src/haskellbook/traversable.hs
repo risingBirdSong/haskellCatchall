@@ -7,8 +7,9 @@ main = do
   let trigger = undefined :: TI ([Int], [Int], [Int])
   -- let trigger = undefined :: TI (Int, Int, [Int])
   let triggera = undefined :: Identity ([Int], [Int], [Int])
+  let triggerb = undefined :: MyConstant ([Int], [Int], [Int]) ([Int], [Int], [Int])
   quickBatch (traversable trigger)
-  quickBatch (traversable triggera)
+  quickBatch (traversable triggerb)
 
 
 newtype Identity a = Identity a
@@ -34,4 +35,27 @@ instance Arbitrary a => Arbitrary (Identity a) where
   arbitrary = Identity <$> arbitrary
 
 instance (Eq a) => EqProp (Identity a) where 
+  (=-=) = eq
+
+
+newtype MyConstant a b =
+  MyConstant { getMyConstant :: a } deriving (Show, Eq)
+
+instance Functor (MyConstant a) where 
+  fmap f (MyConstant a) = MyConstant a
+
+instance (Monoid a) => Applicative (MyConstant a) where 
+  pure x = MyConstant mempty
+  (<*>) (MyConstant x) (MyConstant y) = MyConstant  (x <> y)
+
+instance (Monoid a) => Foldable (MyConstant a) where
+  foldMap _ _ = mempty
+
+instance (Monoid a) => Traversable (MyConstant a) where
+  traverse f (MyConstant a) = pure $ MyConstant a 
+
+instance (Arbitrary a) => Arbitrary (MyConstant a b) where 
+  arbitrary = MyConstant <$> arbitrary
+
+instance (Eq a) => EqProp (MyConstant a b) where 
   (=-=) = eq
