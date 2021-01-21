@@ -203,6 +203,7 @@ instance Foldable (List) where
 -- instance Traversable (List) where 
 
 type Trigger = (Int, Int, [Int])
+type Tester = (String, String, String)
 
 
 instance Traversable (List) where
@@ -211,3 +212,30 @@ instance Traversable (List) where
 
 travtestlist = quickBatch $ traversable (undefined :: List Trigger)
 foldtestlist = quickBatch $ foldable (undefined :: List (String, String, String, Int, String))
+
+
+data Three a b c =
+  Three a b c deriving (Show, Eq)
+
+instance Functor (Three a b) where 
+  fmap f (Three a b c) = Three a b (f c)
+
+instance Foldable (Three a b) where 
+  foldr f z (Three a b c) = f c z
+
+instance Traversable (Three a b) where 
+  traverse f (Three a b c) = Three a b <$> f c
+
+instance (Arbitrary a
+        , Arbitrary b
+        , Arbitrary c) => Arbitrary (Three a b c) where
+  arbitrary = do
+    a <- arbitrary
+    b <- arbitrary
+    c <- arbitrary
+    return $ Three a b c
+
+instance (Eq a, Eq b, Eq c) => EqProp (Three a b c) where
+  (=-=) = eq
+
+threetravtest = quickBatch $ traversable (undefined :: Three Trigger Trigger Trigger)
