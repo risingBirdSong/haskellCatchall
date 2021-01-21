@@ -177,8 +177,10 @@ instance Applicative (List ) where
 instance Foldable (List) where
   foldr _ b Nil = b 
   foldr f b (Cons x xs) = foldr f (f x b) xs 
+  foldMap _ Nil = mempty
+  foldMap f (Cons x xs) = f x <> (foldMap f xs)
 
-*Main> quickBatch $ foldable (undefined :: List (String, String, String, Int, String))
+-- *Main> quickBatch $ foldable (undefined :: List (String, String, String, Int, String))
 
 -- Foldable:
 --   foldr and foldMap: +++ OK, passed 500 tests.
@@ -199,4 +201,13 @@ instance Foldable (List) where
 --   product:           +++ OK, passed 500 tests.
 
 -- instance Traversable (List) where 
-  
+
+type Trigger = (Int, Int, [Int])
+
+
+instance Traversable (List) where
+  traverse f Nil = pure Nil 
+  traverse f (Cons x xs) = Cons <$> f x <*> traverse f xs
+
+travtestlist = quickBatch $ traversable (undefined :: List Trigger)
+foldtestlist = quickBatch $ foldable (undefined :: List (String, String, String, Int, String))
