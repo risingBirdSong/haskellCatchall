@@ -1,4 +1,5 @@
 {-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE TypeApplications #-}
 
 import Test.QuickCheck
 import Test.QuickCheck.Checkers
@@ -141,12 +142,14 @@ genList  = do
 instance Arbitrary a => Arbitrary (List a) where
   arbitrary = genList
 
+instance (Eq a) => EqProp (List a) where (=-=) = eq
+
+
 -- instance Arbitrary a => Arbitrary (List a) where
 --   arbitrary = do 
 --   a <- arbitrary
 --   elements [Nil, Cons (a) Nil]
 
-instance (Eq a) => EqProp (List a) where (=-=) = eq
 
 -- testing semigroup List - passing :)
 -- quickBatch $ semigroup (undefined :: (List String , Int))
@@ -205,7 +208,7 @@ instance Foldable (List) where
 type Trigger = (Int, Int, [Int])
 type Tester = (String, String, String)
 
-
+  -- traverse :: Applicative f => (a -> f b) -> t a -> f (t b)
 instance Traversable (List) where
   traverse f Nil = pure Nil 
   traverse f (Cons x xs) = Cons <$> f x <*> traverse f xs
@@ -239,3 +242,30 @@ instance (Eq a, Eq b, Eq c) => EqProp (Three a b c) where
   (=-=) = eq
 
 threetravtest = quickBatch $ traversable (undefined :: Three Trigger Trigger Trigger)
+
+
+data S n a = S (n a) a deriving (Show, Eq)
+sTraversable :: S [] (Int, Int, [Int])
+sTraversable = undefined
+
+instance (Functor n) => Functor (S n) where 
+  fmap f (S (na) a) = S (fmap f na) (f a)
+
+instance (Foldable n) => Foldable (S n) where 
+  foldMap f (S na a) = foldMap f na  <> f a
+
+instance Traversable n => Traversable (S n) where
+  traverse f (S s x) = pure S <*> traverse f s <*> f x
+
+instance ( Arbitrary (n a)
+         , CoArbitrary (n a)
+         , Arbitrary a
+         , CoArbitrary a
+         ) => Arbitrary (S n a) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    return $ S (x y) y
+
+instance (Eq (n a), Eq a) => EqProp (S n a) where
+  (=-=) = eq
