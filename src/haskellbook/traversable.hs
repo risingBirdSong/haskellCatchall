@@ -3,6 +3,8 @@
 import Test.QuickCheck
 import Test.QuickCheck.Checkers
 import Test.QuickCheck.Classes
+import Control.Applicative
+
 
 type TI = []
 main = do
@@ -110,12 +112,26 @@ t_o_t = quickBatch $ traversable (undefined :: Optional (String, String, String)
 
 data List a =
   Nil
-  | Cons a (List a) deriving (Show, Eq)
+  | Cons a (List a) deriving (Show, Eq, Ord)
 
-instance (Monoid a) =>  Semigroup (List a) where 
+-- fixed version thanks to digi :) 
+instance Semigroup (List a) where 
   (<>) Nil _ = Nil 
   (<>) _ Nil = Nil 
-  (<>) (Cons x xs) (Cons y ys) = Cons (x <> y) (xs <> ys)
+  (<>) (Cons x xs) ys = Cons (x) (xs <> ys)
+
+-- broken version 
+-- instance (Monoid a) =>  Semigroup (List a) where 
+--   (<>) Nil _ = Nil 
+--   (<>) _ Nil = Nil 
+-- --   (<>) (Cons x xs) (Cons y ys) = Cons (x <> y) (xs <> ys)
+
+-- <interactive>:303:22: error:
+--     * No instance for (Semigroup (List b)) arising from a use of `<>'
+--     * In the expression: (fmap f xs) <> (fs <*> xs)
+--       In an equation for `<*>': Cons f fs <*> xs = (fmap f xs) <> (fs <*> xs)
+--       In the instance declaration for `Applicative List'
+
 genList :: Arbitrary a => Gen (List a)
 genList  = do 
   a <- arbitrary
@@ -124,7 +140,7 @@ genList  = do
 
 instance Arbitrary a => Arbitrary (List a) where
   arbitrary = genList
-  
+
 -- instance Arbitrary a => Arbitrary (List a) where
 --   arbitrary = do 
 --   a <- arbitrary
@@ -140,5 +156,27 @@ instance (Eq a) => EqProp (List a) where (=-=) = eq
 --   sconcat:       +++ OK, passed 500 tests.
 --   stimes:        +++ OK, passed 500 tests.
 
--- instance Monoid (List a) where 
-  -- mempty = Nil
+instance Monoid a => Monoid (List a) where 
+  mempty = Nil
+
+instance Functor (List) where
+  fmap f Nil = Nil 
+  fmap f (Cons x xs) = Cons (f x) (fmap f xs)
+
+--  quickBatch $ functor (undefined :: (List (String , String , String )))
+
+-- functor:
+--   identity: +++ OK, passed 500 tests.
+--   compose:  +++ OK, passed 500 tests.
+
+instance Applicative (List ) where 
+  pure x = Cons x Nil
+  (<*>) Nil _ = Nil 
+  (<*>) (Cons f fs) (xs) = (fmap f xs) <> (fs <*> xs)
+
+instance Foldable (List) where
+  foldr _ b Nil = b 
+  foldr f b (Cons x xs) = foldr f (f x b) xs 
+
+-- instance Traversable (List) where 
+  
