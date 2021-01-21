@@ -178,5 +178,25 @@ instance Foldable (List) where
   foldr _ b Nil = b 
   foldr f b (Cons x xs) = foldr f (f x b) xs 
 
+*Main> quickBatch $ foldable (undefined :: List (String, String, String, Int, String))
+
+-- Foldable:
+--   foldr and foldMap: +++ OK, passed 500 tests.
+--   foldl and foldMap: +++ OK, passed 500 tests.
+--   fold and foldMap:  +++ OK, passed 500 tests.
+--   length:            +++ OK, passed 500 tests.
+--   foldMap':          +++ OK, passed 500 tests.
+--   foldr':            +++ OK, passed 500 tests.
+--   foldl':            +++ OK, passed 500 tests.
+--   foldr1:            +++ OK, passed 500 tests; 113 discarded.
+--   foldl1:            +++ OK, passed 500 tests; 83 discarded.
+--   toList:            +++ OK, passed 500 tests.
+--   null:              +++ OK, passed 500 tests.
+--   elem:              +++ OK, passed 500 tests.
+--   maximum:           +++ OK, passed 500 tests; 97 discarded.
+--   minimum:           +++ OK, passed 500 tests; 93 discarded.
+--   sum:               +++ OK, passed 500 tests.
+--   product:           +++ OK, passed 500 tests.
+
 -- instance Traversable (List) where 
   
