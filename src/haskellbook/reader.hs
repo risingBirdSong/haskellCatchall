@@ -40,6 +40,19 @@ tupleda xs = fmap composed (xs, xs)
 tupledd :: [Char] -> ([Char], [Char])
 tupledd xs = join (,) (composed xs)
 
-tupled' xs = (,) <$> cap <*> rev
+tupled' xs = (\ys zs -> [ys,zs]) <$> cap <*> rev
 
 tupled'' = liftA2 (,) rev cap 
+
+tupledm = do 
+  a <- rev 
+  b <- cap 
+  return (a, b)
+
+tupledm'= rev >>=
+ \ reved ->
+  cap >>=
+   \ caped ->
+    return (reved, caped)  
+
+    
