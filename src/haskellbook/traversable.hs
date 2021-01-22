@@ -4,7 +4,7 @@
 import Test.QuickCheck
 import Test.QuickCheck.Checkers
 import Test.QuickCheck.Classes
-import Control.Applicative
+-- import Control.Applicative
 import Data.Monoid
 
 
