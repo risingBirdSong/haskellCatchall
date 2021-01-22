@@ -184,6 +184,7 @@ instance Foldable (List) where
   foldMap _ Nil = mempty
   foldMap f (Cons x xs) = f x <> (foldMap f xs)
 
+type Foldtest = (String, String, String, Int, String)
 -- *Main> quickBatch $ foldable (undefined :: List (String, String, String, Int, String))
 
 -- Foldable:
@@ -292,3 +293,13 @@ instance Foldable Tree where
 
 -- atree = Node (Node (Empty)(Leaf (Sum 2))(Empty) )(Leaf (Sum 1))(Node (Empty)(Leaf (Sum 3))(Empty))
 btree = Node (Empty) (Leaf 1) (Empty)
+
+instance Arbitrary a => Arbitrary (Tree a) where
+  arbitrary =
+    frequency [ (1, pure Empty)
+              , (2, pure Leaf <*> arbitrary)
+              , (2, pure Node <*> arbitrary <*> arbitrary <*> arbitrary)
+              ]
+
+instance Eq a => EqProp (Tree a) where (=-=) = eq 
+
