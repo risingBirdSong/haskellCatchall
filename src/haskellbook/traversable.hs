@@ -5,6 +5,7 @@ import Test.QuickCheck
 import Test.QuickCheck.Checkers
 import Test.QuickCheck.Classes
 import Control.Applicative
+import Data.Monoid
 
 
 type TI = []
@@ -269,3 +270,25 @@ instance ( Arbitrary (n a)
 
 instance (Eq (n a), Eq a) => EqProp (S n a) where
   (=-=) = eq
+
+
+data Tree a =
+  Empty
+  | Leaf a
+  | Node (Tree a) a (Tree a)
+  deriving (Eq, Show)
+
+instance Functor Tree where 
+  fmap _ Empty = Empty
+  fmap f (Leaf a) = Leaf (f a)
+  fmap f (Node l v r) = Node (fmap f l) (f v) (fmap f r)
+
+instance Foldable Tree where 
+  foldMap f (Empty) = mempty
+  foldMap f (Leaf a) = f a
+  foldMap f (Node l v r) = (foldMap f l) <> (f v) <> (foldMap f r)
+
+-- Node (Node (Empty)(Leaf 2)(Empty) )(Leaf 1)(Node (Empty)(Leaf 3)(Empty))
+
+-- atree = Node (Node (Empty)(Leaf (Sum 2))(Empty) )(Leaf (Sum 1))(Node (Empty)(Leaf (Sum 3))(Empty))
+btree = Node (Empty) (Leaf 1) (Empty)
