@@ -303,3 +303,9 @@ instance Arbitrary a => Arbitrary (Tree a) where
 
 instance Eq a => EqProp (Tree a) where (=-=) = eq 
 
+--  sized $ \n -> resize (round (sqrt n))
+
+-- https://www.st.cs.uni-saarland.de/edu/seminare/2005/advanced-fp/slides/meiser.pdf
+-- http://www.cse.chalmers.se/~rjmh/QuickCheck/manual_body.html#18
+ttt = quickBatch $ foldable (undefined :: Tree Foldtest) 
+--  sized $ \n -> resize (round (sqrt n))

@@ -31,3 +31,4 @@ genList = do
 
 instance Arbitrary a => Arbitrary (List a) where
   arbitrary = genList
+
