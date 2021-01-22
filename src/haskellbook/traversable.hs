@@ -289,9 +289,14 @@ instance Foldable Tree where
   foldMap f (Leaf a) = f a
   foldMap f (Node l v r) = (foldMap f l) <> (f v) <> (foldMap f r)
 
+instance Traversable (Tree) where
+  traverse f (Empty) = pure Empty
+  traverse f (Leaf x) = Leaf <$> f x
+  traverse f (Node l v r) = Node <$> traverse f l <*> f v <*> traverse f r 
+
 -- Node (Node (Empty)(Leaf 2)(Empty) )(Leaf 1)(Node (Empty)(Leaf 3)(Empty))
 
--- atree = Node (Node (Empty)(Leaf (Sum 2))(Empty) )(Leaf (Sum 1))(Node (Empty)(Leaf (Sum 3))(Empty))
+atree = Node (Node (Empty)(Leaf (Sum 2))(Empty) )(Leaf (Sum 1))(Node (Empty)(Leaf (Sum 3))(Empty))
 btree = Node (Empty) (Leaf 1) (Empty)
 
 instance Arbitrary a => Arbitrary (Tree a) where
