@@ -1,6 +1,7 @@
 import Control.Applicative
 import Control.Monad
 import Data.Char
+import Data.List
 boop = (*2)
 doop = (+10)
 -- bip :: Num a => a -> a 
@@ -66,3 +67,49 @@ ask = Reader id
 
 -- *Main> runReader ask 3
 -- 3
+
+newtype HumanName =
+  HumanName String
+  deriving (Eq, Show)
+newtype DogName =
+  DogName String
+  deriving (Eq, Show)
+newtype Address =
+  Address String
+  deriving (Eq, Show)
+data Person =
+  Person {
+  humanName :: HumanName
+  , dogName :: DogName
+  , address :: Address
+  } deriving (Eq, Show)
+data Dog =
+  Dog {
+  dogsName :: DogName
+  , dogsAddress :: Address
+  } deriving (Eq, Show)
+
+chris :: Person
+chris = Person (HumanName "Chris Allen")
+  (DogName "Papu")
+  (Address "Austin")
+
+
+getDog :: Person -> Dog
+getDog p =
+  Dog (dogName p) (address p)
+
+getDogR :: Person -> Dog
+getDogR =
+  Dog <$> dogName <*> address
+
+-- *Main> getDog chris
+-- Dog {dogsName = DogName "Papu", dogsAddress = Address "Austin"}
+-- *Main> getDogR chris
+-- Dog {dogsName = DogName "Papu", dogsAddress = Address "Austin"}
+
+myLiftA2 :: Applicative f =>
+  (a -> b -> c)
+  -> f a -> f b -> f c
+myLiftA2 f a b = f <$> a <*> b
+
