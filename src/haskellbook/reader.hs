@@ -57,3 +57,12 @@ tupledm'= rev >>=
 
     
 -- Functor of functions is function composition.
+
+newtype Reader r a =
+  Reader { runReader :: r -> a } 
+
+ask :: Reader a a
+ask = Reader id   
+
+-- *Main> runReader ask 3
+-- 3
