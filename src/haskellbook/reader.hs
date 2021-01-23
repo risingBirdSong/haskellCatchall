@@ -56,3 +56,4 @@ tupledm'= rev >>=
     return (reved, caped)  
 
     
+-- Functor of functions is function composition.
