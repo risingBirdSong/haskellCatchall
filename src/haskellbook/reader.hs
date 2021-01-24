@@ -113,3 +113,22 @@ myLiftA2 :: Applicative f =>
   -> f a -> f b -> f c
 myLiftA2 f a b = f <$> a <*> b
 
+-- and a way to handle a tagged union as well 
+
+
+-- data ListenExpiried = -- stuff
+-- instance FromJSON ListenExpiried where
+--   -- decode from the thing that's supposed to be in that 'data' field
+
+-- -- more types and instances, similar to the above
+
+-- data Event = EListenExpiried ListenExpiried | -- other events
+
+-- instance FromJSON Event where
+--   parseJSON = withObject "event" $ \o -> do
+--     tag <- o .: "e"
+--     payload <- o .: "data"
+--     case tag of
+--       "listenexpiried" -> ListenExpiried <$> parseJSON payload
+--       "account_update" -> AccountUpdate <$> parseJSON payload
+

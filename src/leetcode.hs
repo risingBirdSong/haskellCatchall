@@ -205,3 +205,7 @@ filterTwo f (x:y:ls)
   | otherwise = filterTwo f (y:ls)
 
 
+minTimeVisitAll xs = sum . dif . map (maximum) $ xs
+
+dif (x : []) = []
+dif (x : y : xs) = (abs (x - y)) : dif (y:xs)
