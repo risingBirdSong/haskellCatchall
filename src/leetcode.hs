@@ -209,3 +209,30 @@ minTimeVisitAll xs = sum . dif . map (maximum) $ xs
 
 dif (x : []) = []
 dif (x : y : xs) = (abs (x - y)) : dif (y:xs)
+
+
+-- maxDistance (frst : scnd : []) = [] 
+-- maxDistance (frst : scnd : rest ) = (max ((head frst - head scnd)) (abs (last scnd) - last scnd) ) : maxDistance (scnd : rest)
+
+
+-- example1 =  "( )())()"
+-- output1 =  "() : recurse ()()"
+
+
+innerMostWork [] = []
+innerMostWork ([x]) = []
+innerMostWork (x : y : rest) 
+  | x == '(' && y == ')' = "()" : innerMostWork rest  
+  | otherwise = innerMostWork (y:rest) 
+
+innerMost xs = concat $ innerMostWork xs
+
+minDist xs = sum $ go xs where
+  -- go [] = []
+  go [x] = []
+  go ([x,y]:[x1,y1]:rest) =
+    max (abs (x - x1)) (abs (y - y1)) : go ([x1,y1]:rest) 
+
+
+-- pattern match test
+tester (x:y:rest) = ([x,y], rest)
