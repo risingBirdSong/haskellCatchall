@@ -236,3 +236,10 @@ minDist xs = sum $ go xs where
 
 -- pattern match test
 tester (x:y:rest) = ([x,y], rest)
+
+
+randos = do
+  g <- newStdGen
+  return $ map (`div` 10000000000000000) $ take 2 (randoms g :: [Int])
+  
+gnerater = do replicateM 5 randos
