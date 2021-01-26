@@ -59,3 +59,8 @@ testtree = foldr btnsrt Leaf $ reverse  [1,2,3,4,5]
 fldTree fn acc Leaf = acc
 fldTree fn acc (Node l v r) = fldTree fn (fldTree fn (fn v acc) l) r
 
+buildBalanced []   = Leaf
+buildBalanced elts = Node (buildBalanced $ take half elts) 
+                          (elts !! half) 
+                          (buildBalanced $ drop (half+1) elts)
+    where half = length elts `quot` 2
