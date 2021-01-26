@@ -278,3 +278,8 @@ asfda = fmap (subtract 2 ) (Just 4)
 
 -- https://leetcode.com/problems/find-n-unique-integers-sum-up-to-zero/
 sumToZero n = [(-n)..n]
+
+-- https://leetcode.com/problems/maximum-product-of-two-elements-in-an-array/
+-- 1464. Maximum Product of Two Elements in an Array
+
+mxpr = product . map (subtract 1) . take 2 . reverse . sort 
