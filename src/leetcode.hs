@@ -275,3 +275,6 @@ giveDiscount x Nothing = x
 giveDiscount x (Just y) = x - y 
 
 asfda = fmap (subtract 2 ) (Just 4)
+
+-- https://leetcode.com/problems/find-n-unique-integers-sum-up-to-zero/
+sumToZero n = [(-n)..n]
