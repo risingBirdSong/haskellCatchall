@@ -1,4 +1,4 @@
-
+import Data.List
 data Tree v = Nil | Nodey (Tree v) v (Tree v) deriving (Show, Eq, Ord)
 
 nsrt Nil v = Nodey Nil v Nil 
@@ -34,3 +34,28 @@ subT (Nodey l v r) qry
   | qry == v = Nodey l v r
   | (qry < v) = subT l qry
   | (qry > v) = subT r qry 
+
+
+collect Nil = []
+-- collect (Nodey l v r) = (v : collect l)
+
+
+data BinaryTree a = Leaf
+                  | Node (BinaryTree a) a (BinaryTree a)
+                  deriving (Eq, Ord, Show)
+
+btnsrt x Leaf = Node Leaf x Leaf
+btnsrt x (Node l v r) 
+  | x < v =  Node (btnsrt x l) v r
+  | x > v = Node l v (btnsrt x r)
+  | otherwise = Node l v r
+
+-- testree :: BinaryTree Integer
+atr = foldr btnsrt Leaf (reverse [5,4,6,3,7])
+btr = foldr btnsrt Leaf (reverse [11,9,11,8,12])
+
+testtree = foldr btnsrt Leaf $ reverse  [1,2,3,4,5]
+
+fldTree fn acc Leaf = acc
+fldTree fn acc (Node l v r) = fldTree fn (fldTree fn (fn v acc) l) r
+
