@@ -283,3 +283,9 @@ sumToZero n = [(-n)..n]
 -- 1464. Maximum Product of Two Elements in an Array
 
 mxpr = product . map (subtract 1) . take 2 . reverse . sort 
+
+
+-- https://leetcode.com/problems/n-repeated-element-in-size-2n-array/
+-- 961. N-Repeated Element in Size 2N Array
+
+therepeat xs = head . last . sortBy (comparing length) . group . sort $ xs
