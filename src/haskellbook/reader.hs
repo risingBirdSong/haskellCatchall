@@ -1,5 +1,7 @@
+{-# LANGUAGE InstanceSigs #-}
 import Control.Applicative
 import Control.Monad
+
 import Data.Char
 import Data.List
 boop = (*2)
@@ -131,4 +133,22 @@ myLiftA2 f a b = f <$> a <*> b
 --     case tag of
 --       "listenexpiried" -> ListenExpiried <$> parseJSON payload
 --       "account_update" -> AccountUpdate <$> parseJSON payload
+
+asks :: (r -> a) -> Reader r a
+asks = Reader
+
+-- fmap :: (a -> b)
+-- -> (r -> a)
+-- -> (r -> b)
+instance Functor (Reader r) where 
+  fmap f (Reader r) = Reader (\a -> f (r a))
+
+-- <*> :: (r -> a -> b)
+-- -> (r -> a)
+-- -> (r -> b)
+
+instance Applicative (Reader r) where
+  pure :: a -> Reader r a
+  pure a = Reader (\r' -> a)
+  (<*>) (Reader rab) (Reader ra) = Reader (\r -> rab r (ra r) )
 
