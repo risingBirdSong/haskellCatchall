@@ -9,6 +9,11 @@ import Data.List.Split
 import  System.Random
 import Test.QuickCheck
 
+import Data.List.Split
+
+
+import Data.Ord
+
 a = [1,1]
 b = [2,2]
 c = [1,2] 
@@ -228,7 +233,6 @@ innerMostWork (x : y : rest)
 innerMost xs = concat $ innerMostWork xs
 
 minDist xs = sum $ go xs where
-  -- go [] = []
   go [x] = []
   go ([x,y]:[x1,y1]:rest) =
     max (abs (x - x1)) (abs (y - y1)) : go ([x1,y1]:rest) 
@@ -240,6 +244,34 @@ tester (x:y:rest) = ([x,y], rest)
 
 randos = do
   g <- newStdGen
-  return $ map (`div` 10000000000000000) $ take 2 (randoms g :: [Int])
+  return $ map (`div` 100000000000000000) $ take 2 (randoms g :: [Int])
   
 gnerater = do replicateM 5 randos
+
+solver = do
+  gened <- gnerater
+  print gened
+  return $ minDist gened
+  
+
+-- 1588. Sum of All Odd Length Subarrays
+
+subarrs n [] = [] 
+subarrs n xs 
+  | (length $ take n xs) /= n = []
+  | otherwise = (take n xs) : subarrs n (drop 1 xs) 
+
+subarrsolver xs = sum $ map sum $ concatMap (`subarrs` xs) [1,3,5]
+
+-- print $ splitEvery 3 [1..5]
+
+splitEvery' :: Int -> [a] -> [[a]]
+splitEvery' n = takeWhile (not.null) . map (take n) . iterate (drop n)
+
+discount [] = []
+discount (x:xs) = giveDiscount x (find (<=x) xs) : discount xs 
+
+giveDiscount x Nothing = x
+giveDiscount x (Just y) = x - y 
+
+asfda = fmap (subtract 2 ) (Just 4)
