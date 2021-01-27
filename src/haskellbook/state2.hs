@@ -63,6 +63,24 @@ rollsToGetTwenty g = go 0 0 g
           let (die, nextGen) = randomR (1, 6) gen
           in go (sum + die) (count + 1) nextGen
 
+type SumOfDice = Int 
+type CountOfRolls = Int 
+-- rlsItTakes :: StdGen -> (a -> Bool) -> Int 
+rlsItTakes g f = go 0 0 g   
+  where go :: SumOfDice -> CountOfRolls -> StdGen -> Int
+        go sm cnt gn 
+          | f sm = cnt 
+          | otherwise = 
+          let (die, nextGen) = randomR (1,6) gn 
+          in go (sm + die) (cnt + 1) nextGen
+
+rlsItTakesWithHistory g f = go 0 0 [] g   
+  where go :: SumOfDice -> CountOfRolls -> [Int] -> StdGen -> ( [Int] , Int)
+        go sm cnt hst gn 
+          | f sm = (hst, cnt)
+          | otherwise = 
+          let (die, nextGen) = randomR (1,6) gn 
+          in go (sm + die) (cnt + 1) (die : hst) nextGen
 -- We can also use randomIO, which uses IO to get a new value each
 -- time without needing to create a unique value for the StdGen:
 -- Prelude> :t randomIO
