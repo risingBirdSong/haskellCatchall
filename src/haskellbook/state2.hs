@@ -41,3 +41,15 @@ rollDieThreeTimes' =
 
 evalled = evalState rollDieThreeTimes' (mkStdGen 0)
 -- (DieSix,DieSix,DieFour)
+
+infiniteDie :: State StdGen [Die]
+infiniteDie = repeat <$> rollDie'
+
+-- *Main> take 10 $ evalState infiniteDie  (mkStdGen 3)
+-- [DieSix,DieSix,DieSix,DieSix,DieSix,DieSix,DieSix,DieSix,DieSix,DieSix]
+
+nDie :: Int -> State StdGen [Die]
+nDie n = replicateM n rollDie'
+
+-- *Main> evalState (nDie 4) (mkStdGen 4)
+-- [DieSix,DieThree,DieThree,DieTwo]
