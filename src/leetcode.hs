@@ -121,6 +121,12 @@ empAccess x = oneAcces $ head (manyAccess x)
 data RoseTree a = RoseTree a [RoseTree a] deriving (Show, Eq,Ord)
 data RT a = RT a [RT a] deriving (Show, Eq, Ord)
 
+-- insrtRT (Just v) =    
+
+testRose = RT 1 [RT 2 [RT 3 [RT 5 []]], RT 4 [] ]
+
+-- fromSortedList :: (Eq a) => [[a]] -> RT a
+
 stockinput = [7,1,5,3,6,4]
 -- Output: 7
 
@@ -289,3 +295,25 @@ mxpr = product . map (subtract 1) . take 2 . reverse . sort
 -- 961. N-Repeated Element in Size 2N Array
 
 therepeat xs = head . last . sortBy (comparing length) . group . sort $ xs
+
+
+-- data RT a = No | Rose a [RT a]
+
+-- showTreeLR RT 
+
+-- https://leetcode.com/problems/array-partition-i/
+-- 561. Array Partition I
+
+arrPart xs = sum $ go s
+      where s =  sort xs
+            go [] = []
+            go (x:y:xs) = min x y : go xs  
+
+arrPart' = sum . mapPair min . sort
+
+-- mapPair -- process a list two at a time with a function, do not place the y value back into the list for the next recursive call
+-- (a pattern i do regularly when I want the y, of my x y data needs to be the first arg in the next recursion) also must be even length to work
+mapPair _ [] = [] 
+mapPair _ [] = [] 
+mapPair f (x:y:ls) = f x y : mapPair f ls 
+

@@ -53,3 +53,21 @@ nDie n = replicateM n rollDie'
 
 -- *Main> evalState (nDie 4) (mkStdGen 4)
 -- [DieSix,DieThree,DieThree,DieTwo]
+
+rollsToGetTwenty :: StdGen -> Int
+rollsToGetTwenty g = go 0 0 g
+  where go :: Int -> Int -> StdGen -> Int
+        go sum count gen
+          | sum >= 100 = count
+          | otherwise =
+          let (die, nextGen) = randomR (1, 6) gen
+          in go (sum + die) (count + 1) nextGen
+
+-- We can also use randomIO, which uses IO to get a new value each
+-- time without needing to create a unique value for the StdGen:
+-- Prelude> :t randomIO
+-- randomIO :: Random a => IO a
+-- Prelude> (rollsToGetTwenty . mkStdGen) <$> randomIO
+-- 6
+-- Prelude> (rollsToGetTwenty . mkStdGen) <$> randomIO
+-- 7
