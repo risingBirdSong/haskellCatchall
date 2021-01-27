@@ -319,3 +319,5 @@ mapPair f (x:y:ls) = f x y : mapPair f ls
 
 mapTw f [] = []
 mapTw f xs = f (take 2 xs) : mapTw f (drop 2 xs)   
+
+-- 1460. Make Two Arrays Equal by Reversing Sub-arrays
