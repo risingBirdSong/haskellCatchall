@@ -317,3 +317,5 @@ mapPair _ [] = []
 mapPair _ [] = [] 
 mapPair f (x:y:ls) = f x y : mapPair f ls 
 
+mapTw f [] = []
+mapTw f xs = f (take 2 xs) : mapTw f (drop 2 xs)   
