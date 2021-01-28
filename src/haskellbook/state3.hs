@@ -80,3 +80,20 @@ exec (State sa) s = snd (sa s)
 -- "wilma"
 -- Prelude> exec get "scooby papu"
 -- "scooby papu"
+
+eval :: State s a -> s -> a
+eval (State sa) = fst . sa 
+
+-- Prelude> eval get "bunnicula"
+-- "bunnicula"
+-- Prelude> eval get "stake a bunny"
+-- "stake a bunny"
+
+modify :: (s -> s) -> State s ()
+modify f = State (\s -> ((), f s)) 
+
+-- Should behave like the following:
+-- Prelude> runState (modify (+1)) 0
+-- ((),1)
+-- Prelude> runState (modify (+1) >> modify (+1)) 0
+-- ((),2)
