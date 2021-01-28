@@ -62,3 +62,9 @@ get = State $ (,) <$> id <*> id
 
 get_  = (,) <$> id <*> id 
 geta  = (,) <$> id 
+
+put :: s -> State s ()
+-- put s = State $ (,) <$> mempty  <*> id
+put s = State $ \x -> ((), x)
+-- Prelude> runState (put "blah") "woot"
+-- ((),"blah")
