@@ -8,7 +8,10 @@ newtype State s a =
 
 instance Functor (State s) where 
   fmap :: (a-> b) -> State s a -> State s b
-  fmap f (State g) = State (\s -> (\(a,s') -> (f a , s')) $ g s ) 
+  -- fmap f (State g) = State (\s -> (\(a,s') -> (f a , s')) $ g s ) 
+  fmap f (State g) = State $ \s ->
+    let (a, s') = g s 
+    in (f a, s') 
 
 -- *Main> runState ((+1) <$> (State  $ \s -> (0,s))) 0
 -- (1,0)
@@ -18,6 +21,7 @@ instance Functor (State s) where
 -- -> State s b
 instance Applicative (State s) where 
   pure x = State (\s -> (x, s))
+  (<*>) :: State s (a -> b) -> State s a -> State s b
   (<*>) (State sab) (State sa) = State $ \s ->
     let (f, s') = sab s
         (a, s'') = sa s' 
@@ -34,6 +38,7 @@ ran = runState ((,,,) <$>  incState <*> incState <*> incState <*> incState) 0
   --   -> State s b
 instance Monad (State s) where
   return = pure
+  (>>=) :: State s a -> (a -> State s b) -> State s b
   (State f) >>= g = State $ \s ->
       let (a, s') = f s 
           ssb = g a 
@@ -44,7 +49,7 @@ instance Monad (State s) where
       --   State ssb = g a 
       --   (b, s'') = ssb s'
       -- in (b, s'') 
-      
+
 -- Yeah, I specifically chose a calculation that required Monad instead of Applicative, since the value of y is dependant on x, the result of incState. You need Monad for that.
 statemonadexample =  runState (do { x <- incState; y <- replicateM x incState; return (x, y) }) 5
 

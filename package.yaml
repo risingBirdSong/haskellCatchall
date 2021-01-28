@@ -42,6 +42,7 @@ dependencies:
 - semigroups
 - bytestring
 - text
+- mtl 
 
 library:
   source-dirs: src

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b0665ae92ac34454415622363a1a0a14139b58e2e7ab43a52d1db8d1750ed6f7
+-- hash: 296c2eb0760570b3ea000a01eae29fd084a765ad34e3537d6a5a0006ce72afd8
 
 name:           catchallHaskell
 version:        0.1.0.0
@@ -42,6 +42,7 @@ library
     , containers
     , hspec
     , matrix
+    , mtl
     , primes
     , process
     , random
@@ -73,6 +74,7 @@ executable catchallHaskell-exe
     , containers
     , hspec
     , matrix
+    , mtl
     , primes
     , process
     , random
@@ -105,6 +107,7 @@ test-suite catchallHaskell-test
     , containers
     , hspec
     , matrix
+    , mtl
     , primes
     , process
     , random
