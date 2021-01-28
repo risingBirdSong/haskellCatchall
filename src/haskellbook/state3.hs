@@ -56,3 +56,9 @@ statemonadexample =  runState (do { x <- incState; y <- replicateM x incState; r
 
 -- *Main> statemonadexample
 -- ((6,[7,8,9,10,11,12]),12)
+
+get :: State s s
+get = State $ (,) <$> id <*> id
+
+get_  = (,) <$> id <*> id 
+geta  = (,) <$> id 
