@@ -61,6 +61,9 @@ get :: State s s
 get = State $ (,) <$> id <*> id
 
 get_  = (,) <$> id <*> id 
+
+get_' :: State s s
+get_' = State $ \x -> (x,x)  
 geta  = (,) <$> id 
 
 put :: s -> State s ()
@@ -68,3 +71,12 @@ put :: s -> State s ()
 put s = State $ \x -> ((), s)
 -- Prelude> runState (put "blah") "woot"
 -- ((),"blah")
+
+
+exec :: State s a -> s -> s
+exec (State sa) s = snd (sa s)
+
+-- Prelude> exec (put "wilma") "daphne"
+-- "wilma"
+-- Prelude> exec get "scooby papu"
+-- "scooby papu"
