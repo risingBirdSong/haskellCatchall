@@ -44,7 +44,10 @@ instance Monad (State s) where
       --   State ssb = g a 
       --   (b, s'') = ssb s'
       -- in (b, s'') 
+      
+-- Yeah, I specifically chose a calculation that required Monad instead of Applicative, since the value of y is dependant on x, the result of incState. You need Monad for that.
 statemonadexample =  runState (do { x <- incState; y <- replicateM x incState; return (x, y) }) 5
+
 
 -- *Main> statemonadexample
 -- ((6,[7,8,9,10,11,12]),12)
