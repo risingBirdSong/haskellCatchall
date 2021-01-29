@@ -336,6 +336,7 @@ unq xs = length seti == length grouped
     where seti = S.fromList xs
           grouped = S.fromList $ map length $ group $ sort xs
 
+-- https://leetcode.com/problems/minimum-cost-to-move-chips-to-the-same-position/
 cost trg n 
   | abs (trg - n) == 1= 1
   | otherwise = 0 
