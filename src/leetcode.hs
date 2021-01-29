@@ -349,3 +349,17 @@ chips xs = sum $ map (cost trg) $ toMove
 -- chipanswer :: [Integer]
 chipanswer = chips [2,2,2,3,3]
 -- chipanswer = chips [[2,2,2],[3,3]]
+
+-- [3,5,1]
+
+arithT = [3,5,1]
+arithF = [1,2,4]
+
+second (x:y:_) = y
+
+-- https://leetcode.com/problems/can-make-arithmetic-progression-from-sequence/
+arth xs = compy == sort xs
+  where srtd = sort $ xs
+        strt = head srtd 
+        growth = head $ drop 1 $ srtd
+        compy = [strt , growth .. last srtd]
