@@ -363,3 +363,14 @@ arth xs = compy == sort xs
         strt = head srtd 
         growth = head $ drop 1 $ srtd
         compy = [strt , growth .. last srtd]
+
+play =  [4,3,10,9,8]
+
+minSub xs = taking [] $ desc  
+    where desc = reverse $ sort xs 
+          sm = sum $ xs
+
+-- https://leetcode.com/problems/minimum-subsequence-in-non-increasing-order/
+taking xs (r:rest) 
+  | sum (xs) <= sum (r:rest) = taking (r:xs) rest
+  | otherwise  = (xs,r:rest)
