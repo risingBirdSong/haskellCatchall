@@ -11,7 +11,6 @@ import Test.QuickCheck
 
 import Data.List.Split
 
-
 import Data.Ord
 
 a = [1,1]
@@ -326,3 +325,7 @@ pk xs = go xs (head xs) where
   go (x:xs) hi 
     | x > hi = 1 +  go xs x
     | otherwise  =  go xs hi
+
+pk' xs = snd . maximum . zip xs $ [0..]
+
+
