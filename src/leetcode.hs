@@ -320,4 +320,9 @@ mapPair f (x:y:ls) = f x y : mapPair f ls
 mapTw f [] = []
 mapTw f xs = f (take 2 xs) : mapTw f (drop 2 xs)   
 
--- 1460. Make Two Arrays Equal by Reversing Sub-arrays
+-- https://leetcode.com/problems/peak-index-in-a-mountain-array/
+pk xs = go xs (head xs) where
+  go [] _ = 0 
+  go (x:xs) hi 
+    | x > hi = 1 +  go xs x
+    | otherwise  =  go xs hi

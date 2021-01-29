@@ -97,3 +97,7 @@ modify f = State (\s -> ((), f s))
 -- ((),1)
 -- Prelude> runState (modify (+1) >> modify (+1)) 0
 -- ((),2)
+
+
+rev [] = []
+rev (x:xs) = rev xs ++ [x]
