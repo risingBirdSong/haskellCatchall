@@ -381,3 +381,8 @@ minSub' xs = go [] $ sort xs
           | sum (d:tk) < sum dp = go (d:tk) dp 
           | otherwise = d:dp
 
+
+
+minSub''' = fmap snd . (find <$> (. fst) . (<) . (`div` 2) . sum <*> (zip <$> scanl (+) 0 <*> inits)) . reverse . sort
+
+zippingSumInits = zip <$> scanl (+) 0 <*> inits $ [1,2,3,4]
