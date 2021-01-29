@@ -1,4 +1,5 @@
 import Debug.Trace
+import qualified Data.Set as S
 import Data.List
 import Data.Maybe
 import qualified Data.Set as S
@@ -8,7 +9,7 @@ import qualified Data.Map as M
 import Data.List.Split
 import  System.Random
 import Test.QuickCheck
-
+import Data.Function
 import Data.List.Split
 
 import Data.Ord
@@ -329,3 +330,21 @@ pk xs = go xs (head xs) where
 pk' xs = snd . maximum . zip xs $ [0..]
 
 
+-- https://leetcode.com/problems/unique-number-of-occurrences/
+-- length seti == length grouped
+unq xs = length seti == length grouped
+    where seti = S.fromList xs
+          grouped = S.fromList $ map length $ group $ sort xs
+
+cost trg n 
+  | abs (trg - n) == 1= 1
+  | otherwise = 0 
+
+chips xs = sum $ map (cost trg) $ toMove 
+    where trg = head $ maximumBy (compare `on` length) $ group xs
+          toMove = filter (/= trg) xs
+
+
+-- chipanswer :: [Integer]
+chipanswer = chips [2,2,2,3,3]
+-- chipanswer = chips [[2,2,2],[3,3]]
