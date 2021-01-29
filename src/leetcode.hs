@@ -374,3 +374,10 @@ minSub xs = taking [] $ desc
 taking xs (r:rest) 
   | sum (xs) <= sum (r:rest) = taking (r:xs) rest
   | otherwise  = (xs,r:rest)
+
+
+minSub' xs = go [] $ sort xs
+  where go tk (d:dp) 
+          | sum (d:tk) < sum dp = go (d:tk) dp 
+          | otherwise = d:dp
+
