@@ -389,10 +389,19 @@ zippingSumInits = zip <$> scanl (+) 0 <*> inits $ [1,2,3,4]
 
 -- https://leetcode.com/problems/maximum-units-on-a-truck/
 
+toTuple [a,b] = (a,b)
+
 truck xs n = sum $ go clean n
-  where clean = reverse . sortBy (compare `on` last) $ xs
+  where clean = sortBy ( flip  compare `on` last) xs
         go [] n = []
         go ([b,u]:bxs) n 
           | n <= 0 = []
           | otherwise  = u * min b n : go bxs (n-b)
 
+truck' xs n = sum 
+             . take n 
+             . concatMap (uncurry replicate) 
+             . sortOn (Down . snd)
+             . map toTuple $ xs  
+
+inp = [[5,10],[2,5],[4,7],[3,9]]
