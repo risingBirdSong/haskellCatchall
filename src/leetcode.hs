@@ -10,6 +10,7 @@ import Data.List.Split
 import  System.Random
 import Test.QuickCheck
 import Data.Function
+import Data.Bool
 import Data.List.Split
 
 import Data.Ord
@@ -405,3 +406,29 @@ truck' xs n = sum
              . map toTuple $ xs  
 
 inp = [[5,10],[2,5],[4,7],[3,9]]
+
+
+shrts xs c = 
+    let zipd =  zip [0..] xs
+        targets = filter (\(idx,ltr) -> ltr == c) zipd
+          -- cands == candidates ... cur == current ... dst == distance
+        minDist cands cur = minimum $ map (\(dst, lt) -> abs (dst - cur)) cands
+    in map (minDist targets) $ map fst zipd  
+
+-- morrows cool answer
+shrts' xs c = zipWith min (tail $ go (scanl' . flip)) (init $ go scanr)
+  where
+    go dir = dir (bool (+1) (const 0) . (==c)) (maxBound - length xs) xs
+
+
+minDistLtr cands cur = minimum $ map (\(dst, lt) -> abs (dst - cur)) cands
+
+ees = [(3,'e'),(5,'e'),(6,'e'),(11,'e')]
+
+
+ff (b, u) (n, _) = let s = max 1 (min n b) in (n - s, u * s)
+trucking n = sum . map snd . takeWhile ((>= 0) . fst) . scanl ff (n, 0) . sortBy (comparing $ Down . snd)
+
+truckinp = [(1,3),(2,2),(3,1)]
+truckingA cargo limit =  scanl ff (limit, 0) . sortBy (comparing $ Down . snd) $ map toTuple cargo
+
