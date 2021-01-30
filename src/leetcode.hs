@@ -386,3 +386,13 @@ minSub' xs = go [] $ sort xs
 minSub''' = fmap snd . (find <$> (. fst) . (<) . (`div` 2) . sum <*> (zip <$> scanl (+) 0 <*> inits)) . reverse . sort
 
 zippingSumInits = zip <$> scanl (+) 0 <*> inits $ [1,2,3,4]
+
+-- https://leetcode.com/problems/maximum-units-on-a-truck/
+
+truck xs n = sum $ go clean n
+  where clean = reverse . sortBy (compare `on` last) $ xs
+        go [] n = []
+        go ([b,u]:bxs) n 
+          | n <= 0 = []
+          | otherwise  = u * min b n : go bxs (n-b)
+
