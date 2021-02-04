@@ -435,6 +435,7 @@ truckingA cargo limit =  scanl ff (limit, 0) . sortBy (comparing $ Down . snd) $
 
 
 palitest = "hellosannasxyz"
-lngstPaliSuba xs = sortOn length . groupBy ((==) `on` fst) . sort $ zip xs [0..]
+-- lngstPaliSuba :: (Ord a, Ord b, Num b, Enum b) => [a] -> [[(a, b)]]
+lngstPaliSuba xs = sortOn (Down . length) . groupBy ((==) `on` fst) . sort $ zip xs [0..]
 lngstPaliSubb xs = sortBy (comparing length) . groupBy ((==) `on` fst) . sort $ zip xs [0..]
 -- lngstPaliSuba xs = groupBy (\(v,i) -> (==(v))  ) . sort $ zip xs [0..]
