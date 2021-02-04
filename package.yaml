@@ -45,6 +45,7 @@ dependencies:
 - mtl 
 - transformers
 - trifecta
+- universe-base
 
 library:
   source-dirs: src

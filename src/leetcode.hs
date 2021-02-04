@@ -12,6 +12,7 @@ import Test.QuickCheck
 import Data.Function
 import Data.Bool
 import Data.List.Split
+import Data.Universe.Helpers
 
 import Data.Ord
 
@@ -509,6 +510,11 @@ safeHead (x:_) = Just x
 safeHead  [] = Nothing 
 
 -- 766. Toeplitz Matrix
+mymatrix = [[1,2,3,4],[5,1,2,3],[9,5,1,2]]
+toepM xxs = allEqual $ map allEqual $ diagonals $ reverse xxs
+
+allEqual [] = True 
+allEqual (x:xs) = all (==x) xs
 
 -- sampersand made a nice implementation for the island perimeter problem in Ruby 
 -- require 'set'

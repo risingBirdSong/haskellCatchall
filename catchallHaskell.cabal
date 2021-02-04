@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e1790a6b39fbba043e7837ec5fbb5a3a16874c2726ed5e5e21c82b5b956d6798
+-- hash: 7ded36292c8b3671c48f9d525b849020c2e88f2001859e3265aabe6c3fec32b5
 
 name:           catchallHaskell
 version:        0.1.0.0
@@ -54,6 +54,7 @@ library
     , time
     , transformers
     , trifecta
+    , universe-base
     , universum
     , utility-ht
     , vector
@@ -88,6 +89,7 @@ executable catchallHaskell-exe
     , time
     , transformers
     , trifecta
+    , universe-base
     , universum
     , utility-ht
     , vector
@@ -123,6 +125,7 @@ test-suite catchallHaskell-test
     , time
     , transformers
     , trifecta
+    , universe-base
     , universum
     , utility-ht
     , vector
