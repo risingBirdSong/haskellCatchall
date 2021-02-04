@@ -473,3 +473,29 @@ shortD xs trg = map (shortDHelper (trgtDistances xs trg)) $ zipWith const [0..] 
 
 -- *Main> shrtD "loveleetcode" 'e'
 -- [(3,'e'),(5,'e'),(6,'e'),(11,'e')]
+
+-- 509. Fibonacci Number
+
+-- naive implementation
+fby 1 = 1 
+fby 0 = 1
+fby n = fby (n-1) + fby (n-2)
+
+fibsn = 0 : 1 : zipWith (+) fibsn (tail fibsn)
+
+
+-- 1200. Minimum Absolute Difference
+
+mad xs = minimum $ go srtd
+  where go [x] = []
+        go (x:y:rest)= (y-x) : go (y:rest) 
+        srtd = sort xs
+         
+
+madSolver xs minn = go $ sort xs
+  where go [x] = []
+        go (x:y:ls) 
+          | (y-x) == minn = [x,y] : go (y:ls) 
+          | otherwise  = go (y:ls)
+        
+madSolv xs = madSolver xs (mad xs)
