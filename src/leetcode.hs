@@ -499,3 +499,10 @@ madSolver xs minn = go $ sort xs
           | otherwise  = go (y:ls)
         
 madSolv xs = madSolver xs (mad xs)
+
+
+-- 136. Single Number
+sngleN xs = safeHead . concat . filter ((==1).length) $ group $ sort xs
+
+safeHead (x:_) = Just x 
+safeHead  [] = Nothing 
