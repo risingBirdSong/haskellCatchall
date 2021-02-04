@@ -546,4 +546,9 @@ stayPos xs
   | otherwise = 1 + abs minnie 
   where minnie =  minimum $ scanl (+) 0 xs
 
-
+-- 806. Number of Lines To Write String
+nlws xs 
+  | length xs `rem` 10 == 0 = dvmd
+  | otherwise = go dvmd
+  where dvmd = length xs `divMod` 10
+        go (y,x) = (y+1,x)
