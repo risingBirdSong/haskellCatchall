@@ -436,6 +436,30 @@ truckingA cargo limit =  scanl ff (limit, 0) . sortBy (comparing $ Down . snd) $
 
 palitest = "hellosannasxyz"
 -- lngstPaliSuba :: (Ord a, Ord b, Num b, Enum b) => [a] -> [[(a, b)]]
-lngstPaliSuba xs = sortOn (Down . length) . groupBy ((==) `on` fst) . sort $ zip xs [0..]
+lngstPaliSuba xs = sortOn snd $ concat . takeWhile ((>=2).length) . sortOn (Down . length) . groupBy ((==) `on` fst) . sort $ zip xs [0..]
 lngstPaliSubb xs = sortBy (comparing length) . groupBy ((==) `on` fst) . sort $ zip xs [0..]
 -- lngstPaliSuba xs = groupBy (\(v,i) -> (==(v))  ) . sort $ zip xs [0..]
+
+-- consecutives a b 
+--   | (a+1) == b = True 
+--   | otherwise = False  
+
+groupNum ns = groupBy (\a -> \b -> (a + 1) == b ) ns 
+
+groupedNumsInput = [1,2,3,5,6,7,9,10,11]
+groupedNumsOutput = [[1,2,3],[5,6,7],[9,10,11]]
+
+fff=maximum.map length.group.zipWith(-)[1..]
+
+-- https://gitlab.haskell.org/ghc/ghc/-/issues/1408
+
+groupConsecutive :: (Ord a, Num a) => [a] -> [[a]]
+groupConsecutive = foldr group []
+    where 
+		group x [] = [[x]]
+		group x acc@((h:t):rest)
+			| h - x <= 1 = (x:h:t):rest
+			| otherwise = [x]:acc
+
+main :: IO()
+main = print $ groupConsecutive [1, 2, 4, 5, 6, 9 :: Int]
