@@ -407,6 +407,7 @@ truck' xs n = sum
 
 inp = [[5,10],[2,5],[4,7],[3,9]]
 
+-- https://leetcode.com/problems/shortest-distance-to-a-character/
 
 shrts xs c = 
     let zipd =  zip [0..] xs
@@ -432,3 +433,8 @@ trucking n = sum . map snd . takeWhile ((>= 0) . fst) . scanl ff (n, 0) . sortBy
 truckinp = [(1,3),(2,2),(3,1)]
 truckingA cargo limit =  scanl ff (limit, 0) . sortBy (comparing $ Down . snd) $ map toTuple cargo
 
+
+palitest = "hellosannasxyz"
+lngstPaliSuba xs = sortOn length . groupBy ((==) `on` fst) . sort $ zip xs [0..]
+lngstPaliSubb xs = sortBy (comparing length) . groupBy ((==) `on` fst) . sort $ zip xs [0..]
+-- lngstPaliSuba xs = groupBy (\(v,i) -> (==(v))  ) . sort $ zip xs [0..]
