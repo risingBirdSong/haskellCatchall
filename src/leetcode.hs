@@ -558,3 +558,13 @@ toBin 0 = [0]
 toBin n = reverse (helper n)
 helper 0 = []
 helper n = let (q,r) = n `divMod` 2 in r : helper q
+
+
+-- 476. Number Complement
+numComp n =  map binFlip binn 
+  where binn = toBin n 
+
+binFlip n 
+  | n == 1 = 0
+  | n == 0 = 1
+  | otherwise = error "only works with binary nums"
