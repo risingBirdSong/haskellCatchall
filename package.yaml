@@ -46,6 +46,7 @@ dependencies:
 - transformers
 - trifecta
 - universe-base
+- probability
 
 library:
   source-dirs: src

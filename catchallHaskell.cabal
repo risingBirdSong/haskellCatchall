@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7ded36292c8b3671c48f9d525b849020c2e88f2001859e3265aabe6c3fec32b5
+-- hash: 2c31b5b85fe778726dff66d62091f631b9a68b3c63370c4620e7e590b21d3c73
 
 name:           catchallHaskell
 version:        0.1.0.0
@@ -44,6 +44,7 @@ library
     , matrix
     , mtl
     , primes
+    , probability
     , process
     , random
     , random-shuffle
@@ -79,6 +80,7 @@ executable catchallHaskell-exe
     , matrix
     , mtl
     , primes
+    , probability
     , process
     , random
     , random-shuffle
@@ -115,6 +117,7 @@ test-suite catchallHaskell-test
     , matrix
     , mtl
     , primes
+    , probability
     , process
     , random
     , random-shuffle

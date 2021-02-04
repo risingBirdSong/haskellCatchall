@@ -7,12 +7,14 @@ import Data.Char
 import Control.Monad
 import qualified Data.Map as M
 import Data.List.Split
+import Data.Ratio
 import  System.Random
 import Test.QuickCheck
 import Data.Function
 import Data.Bool
 import Data.List.Split
 import Data.Universe.Helpers
+import Numeric.Probability.Percentage
 
 import Data.Ord
 
@@ -568,3 +570,13 @@ binFlip n
   | n == 1 = 0
   | n == 0 = 1
   | otherwise = error "only works with binary nums"
+
+
+-- 1619. Mean of Array After Removing Some Elements
+maarse xs = (thesum, thelength, thesum / thelength)
+    where fve = floor $ realToFrac (length (xs)) * 0.05
+          rmvd = drop fve $ reverse $ drop fve $ sort xs
+          thesum = realToFrac $ sum rmvd 
+          thelength = realToFrac $ length rmvd
+
+dropper xs = drop 1 $ reverse $ drop 1 xs
