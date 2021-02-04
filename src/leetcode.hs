@@ -534,3 +534,16 @@ allEqual (x:xs) = all (==x) xs
 
 
 -- puts doit [[0,1,0,0],[1,1,1,0],[0,1,0,0],[1,1,0,0]]
+
+
+stayPositiveTest = [-3,2,-3,4,2]
+
+-- 1413. Minimum Value to Get Positive Step by Step Sum
+-- https://leetcode.com/problems/minimum-value-to-get-positive-step-by-step-sum/
+
+stayPos xs 
+  | minnie > 0 = 1
+  | otherwise = 1 + abs minnie 
+  where minnie =  minimum $ scanl (+) 0 xs
+
+
