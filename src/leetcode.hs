@@ -463,3 +463,13 @@ groupConsecutive = foldr group []
 
 main :: IO()
 main = print $ groupConsecutive [1, 2, 4, 5, 6, 9 :: Int]
+
+
+trgtDistances xs trg = map fst . filter (\(idx, str) -> str == trg) $ zip [0..] xs
+shortDHelper xs trg = minimum $ map (\x -> abs (trg - x)) xs
+
+shortD xs trg = map (shortDHelper (trgtDistances xs trg)) $ zipWith const [0..] xs
+
+
+-- *Main> shrtD "loveleetcode" 'e'
+-- [(3,'e'),(5,'e'),(6,'e'),(11,'e')]
