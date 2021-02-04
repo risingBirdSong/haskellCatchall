@@ -552,3 +552,9 @@ nlws xs
   | otherwise = go dvmd
   where dvmd = length xs `divMod` 10
         go (y,x) = (y+1,x)
+
+
+toBin 0 = [0]
+toBin n = reverse (helper n)
+helper 0 = []
+helper n = let (q,r) = n `divMod` 2 in r : helper q
