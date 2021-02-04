@@ -501,8 +501,30 @@ madSolver xs minn = go $ sort xs
 madSolv xs = madSolver xs (mad xs)
 
 
+-- https://leetcode.com/problems/single-number/
 -- 136. Single Number
 sngleN xs = safeHead . concat . filter ((==1).length) $ group $ sort xs
 
 safeHead (x:_) = Just x 
 safeHead  [] = Nothing 
+
+-- 766. Toeplitz Matrix
+
+-- sampersand made a nice implementation for the island perimeter problem in Ruby 
+-- require 'set'
+-- def doit(grid)
+--     land = Set.new
+
+--     grid.each_with_index do |eles, row|
+--         eles.each_with_index do |ele, col|
+--             land.add(row + 1i*col) unless ele.zero?
+--         end
+--     end
+
+--     land
+--         .map { |z| 4 - [z+1, z-1, z+1i, z-1i].count { |x| land.include? x } }
+--         .sum
+-- end
+
+
+-- puts doit [[0,1,0,0],[1,1,1,0],[0,1,0,0],[1,1,0,0]]
