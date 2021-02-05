@@ -599,3 +599,12 @@ ita' xs ys = filter keepJusts $ map (includes (nub ys)) (nub xs)
 keepJusts Nothing = False  
 keepJusts (Just x) = True 
 
+
+-- 1455. Check If a Word Occurs As a Prefix of Any Word in a Sentence
+
+cwop ws srch 
+  | null candids = -1
+  | otherwise  = fst $ head candids
+     where candids = filter (\(i,w) -> prefix srch w) $ zip [1..] $ words ws
+
+prefix qry wrd = qry == take (length qry) wrd
