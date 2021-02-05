@@ -648,3 +648,11 @@ dpzs xs = take (length xs) $ go xs
   where go [] = []
         go (0:xs) = 0 : 0 : go xs
         go (x:xs) = x : go xs
+
+
+-- 485. Max Consecutive Ones
+
+mco ns = sum . maximum . sort $ group ns
+
+-- *Main> mco [1,1,1,1,0,1,1,1,0,1,1,1,1,1,1]
+-- [[0],[0],[1,1,1],[1,1,1,1],[1,1,1,1,1,1]]
