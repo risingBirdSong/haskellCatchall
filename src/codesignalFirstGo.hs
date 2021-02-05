@@ -2,6 +2,7 @@
 -- {-# LANGUAGE FlexibleContexts #-}
 
 import Data.List
+import Data.Maybe
 -- import Data.Ord
 
 firstDuplicateNestedlambdas xs = groupBy (\(x, v1) -> \(y,v2) -> x == y ) . sort $ zip xs [0..]  
@@ -34,3 +35,15 @@ getTupleInn (((x,i) : _ ) : _ ) = x
 
 -- *Main> solverPattern [[(1,2),(3,4)],[(4,5),(6,7)]]
 -- [(1,2),(3,4)]
+
+
+
+
+
+
+firstNotRepeatingCharacter strs = head $ fromMaybe "_"  first
+   where options = filter ((==1).length) . group $ sort strs 
+         first = find (`elem` options) options
+
+-- "abbbbcddffghhhhhiiijjkkkklnnnoopppqqrrsssttuvvxxxxyy"
+-- "ngrhhqbhnsipkcoqjyviikvxbxyphsnjpdxkhtadltsuxbfbrkof"
