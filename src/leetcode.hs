@@ -639,3 +639,12 @@ msaakn xs c = sum $ go xs c
         go xs n = go (ngtSmallest $ sort xs) (n-1)
 
 ngtSmallest (x:xs) = (negate x) : xs  
+
+-- 1089. Duplicate Zeros
+
+ddppzzss = [1,0,2,3,0,4,5,0]
+
+dpzs xs = take (length xs) $ go xs 
+  where go [] = []
+        go (0:xs) = 0 : 0 : go xs
+        go (x:xs) = x : go xs
