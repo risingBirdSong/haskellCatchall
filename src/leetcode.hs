@@ -621,3 +621,6 @@ uncommons as bs = concat
                 . group 
                 . sort 
                 $ words (as ++ " " ++ bs)
+
+--  Sort Array by Increasing Frequency
+saif xs = concat $ sortOn length . sortOn Down . group $ sort xs
