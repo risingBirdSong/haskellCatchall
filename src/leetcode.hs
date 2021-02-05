@@ -614,3 +614,10 @@ crawler ins = max 0 $ sum $ map logic ins
     where logic "../" = (-1)
           logic "./" = (0)  
           logic _ = 1
+
+-- 884. Uncommon Words from Two Sentences
+uncommons as bs = concat 
+                . filter ((==1) . length) 
+                . group 
+                . sort 
+                $ words (as ++ " " ++ bs)
