@@ -3,6 +3,8 @@
 
 import Data.List
 import Data.Maybe
+import qualified Data.Set as S
+
 -- import Data.Ord
 
 firstDuplicateNestedlambdas xs = groupBy (\(x, v1) -> \(y,v2) -> x == y ) . sort $ zip xs [0..]  
@@ -41,9 +43,37 @@ getTupleInn (((x,i) : _ ) : _ ) = x
 
 
 
-firstNotRepeatingCharacter strs = head $ fromMaybe "_"  first
-   where options = filter ((==1).length) . group $ sort strs 
-         first = find (`elem` options) options
+firstNotRepeatingCharacter strs = finder strs options
+   where options = concat $ filter ((==1).length) . group $ sort strs 
+         finder [] cands = '_'
+         finder (x:xs) cands 
+              | x `elem` cands = x 
+              | otherwise = finder xs cands 
+
+
+firstNotRepeatingCharacter' :: String -> Char
+firstNotRepeatingCharacter' [] = '_'
+firstNotRepeatingCharacter' (x:xs) | x `elem` xs = firstNotRepeatingCharacter (filter (/=x) xs)
+                                  | otherwise = x 
+
+firstNotRepeatingCharacter'' s = go s s
+    where go _ [] = '_'
+          go s (x:xs)
+                  | length (filter (==x) s) == 1 = x
+                  | otherwise = go newLs newXs        
+              where newLs = filter (/= x) s
+                    newXs = filter (/= x) xs
+
+
+firstNotRepeatingCharacter''' = go S.empty
+    where go _ [] = '_'
+          go repeats (x:xs) = 
+            if (S.member x repeats) || (elem x xs)
+                then go (S.insert x repeats) xs
+                else x
+
+
+options strs = concat $ filter ((==1).length) . group $ sort strs 
 
 -- "abbbbcddffghhhhhiiijjkkkklnnnoopppqqrrsssttuvvxxxxyy"
 -- "ngrhhqbhnsipkcoqjyviikvxbxyphsnjpdxkhtadltsuxbfbrkof"
