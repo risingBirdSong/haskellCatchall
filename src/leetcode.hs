@@ -608,3 +608,9 @@ cwop ws srch
      where candids = filter (\(i,w) -> prefix srch w) $ zip [1..] $ words ws
 
 prefix qry wrd = qry == take (length qry) wrd
+
+-- 1598. Crawler Log Folder
+crawler ins = max 0 $ sum $ map logic ins
+    where logic "../" = (-1)
+          logic "./" = (0)  
+          logic _ = 1
