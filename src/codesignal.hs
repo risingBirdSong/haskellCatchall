@@ -7,15 +7,30 @@ import Data.List
 firstDuplicateNestedlambdas xs = groupBy (\(x, v1) -> \(y,v2) -> x == y ) . sort $ zip xs [0..]  
 firstDuplicateCollapsed xs = groupBy (\(x, v1) (y,v2) -> x == y ) . sort $ zip xs [0..]  
 
-firstDuplicate xs = solve $ go 
-  where go =  sortBy (\x y -> compare (snd $ last x) (snd $ last y)) . filter ((>1).length) . groupBy (\(x, v1) (y,v2) -> x == y ) . sort $ zip xs [0..]  
+firstDuplicate xs = solve go 
+  where go =  sortBy (\x y -> compare (snd $ grabSecond x) (snd $ grabSecond y)) . filter ((>1).length) . groupBy (\(x, v1) (y,v2) -> x == y ) . sort $ zip xs [0..]  
         solve [] = -1
-        solve ([(x,i), _] : _) = x
+        -- solve ([(x,i), _] : _) = x
+        solve (((x,i) : _ ) : _ ) = x
+        grabSecond (x:y:zs) = y
 
-firstDInnerLogic xs =   sortBy (\x y -> compare (snd $ last x) (snd $ last y)) . filter ((>1).length) . groupBy (\(x, v1) (y,v2) -> x == y ) . sort $ zip xs [0..]
+
+firstDInnerLogic xs = sortBy (\x y -> compare (snd $ grabSecond x) (snd $ grabSecond y)) . filter ((>1).length) . groupBy (\(x, v1) (y,v2) -> x == y ) . sort $ zip xs [0..]
+
+grabSecond (x:y:zs) = y
+
 
 
 tupleMatching [(x,y)] = "oneTuple"
 tupleMatching [(x,y),(xx,yy)] = "twoTuple"
+-- tupleMatching [(x,y),(xx,yy), _] = "moreThanTwoTuples"
 tupleMatching _ = "moreThanTwoTuples"
 
+ex = [2, 1, 3, 5, 3, 2]
+solverPattern (x:xs) = x 
+
+-- getFirstFromTuples (([(x,i) : _]) : _) = x
+getTupleInn (((x,i) : _ ) : _ ) = x
+
+-- *Main> solverPattern [[(1,2),(3,4)],[(4,5),(6,7)]]
+-- [(1,2),(3,4)]
