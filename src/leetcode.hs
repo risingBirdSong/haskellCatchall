@@ -579,4 +579,23 @@ maarse xs = (thesum, thelength, thesum / thelength)
           thesum = realToFrac $ sum rmvd 
           thelength = realToFrac $ length rmvd
 
-dropper xs = drop 1 $ reverse $ drop 1 xs
+
+-- 349. Intersection of Two Arrays
+-- solve just by using Set data structure
+ita as bs = S.intersection (S.fromList as) (S.fromList bs)
+
+-- 349. Intersection of Two Arrays
+-- try again without using interesection
+
+-- ita' xs ys = 
+--   where go _ [] = []
+--         go Nothing 
+
+includes ys x = find ((==)x) ys 
+
+ita' xs ys = filter keepJusts $ map (includes (nub ys)) (nub xs)
+
+-- keepJusts = []
+keepJusts Nothing = False  
+keepJusts (Just x) = True 
+
