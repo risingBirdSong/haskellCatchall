@@ -14,7 +14,7 @@ import Data.Function
 import Data.Bool
 import Data.List.Split
 import Data.Universe.Helpers
-import Numeric.Probability.Percentage
+-- import Numeric.Probability.Percentage
 
 import Data.Ord
 
@@ -624,3 +624,18 @@ uncommons as bs = concat
 
 --  Sort Array by Increasing Frequency
 saif xs = concat $ sortOn length . sortOn Down . group $ sort xs
+
+-- 383. Ransom Note
+
+rnsnt source candidate = all (`elem` s_cand) s_src
+    where s_src = group $ sort source 
+          s_cand = group $ sort candidate 
+
+
+-- 1005. Maximize Sum Of Array After K Negations
+msaakn xs c = sum $ go xs c 
+  where go [] _ = [] 
+        go xs 0 = xs 
+        go xs n = go (ngtSmallest $ sort xs) (n-1)
+
+ngtSmallest (x:xs) = (negate x) : xs  
