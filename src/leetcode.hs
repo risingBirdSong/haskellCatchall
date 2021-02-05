@@ -654,5 +654,31 @@ dpzs xs = take (length xs) $ go xs
 
 mco ns = sum . maximum . sort $ group ns
 
+hola ns = sort $ group ns
+
 -- *Main> mco [1,1,1,1,0,1,1,1,0,1,1,1,1,1,1]
 -- [[0],[0],[1,1,1],[1,1,1,1],[1,1,1,1,1,1]]
+
+-- 409. Longest Palindrome
+
+ploss = "abccccddeee"
+mkLnPl str = group $ sort str
+preppped :: [[Char]]
+preppped = mkLnPl ploss
+
+aCenter srtd = fromMaybe "" $ find ((==1).length) srtd
+therest srtd = dropWhile ((==1).length) srtd 
+
+evnOddHndler xs 
+  | even $ length xs = xs
+  | otherwise = drop 1 xs 
+
+paliSolver xs = (stitch rest) ++ first ++ (reverse $ stitch rest)
+    where first = aCenter prepped
+          rest = therest preppped 
+          prepped = group $ sort xs   
+          stitch xss = concat $ map (\x -> take (length x `div` 2) x) xss
+
+ 
+  
+
