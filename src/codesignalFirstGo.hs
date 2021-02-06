@@ -4,6 +4,9 @@
 import Data.List
 import Data.Maybe
 import qualified Data.Set as S
+import qualified Data.Matrix as Mtx
+import qualified Data.Map as M 
+
 
 -- import Data.Ord
 
@@ -50,7 +53,6 @@ firstNotRepeatingCharacter strs = finder strs options
               | x `elem` cands = x 
               | otherwise = finder xs cands 
 
-
 firstNotRepeatingCharacter' :: String -> Char
 firstNotRepeatingCharacter' [] = '_'
 firstNotRepeatingCharacter' (x:xs) | x `elem` xs = firstNotRepeatingCharacter (filter (/=x) xs)
@@ -77,3 +79,19 @@ options strs = concat $ filter ((==1).length) . group $ sort strs
 
 -- "abbbbcddffghhhhhiiijjkkkklnnnoopppqqrrsssttuvvxxxxyy"
 -- "ngrhhqbhnsipkcoqjyviikvxbxyphsnjpdxkhtadltsuxbfbrkof"
+
+-- an idea from melissa regaring the baf
+-- fnrc xs = let bag = Map.fromListWith (+) . zip xs $ repeat 1 in find ((== 1) . (bag !)) xs
+
+
+
+counting val cur = if val == cur then (Just (+1)) else Nothing 
+
+  -- where myMap = M.fromList []
+        -- go [] count = count 
+        -- go (x:xs) count = M.updateWithKey (counting x) count 
+
+countElems xs = M.fromListWith (+) $ zip xs (repeat 1)
+
+countA xs = M.fromListWith (+) $ map (\x -> (x,1)) xs
+countB zs = map (\xs -> (head xs, length xs)) . group . sort $ zs 

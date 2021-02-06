@@ -31,3 +31,4 @@ firstNotRepeatingCharacter str = go
 fnrcLogic str = concat . filter ((==1).length)
           . groupBy (\(x,_)(y,_) -> x == y) 
           $ sort $ zip str [0..]
+
