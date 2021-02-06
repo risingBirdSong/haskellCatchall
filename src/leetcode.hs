@@ -693,3 +693,9 @@ pascalsTriangle = solver [0,1,0]
        single xs = 0 : go xs ++ [0]
        solver xs = xs : solver (single xs) 
 
+pascalsTriangle' = solver [0,1,0]
+ where go [x] = []
+       go xs = sum (take 2 xs) : go (drop 1 xs)
+       single xs = 0 : go xs ++ [0]
+       solver xs = xs : solver (single xs) 
+
