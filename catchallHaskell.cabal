@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 2c31b5b85fe778726dff66d62091f631b9a68b3c63370c4620e7e590b21d3c73
+-- hash: 2791f978c006298d87935bc07d2cafec2b040d9dd630d6f43bf4402a017d33b1
 
 name:           catchallHaskell
 version:        0.1.0.0
@@ -40,6 +40,7 @@ library
     , bytestring
     , checkers
     , containers
+    , criterion
     , hspec
     , matrix
     , mtl
@@ -76,6 +77,7 @@ executable catchallHaskell-exe
     , catchallHaskell
     , checkers
     , containers
+    , criterion
     , hspec
     , matrix
     , mtl
@@ -113,6 +115,7 @@ test-suite catchallHaskell-test
     , catchallHaskell
     , checkers
     , containers
+    , criterion
     , hspec
     , matrix
     , mtl

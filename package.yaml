@@ -47,6 +47,7 @@ dependencies:
 - trifecta
 - universe-base
 - probability
+- criterion
 
 library:
   source-dirs: src
