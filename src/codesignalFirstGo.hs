@@ -95,3 +95,6 @@ countElems xs = M.fromListWith (+) $ zip xs (repeat 1)
 
 countA xs = M.fromListWith (+) $ map (\x -> (x,1)) xs
 countB zs = map (\xs -> (head xs, length xs)) . group . sort $ zs 
+
+frstNonRepeat xs = fromMaybe '_' $ find (`elem`singles) xs
+  where singles = map fst . filter ((==1).snd) $ countB xs
