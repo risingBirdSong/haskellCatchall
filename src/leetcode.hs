@@ -688,14 +688,26 @@ ptD = [0,1,3,3,1,0]
 ptE = [0,1,4,6,4,1,0]
 
 pascalsTriangle = solver [0,1,0]
- where go (x:y:xs) = x + y : go (y:xs)
-       go [x] = []
+ where go [x] = [] 
+       go (x:y:xs) = x + y : go (y:xs)
        single xs = 0 : go xs ++ [0]
        solver xs = xs : solver (single xs) 
 
+-- pascalsTriangle' :: [[Integer]]
 pascalsTriangle' = solver [0,1,0]
  where go [x] = []
        go xs = sum (take 2 xs) : go (drop 1 xs)
        single xs = 0 : go xs ++ [0]
        solver xs = xs : solver (single xs) 
 
+
+pascalsTriangle'' = zip (single [0,1,0]) 
+  where go [x] = []
+        go xs = sum (take 2 xs) : go (drop 1 xs)
+        single xs = 0 : go xs ++ [0]
+
+-- simplePatternMatch (a:b:c:d:rest) = (a,b,c,d)
+
+
+singlePscl xs = zipWith (+) (0:xs) (xs++[0])
+manyPscls n = take n $ iterate  singlePscl [1] 
