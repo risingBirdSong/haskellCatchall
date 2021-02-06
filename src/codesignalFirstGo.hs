@@ -6,6 +6,8 @@ import Data.Maybe
 import qualified Data.Set as S
 import qualified Data.Matrix as Mtx
 import qualified Data.Map as M 
+import Control.Arrow
+
 
 
 -- import Data.Ord
@@ -98,3 +100,11 @@ countB zs = map (\xs -> (head xs, length xs)) . group . sort $ zs
 
 frstNonRepeat xs = fromMaybe '_' $ find (`elem`singles) xs
   where singles = map fst . filter ((==1).snd) $ countB xs
+        countB zs = map (\xs -> (head xs, length xs)) . group . sort $ zs 
+
+
+exM = [[1, 2, 3],
+     [4, 5, 6],
+     [7, 8, 9]]
+
+cw = map reverse . transpose

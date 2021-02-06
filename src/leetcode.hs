@@ -679,6 +679,17 @@ paliSolver xs = (stitch rest) ++ first ++ (reverse $ stitch rest)
           prepped = group $ sort xs   
           stitch xss = concat $ map (\x -> take (length x `div` 2) x) xss
 
- 
-  
+
+-- Pascal's Triangle
+ptA = [0,1,0]
+ptB = [0,1,1,0]
+ptC = [0,1,2,1,0]
+ptD = [0,1,3,3,1,0]
+ptE = [0,1,4,6,4,1,0]
+
+pascalsTriangle = solver [0,1,0]
+ where go (x:y:xs) = x + y : go (y:xs)
+       go [x] = []
+       single xs = 0 : go xs ++ [0]
+       solver xs = xs : solver (single xs) 
 
