@@ -793,3 +793,25 @@ assignCky grd cks = length $ go (sort grd) (sort cks)
             | otherwise = go grd (sz ++ [1])
 
 
+-- 599. Minimum Index Sum of Two Lists
+
+rst1 = ["Tapioca Express","Shogun","Burger King","KFC"]
+rst2 = ["Piatti", "The Grill at Torrey Pines","Hungry Hunter Steakhouse","Shogun"]
+
+              -- nub
+              -- . map snd
+              -- . sort . concat 
+
+mistl as bs = solve
+      where logic = sort
+              . map summarize
+              . filter ((==2).length) 
+              . groupBy ((==)`on`snd)
+              $ sortOn snd (((++) `on` zip [0..]) as bs)
+            summarize ls = foldr (\(i, str) (acci, accstr) -> (i + acci, str)) (0,"") ls
+            solve = map snd $ takeWhile (\(sumI, str) -> (fst $ head logic) == sumI) logic
+
+
+-- 599. Minimum Index Sum of Two Lists
+
+-- mistl' as bs = 
