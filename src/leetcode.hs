@@ -745,6 +745,8 @@ intrSct2' (a:as) bs
 maybeToBool (Just x) = True 
 maybeToBool Nothing  = False  
 
+
+
 myFind f (x:xs) 
   | f x = Just x 
   | otherwise = myFind f xs  
@@ -755,5 +757,39 @@ myElem f g (x:xs)
   | otherwise = myElem f g xs
 
 
+
+
+testingMap =  M.intersectionWith max (M.fromList [(5, 2), (3, 3)]) (M.fromList [(5, 1), (7, 4)])
+
+intersct2'' as bs = concatMap tplRpt $ M.toList $ M.intersectionWith min mapA mapB
+  where mapA = countMap as 
+        mapB = countMap bs  
+        tplRpt (v,cnt) = replicate cnt v
+        countMap vs = M.fromListWith (+) $ zip vs (repeat 1)
+
+
+
+-- stock xs =
+--   where minIdxVal = minimumBy (\(i,v) (ii,vv) -> compare v vv ) $ zip [0..] xs 
+--         findMax (minIdx, minValue) = dropWhile 
+
+
+-- 455. Assign Cookies
+
+-- Input: greed = [1,2,3], size = [1,1]
+-- output  1
+
+children1 =[1,2,3]
+cookies1 = [1,1]
+
+children2 = [1,2]
+cookies2 = [1,2,3]
+
+
+assignCky grd cks = length $ go (sort grd) (sort cks)
+  where  go [] _ = [] 
+         go (g:grd) (s:sz) 
+            | g <= s = g : go grd sz 
+            | otherwise = go grd (sz ++ [1])
 
 
