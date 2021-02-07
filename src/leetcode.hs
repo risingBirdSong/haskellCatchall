@@ -824,6 +824,36 @@ list4 = ["KFC","Shogun","Burger King"]
 list5 = ["Shogun","Tapioca Express","Burger King","KFC"]
 list6 = ["KNN","KFC","Burger King","Tapioca Express","Shogun"]
 
+findRestaurant xs ys = map fst . concat . find (not . null) . map (filter (uncurry (==))) . diags $ crossed
+  where crossed = map (\x -> map (x,) ys) xs
+        diags ((z:zs):zss) = [z] : zipDiags zs (diags zss)
+        diags _ = []
+        zipDiags (z:zs) (w:ws) = (z : w) : zipDiags zs ws
+        zipDiags [] ws = ws
+        zipDiags zs [] = map (:[]) zs
+
+-- from melissa 
+-- Now, sets of cells with the same index sum are the diagonal rows of this table.
+
+-- ij| 0 1 2
+-- --+------
+-- 0 | 1 2 3
+-- 1 | 4 5 6
+-- 2 | 7 8 9
+
+-- In this table, cell 1 has index sum 0 (assuming 0-based indexing); both cells 2 and 4 have index sum 1; cells 3, 5, and 7 have index sum 2; cells 6 and 8 have index sum 3, and cell 9 has index sum 4.
+
+stepA xs ys = crossed xs ys  
+
+stepB xs ys = diags $ stepA xs ys
+-- stepC =   map (filter (uncurry (==))) . diags $ stepB
+
+crossed xs ys = map (\x -> map (x,) ys) xs
+diags ((z:zs):zss) = [z] : zipDiags zs (diags zss)
+diags _ = []
+zipDiags (z:zs) (w:ws) = (z : w) : zipDiags zs ws
+zipDiags [] ws = ws
+zipDiags zs [] = map (:[]) zs
 
 -- Data.Tuple.swap
 tupleFlip (a,b) = (b,a)
@@ -841,15 +871,6 @@ rising (x:y:xs) n
 btsbss xs = maximum $ go xs 0
   where go (x:[]) rng = []
         go (x:y:zs) rng = (max 0 (rng + (y-x))) : go (y:zs) (max 0 (rng + (y-x)))
-
-
-findRestaurant xs ys = map fst . concat . find (not . null) . map (filter (uncurry (==))) . diags $ crossed
-  where crossed = map (\x -> map (x,) ys) xs
-        diags ((z:zs):zss) = [z] : zipDiags zs (diags zss)
-        diags _ = []
-        zipDiags (z:zs) (w:ws) = (z : w) : zipDiags zs ws
-        zipDiags [] ws = ws
-        zipDiags zs [] = map (:[]) zs
 
 stockex = [7,1,5,3,6,4]
 -- bestTime xs =
