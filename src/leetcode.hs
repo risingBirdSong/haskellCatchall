@@ -708,6 +708,41 @@ pascalsTriangle'' = zip (single [0,1,0])
 
 -- simplePatternMatch (a:b:c:d:rest) = (a,b,c,d)
 
-
 singlePscl xs = zipWith (+) (0:xs) (xs++[0])
 manyPscls n = take n $ iterate  singlePscl [1] 
+
+-- https://leetcode.com/problems/pascals-triangle-ii/
+-- 119. Pascal's Triangle II
+-- same as pascals 1, but just indexing
+pscl2 n = (!!) (manyPscls $ n + 1) n
+
+
+-- 350. Intersection of Two Arrays II
+
+nums1 = [1,2,2,1]
+nums2 = [2,2]
+
+
+
+nums1' = [4,9,5]
+nums2' = [9,4,9,8,4]
+
+
+intrSct2 a b = go a' b'
+  where a' = sort a  
+        b' = sort b 
+        go _ [] = []  
+        go [] (y:ys) = go a' (ys)
+        go (x:xs) (y:ys)
+            | x == y = x : go xs (ys)
+            | otherwise = go xs (y:ys)
+
+myFind f (x:xs) 
+  | f x = Just x 
+  | otherwise = myFind f xs  
+
+myElem f g [] = False 
+myElem f g (x:xs)
+  | f $ g x = True 
+  | otherwise = myElem f g xs
+
