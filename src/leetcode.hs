@@ -737,6 +737,14 @@ intrSct2 a b = go a' b'
             | x == y = x : go xs (ys)
             | otherwise = go xs (y:ys)
 
+intrSct2' [] bs = [] 
+intrSct2' (a:as) bs 
+  | maybeToBool (find (==a) bs) =  a :  intrSct2' as bs
+  | otherwise  =  intrSct2' as bs
+-- maybeToBool :: Maybe a -> Bool
+maybeToBool (Just x) = True 
+maybeToBool Nothing  = False  
+
 myFind f (x:xs) 
   | f x = Just x 
   | otherwise = myFind f xs  
@@ -745,4 +753,7 @@ myElem f g [] = False
 myElem f g (x:xs)
   | f $ g x = True 
   | otherwise = myElem f g xs
+
+
+
 
