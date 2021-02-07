@@ -1,3 +1,7 @@
+-- {-# LANGUAGE TupleSections #-}
+{-# LANGUAGE TupleSections #-}
+
+
 import Debug.Trace
 import qualified Data.Set as S
 import Data.List
@@ -831,7 +835,6 @@ rising (x:y:xs) n
 
 
 -- 121. Best Time to Buy and Sell Stock
-stockex = [7,1,5,3,6,4]
 -- btbss xs = (maximum $ drop minIndx xs) - minVal 
 --   where (minVal, minIndx) = minimumBy (\(a,_) (b,_) -> compare a b) $ zip xs [0..]
 
@@ -839,3 +842,23 @@ btsbss xs = maximum $ go xs 0
   where go (x:[]) rng = []
         go (x:y:zs) rng = (max 0 (rng + (y-x))) : go (y:zs) (max 0 (rng + (y-x)))
 
+
+findRestaurant xs ys = map fst . concat . find (not . null) . map (filter (uncurry (==))) . diags $ crossed
+  where crossed = map (\x -> map (x,) ys) xs
+        diags ((z:zs):zss) = [z] : zipDiags zs (diags zss)
+        diags _ = []
+        zipDiags (z:zs) (w:ws) = (z : w) : zipDiags zs ws
+        zipDiags [] ws = ws
+        zipDiags zs [] = map (:[]) zs
+
+stockex = [7,1,5,3,6,4]
+-- bestTime xs =
+
+
+ghj = [1,-2,3,4,-1,1] 
+-- max_cont_sum :: [Int] -> Int -> Int -> Int
+-- https://lettier.github.io/posts/2016-04-14-max-subarray-in-haskell.html
+-- Kadane's algorithm, very cool!
+max_cont_sum [] _ maxx = maxx
+max_cont_sum (h:t) sub_max maxx = max_cont_sum t (max 0 sub_max_cur) (max sub_max_cur maxx)
+   where sub_max_cur = sub_max + h
