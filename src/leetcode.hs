@@ -813,5 +813,26 @@ mistl as bs = solve
 
 
 -- 599. Minimum Index Sum of Two Lists
+list1 = ["Shogun","Tapioca Express","Burger King","KFC"]
+list2 = ["Piatti","The Grill at Torrey Pines","Hungry Hunter Steakhouse","Shogun"]
+list3 = ["Shogun","Tapioca Express","Burger King","KFC"]
+list4 = ["KFC","Shogun","Burger King"]
+list5 = ["Shogun","Tapioca Express","Burger King","KFC"]
+list6 = ["KNN","KFC","Burger King","Tapioca Express","Shogun"]
 
--- mistl' as bs = 
+
+-- Data.Tuple.swap
+tupleFlip (a,b) = (b,a)
+
+rising ([]) n = []
+rising (x:y:xs) n
+  | (x + n) == (y) = x : rising (y:xs) (n)
+  | otherwise  = []
+
+
+-- 121. Best Time to Buy and Sell Stock
+stockex = [7,1,5,3,6,4]
+btbss xs = (maximum $ drop minIndx xs) - minVal 
+  where (minVal, minIndx) = minimumBy (\(a,_) (b,_) -> compare a b) $ zip xs [0..]
+
+--  btbss [3,7,21,1,6]
