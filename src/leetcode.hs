@@ -832,7 +832,10 @@ rising (x:y:xs) n
 
 -- 121. Best Time to Buy and Sell Stock
 stockex = [7,1,5,3,6,4]
-btbss xs = (maximum $ drop minIndx xs) - minVal 
-  where (minVal, minIndx) = minimumBy (\(a,_) (b,_) -> compare a b) $ zip xs [0..]
+-- btbss xs = (maximum $ drop minIndx xs) - minVal 
+--   where (minVal, minIndx) = minimumBy (\(a,_) (b,_) -> compare a b) $ zip xs [0..]
 
---  btbss [3,7,21,1,6]
+btsbss xs = maximum $ go xs 0
+  where go (x:[]) rng = []
+        go (x:y:zs) rng = (max 0 (rng + (y-x))) : go (y:zs) (max 0 (rng + (y-x)))
+
