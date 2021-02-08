@@ -12,3 +12,7 @@ filterTwo f (x:y:ls)
   | otherwise = filterTwo f (y:ls)
 
 
+
+-- a helper function I wrote wanting to zip when the values are Just, otherwise stop zipping
+maybeZip ((Just x):xs) ((Just y):ys) = (Just x, Just y) : maybeZip xs ys
+maybeZip _  _ = [] 
