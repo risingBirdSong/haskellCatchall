@@ -889,6 +889,16 @@ numToNumList n = reverse $ go n
         go num = snd (num `divMod` 10) : go (num `div` 10)
 
 
+-- recommended algorithms to solve this
+-- https://cs.stackexchange.com/questions/10360/floyds-cycle-detection-algorithm-determining-the-starting-point-of-cycle
+
+-- def isHappy(self, n):
+--         seen = set()
+--         while n not in seen:
+--             seen.add(n)
+--             n = sum([int(x) **2 for x in str(n)])
+--         return n == 1
+
 -- 202. Happy Number
 isHappy n = go n 20
  where go 1 _ = True 
@@ -896,3 +906,38 @@ isHappy n = go n 20
           | cnt <= 0 = False
           | otherwise = trace (show n) go (sum $ map (^2) (numToNumList n)) (cnt-1)
 
+
+harmonious xs =  [1,3,2,2,5,2,3,7]
+
+filterOut xs = go $ sort xs
+  where go [x] = []
+        go (x:y:zs) 
+          | cand == 0 || cand == 1 = x : go (y:zs)
+          | otherwise  = go (y:zs)
+            where cand = y - x 
+        
+
+-- length $ concat . take 2 $ 
+idea xs = passOnlyMultiple $ sortOn (Down . length) . group $ go srtd (head srtd)
+  where go [] trg = []
+        go (x:xs) trg 
+            | x == trg || x - 1 == trg = x : go (xs) x 
+            | otherwise  = go xs x 
+        srtd = sort xs
+
+passOnlyMultiple xs
+  | length xs == 1 = 0 
+  | length xs > 1 = length $ concat . take 2 $ xs
+
+harmoniousCandidates xs = concatMap (\n -> [n-1,n+1]) $ S.toList ( S.fromList xs)
+harmoniousGather xs = sort $ filter (`elem` harmoniousCandidates xs) xs
+
+harmoniousSolve xs = sum $ take 2 . sortOn Down . map length . group $ harmoniousGather xs
+
+myHarmoniousSolven input = maximum . (0:) $ map length $ group $ sort $ (\x -> [x,x+1]) =<< harmoniousGather input
+
+myHarmoniousSolvenA input = (\x -> [x,x+1]) =<< harmoniousGather input
+
+maxH list = let
+  bag = M.unionsWith (+) $ (`M.singleton` 1) <$> list
+  in maximum . (0:) . M.elems . M.intersectionWith (+) bag $ M.mapKeysMonotonic (+1) bag
