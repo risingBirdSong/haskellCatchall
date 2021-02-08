@@ -1,8 +1,7 @@
 -- {-# LANGUAGE TupleSections #-}
 {-# LANGUAGE TupleSections #-}
 
-
-import Debug.Trace
+import Debug.Trace 
 import qualified Data.Set as S
 import Data.List
 import Data.Maybe
@@ -21,6 +20,7 @@ import Data.Universe.Helpers
 -- import Numeric.Probability.Percentage
 
 import Data.Ord
+
 
 a = [1,1]
 b = [2,2]
@@ -883,3 +883,16 @@ ghj = [1,-2,3,4,-1,1]
 max_cont_sum [] _ maxx = maxx
 max_cont_sum (h:t) sub_max maxx = max_cont_sum t (max 0 sub_max_cur) (max sub_max_cur maxx)
    where sub_max_cur = sub_max + h
+
+numToNumList n = reverse $ go n 
+  where go 0 = []
+        go num = snd (num `divMod` 10) : go (num `div` 10)
+
+
+-- 202. Happy Number
+isHappy n = go n 20
+ where go 1 _ = True 
+       go n cnt
+          | cnt <= 0 = False
+          | otherwise = trace (show n) go (sum $ map (^2) (numToNumList n)) (cnt-1)
+
