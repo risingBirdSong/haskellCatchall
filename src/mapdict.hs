@@ -37,5 +37,7 @@ zipWithPadding a b (x:xs) (y:ys) = (x,y) : zipWithPadding a b xs ys
 zipWithPadding a _ []     ys     = zip (repeat a) ys
 zipWithPadding _ b xs     []     = zip xs (repeat b)
 
+
+
 --  HT.takeWhileJust (apZip ma mb)
 -- [(1,2),(3,1),(2,3)]
