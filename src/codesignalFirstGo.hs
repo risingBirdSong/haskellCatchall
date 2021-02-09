@@ -109,4 +109,11 @@ exM = [[1, 2, 3],
 
 cw = map reverse . transpose
 
-centuryFromYear year = reverse $ show year
+centuryFromYear year = let (centry, decadeAndYear) =  year `divMod` 100 
+                           answer (cntr, year) 
+                              | year > 0 = cntr + 1
+                              | otherwise = cntr
+                       in answer (centry, decadeAndYear)
+
+centuryFromYear' year = ceiling (year / 100)
+centuryFromYear'' year = 1 + ((year -1 ) `div` 100 )
