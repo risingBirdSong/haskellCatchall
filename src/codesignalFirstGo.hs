@@ -108,3 +108,5 @@ exM = [[1, 2, 3],
      [7, 8, 9]]
 
 cw = map reverse . transpose
+
+centuryFromYear year = reverse $ show year
