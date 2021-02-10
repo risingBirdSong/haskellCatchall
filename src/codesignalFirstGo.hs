@@ -127,3 +127,5 @@ adjacentElementsProduct xs = maximum $ go xs
              
 adjacentElementsProduct xs = maximum $ zipWith (*) xs (tail xs)  
 
+shapeArea 1 = 1
+shapeArea n = (n-1) * 4 + shapeArea (n-1)
