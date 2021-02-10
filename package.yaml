@@ -47,7 +47,8 @@ dependencies:
 - trifecta
 - universe-base
 - probability
-
+- groupBy
+- data-ordlist
 
 library:
   source-dirs: src

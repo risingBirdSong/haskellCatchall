@@ -6,6 +6,8 @@ import Data.Maybe
 import qualified Data.Set as S
 import qualified Data.Matrix as Mtx
 import qualified Data.Map as M 
+import qualified Data.List.GroupBy as Grp  
+import qualified Data.List.Ordered as Ordd  
 import Data.List.Split 
 import Control.Arrow
 
@@ -135,6 +137,7 @@ makeArrayConsecutive2 s = (maximum (s) - minimum s + 1) - length s
 
 
 -- almostIncreasingSequence s = 
+strctIncExA :: [Integer]
 strctIncExA = [1, 3, 2, 1]
 strctIncExB = [1, 3, 2]
 srted = [0..10]
@@ -143,27 +146,34 @@ srted = [0..10]
 -- [40, 50, 60, 10, 20, 30]
 
 
+myDelete Nothing xs = xs 
+myDelete (Just x) xs = delete x xs
+pre xs = myDelete (findOffender xs) xs
+almostIncreasingSequence xs = isStrictSorted $ myDelete (findOffender xs) xs
+
+isStrictSorted xs = all (==True) $ zipWith (<) xs (tail xs) 
+
 findOffender [x] = Nothing
 findOffender (x:y:zs) 
-      | x >= y = Just x
+      | x >= y = Just y
       | otherwise  = findOffender (y:zs)
 
-alim xs = null $ go xs (minimum xs -1)
-      where go [] high = []
-            go (x:xs) high 
-                  | x < high = x : go xs (max x high)
-                  | otherwise = go xs (max x high)
+-- alim xs = null $ go xs (minimum xs -1)
+--       where go [] high = []
+--             go (x:xs) high 
+--                   | x < high = x : go xs (max x high)
+--                   | otherwise = go xs (max x high)
 
-almostIncreasingSequence xs =
-      case findOffender xs of 
-            Nothing -> True
-            (Just x) -> alim (delete x xs) 
+-- almostIncreasingSequence xs =
+--       case findOffender xs of 
+--             Nothing -> True
+--             (Just x) -> alim (delete x xs) 
 
-almostIncreasingSequence xs = ((<2).length) $ go xs 0
-      where go [] high = []
-            go (x:xs) high 
-                  | x <= high = x : go xs (max x high)
-                  | otherwise = go xs (max x high)
+-- almostIncreasingSequence xs = ((<2).length) $ go xs 0
+--       where go [] high = []
+--             go (x:xs) high 
+--                   | x <= high = x : go xs (max x high)
+--                   | otherwise = go xs (max x high)
             
 
 
