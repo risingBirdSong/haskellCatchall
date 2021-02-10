@@ -6,6 +6,7 @@ import Data.Maybe
 import qualified Data.Set as S
 import qualified Data.Matrix as Mtx
 import qualified Data.Map as M 
+import Data.List.Split 
 import Control.Arrow
 
 
@@ -117,3 +118,12 @@ centuryFromYear year = let (centry, decadeAndYear) =  year `divMod` 100
 
 centuryFromYear' year = ceiling (year / 100)
 centuryFromYear'' year = 1 + ((year -1 ) `div` 100 )
+
+palindrome str = str == reverse str
+
+adjacentElementsProduct xs = maximum $ go xs 
+      where go [x] = []
+            go (x:y:zs) = (x * y) : go (y:zs)
+             
+adjacentElementsProduct xs = maximum $ zipWith (*) xs (tail xs)  
+
