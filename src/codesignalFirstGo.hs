@@ -129,3 +129,43 @@ adjacentElementsProduct xs = maximum $ zipWith (*) xs (tail xs)
 
 shapeArea 1 = 1
 shapeArea n = (n-1) * 4 + shapeArea (n-1)
+
+
+makeArrayConsecutive2 s = (maximum (s) - minimum s + 1) - length s 
+
+
+-- almostIncreasingSequence s = 
+strctIncExA = [1, 3, 2, 1]
+strctIncExB = [1, 3, 2]
+srted = [0..10]
+
+-- [1, 2, 1, 2]
+-- [40, 50, 60, 10, 20, 30]
+
+
+findOffender [x] = Nothing
+findOffender (x:y:zs) 
+      | x >= y = Just x
+      | otherwise  = findOffender (y:zs)
+
+alim xs = null $ go xs (minimum xs -1)
+      where go [] high = []
+            go (x:xs) high 
+                  | x < high = x : go xs (max x high)
+                  | otherwise = go xs (max x high)
+
+almostIncreasingSequence xs =
+      case findOffender xs of 
+            Nothing -> True
+            (Just x) -> alim (delete x xs) 
+
+almostIncreasingSequence xs = ((<2).length) $ go xs 0
+      where go [] high = []
+            go (x:xs) high 
+                  | x <= high = x : go xs (max x high)
+                  | otherwise = go xs (max x high)
+            
+
+
+-- amitest xs =  ((<2).length) $ filter (==False ) $ zipWith (<) srtIndex (tail srtIndex)
+--       where srtIndex = map snd $ sort $ zip xs [0..] 
