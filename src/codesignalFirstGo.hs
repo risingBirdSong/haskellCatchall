@@ -207,8 +207,8 @@ allLongestStrings xs = reverse $ takeWhile (\x -> length x == longest) $ reverse
          srtd = sortOn length $ xs
 
 
-cmnA = "aabcc" 
-cmnB = "adcaa"
+cmA = "aabcc" 
+cmB = "adcaa"
 
 
 s1 = "abca"
@@ -227,3 +227,14 @@ commonCharacterCount' s1 s2 = length lngst - (length $ lngst \\ shrt)
       where lngst = last $ srtd 
             shrt = head $ srtd
             srtd = sortOn length [s1,s2] 
+
+intr s1 s2 = s1 `intersect` s2
+
+-- best solutuion! this works in either direction, either with the shorterst word \\ or the longest word \\...
+-- the original s minus the difference between the two strings... if the longer is divided, the longest word minus the longer difference will equal the shortest word minus the shorter distance
+-- an example -> short = "zzzz" long "zzzzzzz" , long \\ short is "zzz" (length 3), so the orgiginal long, length 7 minus difference 3 is 4
+-- the reverse, short \\ long is 0, all the short letters are subracted, but its original length is 4, so 4 - 0 is still 4 
+-- so you can see the difference doesnt matter, and why this is the cleanest answer 
+commonCharacterCount'' s1 s2 = length s1 - length (s1 \\ s2) 
+
+-- mxLng s1 s2 = 
