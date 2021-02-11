@@ -3,6 +3,7 @@
 
 import Data.List
 import Data.Maybe
+import Data.Function
 import qualified Data.Set as S
 import qualified Data.Matrix as Mtx
 import qualified Data.Map as M 
@@ -170,4 +171,36 @@ myMatrix =[[0,1,1,2],
 ghosts xxs = sum $ concatMap (takeWhile (/= 0)) $ transpose xxs
 
 
--- almst1C xs = and $ ((<2) . length) xs  
+
+almostDupes xs = if (length xs - length (nub xs) > 1) then False else True 
+-- almostOrderA xs = ((<2).length) $ filter (==False) $ zipWith (<) xs (tail xs)\
+
+almostOrderA xs = (<2) $ sum $ zipWith3 zipping xs (tail (xs ++ [maximum xs + 1])) (tail $ tail xs ++ [maximum xs + 1])
+
+almostOrderATest xs = zipWith3 zipping xs (tail (xs ++ [maximum xs + 1])) (tail $ tail xs ++ [maximum xs + 1])
+
+-- almostOrderA xs = zipWith3 zipping xs (tail (xs ++ [maximum xs + 1])) (tail $ tail xs ++ [maximum xs + 1])
+
+zip3Test xs = zip3 xs (tail (xs ++ [maximum xs + 1])) (tail $ tail xs ++ [maximum xs + 1])
+
+
+zipping a b c 
+      | a >= b && a >= c = 2
+      | a >= b || a >= c = 1 
+      | otherwise = 0 
+
+-- almostOrderB xs = ((<2).length) $ filter (==False) $ zipWith (<) xs (tail $ tail xs)
+almostComposed xs = (almostDupes xs) && (almostOrderA xs)
+almostOrderB xs = zip xs (tail xs)
+almostOrderC xs = zip xs (tail $ tail xs)
+
+takeTwo f [x] = [] 
+takeTwo f (x:y:zs)
+      | f x y = x : takeTwo f (y:zs)
+      | otherwise = []
+
+-- takeTest = takeTwo ((==).length) ["ab", "cd","asdf"]
+
+allLongestStrings xs = reverse $ takeWhile (\x -> length x == longest) $ reverse $ srtd
+   where longest = length $ last srtd   
+         srtd = sortOn length $ xs
