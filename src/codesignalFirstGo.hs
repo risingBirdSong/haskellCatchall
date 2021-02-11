@@ -163,4 +163,11 @@ almostIncreasingSequence s = and $ (<2) . length
 
 almst1A s = zip s . tail <$> [s, tail s]
 
+myMatrix =[[0,1,1,2], 
+      [0,5,0,0], 
+      [2,0,3,3]]
+
+ghosts xxs = sum $ concatMap (takeWhile (/= 0)) $ transpose xxs
+
+
 -- almst1C xs = and $ ((<2) . length) xs  
