@@ -146,36 +146,21 @@ srted = [0..10]
 -- [40, 50, 60, 10, 20, 30]
 
 
-myDelete Nothing xs = xs 
-myDelete (Just x) xs = delete x xs
-pre xs = myDelete (findOffender xs) xs
-almostIncreasingSequence xs = isStrictSorted $ myDelete (findOffender xs) xs
-
-isStrictSorted xs = all (==True) $ zipWith (<) xs (tail xs) 
-
-findOffender [x] = Nothing
-findOffender (x:y:zs) 
-      | x >= y = Just y
-      | otherwise  = findOffender (y:zs)
-
--- alim xs = null $ go xs (minimum xs -1)
---       where go [] high = []
---             go (x:xs) high 
---                   | x < high = x : go xs (max x high)
---                   | otherwise = go xs (max x high)
-
--- almostIncreasingSequence xs =
---       case findOffender xs of 
---             Nothing -> True
---             (Just x) -> alim (delete x xs) 
-
--- almostIncreasingSequence xs = ((<2).length) $ go xs 0
---       where go [] high = []
---             go (x:xs) high 
---                   | x <= high = x : go xs (max x high)
---                   | otherwise = go xs (max x high)
-            
+almstA sequence =
+    case findIndex (not. okPair) (prs sequence) of
+        Nothing -> True
+        Just x -> any isOk. map (flip delete sequence) $ [x, x+1]
+    where prs seq = zip seq (tail seq)
+          delete x = (\(l1, l2) -> l1 ++ drop 1 l2). splitAt x
+          isOk = all okPair. prs
+          okPair = uncurry (<)
 
 
--- amitest xs =  ((<2).length) $ filter (==False ) $ zipWith (<) srtIndex (tail srtIndex)
---       where srtIndex = map snd $ sort $ zip xs [0..] 
+almostIncreasingSequence s = and $ (<2) . length 
+                            . filter (uncurry (>=)) 
+                            . zip s . tail <$> [s, tail s]
+
+
+almst1A s = zip s . tail <$> [s, tail s]
+
+-- almst1C xs = and $ ((<2) . length) xs  
