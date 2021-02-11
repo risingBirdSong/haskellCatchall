@@ -195,17 +195,61 @@ almostComposed xs = (almostDupes xs) && (almostOrderA xs)
 almostOrderB xs = zip xs (tail xs)
 almostOrderC xs = zip xs (tail $ tail xs)
 
-takeTwo f [x] = [] 
-takeTwo f (x:y:zs)
-      | f x y = x : takeTwo f (y:zs)
-      | otherwise = []
-
 -- takeTest = takeTwo ((==).length) ["ab", "cd","asdf"]
 
 allLongestStrings xs = reverse $ takeWhile (\x -> length x == longest) $ reverse $ srtd
    where longest = length $ last srtd   
          srtd = sortOn length $ xs
+-- assume that the dupe test comes first, and then a nubbed xs version is processed
+ag1 = [1,2,3,2,4,5] -- True (1 dupe vltn) (0 order violations, bcz of nub) 
+ag2 = [10,1,2,3,4,5] -- True (0 dupe vltn) (1 ord vltn)
+ag3 = [10,1,2,4,5] -- True (0 dupe vltn) (1 order vltn)
 
+ag4 = [3,4,5,3,4,5] -- False (3 dupe vltn) (0 order vltn)
+
+ag5 = [1,1,1,3,4] -- False (2 dupe vltn) (0 order vltn)
+
+ag6 = [9,6,7,2,8] -- False (0 dupe vltn) (2 order vltn)
+ag7 = [6,7,8,3,4,5] -- False (0 dupe vltn) (3 order vltn)
+
+-- almstAgain xs = (zipSrt)
+--       where dupViolations = (length xs) - (length (nub xs))
+--             zipSrt =  sort $ zip (nub xs) [0..] 
+
+-- ("dupe violations -> ", show dupViolations , "order violations -> " ++ show grpVltns)
+
+grpBy :: (a -> a -> Bool) -> [a] -> [[a]]
+grpBy _ [] = []
+grpBy p' (x':xs') = (x' : ys') : zs'
+  where
+    (ys',zs') = go p' x' xs'
+    go p z (x:xs)
+      | p z x = (x : ys, zs)
+      | otherwise = ([], (x : ys) : zs)
+      where (ys,zs) = go p x xs
+    go _ _ [] = ([], [])
+
+almstAgain xs = solve dupViolations  ordVltns
+      where dupViolations = (length xs) - (length (nub xs))
+            strdidxs = map (snd) $ sort $ zip (nub xs) [0..]
+            ordVltns = sum $ map (\x -> length x -1) 
+                       $ transpose $ grpBy (<) $ map snd 
+                       $ sort $ zip (nub xs) [0..]
+            findFirstDupe xs = head $ head $ filter ((>1).length) $ group $ sort xs  
+            solve dp or 
+                  | (dp + or) < 2 = True
+                  | dp == 1 && or == 1 = almstAgain (delete (findFirstDupe xs) xs)
+                  | otherwise = False
+
+                   
+failing1 = [1, 2, 5, 3, 5]
+
+simpleLessThanCount xs = filter (==False ) $ zipWith (<) (xs) (tail xs)
+      
+sortTest xs = Grp.groupBy (<) $ map snd $ sort $ zip (nub xs) [0..]
+sortTestTrnsp xs = transpose $ Grp.groupBy (<) $ map snd $ sort $ zip (nub xs) [0..]
+sortTestViolationCount xs = sum $ map (\x -> length x -1) $ transpose $ Grp.groupBy (<) $ map snd $ sort $ zip (nub xs) [0..]
+      
 
 cmA = "aabcc" 
 cmB = "adcaa"
