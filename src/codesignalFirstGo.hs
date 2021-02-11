@@ -5,6 +5,7 @@ import Data.List
 import Data.Maybe
 import Data.Ord
 import Data.Function
+import Debug.Trace
 import qualified Data.Set as S
 import qualified Data.Matrix as Mtx
 import qualified Data.Map as M 
@@ -212,6 +213,23 @@ ag5 = [1,1,1,3,4] -- False (2 dupe vltn) (0 order vltn)
 ag6 = [9,6,7,2,8] -- False (0 dupe vltn) (2 order vltn)
 ag7 = [6,7,8,3,4,5] -- False (0 dupe vltn) (3 order vltn)
 
+failFast = [1,2,3,2,5,3,4,1,5,3,2,4,1]
+
+understandingalmostIncreasingA s = zip s . tail <$> [s, tail s] 
+understandingalmostIncreasingB s = filter (uncurry (>=)) . zip s . tail <$> [s, tail s] 
+understandingalmostIncreasingC s = (<2) . length . filter (uncurry (>=)) . zip s . tail <$> [s, tail s] 
+understandingalmostIncreasing s = and $ (<2) . length . filter (uncurry (>=)) . zip s . tail <$> [s, tail s] 
+
+
+almostIncreasingSequenceInsprd xs = go (trio xs) 0 
+      where go [] bad = trace ("bad ->" ++ show bad)  True
+            go ((a,b,c):xs) bad 
+                  | bad > 1 = False
+                  | a >= c && b >= c = False
+                  | a >= b = go (drop 1 xs) (bad + 1)
+                  | a < b = go (drop 1 xs) (bad)
+            trio xs = zip3 (xs) (tail xs) (tail $ tail xs)
+
 -- almstAgain xs = (zipSrt)
 --       where dupViolations = (length xs) - (length (nub xs))
 --             zipSrt =  sort $ zip (nub xs) [0..] 
@@ -262,7 +280,10 @@ myNubPreservesOrder xs = go xs (S.empty)
                   | otherwise  = x : go xs (S.insert x st)
 
 
+
 failing1 = [1, 2, 5, 3, 5]
+
+threeZip xs = zip3 (xs) (tail xs) (tail $ tail xs)
 
 simpleLessThanCount xs = filter (==False ) $ zipWith (<) (xs) (tail xs)
       
