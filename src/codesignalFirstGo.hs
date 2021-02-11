@@ -229,7 +229,7 @@ grpBy p' (x':xs') = (x' : ys') : zs'
       where (ys,zs) = go p x xs
     go _ _ [] = ([], [])
 
-almstAgain xs = solve dupViolations  ordVltns
+almstAgainNub xs = solve dupViolations  ordVltns
       where dupViolations = (length xs) - (length (nub xs))
             strdidxs = map (snd) $ sort $ zip (nub xs) [0..]
             ordVltns = sum $ map (\x -> length x -1) 
@@ -238,10 +238,30 @@ almstAgain xs = solve dupViolations  ordVltns
             findFirstDupe xs = head $ head $ filter ((>1).length) $ group $ sort xs  
             solve dp or 
                   | (dp + or) < 2 = True
-                  | dp == 1 && or == 1 = almstAgain (delete (findFirstDupe xs) xs)
+                  | dp == 1 && or == 1 = almstAgainNub (delete (findFirstDupe xs) xs)
                   | otherwise = False
 
-                   
+almstAgainSet xs = solve dupViolations  ordVltns
+      where dupViolations = (length xs) - (length (nubby xs))
+            strdidxs = map (snd) $ sort $ zip (nubby xs) [0..]
+            ordVltns = sum $ map (\x -> length x -1) 
+                       $ transpose $ grpBy (<) $ map snd 
+                       $ sort $ zip (nubby xs) [0..]
+            findFirstDupe xs = head $ head $ filter ((>1).length) $ group $ sort xs  
+            nubby xs = S.toList $ S.fromList xs
+            solve dp or 
+                  | (dp + or) < 2 = True
+                  | dp == 1 && or == 1 = almstAgainSet (delete (findFirstDupe xs) xs)
+                  | otherwise = False
+
+
+myNubPreservesOrder xs = go xs (S.empty) 
+      where go [] st = []   
+            go (x:xs) st
+                  | S.member x st = go xs st 
+                  | otherwise  = x : go xs (S.insert x st)
+
+
 failing1 = [1, 2, 5, 3, 5]
 
 simpleLessThanCount xs = filter (==False ) $ zipWith (<) (xs) (tail xs)
