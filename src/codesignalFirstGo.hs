@@ -3,6 +3,7 @@
 
 import Data.List
 import Data.Maybe
+import Data.Ord
 import Data.Function
 import qualified Data.Set as S
 import qualified Data.Matrix as Mtx
@@ -208,9 +209,21 @@ allLongestStrings xs = reverse $ takeWhile (\x -> length x == longest) $ reverse
 
 cmnA = "aabcc" 
 cmnB = "adcaa"
+
+
+s1 = "abca"
+s2 ="xyzbac"
+
+z1 = "zzzz"
+z2 = "zzzzzzz"
+
 commonCharacterCount s1 s2 = length $ concatMap minimum $ gather overlap s1 s2 
       where overlap = nub $ s1 `intersect` s2 
             gather [] s1 s2 = []  
             gather (x:xs) s1 s2 = [(filter (==x) s1), (filter (==x) s2)] : gather xs s1 s2  
 
-            
+commonCharacterCountTest s1 s2 = (sort s1, sort s2, s1 \\ s2, s2 \\ s1)
+commonCharacterCount' s1 s2 = length lngst - (length $ lngst \\ shrt)
+      where lngst = last $ srtd 
+            shrt = head $ srtd
+            srtd = sortOn length [s1,s2] 
