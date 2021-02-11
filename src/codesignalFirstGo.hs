@@ -238,3 +238,10 @@ intr s1 s2 = s1 `intersect` s2
 commonCharacterCount'' s1 s2 = length s1 - length (s1 \\ s2) 
 
 -- mxLng s1 s2 = 
+
+isLucky n = (\(x,y) -> (sum (numToNumList x)) == (sum (numToNumList y))) $ (\(a,b) ->((read a :: Int),(read b :: Int))) $ splitAt ((length toStr) `div` 2) toStr
+      where toStr = show n
+
+numToNumList n = reverse $ go n 
+  where go 0 = []
+        go num = snd (num `divMod` 10) : go (num `div` 10)
