@@ -204,3 +204,13 @@ takeTwo f (x:y:zs)
 allLongestStrings xs = reverse $ takeWhile (\x -> length x == longest) $ reverse $ srtd
    where longest = length $ last srtd   
          srtd = sortOn length $ xs
+
+
+cmnA = "aabcc" 
+cmnB = "adcaa"
+commonCharacterCount s1 s2 = length $ concatMap minimum $ gather overlap s1 s2 
+      where overlap = nub $ s1 `intersect` s2 
+            gather [] s1 s2 = []  
+            gather (x:xs) s1 s2 = [(filter (==x) s1), (filter (==x) s2)] : gather xs s1 s2  
+
+            
