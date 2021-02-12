@@ -351,13 +351,18 @@ sortOnly p xs = reinsert xs $ sort $ filter p xs
 
 sortExceptTrees = sortOnly (>0)
 
-          
-myRev xs = reverse $ go (xs) 
+data Rev a = One a | Lst [Rev a] deriving (Show, Eq, Ord) 
+
+myRev (Lst xss) = go xss 
       where go [] = []
-            go (x:xs) 
-                  | x == '(' = myRev xs 
-                  | x == ')' = [] ++ xs
-                  | otherwise = x : go xs
+            go ((One x):xs) =  (One x) : go xs 
+            go ((Lst aas):xs) =  Lst (reverse ( go (aas))) : go xs  
+
+
+alternatingSums zs = go zs [] []
+      where go [] aa bb = [sum aa, sum bb]
+            go (x:y:zs) aa bb = go (zs) (x:aa) (y:bb)
+            go (x:zs) aa bb = go [] (x:aa) bb
 
 
 
