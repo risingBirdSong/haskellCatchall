@@ -350,3 +350,17 @@ sortOnly p xs = reinsert xs $ sort $ filter p xs
     reinsert (_:xs) (y:ys) = y : reinsert xs ys
 
 sortExceptTrees = sortOnly (>0)
+
+          
+myRev xs = reverse $ go (xs) 
+      where go [] = []
+            go (x:xs) 
+                  | x == '(' = myRev xs 
+                  | x == ')' = [] ++ xs
+                  | otherwise = x : go xs
+
+
+
+-- "foo(bar)baz"
+-- reverseInParentheses xs = rever $ go   
+--       | s == '(' = 
