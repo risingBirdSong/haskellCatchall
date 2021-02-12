@@ -1,5 +1,5 @@
 -- https://app.codesignal.com/interview-practice/task/pMvymcahZ8dY4g75q/description
--- {-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE FlexibleContexts #-}
 
 import Data.List
 import Data.Maybe
@@ -330,3 +330,23 @@ isLucky n = (\(x,y) -> (sum (numToNumList x)) == (sum (numToNumList y))) $ (\(a,
 numToNumList n = reverse $ go n 
   where go 0 = []
         go num = snd (num `divMod` 10) : go (num `div` 10)
+
+
+sortByHeight' xs = putBack xs srtPeople
+    where srtPeople = sort $ filter (/=(-1)) xs
+          putBack [] _ = []
+          putBack xs [] = xs
+          putBack (x:xs) (p:ppl)
+            | x == (-1) = x : putBack xs (p:ppl)
+            | otherwise = p : putBack xs ppl
+
+srtPeople xs = sort $ filter (/=(-1)) xs
+s xs = sort $ filter (/=(-1)) xs
+
+sortOnly p xs = reinsert xs $ sort $ filter p xs
+  where
+    reinsert _ [] = []
+    reinsert (-1:xs) ys = -1 : reinsert xs ys
+    reinsert (_:xs) (y:ys) = y : reinsert xs ys
+
+sortExceptTrees = sortOnly (>0)
