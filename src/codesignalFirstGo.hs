@@ -11,6 +11,7 @@ import qualified Data.Matrix as Mtx
 import qualified Data.Map as M 
 import qualified Data.List.GroupBy as Grp  
 import qualified Data.List.Ordered as Ordd  
+import Data.Tuple
 import Data.List.Split 
 import Control.Arrow
 
@@ -353,11 +354,12 @@ sortExceptTrees = sortOnly (>0)
 
 data Rev a = One a | Lst [Rev a] deriving (Show, Eq, Ord) 
 
-myRev (Lst xss) = go xss 
+myRev (Lst xss) =  go xss 
       where go [] = []
             go ((One x):xs) =  (One x) : go xs 
-            go ((Lst aas):xs) =  Lst (reverse ( go (aas))) : go xs  
-
+            go ((Lst aas):xs) =  Lst (( myRev (Lst (reverse aas)))) : go xs  
+-- the current problem is it's not reversing the nested elements properly 
+-- [One 'b',One 'a',One 'r',Lst [One 'z',One 'a',One 'b']]
 
 alternatingSums zs = go zs [] []
       where go [] aa bb = [sum aa, sum bb]
@@ -369,3 +371,25 @@ alternatingSums zs = go zs [] []
 -- "foo(bar)baz"
 -- reverseInParentheses xs = rever $ go   
 --       | s == '(' = 
+
+pic1 =  ["abc",
+           "ded"]
+
+pic2 = ["aa", 
+ "**", 
+ "zz"]
+
+addBorder pct = brdr : (map (\ln -> '*' : ln ++ "*") pct) ++ [brdr]
+            where width = length $ head pct 
+                  brdr = replicate (width + 2) '*'
+
+
+areSimilar a b = if (sort a /= sort b) then False else (all (==True) $ map (\x -> eitherSame x || singleSwap x) $ allSwaps a b) 
+
+allSwaps a b = zip (zip a b) ( tail (zip a b)) 
+
+eitherSame ((x,y),(x',y')) = x == y || x' == y' 
+singleSwap ((x,y),(x',y')) = (x,y) == swap (x',y')
+
+aaa = [832, 998, 148, 570, 533, 561, 894, 147, 455, 279]
+bbb = [832, 570, 148, 998, 533, 561, 455, 147, 894, 279]
