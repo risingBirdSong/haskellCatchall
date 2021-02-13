@@ -423,10 +423,44 @@ safeStep xs obstacles finalGoal lastStep = solve reject
                   | null cands = finalGoal
                   | otherwise = minimum $ map head cands
 
--- avoidObstacles obst = safeStep (prepare ++ [maximum obst + 1]) (maximum prepare)
---       where prepare = sort $ take (maximum obst )[0..] \\ obst
+obst1 =  [5, 3, 6, 7, 9]
 
--- safeStep :: (Ord a, Num a) => [a] -> a -> a
--- safeStep xs lastStep = minimum . concat 
---                        . filter (\sublist -> lastStep `elem` sublist ) 
---                        $ map (\x -> takeWhile (`elem` xs) (iterate (+x) x)) (delete 0 xs)
+
+avoidObstacles' xs = minimum $ filter (isSafeStep xs)  steps
+      where steps = [1..(maximum xs + 1)]
+isSafeStep obst cand = not $ any (\o -> o `mod` cand == 0 ) obst
+
+
+-- https://app.codesignal.com/arcade/intro/level-5/5xPitc3yT3dqS7XkP
+image = [[1, 1, 1], 
+         [1, 7, 1], 
+         [1, 1, 1]]
+image1 :: (Num a) => [[a]]
+image1 = [[7, 4, 0, 1], 
+         [5, 6, 2, 2], 
+         [6, 10, 7, 8], 
+         [1, 4, 2, 0]]
+
+-- boxBlur image = sum $ concat image
+
+
+imageMtrx xss = Mtx.fromLists xss 
+
+mtxA :: (Num a) => Mtx.Matrix a
+mtxA = Mtx.submatrix 1 3 1 3 $ imageMtrx  image1
+mtxB = Mtx.submatrix 1 3 2 4 $ imageMtrx  image1
+mtxC = Mtx.submatrix 2 4 1 3 $ imageMtrx  image1
+mtxD = Mtx.submatrix 2 4 2 4 $ imageMtrx  image1
+
+mtxSummer mtx = foldr (+) 0 mtx
+-- 
+-- proof of concept! \/ !
+-- *Main> mtxSummer mtxD `div` 9
+-- 4
+-- *Main> mtxSummer mtxA `div` 9
+-- 5
+-- *Main> mtxSummer mtxB `div` 9
+-- 4
+-- *Main> mtxSummer mtxC `div` 9
+-- 4
+-- *Main> mtxSummer mtxD `div` 9
