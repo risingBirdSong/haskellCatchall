@@ -395,3 +395,13 @@ howMany xs = go (head xs) (drop 1 xs) (0)
                   | high >= x = go (x + needGrow) (xs) (count + needGrow) 
                   | otherwise = go (x) (xs) (count)
               where needGrow = high - x + 1
+
+
+makePali xs = 2 > (length $ filter (odd) $ map length $ group $ sort xs)
+
+
+areEquallyStrong yl yr fl fr = (yl + yr == fl + fr) && ( (length allarms) > (length $ nub allarms))
+    where allarms = [yl, yr, fl, fr]
+
+
+arrayMaximalAdjacentDifference xs = maximum . map abs $ zipWith (-) xs (tail xs)
