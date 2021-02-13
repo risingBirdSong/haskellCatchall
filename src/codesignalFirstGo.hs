@@ -389,15 +389,6 @@ sortplay as bs = null bads
             bads =  filter (\(x,y) -> x /= (swap y)) compareOrder
 
 
-howManyToStrctAsc xs = go (drop 1 xs) (head xs) 
-      where go [] high = []
-            go [x] high = []
-            go (x:xs) high
-                  | x > high = go xs high
-                  | x <= high = (high - x + 1) : go (high + x : xs) (high + x)
-
-
-
 howMany xs = go (head xs) (drop 1 xs) (0)
       where go high [] count = count 
             go high (x:xs) count 
