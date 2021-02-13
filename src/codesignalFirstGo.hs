@@ -405,3 +405,28 @@ areEquallyStrong yl yr fl fr = (yl + yr == fl + fr) && ( (length allarms) > (len
 
 
 arrayMaximalAdjacentDifference xs = maximum . map abs $ zipWith (-) xs (tail xs)
+
+
+avoidObstacles obst = safeStep prepare obst (maximum obst + 1) (maximum prepare)
+      where prepare = delete 0 (sort $ take (maximum obst )[0..] \\ obst)
+            debugging = ((prepare) , obst , maximum obst + 1 , (maximum prepare))
+
+
+-- safeStep :: (Ord a, Num a) => [a] -> a -> a
+safeStep xs obstacles finalGoal lastStep = solve reject
+      where mainLogic = filter (\sublist -> lastStep `elem` sublist ) 
+                       $ map (\x -> takeWhile (`elem` xs) (iterate (+x) x)) (delete 0 xs)
+            prepareForSolve = concat $ mainLogic
+            iterated = map (\x -> takeWhile (<finalGoal) (iterate (+x) x)) (delete 0 xs)
+            reject = filter (\ys -> null $ (intersect ys obstacles)) iterated   
+            solve cands 
+                  | null cands = finalGoal
+                  | otherwise = minimum $ map head cands
+
+-- avoidObstacles obst = safeStep (prepare ++ [maximum obst + 1]) (maximum prepare)
+--       where prepare = sort $ take (maximum obst )[0..] \\ obst
+
+-- safeStep :: (Ord a, Num a) => [a] -> a -> a
+-- safeStep xs lastStep = minimum . concat 
+--                        . filter (\sublist -> lastStep `elem` sublist ) 
+--                        $ map (\x -> takeWhile (`elem` xs) (iterate (+x) x)) (delete 0 xs)
