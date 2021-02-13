@@ -383,13 +383,24 @@ addBorder pct = brdr : (map (\ln -> '*' : ln ++ "*") pct) ++ [brdr]
             where width = length $ head pct 
                   brdr = replicate (width + 2) '*'
 
+sortplay as bs = null bads
+      where discardGoods =  filter (\(x,y) -> x /= y) $ zip as bs 
+            compareOrder = zip discardGoods (tail discardGoods)
+            bads =  filter (\(x,y) -> x /= (swap y)) compareOrder
 
-areSimilar a b = if (sort a /= sort b) then False else (all (==True) $ map (\x -> eitherSame x || singleSwap x) $ allSwaps a b) 
 
-allSwaps a b = zip (zip a b) ( tail (zip a b)) 
+howManyToStrctAsc xs = go (drop 1 xs) (head xs) 
+      where go [] high = []
+            go [x] high = []
+            go (x:xs) high
+                  | x > high = go xs high
+                  | x <= high = (high - x + 1) : go (high + x : xs) (high + x)
 
-eitherSame ((x,y),(x',y')) = x == y || x' == y' 
-singleSwap ((x,y),(x',y')) = (x,y) == swap (x',y')
 
-aaa = [832, 998, 148, 570, 533, 561, 894, 147, 455, 279]
-bbb = [832, 570, 148, 998, 533, 561, 455, 147, 894, 279]
+
+howMany xs = go (head xs) (drop 1 xs) (0)
+      where go high [] count = count 
+            go high (x:xs) count 
+                  | high >= x = go (x + needGrow) (xs) (count + needGrow) 
+                  | otherwise = go (x) (xs) (count)
+              where needGrow = high - x + 1
