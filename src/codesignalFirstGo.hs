@@ -451,8 +451,9 @@ mtxA = Mtx.submatrix 1 3 1 3 $ imageMtrx  image1
 mtxB = Mtx.submatrix 1 3 2 4 $ imageMtrx  image1
 mtxC = Mtx.submatrix 2 4 1 3 $ imageMtrx  image1
 mtxD = Mtx.submatrix 2 4 2 4 $ imageMtrx  image1
+-- mtxBad = Mtx.submatrix 0 2 2 4 $ imageMtrx  image1
 
-mtxSummer mtx = foldr (+) 0 mtx
+mtxSummer mtx = sum mtx
 -- 
 -- proof of concept! \/ !
 -- *Main> mtxSummer mtxD `div` 9
@@ -464,3 +465,13 @@ mtxSummer mtx = foldr (+) 0 mtx
 -- *Main> mtxSummer mtxC `div` 9
 -- 4
 -- *Main> mtxSummer mtxD `div` 9
+
+
+tryBox xss = map (`div` 9) $ map (\(rs,re,cs,ce) -> sum $ Mtx.submatrix rs re cs ce toMtx) coordinates
+      where toMtx = Mtx.fromLists xss 
+            coordinates = [(1 , 3, 1 ,3), (1, 3 ,2 ,4), (2, 4 ,1 ,3),(2, 4 ,2, 4)]
+-- [5,4,4,4]
+
+coordGenerateAAA = filter ((==2).length)$ nub $ subsequences [[1,3],[1,3],[2,4],[2,4]]
+coordGenerateBBB = filter ((==2).length)$ nub $ subsequences ([[1,3],[1,3],[2,4],[2,4]] ++ (reverse [[1,3],[1,3],[2,4],[2,4]]))
+-- [[1,3],[1,3],[2,4],[2,4]]
