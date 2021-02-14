@@ -505,4 +505,12 @@ coordGenerateAAA = filter ((==2).length)$ nub $ subsequences [[1,3],[1,3],[2,4],
 coordGenerateBBB xss = filter ((==2).length)$ nub $ subsequences (xss ++ (reverse xss))
 -- [[1,3],[1,3],[2,4],[2,4]]
 
--- gatherCoords = 
+
+simpleEx = [1,2,3,4]
+horizOverlap xs =  filter ((==3).length) $ go xs 
+      where go [] = [] 
+            go xs = (take 3 xs) :   go (drop 1 xs)
+
+blurBox xss = go xss 
+      where go [] = []
+            go (xss) = (map (take 3) $ take 3 xss) : go (drop 1 xss)
