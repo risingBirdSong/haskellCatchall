@@ -441,6 +441,18 @@ image1 = [[7, 4, 0, 1],
          [6, 10, 7, 8], 
          [1, 4, 2, 0]]
 
+image2 = [[36,0,18,9], 
+         [27,54,9,0], 
+         [81,63,72,45]]
+
+image3 = [[36,0,18,9,9,45,27], 
+ [27,0,54,9,0,63,90], 
+ [81,63,72,45,18,27,0], 
+ [0,0,9,81,27,18,45], 
+ [45,45,27,27,90,81,72], 
+ [45,18,9,0,9,18,45], 
+ [27,81,36,63,63,72,81]]
+
 -- boxBlur image = sum $ concat image
 
 
@@ -453,7 +465,24 @@ mtxC = Mtx.submatrix 2 4 1 3 $ imageMtrx  image1
 mtxD = Mtx.submatrix 2 4 2 4 $ imageMtrx  image1
 -- mtxBad = Mtx.submatrix 0 2 2 4 $ imageMtrx  image1
 
-mtxSummer mtx = sum mtx
+goal1 = [13,13,24,24]
+goal2 = [13,24,13,24]
+
+makeCoords lngth = take lngth $ zip [1..] (tail [2..] )
+batches tups amount = concat $ map (replicate amount) tups
+stitched tups amount = concat $ take amount $ repeat tups
+
+batchesAndStiches amount = take (amount * 2) $ zip (batches (makeCoords 2) amount) (stitched (makeCoords 2) amount) 
+reshape tups = map (\((a,b), (c,d)) -> (a,b,c,d)) tups
+
+--  1 3 1 3  
+--  1 3 2 4  
+--  2 4 1 3 
+--  2 4 2 4 
+
+
+-- zipping xs ys = 
+
 -- 
 -- proof of concept! \/ !
 -- *Main> mtxSummer mtxD `div` 9
@@ -465,12 +494,10 @@ mtxSummer mtx = sum mtx
 -- *Main> mtxSummer mtxC `div` 9
 -- 4
 -- *Main> mtxSummer mtxD `div` 9
-
-subGen lngth spn = take (lngth `div` 2) $ zip [1, (1 + spn)..] [2, (2 +spn)..]
-tryBox xss = map (`div` 9) $ map (\(rs,re,cs,ce) -> sum $ Mtx.submatrix rs re cs ce toMtx) coordinates
+tryBox xss = chunksOf halfLength $ map (`div` 9) $ map (\(rs,re,cs,ce) -> sum $ Mtx.submatrix rs re cs ce toMtx) coordinates
       where toMtx = Mtx.fromLists xss 
-            coordinates = [(1 , 3, 1 ,3), (1, 3 ,2 ,4), (2, 4 ,1 ,3),(2, 4 ,2, 4)]
--- [5,4,4,4]
+            coordinates =  reshape (batchesAndStiches halfLength)
+            halfLength = length xss `div` 2
 
 subGenToCoor xs amount = map (\(x,y) -> take amount $ repeat [x,y] ) xs
 
