@@ -432,26 +432,7 @@ isSafeStep obst cand = not $ any (\o -> o `mod` cand == 0 ) obst
 
 
 -- https://app.codesignal.com/arcade/intro/level-5/5xPitc3yT3dqS7XkP
-image = [[1, 1, 1], 
-         [1, 7, 1], 
-         [1, 1, 1]]
-image1 :: (Num a) => [[a]]
-image1 = [[7, 4, 0, 1], 
-         [5, 6, 2, 2], 
-         [6, 10, 7, 8], 
-         [1, 4, 2, 0]]
 
-image2 = [[36,0,18,9], 
-         [27,54,9,0], 
-         [81,63,72,45]]
-
-image3 = [[36,0,18,9,9,45,27], 
- [27,0,54,9,0,63,90], 
- [81,63,72,45,18,27,0], 
- [0,0,9,81,27,18,45], 
- [45,45,27,27,90,81,72], 
- [45,18,9,0,9,18,45], 
- [27,81,36,63,63,72,81]]
 
 -- boxBlur image = sum $ concat image
 
@@ -507,10 +488,45 @@ coordGenerateBBB xss = filter ((==2).length)$ nub $ subsequences (xss ++ (revers
 
 
 simpleEx = [1,2,3,4]
-horizOverlap xs =  filter ((==3).length) $ go xs 
-      where go [] = [] 
-            go xs = (take 3 xs) :   go (drop 1 xs)
 
-blurBox xss = go xss 
-      where go [] = []
-            go (xss) = (map (take 3) $ take 3 xss) : go (drop 1 xss)
+image = [[1, 1, 1], 
+         [1, 7, 1], 
+         [1, 1, 1]]
+image1 :: (Num a) => [[a]]
+image1 = [[7, 4, 0, 1], 
+         [5, 6, 2, 2], 
+         [6, 10, 7, 8], 
+         [1, 4, 2, 0]]
+
+image2 = [[36,0,18,9], 
+         [27,54,9,0], 
+         [81,63,72,45]]
+
+-- [[36,0,18],[0,18,9],[27,54,9],[54,9,0],[81,63,72],[63,72,45]]
+
+image3 = [[36,0,18,9,9,45,27], 
+ [27,0,54,9,0,63,90], 
+ [81,63,72,45,18,27,0], 
+ [0,0,9,81,27,18,45], 
+ [45,45,27,27,90,81,72], 
+ [45,18,9,0,9,18,45], 
+ [27,81,36,63,63,72,81]]
+
+--  [[36,0,18],[0,18,9],[18,9,9],[9,9,45],[9,45,27],[27,0,54],[0,54,9],[54,9,0],[9,0,63],[0,63,90],[81,63,72],[63,72,45],[72,45,18],[45,18,27],[18,27,0],[0,0,9],[0,9,81],[9,81,27],[81,27,18],[27,18,45],[45,45,27],[45,27,27],[27,27,90],[27,90,81],[90,81,72],[45,18,9],[18,9,0],[9,0,9],[0,9,18],[9,18,45],[27,81,36],[81,36,63],[36,63,63],[63,63,72],[63,72,81]]
+
+
+overlap xs =  filter ((==3).length) $ go xs 
+      where go [] = [] 
+            go xs = take 3 xs :   go (drop 1 xs)
+overlapped xss =  map (map overlap) $ overlap  xss  
+subGrids xxs =  map transpose $ overlapped xxs
+solver xxs = map (map ((`div`9).sum.concat)) $ subGrids xxs
+-- start again 
+
+-- getThree (x:y:z:[]) = [x,y,z] 
+getThree (x:y:z:rst) = x:y:z : getThree (y:z:rst) 
+getThree _ = []
+
+gettingthree xss = map getThree (getThree xss)
+
+boxBlur' xss = transpose $ map (map ((`div`9).sum.concat)) $ map (chunksOf 3) $ transpose $ map (chunksOf 3) $ gettingthree xss
