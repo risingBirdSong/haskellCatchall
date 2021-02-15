@@ -49,6 +49,7 @@ dependencies:
 - probability
 - groupBy
 - data-ordlist
+- time
 
 library:
   source-dirs: src

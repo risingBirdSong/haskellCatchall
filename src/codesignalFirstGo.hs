@@ -2,7 +2,7 @@
 {-# LANGUAGE FlexibleContexts #-}
 
 import Data.List
-import Data.Maybe
+-- import Data.Maybe
 import Data.Ord
 import Data.Function
 import Debug.Trace
@@ -11,6 +11,7 @@ import qualified Data.Matrix as Mtx
 import qualified Data.Map as M 
 import qualified Data.List.GroupBy as Grp  
 import qualified Data.List.Ordered as Ordd  
+import Data.Maybe
 import Data.Tuple
 import Data.List.Split 
 import Control.Arrow
@@ -530,3 +531,20 @@ getThree _ = []
 gettingthree xss = map getThree (getThree xss)
 
 boxBlur' xss = transpose $ map (map ((`div`9).sum.concat)) $ map (chunksOf 3) $ transpose $ map (chunksOf 3) $ gettingthree xss
+
+
+
+padgame :: [[Bool]] -> [[Maybe Bool]]
+padgame mtrx =  padSides
+      where rplc = replicate (length mtrx) Nothing
+            padTopNMyb = rplc : (map (map (\x -> Just x)) mtrx) ++ [rplc]
+            padSides = map (\x -> Nothing : x ++ [Nothing ]) padTopNMyb
+
+minesweepprint mtrx = mapM_ (\x -> print x) mtrx
+
+minesweeper =[[True,True,True], 
+            [True,True,True], 
+            [True,True,True]]
+
+
+                  
