@@ -533,18 +533,66 @@ gettingthree xss = map getThree (getThree xss)
 boxBlur' xss = transpose $ map (map ((`div`9).sum.concat)) $ map (chunksOf 3) $ transpose $ map (chunksOf 3) $ gettingthree xss
 
 
-
-padgame :: [[Bool]] -> [[Maybe Bool]]
-padgame mtrx =  padSides
-      where rplc = replicate (length mtrx) Nothing
-            padTopNMyb = rplc : (map (map (\x -> Just x)) mtrx) ++ [rplc]
-            padSides = map (\x -> Nothing : x ++ [Nothing ]) padTopNMyb
-
 minesweepprint mtrx = mapM_ (\x -> print x) mtrx
 
 minesweeper =[[True,True,True], 
             [True,True,True], 
             [True,True,True]]
 
-
+-- sweeping mybmtrx = go mybmtrx 
+--       where go (x:y:z:rst)
+--             go (_) = []  
                   
+
+mymtrxr = [[False,True,True,False], 
+            [True,True,False,True], 
+            [False,False,True,False]]
+
+mynumsA =  boolstonums mymtrxr
+mymtrxrB = [[True,False,False], 
+            [False,True,False], 
+            [False,False,False]]
+mynumsB = boolstonums mymtrxrB
+
+boolNum x 
+      | x = 1 
+      | otherwise  = 0
+
+-- boolstonums :: Num a => [[Bool]] -> [[a]]
+boolstonums xs =  output 
+      where vrtcl = (replicate (length (head xs)) 0)
+            topAndBottom = vrtcl : (map (map (boolNum)) xs) ++ [vrtcl]
+            output =  map (\x -> 0 : x ++ [0]) topAndBottom 
+            
+
+mtrxAdd (a:b:xs) = (a+b) : mtrxAdd (b:xs) 
+mtrxAdd (_) = []
+
+
+minesweeperSolutionAAA x = (zipWith.zipWith) (\a b -> a - fromEnum b) newX x 
+  where 
+    newX = sumOf3 $ sumOf3 x'
+    sumOf3 = transpose . map genAAA
+    x' = (map.map) fromEnum x
+
+minesweeperSolutionAAATest x = newX 
+  where 
+    newX = sumOf3 $ sumOf3 x'
+    sumOf3 = transpose . map genAAA
+    x' = (map.map) fromEnum x
+
+
+genAAA ls = zipWith3 (\a b c -> a + b + c) (0 : ls) ls (tail ls ++ [0])
+
+
+sum3 x y z = x + y + z
+map2n = map . map
+zip2n = zipWith . zipWith
+
+sumRow a = zipWith3 sum3 a (0:a) (tail a ++ [0])
+countAll = transpose . map sumRow . transpose . map sumRow
+
+minesweeperBBB a = zip2n (-) (countAll an) an
+    where an = map2n fromEnum a
+
+    
