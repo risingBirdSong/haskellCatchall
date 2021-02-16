@@ -612,6 +612,10 @@ minesweeperBBB a = zip2n (-) (countAll an) an
 -- same length as the output
 singlerow row = zipWith3 (\a b c -> a + b + c) (0:row) (row) (tail row ++ [0])
 
+myminesweep xxs = (zipped)
+      where converToNums = boolstonums xxs 
+            horzVertical =  transpose . map singlerow . transpose . map singlerow $ converToNums
+            zipped = zipWith (zipWith (-)) horzVertical converToNums 
 
 doubleMap = map . map 
 
@@ -620,12 +624,14 @@ zzz = [[True,False,False,True],
       [False,False,True,False], 
       [True,True,False,True]]
 
+-- [[1,0,0,1], 
+-- [0,0,1,0],
+-- [1,1,0,1]]
+
 -- [[0,2,2,1], 
 --  [3,4,3,3], 
 --  [1,2,3,1]]
 
 -- doubleMap singlerow converToNums
-myminesweep xxs = (map )
-      where converToNums = boolstonums xxs 
-            hrztl = map singlerow $ converToNums
-            vrtcl = map singlerow $ transpose converToNums
+
+
