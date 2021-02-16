@@ -542,13 +542,9 @@ minesweeper =[[True,True,True],
 -- sweeping mybmtrx = go mybmtrx 
 --       where go (x:y:z:rst)
 --             go (_) = []  
-                  
+            
 
-mymtrxr = [[False,True,True,False], 
-            [True,True,False,True], 
-            [False,False,True,False]]
-
-mynumsA =  boolstonums mymtrxr
+-- mynumsA =  boolstonums mymtrxr
 mymtrxrB = [[True,False,False], 
             [False,True,False], 
             [False,False,False]]
@@ -559,15 +555,16 @@ boolNum x
       | otherwise  = 0
 
 -- boolstonums :: Num a => [[Bool]] -> [[a]]
-boolstonums xs =  output 
-      where vrtcl = (replicate (length (head xs)) 0)
-            topAndBottom = vrtcl : (map (map (boolNum)) xs) ++ [vrtcl]
-            output =  map (\x -> 0 : x ++ [0]) topAndBottom 
+boolstonums xs = (map (map (boolNum)) xs)
+             
             
 
 mtrxAdd (a:b:xs) = (a+b) : mtrxAdd (b:xs) 
 mtrxAdd (_) = []
 
+ddd =[[True,False,False,True], 
+ [False,False,True,False], 
+ [True,True,False,True]]
 
 minesweeperSolutionAAA x = (zipWith.zipWith) (\a b -> a - fromEnum b) newX x 
   where 
@@ -575,7 +572,7 @@ minesweeperSolutionAAA x = (zipWith.zipWith) (\a b -> a - fromEnum b) newX x
     sumOf3 = transpose . map genAAA
     x' = (map.map) fromEnum x
 
-minesweeperSolutionAAATest x = newX 
+minesweeperSolutionAAATest x = (newX, x) 
   where 
     newX = sumOf3 $ sumOf3 x'
     sumOf3 = transpose . map genAAA
@@ -595,4 +592,40 @@ countAll = transpose . map sumRow . transpose . map sumRow
 minesweeperBBB a = zip2n (-) (countAll an) an
     where an = map2n fromEnum a
 
-    
+
+
+
+-- single row will zip three locations together
+-- prepending 0 and appending 0 to our list will give us some padding on the left and right 
+-- so that we can safely add three values without worrying about out the edges
+-- this put the bomb count on the neighboring tiles... not, the original bomb numbers
+-- will still be there and will need to be cleaned up later by -> [new list] - [original list]
+-- example  -> 
+      -- [1,0,0,1] (original list)
+      -- becomes 
+      -- [1,1,1,1] (new list)
+      -- which will need to be cleaned to [0,1,1,0] because a bomb doesnt count distance to itself
+      -- only adjacent cells count to disctance to their neighbor bombs
+
+-- note, a good thing about singleRow function, using prepending + appending with zipwith3 is that
+-- it cleans up after itself, it doesnt leave the padding after it calculates, meaning the input is the 
+-- same length as the output
+singlerow row = zipWith3 (\a b c -> a + b + c) (0:row) (row) (tail row ++ [0])
+
+
+doubleMap = map . map 
+
+
+zzz = [[True,False,False,True], 
+      [False,False,True,False], 
+      [True,True,False,True]]
+
+-- [[0,2,2,1], 
+--  [3,4,3,3], 
+--  [1,2,3,1]]
+
+-- doubleMap singlerow converToNums
+myminesweep xxs = (map )
+      where converToNums = boolstonums xxs 
+            hrztl = map singlerow $ converToNums
+            vrtcl = map singlerow $ transpose converToNums
