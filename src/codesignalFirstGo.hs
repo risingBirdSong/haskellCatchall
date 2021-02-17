@@ -640,3 +640,15 @@ isIPv4Address s = length l == 4 && all valid l
 
 
 arrayReplace arr rplc subst = map (\x -> if x == rplc then subst else x) arr
+
+
+-- i was confused what this is doing, (:[]) , I learned that (:[]) is "lifting" the char into a [char]
+-- because that's what read expects, to be able to convert to a number
+-- map (:[]) [1,2,3]
+-- [[1],[2],[3]]
+digits :: Integer -> [Integer]
+digits = map (read . (:[])) . show
+
+
+digitsA :: Integer -> [Int]
+digitsA = map digitToInt . show
