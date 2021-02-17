@@ -2,6 +2,8 @@
 {-# LANGUAGE FlexibleContexts #-}
 
 import Data.List
+import Data.Char
+import Data.List.Split
 -- import Data.Maybe
 import Data.Ord
 import Data.Function
@@ -550,15 +552,8 @@ mymtrxrB = [[True,False,False],
             [False,False,False]]
 mynumsB = boolstonums mymtrxrB
 
-boolNum x 
-      | x = 1 
-      | otherwise  = 0
 
--- boolstonums :: Num a => [[Bool]] -> [[a]]
-boolstonums xs = (map (map (boolNum)) xs)
-             
-            
-
+      
 mtrxAdd (a:b:xs) = (a+b) : mtrxAdd (b:xs) 
 mtrxAdd (_) = []
 
@@ -610,15 +605,18 @@ minesweeperBBB a = zip2n (-) (countAll an) an
 -- note, a good thing about singleRow function, using prepending + appending with zipwith3 is that
 -- it cleans up after itself, it doesnt leave the padding after it calculates, meaning the input is the 
 -- same length as the output
-singlerow row = zipWith3 (\a b c -> a + b + c) (0:row) (row) (tail row ++ [0])
 
+boolNum x 
+      | x = 1 
+      | otherwise  = 0
+
+-- boolstonums :: Num a => [[Bool]] -> [[a]]
+boolstonums xs = (map (map (boolNum)) xs)
+singlerow row = zipWith3 (\a b c -> a + b + c) (0:row) (row) (tail row ++ [0])
 myminesweep xxs = (zipped)
-      where converToNums = boolstonums xxs 
+      where converToNums = map (map fromEnum) xxs 
             horzVertical =  transpose . map singlerow . transpose . map singlerow $ converToNums
             zipped = zipWith (zipWith (-)) horzVertical converToNums 
-
-doubleMap = map . map 
-
 
 zzz = [[True,False,False,True], 
       [False,False,True,False], 
@@ -634,4 +632,8 @@ zzz = [[True,False,False,True],
 
 -- doubleMap singlerow converToNums
 
+ipstr = "172.16.254.1"
 
+isIPv4Address s = length l == 4 && all valid l
+  where l = splitOn "." s
+        valid t = not (null t) && all isDigit t && read t <= 255
