@@ -697,3 +697,18 @@ chessBoardCellColor'' (c1:cell1) (c2:cell2) = odd c1' == odd c2'
     where
         c1' = fromEnum c1 + read cell1
         c2' = fromEnum c2 + read cell2
+
+circleOfNumbers n firstNumber = ((n `div` 2) + firstNumber) `mod` n   
+
+depositProfit deposit rate threshold = go (toRational deposit) 0
+      where go dps cnt  
+              | dps >= (toRational threshold) = cnt 
+              | otherwise = trace (show dps) go ((toRational ((toRational rate) / 100) * dps) + dps ) (succ cnt)  
+
+-- def depositProfit(deposit, rate, threshold):
+--     return math.ceil(math.log(threshold/deposit, 1+rate/100))
+
+-- depositProfit deposit rate threshold = ceiling $ b `logBase` a
+--   where a = fromIntegral threshold / fromIntegral deposit
+--         b = 1.0 + fromIntegral rate / 100.0
+
