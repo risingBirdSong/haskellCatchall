@@ -646,9 +646,19 @@ arrayReplace arr rplc subst = map (\x -> if x == rplc then subst else x) arr
 -- because that's what read expects, to be able to convert to a number
 -- map (:[]) [1,2,3]
 -- [[1],[2],[3]]
-digits :: Integer -> [Integer]
-digits = map (read . (:[])) . show
 
+-- #conversion 
 
 digitsA :: Integer -> [Int]
 digitsA = map digitToInt . show
+
+digits :: Integer -> [Integer]
+digits = map (read . (:[])) . show
+
+evenDigitsOnly n = all even $ digits n
+
+evenDigitsOnly' n = all (even . read . c2s) $ show n
+  where
+    c2s c = [c]
+
+evenDigitsOnly'' n = all (\x -> even (read [x] :: Int)) (show n)
