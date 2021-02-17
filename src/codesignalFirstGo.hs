@@ -668,3 +668,13 @@ variableName n = not (null n) && logic && ( not $ isNumber (head n))
 
 -- import Text.Regex.Posix
 --variableName name = (name =~ "^[a-zA-Z]+[a-zA-Z0-9_]*$")
+
+alphabeticShift str = map (\x -> toEnum (97 + ( (succ $ (fromEnum x) - 97) `mod` 26)) :: Char  ) str 
+
+alphabeticShift' = map succ'
+    where
+        succ' 'z' = 'a'
+        succ' x = succ x
+
+alphabeticShift'' = map (toNext) 
+    where toNext c = if c == 'z' then 'a' else succ c
