@@ -662,3 +662,9 @@ evenDigitsOnly' n = all (even . read . c2s) $ show n
     c2s c = [c]
 
 evenDigitsOnly'' n = all (\x -> even (read [x] :: Int)) (show n)
+
+variableName n = not (null n) && logic && ( not $ isNumber (head n))
+      where logic = all (\x -> isAlphaNum x || x == '_') n
+
+-- import Text.Regex.Posix
+--variableName name = (name =~ "^[a-zA-Z]+[a-zA-Z0-9_]*$")
