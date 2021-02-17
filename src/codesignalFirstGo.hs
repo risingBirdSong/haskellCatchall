@@ -678,3 +678,22 @@ alphabeticShift' = map succ'
 
 alphabeticShift'' = map (toNext) 
     where toNext c = if c == 'z' then 'a' else succ c
+
+sameColors a b 
+      | even (a + b) = "dark"
+      | otherwise  = "light"
+
+strPosistion chr = find (\ (ltr,num) -> ltr == chr) $ zip (['A'..'H']) [1..8]   
+
+singleChess piece = sameColors (snd $ fromJust (strPosistion (head piece))) ((\x -> read [x] :: Int) $ last piece)
+
+chessBoardCellColor a b = singleChess a == singleChess b
+
+chessBoardCellColor' cell1 cell2 = f cell1 == f cell2
+    where
+        f = odd . sum . map fromEnum
+
+chessBoardCellColor'' (c1:cell1) (c2:cell2) = odd c1' == odd c2'
+    where
+        c1' = fromEnum c1 + read cell1
+        c2' = fromEnum c2 + read cell2
