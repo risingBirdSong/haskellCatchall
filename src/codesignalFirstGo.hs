@@ -637,3 +637,6 @@ ipstr = "172.16.254.1"
 isIPv4Address s = length l == 4 && all valid l
   where l = splitOn "." s
         valid t = not (null t) && all isDigit t && read t <= 255
+
+
+arrayReplace arr rplc subst = map (\x -> if x == rplc then subst else x) arr
