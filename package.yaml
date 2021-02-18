@@ -50,6 +50,7 @@ dependencies:
 - groupBy
 - data-ordlist
 - time
+- vector 
 
 library:
   source-dirs: src
