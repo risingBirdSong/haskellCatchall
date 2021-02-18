@@ -752,3 +752,18 @@ extractEachKth'' arr k = let
 firstDigit str = fromMaybe '0' $ find (isNumber) str 
 
 firstDigit' = head . filter isDigit 
+
+differentSymbolsNaive st = length . group $ sort st
+
+fgh = [2, 3, 5, 1, 6]
+arrayMaxConsecutiveSum' xs k = maximum . map sum $ go xs
+      where go [] = []
+            go xs = take k xs : go (drop 1 xs)
+
+arrayMaxConsecutiveSum xs k = go xs 0
+      where go [] maxrng = maxrng
+            go (xs) maxrng
+              | (sum (take k xs)) > maxrng = go (drop 1 xs) (sum $ take k xs)
+              | otherwise = go (drop 1 xs) maxrng
+
+bgdata = [768, 77, 755, 960, 747, 25, 107, 520, 995, 404, 43, 714, 632, 642, 493, 352, 450, 625, 262, 217, 254, 55, 661, 822, 562, 187, 603, 216, 275, 76, 75, 417, 350, 942, 1000, 232, 887, 173, 858, 116, 75, 170, 529, 26, 62, 378, 667, 444, 240, 325, 444, 391, 698, 282, 870, 611, 974, 388, 586, 616, 845, 591, 525, 976, 938, 673, 413, 862, 396, 856, 764, 415, 309, 27, 583, 630, 741, 988, 456, 807, 242, 624, 149, 524, 962, 960, 900, 199, 645, 36, 343, 943, 232, 781, 445, 670, 177, 889, 57, 519]
