@@ -712,9 +712,38 @@ depositProfit deposit rate threshold = go (toRational deposit) 0
 --   where a = fromIntegral threshold / fromIntegral deposit
 --         b = 1.0 + fromIntegral rate / 100.0
 
+tsda = [0..20]
 
 absoluteValuesSumMinimization ns = snd.head $ sort $ map (absoluteWork ns) ns
-
+absoluteValuesSumMinimizationSee ns = map (absoluteWork ns) ns
+-- [(210,0),(191,1),(174,2),(159,3),(146,4),(135,5),(126,6),(119,7),(114,8),(111,9),(110,10),
+-- (111,11),(114,12),(119,13),(126,14),(135,15),(146,16),(159,17),(174,18),(191,19),(210,20)]
 absoluteWork arr n = (sum (map (\x -> abs(n - x)) arr), n)
 
 absoluteValuesSumMinimization' a = a !! (div (length a - 1) 2)
+
+
+-- ["ab", "bb", "aa"]
+
+
+inputArray =["aba", 
+      "bbb", 
+      "bab"]
+
+sortByEnum xs = foldr (+) 0  $ map fromEnum xs
+
+oneDifference xs = all (\(x,y) -> length  (x \\ y) == 1 ) $ zip xs (tail xs)
+
+stringsRearrangement xs = map (snd) $ sort $ map ((\x -> (sortByEnum x,x))) xs 
+
+
+extractEachKth inputArray k =  map snd $ filter (\(i,v) -> i `mod` k /= 0) $ zip [1..] inputArray 
+
+extractEachKth' [] k = [];
+extractEachKth' a k = take (k-1) a ++ extractEachKth (drop k a) k
+
+extractEachKth'' arr k = let
+    (seg, rest) = splitAt (k - 1) arr
+    in seg ++ case rest of
+        [] -> []
+        otherwise -> extractEachKth (tail rest) k
