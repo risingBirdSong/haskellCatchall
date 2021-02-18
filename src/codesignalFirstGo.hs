@@ -747,3 +747,8 @@ extractEachKth'' arr k = let
     in seg ++ case rest of
         [] -> []
         otherwise -> extractEachKth (tail rest) k
+
+
+firstDigit str = fromMaybe '0' $ find (isNumber) str 
+
+firstDigit' = head . filter isDigit 
