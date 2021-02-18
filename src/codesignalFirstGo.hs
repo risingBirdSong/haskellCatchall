@@ -712,3 +712,9 @@ depositProfit deposit rate threshold = go (toRational deposit) 0
 --   where a = fromIntegral threshold / fromIntegral deposit
 --         b = 1.0 + fromIntegral rate / 100.0
 
+
+absoluteValuesSumMinimization ns = snd.head $ sort $ map (absoluteWork ns) ns
+
+absoluteWork arr n = (sum (map (\x -> abs(n - x)) arr), n)
+
+absoluteValuesSumMinimization' a = a !! (div (length a - 1) 2)
