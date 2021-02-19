@@ -809,3 +809,23 @@ knapsackLight value1 weight1 value2 weight2 maxW = foldr (\(v,w) acc -> v + acc 
                                                    . scanl (\(_,accW) (v,w)-> (v, accW + w)) (0,0) 
                                                    . sortOn (Down) $ filter (\(v,w) -> w <= maxW) 
                                                     [(value1, weight1),(value2, weight2)]
+
+
+longestDigitsPrefix = takeWhile isDigit
+
+digitDegree n 
+      | n < 10 = 0 
+      | otherwise = 1 + digitDegree (adddigs n)  
+
+adddigs :: Int -> Int 
+adddigs n =  sum $ map (\x -> read [x]) $ show n 
+
+
+digitDegree' n = length $ takeWhile (>9) $ iterate f n where
+    f = sum . map digitToInt . show
+
+    digits = map digitToInt . show
+
+digitDegree'' n
+    | n < 10 = 0
+    | otherwise = digitDegree (sum $ digits n) + 1
