@@ -835,7 +835,7 @@ digits' = map digitToInt . show
 -- bishopAndPawn bishop pawn = 
 
 -- with list comprehensions, remember the fast moving / inner loop is the on the right hand side, like nm below...
-diagmoves = chunksOf 8 [ (ltr,nm) |  nm <- [1..8] , ltr <-['a'..'h']] 
+diagmoves = chunksOf 4 [ (ltr,nm) |  nm <- [1..4] , ltr <-['a'..'d']] 
 -- bottom to top, fast rows
 trnsp1 = transpose diagmoves
 -- bottom to top , fast cols 
@@ -861,7 +861,6 @@ zipping'' = zip diagmoves diagmoves
 
 ply = take 5 $ iterate (drop 1) [1..5]
 -- [[1,2,3,4,5],[2,3,4,5],[3,4,5],[4,5],[5]]
-
 ply1 = take 3 $ iterate (\x -> drop (head x) x) [2..10]
 -- [[2,3,4,5,6,7,8,9,10],[4,5,6,7,8,9,10],[8,9,10]]
 
@@ -870,3 +869,27 @@ ply2 = take 5 $ iterate (\ x -> x ++ x) [4]
 
 ply3 = take 5 $ iterate (drop 1.reverse) [1..5]
 -- [[1,2,3,4,5],[4,3,2,1],[2,3,4],[3,2],[3]]
+
+ply4 = take 4 $ iterate (intersperse '!') ['a'..'g']
+
+ply5 = take 4 $ iterate (map (+1)) [1..4]
+ply6 = take 4 $ iterate (tail) ply5
+
+ply7 = take 4 $ iterate (\x -> drop (head x) x) [2..10]
+
+
+stpA = map tails diagmoves
+wantoCutDiagonal = [
+      [[('a',1),('b',1),('c',1),('d',1)],[('b',1),('c',1),('d',1)],[('c',1),('d',1)],[('d',1)],[]],
+      [[('a',2),('b',2),('c',2),('d',2)],[('b',2),('c',2),('d',2)],[('c',2),('d',2)],[('d',2)],[]],
+      [[('a',3),('b',3),('c',3),('d',3)],[('b',3),('c',3),('d',3)],[('c',3),('d',3)],[('d',3)],[]],
+      [[('a',4),('b',4),('c',4),('d',4)],[('b',4),('c',4),('d',4)],[('c',4),('d',4)],[('d',4)],[]]]
+
+expA = zip (replicate 5 [1..5]) [0..5] 
+expB = map (\(lst,amnt) -> drop amnt lst) expA
+
+cutA = zip (stpA) [0..(length stpA)]
+cutB = map (\(dta, drp) -> drop drp dta) cutA
+
+
+getdiag x = zipWith (!!) x [0..]
