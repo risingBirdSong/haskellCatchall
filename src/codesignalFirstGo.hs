@@ -845,6 +845,9 @@ diag = zip diagmoves (tail diagmoves)
 
 prtPrint mtr = map (\x -> trace  "" x ) mtr
 
+-- map (\(a,b) -> zip a (tail b) )
+zipping'' = zip diagmoves diagmoves
+
 -- *Main> prtPrint diagmoves
 -- [
 -- [('a',1),('b',1),('c',1),('d',1),('e',1),('f',1),('g',1),('h',1)],
@@ -855,3 +858,15 @@ prtPrint mtr = map (\x -> trace  "" x ) mtr
 -- [('a',6),('b',6),('c',6),('d',6),('e',6),('f',6),('g',6),('h',6)],
 -- [('a',7),('b',7),('c',7),('d',7),('e',7),('f',7),('g',7),('h',7)],
 -- [('a',8),('b',8),('c',8),('d',8),('e',8),('f',8),('g',8),('h',8)]]
+
+ply = take 5 $ iterate (drop 1) [1..5]
+-- [[1,2,3,4,5],[2,3,4,5],[3,4,5],[4,5],[5]]
+
+ply1 = take 3 $ iterate (\x -> drop (head x) x) [2..10]
+-- [[2,3,4,5,6,7,8,9,10],[4,5,6,7,8,9,10],[8,9,10]]
+
+ply2 = take 5 $ iterate (\ x -> x ++ x) [4]
+-- [[4],[4,4],[4,4,4,4],[4,4,4,4,4,4,4,4],[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]]
+
+ply3 = take 5 $ iterate (drop 1.reverse) [1..5]
+-- [[1,2,3,4,5],[4,3,2,1],[2,3,4],[3,2],[3]]
