@@ -821,11 +821,18 @@ adddigs :: Int -> Int
 adddigs n =  sum $ map (\x -> read [x]) $ show n 
 
 
+
+digitDegree' :: Int -> Int
 digitDegree' n = length $ takeWhile (>9) $ iterate f n where
     f = sum . map digitToInt . show
 
-    digits = map digitToInt . show
-
 digitDegree'' n
     | n < 10 = 0
-    | otherwise = digitDegree (sum $ digits n) + 1
+    | otherwise = digitDegree'' (sum $ digits' n) + 1
+
+digits' = map digitToInt . show
+
+-- bishopAndPawn bishop pawn = 
+
+-- with list comprehensions, remember the fast moving / inner loop is the on the right hand side, like nm below...
+diagmoves bshp = [ (ltr,nm) |  ltr <-['a'..'h'] ,nm <- [1..8]]
