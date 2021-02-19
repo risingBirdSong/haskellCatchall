@@ -17,8 +17,13 @@ import Data.Maybe
 import Data.Tuple
 import Data.List.Split 
 import Control.Arrow
-import Data.Array
+import qualified Data.Array as A 
 import qualified Data.Vector as V
+import qualified Data.Sequence as Sq 
+
+
+
+
 
 
 
@@ -770,9 +775,22 @@ arrayMaxConsecutiveSum'' xs k = go xs 0
 
 bgdata = [768, 77, 755, 960, 747, 25, 107, 520, 995, 404, 43, 714, 632, 642, 493, 352, 450, 625, 262, 217, 254, 55, 661, 822, 562, 187, 603, 216, 275, 76, 75, 417, 350, 942, 1000, 232, 887, 173, 858, 116, 75, 170, 529, 26, 62, 378, 667, 444, 240, 325, 444, 391, 698, 282, 870, 611, 974, 388, 586, 616, 845, 591, 525, 976, 938, 673, 413, 862, 396, 856, 764, 415, 309, 27, 583, 630, 741, 988, 456, 807, 242, 624, 149, 524, 962, 960, 900, 199, 645, 36, 343, 943, 232, 781, 445, 670, 177, 889, 57, 519]
 
-arrayMaxConsecutiveSum ns k = go ns (V.fromList (replicate k 0)) 0 
+arrayMaxConsecutiveSum''' ns k = go ns (V.fromList (replicate k 0)) 0 
       where go [] myVctr mxm = mxm  
             go (x:xs) myVctr mxm
                   | V.sum (myVctr) > mxm = go xs (V.snoc ((V.tail) myVctr) x ) (V.sum (myVctr))
                   | otherwise = go xs (V.snoc ((V.tail) myVctr) x ) mxm
 
+mysq = Sq.fromList [1,2,3]
+mysqa = (Sq.<|) 9 mysq
+
+
+-- arrayMaxConsecutiveSum list n = maximum $ zipWith (-) nAhead runningTotal
+--     where
+--         runningTotal = scanl (+) 0 list
+--         nAhead       = drop n runningTotal
+
+arrayMaxConsecutiveSum list n = zip nAhead runningTotal
+    where
+        runningTotal = scanl (+) 0 list
+        nAhead       = drop n runningTotal
