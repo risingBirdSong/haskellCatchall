@@ -835,7 +835,7 @@ digits' = map digitToInt . show
 -- bishopAndPawn bishop pawn = 
 
 -- with list comprehensions, remember the fast moving / inner loop is the on the right hand side, like nm below...
-diagmoves = chunksOf 4 [ (ltr,nm) |  nm <- [1..4] , ltr <-['a'..'d']] 
+diagmoves = chunksOf 8 [ (ltr,nm) |  nm <- [1..8] , ltr <-['a'..'g']] 
 -- bottom to top, fast rows
 trnsp1 = transpose diagmoves
 -- bottom to top , fast cols 
@@ -895,3 +895,26 @@ cutB = map (\(dta, drp) -> drop drp dta) cutA
 getdiag x = zipWith (!!) x [0..]
 
 dropMoreAndMore = take 10 $ scanl (flip drop) ['a'..'m'] [1..]
+anotheroption = take 10 . map snd $ iterate (\(i, xs) -> (i + 1, drop i xs)) (1, ['a'..'m'])
+
+
+
+-- import Control.Comonad
+-- import Data.List.NonEmpty (NonEmpty(..))
+-- import qualified Data.List.NonEmpty as NonEmpty
+-- movingAverage n = extend ((/ fromIntegral n) . sum . NonEmpty.take n)
+-- initial = (0 :| [0,0,0,0,0,0,0,100,0,0,0,0,0,0,0,0]) :: NonEmpty Float
+-- mapM_ (print . NonEmpty.toList) . take 5 . iterate (movingAverage 2) $ initial
+
+-- [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,100.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+-- [0.0,0.0,0.0,0.0,0.0,0.0,0.0,50.0,50.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+-- [0.0,0.0,0.0,0.0,0.0,0.0,25.0,50.0,25.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+-- [0.0,0.0,0.0,0.0,0.0,12.5,37.5,37.5,12.5,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+-- [0.0,0.0,0.0,0.0,6.25,25.0,37.5,25.0,6.25,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+
+bishopAndPawn [x1, y1] [x2, y2] =
+    let x = abs (fromEnum x1 - fromEnum x2)
+        y = abs (fromEnum y1 - fromEnum y2)
+    in x == y
+
+enmLtrNum x y = uncurry (-) (fromEnum x, fromEnum y)
