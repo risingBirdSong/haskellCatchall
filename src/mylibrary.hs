@@ -24,3 +24,10 @@ zipWithPadding _ b xs     []     = zip xs (repeat b)
 -- a helper function I wrote wanting to zip when the values are Just, otherwise stop zipping
 maybeZip ((Just x):xs) ((Just y):ys) = (Just x, Just y) : maybeZip xs ys
 maybeZip _  _ = [] 
+
+count :: (Ord a, Integral b) => [a] -> M.Map a b
+count =
+  foldr updateMap M.empty
+    where updateMap v counts
+            | M.member v counts = M.adjust succ v counts
+            | otherwise           = M.insert v 1 counts

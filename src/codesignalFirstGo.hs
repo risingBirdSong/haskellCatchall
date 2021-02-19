@@ -918,3 +918,6 @@ bishopAndPawn [x1, y1] [x2, y2] =
     in x == y
 
 enmLtrNum x y = uncurry (-) (fromEnum x, fromEnum y)
+
+
+-- isBeautifulString str = 
