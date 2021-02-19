@@ -893,3 +893,5 @@ cutB = map (\(dta, drp) -> drop drp dta) cutA
 
 
 getdiag x = zipWith (!!) x [0..]
+
+dropMoreAndMore = take 10 $ scanl (flip drop) ['a'..'m'] [1..]
