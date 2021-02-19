@@ -794,3 +794,18 @@ arrayMaxConsecutiveSum list n = zip nAhead runningTotal
     where
         runningTotal = scanl (+) 0 list
         nAhead       = drop n runningTotal
+
+
+-- growingPlant upSpeed downSpeed desiredHeight = desiredHeight `div` (upSpeed - downSpeed)
+
+growingPlant upSpeed downSpeed desiredHeight = go upSpeed 
+      where go height 
+              | height >= desiredHeight = 1
+              | otherwise = 1 + go ( height + (upSpeed - downSpeed)) 
+
+-- foldr (\(v,w) acc -> v + acc ) 0 .
+knapsackLight value1 weight1 value2 weight2 maxW = foldr (\(v,w) acc -> v + acc ) 0 
+                                                   . takeWhile (\(w,v) -> v <= maxW) 
+                                                   . scanl (\(_,accW) (v,w)-> (v, accW + w)) (0,0) 
+                                                   . sortOn (Down) $ filter (\(v,w) -> w <= maxW) 
+                                                    [(value1, weight1),(value2, weight2)]
