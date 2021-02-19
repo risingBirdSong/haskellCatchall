@@ -1,3 +1,4 @@
+import qualified Data.Map as M
 numToNumList n = reverse $ go n 
   where go 0 = []
         go num = snd (num `divMod` 10) : go (num `div` 10)
