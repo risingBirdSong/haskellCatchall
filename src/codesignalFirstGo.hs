@@ -967,8 +967,16 @@ electionsWinners votes k
 
 -- "aabbbc"
 
-lineEncoding s = concat . map (\x -> (show $ length x) ++ ([head x])) $ group s 
+lineEncoding s = concat . filter (/="1") . split (condense $ whenElt isDigit) . concat . map (\x -> (show $ length x) ++ ([head x])) $ group s 
 
+lineEncoding' s = concat $ map encode $ group s
+    where encode [c] = [c]
+          encode s = (show $ length s) ++ [head s]
 
+lineEncoding'' = concatMap f . group
+      where f [c] = [c]
+            f  s  = (show . length) s ++ [head s]
+
+-- a very useful splitting strategy ! 
 aSplittingStrategyToKeep =  split (condense $ whenElt isDigit) "aaasdf1asdfd312dafsdaf6"
 -- ["aaasdf","1","asdfd","3","dafsdaf","6",""]
