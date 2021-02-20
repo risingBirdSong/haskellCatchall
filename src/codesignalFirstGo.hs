@@ -964,3 +964,11 @@ electionsWinners votes k
                   | k == 0 = 1
                   | otherwise = length candidates
       where candidates =  filter (\x -> x > maximum votes) $ map (+k) votes
+
+-- "aabbbc"
+
+lineEncoding s = concat . map (\x -> (show $ length x) ++ ([head x])) $ group s 
+
+
+aSplittingStrategyToKeep =  split (condense $ whenElt isDigit) "aaasdf1asdfd312dafsdaf6"
+-- ["aaasdf","1","asdfd","3","dafsdaf","6",""]
