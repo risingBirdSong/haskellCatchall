@@ -920,4 +920,29 @@ bishopAndPawn [x1, y1] [x2, y2] =
 enmLtrNum x y = uncurry (-) (fromEnum x, fromEnum y)
 
 
--- isBeautifulString str = 
+count :: (Ord a, Integral b) => [a] -> M.Map a b
+count =
+  foldr updateMap M.empty
+    where updateMap v counts
+            | M.member v counts = M.adjust succ v counts
+            | otherwise           = M.insert v 1 counts
+
+myIsSorted [] = True 
+myIsSorted [x] = True 
+myIsSorted (x:y:zs) 
+      | x <= y = myIsSorted (y:zs)
+      | otherwise = False     
+
+isBeautifulString str = rightLength && rightLtrs
+      where  rightLength = myIsSorted . reverse . map length $ grpSrt
+             rightLtrs = and $ zipWith (==) ['a'..'z'] myNub
+             grpSrt = group $ sort str
+             myNub = S.toList $ S.fromList str
+          
+isBeautifulString' s = dec counts where
+    counts = map (\c -> length $ filter (==c) s) ['a'..'z']
+    dec lst = and $ zipWith (>=) lst (tail lst)
+
+btyHelp str = (allLtrs, myNub)
+      where  allLtrs = and $ zipWith (==) ['a'..'z'] myNub
+             myNub = S.toList $ S.fromList str

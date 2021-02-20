@@ -32,3 +32,10 @@ count =
     where updateMap v counts
             | M.member v counts = M.adjust succ v counts
             | otherwise           = M.insert v 1 counts
+
+-- note, this function is already provided in Data.Ordered, but not always available, like it isnt in codesignal
+myIsSorted [] = True 
+myIsSorted [x] = True 
+myIsSorted (x:y:zs) 
+      | x < y = myIsSorted (y:zs)
+      | otherwise = False     
