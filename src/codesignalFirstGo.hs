@@ -946,3 +946,21 @@ isBeautifulString' s = dec counts where
 btyHelp str = (allLtrs, myNub)
       where  allLtrs = and $ zipWith (==) ['a'..'z'] myNub
              myNub = S.toList $ S.fromList str
+
+
+findEmailDomain adrs = reverse . takeWhile (/='@') $ reverse adrs
+findEmailDomain' = last . splitOn "@"
+
+
+buildPalindrome st = core
+            where rpts = concatMap nub $ filter ((>1).length) . group $ sort st 
+                  core = dropWhile ( not . (`elem` rpts) ) st
+
+
+revpali str = str ++ reverse str
+
+electionsWinners votes k 
+                  | k == 0 && ((length . last . group $ sort votes) > 1) = 0
+                  | k == 0 = 1
+                  | otherwise = length candidates
+      where candidates =  filter (\x -> x > maximum votes) $ map (+k) votes
