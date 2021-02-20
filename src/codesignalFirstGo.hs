@@ -994,5 +994,16 @@ deleteDigit n = (\x -> read x :: Int) $ delete (minimum shown) $ shown
 
 
 -- longestWord txt = maximumBy (\a b -> compare (length a) (length  b) )  $ words txt
-longestWord' txt = maximumBy (\a b -> compare (length a) (length  b) )  $ words txt
-longestWord txt = maximumBy (compare `on` length)  $ words txt
+longestWord' txt = maximumBy (compare `on` length) . words $ filter (\x -> (isAlpha x) || (isSpace x)) txt
+
+longestWord = maximumBy (comparing length) . splitWhen (not . isAlpha)
+
+splitNotAlpha = splitWhen (not . isAlpha)
+cleanWord txt =  words $ filter (\x -> (isAlpha x) || (isSpace x)) txt
+
+
+
+
+-- longestWord txt =  maximumBy (compare `on` length)  $ words txt
+
+-- filter (\x -> (isAlpha x) || (isSpace x))
