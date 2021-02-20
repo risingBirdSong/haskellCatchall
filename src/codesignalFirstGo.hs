@@ -1001,9 +1001,21 @@ longestWord = maximumBy (comparing length) . splitWhen (not . isAlpha)
 splitNotAlpha = splitWhen (not . isAlpha)
 cleanWord txt =  words $ filter (\x -> (isAlpha x) || (isSpace x)) txt
 
+handleTime "24" "00" = False 
+handleTime h' m' = ( h >= 0 && h <= 24) && (m >= 0 && m <= 60) 
+      where h = (read h' :: Int)
+            m = (read m' :: Int)
 
+validTime time = (\[h,m] -> handleTime h m ) $ filter (not . null) $ splitWhen (not . isNumber) time
 
 
 -- longestWord txt =  maximumBy (compare `on` length)  $ words txt
 
 -- filter (\x -> (isAlpha x) || (isSpace x))
+
+-- For inputString = "2 apples, 12 oranges", the output should be
+-- sumUpNumbers(inputString) = 14
+
+sumUpNumbers str = sum $ map (\x -> read x :: Int) $ filter (not . null ) $ splitWhen (not.isNumber) str
+
+sumUpNumbers' = sum . map read . filter (not.null) . splitWhen (not . isDigit)
