@@ -980,3 +980,19 @@ lineEncoding'' = concatMap f . group
 -- a very useful splitting strategy ! 
 aSplittingStrategyToKeep =  split (condense $ whenElt isDigit) "aaasdf1asdfd312dafsdaf6"
 -- ["aaasdf","1","asdfd","3","dafsdaf","6",""]
+
+
+-- deleteDigit n = drop 1 $ sort $ show n
+-- deleteDigit n =   (\x -> read x :: Int) . map fst . sortOn snd . drop 1 . sort $ zip (show n) [0..]
+-- deleteDigit n = (\ x -> read x :: Int) $ logic $ show n        
+--       where logic (x:y:rst)
+--                   | y == '0' = x:rst
+--                   | otherwise = y:rst
+
+deleteDigit n = (\x -> read x :: Int) $ delete (minimum shown) $ shown
+      where shown = show n  
+
+
+-- longestWord txt = maximumBy (\a b -> compare (length a) (length  b) )  $ words txt
+longestWord' txt = maximumBy (\a b -> compare (length a) (length  b) )  $ words txt
+longestWord txt = maximumBy (compare `on` length)  $ words txt
