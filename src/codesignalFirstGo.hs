@@ -1028,6 +1028,13 @@ amtrx =  [[1, 2, 1],
           [1, 2, 3],
           [2, 2, 1]]
 
+bmtrx = [[9,9,9,9,9], 
+ [9,9,9,9,9], 
+ [9,9,9,9,9], 
+ [9,9,9,9,9], 
+ [9,9,9,9,9], 
+ [9,9,9,9,9]]
+
 -- differentSquares [] = []
 -- differentSquares (a:b:rst) =  
 
@@ -1052,3 +1059,20 @@ splitMat mat = concat . transpose . map pairs . transpose . map pairs $ mat
   where pairs xs = zip xs (tail xs)
 
 -- [([(1,2),(2,1)],[(2,2),(2,2)]),([(2,2),(2,2)],[(2,2),(2,2)]),([(2,2),(2,2)],[(1,2),(2,3)]),([(1,2),(2,3)],[(2,2),(2,1)])]
+
+makePairs mtr = length $ nub $ concatMap (uncurry zip) $ pair (map pair mtr)
+      where pair xs = zip xs (tail xs) 
+
+pairMaker xs = zip xs (tail xs) 
+
+-- [[1, 2, 1],
+-- [2, 2, 2],
+-- [2, 2, 2],
+-- [1, 2, 3],
+-- [2, 2, 1]]
+pairsA = map pairMaker amtrx 
+-- [[(1,2),(2,1)],[(2,2),(2,2)],[(2,2),(2,2)],[(1,2),(2,3)],[(2,2),(2,1)]]
+pairsB = pairMaker $ pairsA 
+-- [([(1,2),(2,1)],[(2,2),(2,2)]),([(2,2),(2,2)],[(2,2),(2,2)]),([(2,2),(2,2)],[(1,2),(2,3)]),([(1,2),(2,3)],[(2,2),(2,1)])]
+pairsC = concatMap (uncurry zip) $ pairsB 
+-- [((1,2),(2,2)),((2,1),(2,2)),((2,2),(2,2)),((2,2),(2,2)),((2,2),(1,2)),((2,2),(2,3)),((1,2),(2,2)),((2,3),(2,1))]
