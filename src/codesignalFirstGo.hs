@@ -1042,3 +1042,13 @@ duos xs = zip xs (tail xs)
 splitInto2x2s :: [[a]] -> [((a, a), (a, a))]
 splitInto2x2s mat = concat $ uncurry zip <$> pairs (pairs <$> mat)
     where pairs xs = zip xs (tail xs)
+splitInto2x2sA mat = pairs (pairs <$> mat)
+    where pairs xs = zip xs (tail xs)
+
+splitsTo2x2' mat = pairs . transpose $ pairs <$> mat
+  where pairs xs = zip xs (tail xs)
+
+splitMat mat = concat . transpose . map pairs . transpose . map pairs $ mat
+  where pairs xs = zip xs (tail xs)
+
+-- [([(1,2),(2,1)],[(2,2),(2,2)]),([(2,2),(2,2)],[(2,2),(2,2)]),([(2,2),(2,2)],[(1,2),(2,3)]),([(1,2),(2,3)],[(2,2),(2,1)])]
