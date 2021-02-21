@@ -1099,16 +1099,46 @@ sudoku2 grid = (and . concat) [(map check $ transpose grid) , (map check  grid)]
             -- trio = zip 
 
 -- sub3by3 :: [[c]] -> [([(c, c, c)], [(c, c, c)], [(c, c, c)])]
-sub3by3 mtrx = map (filter isNumber) prepare
-      where trio xs = zip3 (xs) (tail xs) (tail $ tail xs) 
+sub3by3 mtrx = (and . concat) [(map dupesNotAllowed $ transpose mtrx) , (map dupesNotAllowed  mtrx), map dupesNotAllowed prepare]
+      where trio xs = concat . divvy 1 3 $ zip3 (xs) (tail xs) (tail $ tail xs)
             prepare = map unpack3by3 $ concatMap (uncurry3 zip3) $ trio (map trio mtrx)
-            -- solve = map (\x -> length x == length (nub x)) $  map pieces prepare
-uncurry3 f (x,y,z) = f x y z 
+            pieces xs = filter isNumber xs
+            dupesNotAllowed x = (length $ pieces x) == (length.nub $ pieces x)
 
-trio xs = zip3 (xs) (tail xs) (tail $ tail xs)
+sudoku2' grid = valid grid && valid cols && valid subGrid
+  where
+    valid = all (ko . filter (/= '.'))
+    cols = transpose grid
+    subGrid = map concat . concatMap (chunksOf 3) . transpose $ map (chunksOf 3) grid
+
+ko ls = length ls == length (nub ls)
+
+
+sudoku2'' grid = check rows && check cols && check sqrs
+    where rows       = grid
+          cols       = transpose grid
+          sqrs       = map concat $ chunksOf 3 $ concatMap transpose $ chunksOf 3 grid
+          
+check lists = and $ map (\list -> list == nub list) filtered
+    where filtered = map (filter isDigit) lists
+
+sudoku2''' grid = all valid rows && all valid cols && all valid boxes
+  where
+    rows = grid
+    cols = transpose grid
+    boxes = map concat $ concatMap transpose $ splitInto3 $ map splitInto3 grid
+    splitInto3 (x:y:z:xs) = [x,y,z] : splitInto3 xs
+    splitInto3 [] = []
+    valid block = let b = filter (/= '.') block in b == (nub b)
+
+
+uncurry3 f (x,y,z) = f x y z 
+trio xs = concat . divvy 1 3 $ zip3 (xs) (tail xs) (tail $ tail xs)
 
 unpack3tup (x,y,z) = [x,y,z]
 unpack3by3 submtr = concat $ map unpack3tup $ unpack3tup submtr
+
+maptrioA mtrx = map unpack3by3 $ concatMap (uncurry3 zip3) $ trio (map trio mtrx)
 
 mygrida =  [['.', '.', '.', '1', '4', '.', '.', '2', '.'],
             ['.', '.', '6', '.', '.', '.', '.', '.', '.'],
