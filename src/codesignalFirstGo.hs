@@ -1082,3 +1082,7 @@ differentSquares' mtrx = length . nub . concat . ap (zipWith zip) tail $ map (ap
 differentSquares'' m = length $ nub $ concat $ map f $ zipWith zip m (tail m)
       where f m = zipWith two2four m (tail m)
             two2four (a,b) (c,d) = [a,b,c,d]
+
+
+differentSquares''' mtrx = length . nub . concat . transpose . map pairs . transpose $ map pairs mtrx
+      where pairs xs = zip xs (tail xs)
