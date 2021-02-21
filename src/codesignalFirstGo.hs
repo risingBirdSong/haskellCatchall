@@ -1086,3 +1086,46 @@ differentSquares'' m = length $ nub $ concat $ map f $ zipWith zip m (tail m)
 
 differentSquares''' mtrx = length . nub . concat . transpose . map pairs . transpose $ map pairs mtrx
       where pairs xs = zip xs (tail xs)
+
+--       -- ["doc", "doc", "image", "doc(1)", "doc"]
+
+mymp = M.fromList [("doc",1), ("image", 2)]
+
+
+sudoku2 grid = (and . concat) [(map check $ transpose grid) , (map check  grid)]
+      where pieces xs = filter isAlphaNum xs
+            check x = (length $ pieces x) == (length.nub $ pieces x)
+            -- submtrx 
+            -- trio = zip 
+
+-- sub3by3 :: [[c]] -> [([(c, c, c)], [(c, c, c)], [(c, c, c)])]
+sub3by3 mtrx = map (filter isNumber) prepare
+      where trio xs = zip3 (xs) (tail xs) (tail $ tail xs) 
+            prepare = map unpack3by3 $ concatMap (uncurry3 zip3) $ trio (map trio mtrx)
+            -- solve = map (\x -> length x == length (nub x)) $  map pieces prepare
+uncurry3 f (x,y,z) = f x y z 
+
+trio xs = zip3 (xs) (tail xs) (tail $ tail xs)
+
+unpack3tup (x,y,z) = [x,y,z]
+unpack3by3 submtr = concat $ map unpack3tup $ unpack3tup submtr
+
+mygrida =  [['.', '.', '.', '1', '4', '.', '.', '2', '.'],
+            ['.', '.', '6', '.', '.', '.', '.', '.', '.'],
+            ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
+            ['.', '.', '1', '.', '.', '.', '.', '.', '.'],
+            ['.', '6', '7', '.', '.', '.', '.', '.', '9'],
+            ['.', '.', '.', '.', '.', '.', '8', '1', '.'],
+            ['.', '3', '.', '.', '.', '.', '.', '.', '6'],
+            ['.', '.', '.', '.', '.', '7', '.', '.', '.'],
+            ['.', '.', '.', '5', '.', '.', '.', '7', '.']]
+
+mygridb = [['.', '.', '.', '.', '2', '.', '.', '9', '.'],
+        ['.', '.', '.', '.', '6', '.', '.', '.', '.'],
+        ['7', '1', '.', '.', '7', '5', '.', '.', '.'],
+        ['.', '7', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '.', '.', '8', '3', '.', '.', '.'],
+        ['.', '.', '8', '.', '.', '7', '.', '6', '.'],
+        ['.', '.', '.', '.', '.', '2', '.', '.', '.'],
+        ['.', '1', '.', '2', '.', '.', '.', '.', '.'],
+        ['.', '2', '.', '.', '3', '.', '.', '.', '.']]
