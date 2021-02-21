@@ -20,7 +20,7 @@ import Control.Arrow
 import qualified Data.Array as A 
 import qualified Data.Vector as V
 import qualified Data.Sequence as Sq 
-
+import Control.Monad
 
 
 
@@ -1076,3 +1076,9 @@ pairsB = pairMaker $ pairsA
 -- [([(1,2),(2,1)],[(2,2),(2,2)]),([(2,2),(2,2)],[(2,2),(2,2)]),([(2,2),(2,2)],[(1,2),(2,3)]),([(1,2),(2,3)],[(2,2),(2,1)])]
 pairsC = concatMap (uncurry zip) $ pairsB 
 -- [((1,2),(2,2)),((2,1),(2,2)),((2,2),(2,2)),((2,2),(2,2)),((2,2),(1,2)),((2,2),(2,3)),((1,2),(2,2)),((2,3),(2,1))]
+
+differentSquares' mtrx = length . nub . concat . ap (zipWith zip) tail $ map (ap zip tail) mtrx
+
+differentSquares'' m = length $ nub $ concat $ map f $ zipWith zip m (tail m)
+      where f m = zipWith two2four m (tail m)
+            two2four (a,b) (c,d) = [a,b,c,d]
