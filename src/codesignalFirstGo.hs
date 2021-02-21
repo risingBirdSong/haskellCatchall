@@ -1019,3 +1019,26 @@ validTime time = (\[h,m] -> handleTime h m ) $ filter (not . null) $ splitWhen (
 sumUpNumbers str = sum $ map (\x -> read x :: Int) $ filter (not . null ) $ splitWhen (not.isNumber) str
 
 sumUpNumbers' = sum . map read . filter (not.null) . splitWhen (not . isDigit)
+
+-- amtrx :: Num a => [[a]]
+amtrx :: [[Integer]]
+amtrx =  [[1, 2, 1],
+          [2, 2, 2],
+          [2, 2, 2],
+          [1, 2, 3],
+          [2, 2, 1]]
+
+-- differentSquares [] = []
+-- differentSquares (a:b:rst) =  
+
+-- 
+doTheMatrix mtr = nub $ concatMap (\x -> zip (head x ) (last x)) $ chunksOf 2 . concatMap (map (divvy 2 1)) $ divvy 2 1 mtr
+
+zipMe = [[[1,2],[2,1]],[[2,2],[2,2]]]
+
+duos xs = zip xs (tail xs)
+
+-- great 
+splitInto2x2s :: [[a]] -> [((a, a), (a, a))]
+splitInto2x2s mat = concat $ uncurry zip <$> pairs (pairs <$> mat)
+    where pairs xs = zip xs (tail xs)
