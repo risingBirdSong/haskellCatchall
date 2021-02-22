@@ -1159,3 +1159,28 @@ mygridb = [['.', '.', '.', '.', '2', '.', '.', '9', '.'],
         ['.', '.', '.', '.', '.', '2', '.', '.', '.'],
         ['.', '1', '.', '2', '.', '.', '.', '.', '.'],
         ['.', '2', '.', '.', '3', '.', '.', '.', '.']]
+
+slnt     = [['O', '1'],
+            ['T', '0'],
+            ['W', '9'],
+            ['E', '5'],
+            ['N', '4']]
+crypt = ["SEND", "MORE", "MONEY"]
+
+leadingZeroLtr sltn =  filter ('0' `elem`) sltn
+solve xs slnt 
+         | null zroLetter = True 
+         | otherwise = checkLtrs xs (head $ head zroLetter)
+      where zroLetter = leadingZeroLtr slnt  
+checkLtrs xs ltr = all (\x -> head x /= ltr) xs
+
+
+-- Singly-linked lists are already defined with this interface:
+data ListNode a = ListNode { val :: a
+                           , next :: ListNode a
+                           } | Nil deriving Show
+llA = ListNode 1 llB
+llB = ListNode 2 llEnd
+llEnd = ListNode {val=3, next=Nil}
+convertLLToLst Nil = [] 
+convertLLToLst (ListNode v n) = v : convertLLToLst n  
