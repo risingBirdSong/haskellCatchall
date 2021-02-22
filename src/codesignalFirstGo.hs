@@ -1099,8 +1099,9 @@ sudoku2 grid = (and . concat) [(map check $ transpose grid) , (map check  grid)]
             -- trio = zip 
 
 -- sub3by3 :: [[c]] -> [([(c, c, c)], [(c, c, c)], [(c, c, c)])]
-sub3by3 mtrx = (and . concat) [(map dupesNotAllowed $ transpose mtrx) , (map dupesNotAllowed  mtrx), map dupesNotAllowed prepare]
-      where trio xs = concat . divvy 1 3 $ zip3 (xs) (tail xs) (tail $ tail xs)
+sudukoValidateBoard :: [[Char]] -> Bool
+sudukoValidateBoard mtrx = (and . concat) [map dupesNotAllowed $ transpose mtrx, map dupesNotAllowed mtrx, map dupesNotAllowed prepare]
+      where trio xs = concat . divvy 1 3 $ zip3 xs (tail xs) (tail $ tail xs)
             prepare = map unpack3by3 $ concatMap (uncurry3 zip3) $ trio (map trio mtrx)
             pieces xs = filter isNumber xs
             dupesNotAllowed x = (length $ pieces x) == (length.nub $ pieces x)
@@ -1184,3 +1185,4 @@ llB = ListNode 2 llEnd
 llEnd = ListNode {val=3, next=Nil}
 convertLLToLst Nil = [] 
 convertLLToLst (ListNode v n) = v : convertLLToLst n  
+
