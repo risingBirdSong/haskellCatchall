@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b6fdb1a0a91dc6ea06abb838ee4efc2c4acaf9fea2008d7f16983c86dcdf5c39
+-- hash: 4fc330cc76b3dd78ac4ee0124ddf145e001d0a73e2c8a29e4ce7d78d3c5a43f4
 
 name:           catchallHaskell
 version:        0.1.0.0
@@ -43,6 +43,7 @@ library
     , data-ordlist
     , groupBy
     , hspec
+    , lens
     , matrix
     , mtl
     , primes
@@ -81,6 +82,7 @@ executable catchallHaskell-exe
     , data-ordlist
     , groupBy
     , hspec
+    , lens
     , matrix
     , mtl
     , primes
@@ -120,6 +122,7 @@ test-suite catchallHaskell-test
     , data-ordlist
     , groupBy
     , hspec
+    , lens
     , matrix
     , mtl
     , primes

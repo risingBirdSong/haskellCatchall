@@ -51,6 +51,7 @@ dependencies:
 - data-ordlist
 - time
 - vector 
+- lens
 
 library:
   source-dirs: src
