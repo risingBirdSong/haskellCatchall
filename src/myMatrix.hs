@@ -1,6 +1,7 @@
 import Data.List 
 import Data.Char
-myMatrix = [
+import Debug.Trace
+testMatrix = [
     [1,3,2,4,5],
     [6,7,9,2,3],
     [9,8,4,5,6],
@@ -17,9 +18,23 @@ diagonals = tail . go [] where
 
 diagonals' []       = []
 diagonals' ([]:xss) = xss
-diagonals' xss      = zipWith (++) (map ((:[]) . head) xss ++ repeat [])
-                                  ([]:(diagonals' (map tail xss)))
+diagonals' xss      =  zipWith (++) (trace ("leftBranch>" ++ (take 20 $ show leftBranch))leftBranch)
+                                  (trace ("rightBranch>" ++ show rightBranch) rightBranch )
+                      where leftBranch = map (\x -> (:[]) $ head x) xss ++ repeat []
+                            rightBranch = ([]:(diagonals' (map tail xss)))
 
+-- *Main> diagonals' testMatrix
+-- leftBranch>[[1],[6],[9],[0],[],
+-- leftBranch>[[3],[7],[8],[4],[],
+-- leftBranch>[[2],[9],[4],[1],[],
+-- leftBranch>[[4],[2],[5],[7],[],
+-- leftBranch>[[5],[3],[6],[8],[],
+-- rightBranch>[[],[],[],[]]
+-- rightBranch>[[],[5],[3],[6],[8]]
+-- rightBranch>[[],[4],[2,5],[5,3],[7,6],[8]]
+-- rightBranch>[[],[2],[9,4],[4,2,5],[1,5,3],[7,6],[8]]
+-- rightBranch>[[],[3],[7,2],[8,9,4],[4,4,2,5],[1,5,3],[7,6],[8]]
+-- [[1],[6,3],[9,7,2],[0,8,9,4],[4,4,2,5],[1,5,3],[7,6],[8]]
 
 diagonals'' = map concat
           . transpose
