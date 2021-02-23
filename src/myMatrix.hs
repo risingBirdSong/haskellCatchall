@@ -1,12 +1,7 @@
 import Data.List 
 import Data.Char
 import Debug.Trace
-testMatrix = [
-    [1,3,2,4,5],
-    [6,7,9,2,3],
-    [9,8,4,5,6],
-    [0,4,1,7,8]
-  ]
+
 diagonals :: [[a]] -> [[a]]
 diagonals = tail . go [] where
     -- it is critical for some applications that we start producing answers
@@ -23,22 +18,28 @@ diagonals' xss      =  zipWith (++) (trace ("leftBranch>" ++ (take 20 $ show lef
                       where leftBranch = map (\x -> (:[]) $ head x) xss ++ repeat []
                             rightBranch = ([]:(diagonals' (map tail xss)))
 
--- *Main> diagonals' testMatrix
--- leftBranch>[[1],[6],[9],[0],[],
--- leftBranch>[[3],[7],[8],[4],[],
--- leftBranch>[[2],[9],[4],[1],[],
--- leftBranch>[[4],[2],[5],[7],[],
--- leftBranch>[[5],[3],[6],[8],[],
+-- leftBranch>[[1],[6],[11],[16],[
+-- leftBranch>[[2],[7],[12],[17],[
+-- leftBranch>[[3],[8],[13],[18],[
+-- leftBranch>[[4],[9],[14],[19],[
+-- leftBranch>[[5],[10],[15],[20],
 -- rightBranch>[[],[],[],[]]
--- rightBranch>[[],[5],[3],[6],[8]]
--- rightBranch>[[],[4],[2,5],[5,3],[7,6],[8]]
--- rightBranch>[[],[2],[9,4],[4,2,5],[1,5,3],[7,6],[8]]
--- rightBranch>[[],[3],[7,2],[8,9,4],[4,4,2,5],[1,5,3],[7,6],[8]]
--- [[1],[6,3],[9,7,2],[0,8,9,4],[4,4,2,5],[1,5,3],[7,6],[8]]
+-- rightBranch>[[],[5],[10],[15],[20]]
+-- rightBranch>[[],[4],[9,5],[14,10],[19,15],[20]]
+-- rightBranch>[[],[3],[8,4],[13,9,5],[18,14,10],[19,15],[20]]
+-- rightBranch>[[],[2],[7,3],[12,8,4],[17,13,9,5],[18,14,10],[19,15],[20]]
+-- [[1],[6,2],[11,7,3],[16,12,8,4],[17,13,9,5],[18,14,10],[19,15],[20]]
+testMatrix = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9]
+  ]
 
+diagonals'' :: (Num a, Show a) => [[a]] -> [[a]]
 diagonals'' = map concat
           . transpose
-          . zipWith (\ns xs -> ns ++ map (:[]) xs)
+          . (\x -> trace (show x) x)
+          . zipWith (\ns xs -> (ns ++ map (:[]) xs))
                     (iterate ([]:) [])
 
 -- [ [1,2,3], [4,5,6], [7,8,9] ]
