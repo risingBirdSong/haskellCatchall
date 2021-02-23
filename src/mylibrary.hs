@@ -39,3 +39,9 @@ myIsSorted [x] = True
 myIsSorted (x:y:zs) 
       | x < y = myIsSorted (y:zs)
       | otherwise = False     
+
+
+foldCount xs = foldr logic (M.empty) xs 
+    where logic x mp 
+              | M.member x mp = M.adjust (+1) x mp
+              | otherwise = M.insert x 1 mp 
