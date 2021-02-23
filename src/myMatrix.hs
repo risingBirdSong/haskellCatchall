@@ -6,15 +6,28 @@ myMatrix = [
     [9,8,4,5,6],
     [0,4,1,7,8]
   ]
-myDiag n mtrx = go (n) (transpose $ take n mtrx)
-    where go 0 _ = [] 
-          go n (r:rs) = indx (n-1) r : go (n-1) rs 
-              
--- caller mtrx = transpose mtrx
+diagonals :: [[a]] -> [[a]]
+diagonals = tail . go [] where
+    -- it is critical for some applications that we start producing answers
+    -- before inspecting es_
+    go b es_ = [h | h:_ <- b] : case es_ of
+        []   -> transpose ts
+        e:es -> go (e:ts) es
+        where ts = [t | _:t <- b]
 
-indx n xs
-      | n >= ln || n < 0 = Nothing 
-      | otherwise = Just (xs !! n)
-    where ln = length xs 
+diagonals' []       = []
+diagonals' ([]:xss) = xss
+diagonals' xss      = zipWith (++) (map ((:[]) . head) xss ++ repeat [])
+                                  ([]:(diagonals' (map tail xss)))
 
--- diags 
+
+diagonals'' = map concat
+          . transpose
+          . zipWith (\ns xs -> ns ++ map (:[]) xs)
+                    (iterate ([]:) [])
+
+-- [ [1,2,3], [4,5,6], [7,8,9] ]
+
+
+headTest xs = [h | h:_ <- xs]
+tailTest xs = [t | _:t <- xs]
