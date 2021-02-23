@@ -3,6 +3,7 @@ import Data.Char
 import qualified Data.Map as M
 import qualified Data.Vector as V 
 import Control.Lens 
+import Data.Maybe
 import Debug.Trace
 
 foldCount xs = foldr logic (M.empty) xs 
@@ -39,27 +40,6 @@ testMatrix = [
 diagsA mtrx = zipWith (\blnks rows -> blnks ++ map (:[]) rows) (iterate ([]:) []) mtrx
 
 -- fileNames fls 
-
-fnames = ["doc", 
-        "doc", 
-        "image", 
-        "doc(1)", 
-        "doc"]
-
-theseas = ["a(1)", 
-   "a(6)", 
-   "a", 
-   "a", 
-   "a", 
-   "a", 
-   "a", 
-   "a", 
-   "a", 
-   "a", 
-   "a", 
-   "a"]
-
-
 -- fAppnd f n = f ++ "(" ++ show n ++ ")"  
 
 -- ["a(1)", 
@@ -127,3 +107,60 @@ parseFileForLtr f
 
 mymp = M.fromList [('a', [1,6])]
 
+
+fnames = ["doc", 
+        "doc", 
+        "image", 
+        "doc(1)", 
+        "doc"]
+
+theseas = ["a(1)", 
+   "a(6)", 
+   "a", 
+   "a", 
+   "a", 
+   "a", 
+   "a", 
+   "a", 
+   "a", 
+   "a", 
+   "a", 
+   "a"]
+
+
+fileNaming' names = reverse $ foldl' addName [] names
+    where addName acc name = (if name `elem` acc then getNewName name acc else name) : acc
+    
+getNewName name nameList = head $ dropWhile (\x -> elem x nameList) newNames
+    where newNames = map (\n -> concat [name,"(",show n,")"]) [1..]
+    
+
+fileNaming'' xs = f [] xs
+
+f xs [] = []
+f xs (y:ys) =
+    z : f (z:xs) ys
+    where
+    z = if elem y xs then g y xs else y
+
+g x xs =
+    head $ filter (\e -> not $ elem e xs) $ map (\i -> x ++ "(" ++ show i ++ ")") [1..]
+
+fileNaming''' names = foldl' go [] names
+    where go acc name = case elem name acc of
+                            False -> acc ++ [name]
+                            True  -> acc ++ [makeUnique name acc]
+
+makeUnique name names = concat [name, "(" ,modifier, ")"]
+    where modifier = show $ 
+                     fromJust $ 
+                     find (\x -> not $ elem (concat [name, "(", show x, ")"]) names) [1..]
+
+findSmallestUnused s m = case M.lookup s m of Nothing -> s
+                                              Just True -> let tries = zipWith (\n s -> s ++ "("++(show n)++")") [1..] (repeat s)
+                                                    in fromJust $ find (\s -> M.notMember s m) tries
+                 
+fileNaming'''' a = go M.empty a 
+           where go m [] = []
+                 go m (s:ss) = let s' = findSmallestUnused s m 
+                        in s' : go (M.insert s' True m) ss
