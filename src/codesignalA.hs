@@ -19,3 +19,17 @@ countFiles files = go files (M.empty)
                                          | x > 1 -> (f ++ "(" ++ (show x) ++ ")(" ++ (show x) ++ ")") : go fs (M.adjust (+1) f mp)
                                       Nothing -> go fs (M.insert "error" 1 mp)
               | otherwise = f : go fs (M.insert f 1 mp)
+
+aa =  [[4, 1],
+                [4, -1],
+                [0, 0],
+                [6, 1]]
+
+bb = [[3,1], 
+      [6,1], 
+      [4,1], 
+      [5,1]]
+
+companyBotStrategy trn =  case (map head $ filter (\[v,crct] -> crct == 1) trn) of 
+                                [] -> 0.0
+                                xs -> (realToFrac $ sum xs) / (realToFrac $ length xs)
