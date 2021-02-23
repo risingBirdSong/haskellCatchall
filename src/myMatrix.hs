@@ -42,8 +42,6 @@ diagonals'' = map concat
           . zipWith (\ns xs -> (ns ++ map (:[]) xs))
                     (iterate ([]:) [])
 
--- [ [1,2,3], [4,5,6], [7,8,9] ]
 
 
-headTest xs = [h | h:_ <- xs]
-tailTest xs = [t | _:t <- xs]
+remakeDiagonals xss = map concat . transpose $ zipWith (\blanks xs -> blanks ++ (map (:[]) xs)) (iterate ([]:) []) xss
