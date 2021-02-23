@@ -1,4 +1,5 @@
 import qualified Data.Map as M
+import Data.List
 numToNumList n = reverse $ go n 
   where go 0 = []
         go num = snd (num `divMod` 10) : go (num `div` 10)
@@ -45,3 +46,14 @@ foldCount xs = foldr logic (M.empty) xs
     where logic x mp 
               | M.member x mp = M.adjust (+1) x mp
               | otherwise = M.insert x 1 mp 
+
+
+-- finds the next available number in a sequence, preferring lowest numbers above zero
+--with no duplicates
+-- this is a helper function coming from this challenge
+-- https://app.codesignal.com/arcade/intro/level-12/sqZ9qDTFHXBNrQeLC
+nextNumber taken = go taken [0..]
+  where go [] (n:ns) = (n, (sort (n:taken)))
+        go (t:tkn) (n:ns) 
+          | n < t = (n, sort (n:taken))
+          | n == t = go tkn [(n+1)..]

@@ -3,6 +3,7 @@ import Data.Char
 import qualified Data.Map as M
 import qualified Data.Vector as V 
 import Control.Lens 
+import Debug.Trace
 
 foldCount xs = foldr logic (M.empty) xs 
     where logic x mp 
@@ -45,20 +46,19 @@ fnames = ["doc",
         "doc(1)", 
         "doc"]
 
---           0                1                       2               3              4
--- myMap -> (doc : 1) -> (doc : 2, doc(1) : 1) ->  (image : 1) -> (doc(1) : 2) ->  (doc : 3 )
--- output -> "doc"          "doc(1)"                "image"         doc(1)(1)         doc(2)
+theseas = ["a(1)", 
+   "a(6)", 
+   "a", 
+   "a", 
+   "a", 
+   "a", 
+   "a", 
+   "a", 
+   "a", 
+   "a", 
+   "a", 
+   "a"]
 
-
-fileNames files = go files (M.empty) 
-  where go  []  mp = []
-        go (f:fs) mp 
-          | M.member f mp = prnsPrint : go fs ( M.adjust (+1) f (M.insert prnsPrint 1 mp))
-          | otherwise = f : go fs (M.insert f 1 mp) 
-            where fAppnd f n = f ++ "(" ++ show n ++ ")" 
-                  lkp k = case (M.lookup k mp) of
-                    Just x -> x
-                  prnsPrint = (fAppnd f (lkp f))
 
 -- fAppnd f n = f ++ "(" ++ show n ++ ")"  
 
@@ -97,8 +97,33 @@ fileNames files = go files (M.empty)
 -- notice that the third a gets output as simple "a" because zero wasnt taken yet.
 
 -- below is a helper function to find the next occurence
-nextNumber taken = go taken [0..]
+nextNumber taken = go (sort taken) [0..]
   where go [] (n:ns) = (n, (sort (n:taken)))
         go (t:tkn) (n:ns) 
           | n < t = (n, sort (n:taken))
           | n == t = go tkn [(n+1)..]
+
+
+fileNames files = go files (M.empty) 
+  where go  []  mp = []
+        go (f:fs) mp 
+          | M.member (parseFileForLtr f) mp =  (fAppnd f currentNumber) : go fs (M.insert (parseFileForLtr f) (nextNums) mp)
+          | otherwise = f : go fs (M.insert (parseFileForLtr f) ([parseFileForNum f]) mp)
+            where fAppnd f n = f ++ "(" ++ show n ++ ")" 
+                  getFromM k = case (M.lookup k mp) of 
+                                Just x -> x
+                  (currentNumber,nextNums) = nextNumber $ getFromM (parseFileForLtr f)
+
+
+parseFileForNum f' 
+  | last f' == ')' = digitToInt $ last $ init f'
+  | otherwise = 0
+
+parseFileForLtr f 
+  | last f == ')' =  reverse $ drop 1 $ dropWhile (isNumber) $ (reverse $ init f)
+  | otherwise = f
+-- getFromM k = case (M.lookup k mp) of 
+--                                 Just x -> x
+
+mymp = M.fromList [('a', [1,6])]
+
