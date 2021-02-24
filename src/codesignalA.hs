@@ -1,3 +1,5 @@
+-- {-# LANGUAGE FlexibleContexts #-}
+
 import Data.List
 import Numeric 
 import Data.Char 
@@ -243,14 +245,37 @@ lastSpiral n = [(2*n - 1)..(3*n - 2)]
 
 prttyMtr mtr = mapM_ (print) mtr
 
-spiral n = blank
-  where blank = replicate n (replicate n (-1))
+-- spiral n = go (n*n) [] [1..(n*n)]
+--     where go n' (xs) (v:vs)
+--               | n' == 20 = []
+--               | otherwise = v : go (n'-1) xs vs
+          -- go n (s:structrs) (v:vals) = go (n-1) (v:s:structrs) (vals)          
 
-horizontal [] _ = [] 
-horizontal (x:xs) (v:vs) = v : horizontal xs vs
-
-vertical [] _ = []
-vertical (xs:xxs) (v:vs) = (v:xs) : vertical xxs vs
 -- *Main> vertical [[],[],[]] [1,2,3]
 -- [[1],[2],[3]]
 
+-- [[1,2,3,4,5], 
+--  [16,17,18,19,6], 
+--  [15,24,25,20,7], 
+--  [14,23,22,21,8], 
+--  [13,12,11,10,9]]
+
+bigExample = [[1,2,3,4,5], 
+              [16,17,18,19,6], 
+              [15,24,25,20,7], 
+              [14,23,22,21,8], 
+              [13,12,11,10,9]]
+
+-- 1 == hrz right
+-- 2 == vrt down
+--3 == hrz left 
+-- 4 == vrt up 
+
+spiralViewer mtrx = dirctr (mtrx) 1
+  where dirctr (xs:xss) dir
+          | dir == 1 = trace (show $ hrzRight xs dir) (dirctr ((hrzRight xs dir):xss) 3) 
+          | dir == 3 = hrzLeft xs dir
+        hrzRight [] dir = [] 
+        hrzRight (x:xs) dir = x : hrzRight xs dir 
+        hrzLeft [] dir = []
+        hrzLeft (x:xs) dir = (hrzLeft xs dir) ++ [x]
