@@ -277,7 +277,7 @@ spiralViewer mtrx = dirctr (mtrx) 1
           | dir == 2 = vrtDown (xs:xss)
           | dir == 3 = hrzLeft xs
         -- hrzRight [x] = [x] -- note, this will prevent the duplicate 5, but not sure if its the right idea yet
-        hrzRight [x] = [x] 
+        hrzRight [] = [] 
         hrzRight (x:xs) =  x : (trace (show x) hrzRight xs)  
         hrzLeft [] = []
         hrzLeft (x:xs) = (hrzLeft xs  ++ [x])
