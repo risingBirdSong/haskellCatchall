@@ -175,3 +175,12 @@ numToBin x = showIntAtBase 2 intToDigit x ""
 binToNum bins = sum $ reverse $ go (reverse $ bins) 1
   where go [] mlt = []
         go (b:bs) mlt = ((digitToInt b)*mlt) : go bs (mlt * 2)
+
+
+toDec :: String -> Int
+toDec = foldl' (\acc x -> acc * 2 + digitToInt x) 0
+
+-- "111"
+-- (0 + 1) -> (2 + 1) -> (6 + 1) == 7
+-- "101" 
+-- (0+1) -> (2 + 0) -> (4 + 1) == 5  
