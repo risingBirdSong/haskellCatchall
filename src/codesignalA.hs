@@ -273,9 +273,13 @@ bigExample = [[1,2,3,4,5],
 
 spiralViewer mtrx = dirctr (mtrx) 1
   where dirctr (xs:xss) dir
-          | dir == 1 = trace (show $ hrzRight xs dir) (dirctr ((hrzRight xs dir):xss) 3) 
-          | dir == 3 = hrzLeft xs dir
-        hrzRight [] dir = [] 
-        hrzRight (x:xs) dir = x : hrzRight xs dir 
-        hrzLeft [] dir = []
-        hrzLeft (x:xs) dir = (hrzLeft xs dir) ++ [x]
+          | dir == 1 = (dirctr ((hrzRight xs):xss) 2) 
+          | dir == 2 = vrtDown (xs:xss)
+          | dir == 3 = hrzLeft xs
+        -- hrzRight [x] = [x] -- note, this will prevent the duplicate 5, but not sure if its the right idea yet
+        hrzRight [x] = [x] 
+        hrzRight (x:xs) =  x : (trace (show x) hrzRight xs)  
+        hrzLeft [] = []
+        hrzLeft (x:xs) = (hrzLeft xs  ++ [x])
+        vrtDown [] = []
+        vrtDown (xs:xss) = trace (show $ last xs) vrtDown (xss) 
