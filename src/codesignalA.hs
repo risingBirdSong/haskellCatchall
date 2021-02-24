@@ -1,4 +1,5 @@
 import Data.List
+import Numeric 
 import Data.Char 
 import qualified Data.Map as M
 import qualified Data.Vector as V 
@@ -159,8 +160,18 @@ makeUnique name names = concat [name, "(" ,modifier, ")"]
 findSmallestUnused s m = case M.lookup s m of Nothing -> s
                                               Just True -> let tries = zipWith (\n s -> s ++ "("++(show n)++")") [1..] (repeat s)
                                                     in fromJust $ find (\s -> M.notMember s m) tries
-                 
+
+tries s = take 10 $ zipWith (\n s -> s ++ "("++(show n)++")") [1..] (repeat s)
+
 fileNaming'''' a = go M.empty a 
            where go m [] = []
                  go m (s:ss) = let s' = findSmallestUnused s m 
                         in s' : go (M.insert s' True m) ss
+
+
+numToBin x = showIntAtBase 2 intToDigit x ""
+-- "101" 
+
+binToNum bins = sum $ reverse $ go (reverse $ bins) 1
+  where go [] mlt = []
+        go (b:bs) mlt = ((digitToInt b)*mlt) : go bs (mlt * 2)
