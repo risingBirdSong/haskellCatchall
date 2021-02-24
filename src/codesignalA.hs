@@ -191,3 +191,34 @@ toDec = foldl' (\acc x -> acc * 2 + digitToInt x) 0
 messageFromBinaryCode code = map chr $ map toDec $ chunksOf 8 code  
 
 
+
+
+cryptsolution = [['O', '0'],
+                  ['M', '1'],
+                  ['Y', '2'],
+                  ['E', '5'],
+                  ['N', '6'],
+                  ['D', '7'],
+                  ['R', '8'],
+                  ['S', '9']]
+
+anothersolution = [['O', '1'],
+                ['T', '0'],
+                ['W', '9'],
+                ['E', '5'],
+                ['N', '4']]
+
+
+convertToMap :: (Foldable t, Ord a) => t [a] -> M.Map a a
+convertToMap = foldr (\[l,n] acc -> M.insert l n acc) M.empty  
+
+isCryptSolution xs slnt = (x + y == z) && (and $ map noleading $ mapped) 
+  where mp = convertToMap slnt
+        logic x = case (M.lookup (x) mp) of
+                        Just x -> x
+        noleading (x:xs) 
+            | x == '0' && (not.null) xs = False  
+            | otherwise = True
+        mapped = map (map logic) xs
+        [x,y,z] = map (\x -> read x :: Int) mapped
+
