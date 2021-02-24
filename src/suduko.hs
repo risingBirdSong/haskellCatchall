@@ -3,6 +3,7 @@
 --https://www.youtube.com/watch?v=glog9DZh8G0&ab_channel=GrahamHutton
 
 import Data.List
+import qualified Data.List.Split as Splt
 
 type Grid             = Matrix Value
 type Matrix a         = [Row a]
@@ -32,6 +33,10 @@ boxs                  =  unpack . map cols . pack
 chop                  :: Int -> [a] -> [[a]]
 chop n []             =  []
 chop n xs             =  take n xs : chop n (drop n xs)
+
+pack'   = split' . map split'
+split'  = chop boxsize
+unpack' xs = map concat $ concat xs
 
 examplematrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
 examplematrixA = [[1,2,3,4,5,6],[7,8,9,10,11,12],[13,14,15,16,17,18]]

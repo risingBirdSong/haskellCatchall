@@ -7,6 +7,7 @@ import Control.Lens
 import Data.Maybe
 import Data.List.Split
 import Debug.Trace
+import Control.Monad
 
 foldCount xs = foldr logic (M.empty) xs 
     where logic x mp 
@@ -221,4 +222,35 @@ isCryptSolution xs slnt = (x + y == z) && (and $ map noleading $ mapped)
             | otherwise = True
         mapped = map (map logic) xs
         [x,y,z] = map (\x -> read x :: Int) mapped
+
+mtrx =[[1,2,3],
+      [4,5,6],
+      [7,8,9]]
+
+--  [[1, 2, 3],
+--   [8, 9, 4],
+--   [7, 6, 5]]
+
+-- [1,2,3] [8,9,4] [7,6,5]
+
+newMtrx = chunksOf 3 [1..9]
+
+-- [[1, 2, 3], [8, 9, 4], [7, 6, 5]]
+-- [[1, 2, 3], [4, 9, 8], [5, 6, 7]]
+
+lastSpiral n = [(2*n - 1)..(3*n - 2)]
+
+
+prttyMtr mtr = mapM_ (print) mtr
+
+spiral n = blank
+  where blank = replicate n (replicate n (-1))
+
+horizontal [] _ = [] 
+horizontal (x:xs) (v:vs) = v : horizontal xs vs
+
+vertical [] _ = []
+vertical (xs:xxs) (v:vs) = (v:xs) : vertical xxs vs
+-- *Main> vertical [[],[],[]] [1,2,3]
+-- [[1],[2],[3]]
 
