@@ -278,11 +278,18 @@ bigExample = [[ 1, 2, 3, 4,5],
 -- h0 -> h4r -> h1 -> h3r -> h2     v4 -> v0r -> v3 -> v1r
 
 hrzIdxs n = take ((n `div` 2) +1) $ zip ([0..n]) (reverse [0..n])
+-- [(0,4),(1,3),(2,2)]
 vrtcIdxs n = map tup2Rvr $ hrzIdxs n  
+-- [(4,0),(3,1),(2,2)]
 
+spiralIdxs n = zip (hrzIdxs n) (vrtcIdxs n)
+-- [((0,4),(4,0)),((1,3),(3,1)),((2,2),(2,2))]
 tup2Rvr (x,y) = (y,x)
 
--- spiral mtrx = 
---  where hrzMtr = mtrx 
---        vrtcMtrx transpose mtrx
+spiral mtrx = output
+      where hrzMtr = mtrx 
+            vrtcMtrx = transpose mtrx
+            n = (length mtrx) - 1 
+            sprlIndxs = spiralIdxs n
+            output = map (\((tx,ry) , (bx,ly)) -> trace ("tx>" ++ (show (mtrx !! tx)) ++ "y>" ++ (show (vrtcMtrx !! ry)) ++ "bx>" ++ (show $ reverse (mtrx !! bx)) ++ "ly>" ++ (show (reverse $ vrtcMtrx !! ly)) ) ((tx,ry) , (bx,ly)) ) $ init sprlIndxs 
 
