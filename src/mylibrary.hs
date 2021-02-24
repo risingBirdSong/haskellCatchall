@@ -66,3 +66,11 @@ toDec = foldl' (\acc x -> acc * 2 + digitToInt x) 0
 
 -- 
 numToBin x = showIntAtBase 2 intToDigit x ""
+
+
+-- im sure better ways to do it, but this concept came up
+-- change a single element in a list 
+changeOne xs n f = frstPart ++ [(f changed)] ++ lastPart
+  where frstPart = take n xs
+        lastPart = drop (n+1) xs
+        changed = head $ drop n xs 

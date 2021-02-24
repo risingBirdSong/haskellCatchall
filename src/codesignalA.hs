@@ -260,7 +260,7 @@ prttyMtr mtr = mapM_ (print) mtr
 --  [14,23,22,21,8], 
 --  [13,12,11,10,9]]
 
-bigExample = [[1,2,3,4,5], 
+bigExample = [[ 1, 2, 3, 4,5], 
               [16,17,18,19,6], 
               [15,24,25,20,7], 
               [14,23,22,21,8], 
@@ -271,15 +271,18 @@ bigExample = [[1,2,3,4,5],
 --3 == hrz left 
 -- 4 == vrt up 
 
-spiralViewer mtrx = dirctr (mtrx) 1
-  where dirctr (xs:xss) dir
-          | dir == 1 = (dirctr ((hrzRight xs):xss) 2) 
-          | dir == 2 = vrtDown (xs:xss)
-          | dir == 3 = hrzLeft xs
-        -- hrzRight [x] = [x] -- note, this will prevent the duplicate 5, but not sure if its the right idea yet
-        hrzRight [] = [] 
-        hrzRight (x:xs) =  x : (trace (show x) hrzRight xs)  
-        hrzLeft [] = []
-        hrzLeft (x:xs) = (hrzLeft xs  ++ [x])
-        vrtDown [] = []
-        vrtDown (xs:xss) = trace (show $ last xs) vrtDown (xss) 
+--alternating indexs horizontal and vertical
+-- h0 -> v4 -> h4r -> v0r -> h1 -> v3 -> h3r -> v1r -> h2  
+
+--horizontals                       verticals
+-- h0 -> h4r -> h1 -> h3r -> h2     v4 -> v0r -> v3 -> v1r
+
+hrzIdxs n = take ((n `div` 2) +1) $ zip ([0..n]) (reverse [0..n])
+vrtcIdxs n = map tup2Rvr $ hrzIdxs n  
+
+tup2Rvr (x,y) = (y,x)
+
+-- spiral mtrx = 
+--  where hrzMtr = mtrx 
+--        vrtcMtrx transpose mtrx
+
