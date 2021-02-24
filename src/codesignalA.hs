@@ -5,6 +5,7 @@ import qualified Data.Map as M
 import qualified Data.Vector as V 
 import Control.Lens 
 import Data.Maybe
+import Data.List.Split
 import Debug.Trace
 
 foldCount xs = foldr logic (M.empty) xs 
@@ -177,10 +178,16 @@ binToNum bins = sum $ reverse $ go (reverse $ bins) 1
         go (b:bs) mlt = ((digitToInt b)*mlt) : go bs (mlt * 2)
 
 
-toDec :: String -> Int
-toDec = foldl' (\acc x -> acc * 2 + digitToInt x) 0
+somecode =  "010010000110010101101100011011000110111100100001"
 
 -- "111"
 -- (0 + 1) -> (2 + 1) -> (6 + 1) == 7
 -- "101" 
 -- (0+1) -> (2 + 0) -> (4 + 1) == 5  
+
+
+toDec :: String -> Int
+toDec = foldl' (\acc x -> acc * 2 + digitToInt x) 0
+messageFromBinaryCode code = map chr $ map toDec $ chunksOf 8 code  
+
+

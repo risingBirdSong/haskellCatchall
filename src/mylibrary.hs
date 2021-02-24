@@ -1,3 +1,5 @@
+import Numeric
+import Data.Char
 import qualified Data.Map as M
 import Data.List
 numToNumList n = reverse $ go n 
@@ -57,3 +59,10 @@ nextNumber taken = go taken [0..]
         go (t:tkn) (n:ns) 
           | n < t = (n, sort (n:taken))
           | n == t = go tkn [(n+1)..]
+
+-- binary to number conversion, a good way I found
+toDec :: String -> Int
+toDec = foldl' (\acc x -> acc * 2 + digitToInt x) 0
+
+-- 
+numToBin x = showIntAtBase 2 intToDigit x ""
