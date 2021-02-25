@@ -5,6 +5,7 @@ import Numeric
 import Data.Char 
 import qualified Data.Map as M
 import qualified Data.Vector as V 
+import qualified Data.Set as S 
 import Control.Lens 
 import Data.Maybe
 import Data.List.Split
@@ -327,3 +328,53 @@ spiralNumbers n = spiral n n 1 where
 
 diagsB mtrx = map concat . transpose 
   $ zipWith (\blnks dta -> blnks ++ (map (:[]) dta)) (iterate ([]:) []) mtrx
+
+
+-- sudukoValid mtrx 
+
+
+
+sudgrid' = [['1', '3', '2', '5', '4', '6', '9', '8', '7'],
+          ['4', '6', '5', '8', '7', '9', '3', '2', '1'],
+          ['7', '9', '8', '2', '1', '3', '6', '5', '4'],
+          ['9', '2', '1', '4', '3', '5', '8', '7', '6'],
+          ['3', '5', '4', '7', '6', '8', '2', '1', '9'],
+          ['6', '8', '7', '1', '9', '2', '5', '4', '3'],
+          ['5', '7', '6', '9', '8', '1', '4', '3', '2'],
+          ['2', '4', '3', '6', '5', '7', '1', '9', '8'],
+          ['8', '1', '9', '3', '2', '4', '7', '6', '5']]
+
+
+sudgridTrue =[[1, 3, 2, 5, 4, 6, 9, 8, 7],
+          [4, 6, 5, 8, 7, 9, 3, 2, 1],
+          [7, 9, 8, 2, 1, 3, 6, 5, 4],
+          [9, 2, 1, 4, 3, 5, 8, 7, 6],
+          [3, 5, 4, 7, 6, 8, 2, 1, 9],
+          [6, 8, 7, 1, 9, 2, 5, 4, 3],
+          [5, 7, 6, 9, 8, 1, 4, 3, 2],
+          [2, 4, 3, 6, 5, 7, 1, 9, 8],
+          [8, 1, 9, 3, 2, 4, 7, 6, 5]]
+
+sudgridFalse =[[1, 3, 1, 5, 4, 6, 9, 8, 7],
+              [4, 6, 5, 8, 7, 9, 3, 2, 1],
+              [7, 9, 8, 2, 1, 3, 6, 5, 4],
+              [9, 2, 1, 4, 3, 5, 8, 7, 6],
+              [3, 5, 4, 7, 6, 8, 2, 1, 9],
+              [6, 8, 7, 1, 9, 2, 5, 4, 3],
+              [5, 7, 6, 9, 8, 1, 4, 3, 2],
+              [2, 4, 3, 6, 5, 7, 1, 9, 8],
+              [8, 1, 9, 3, 2, 4, 7, 6, 5]]
+
+setAndBack xs = S.toList $ S.fromList xs
+noDupes xs = length xs == length (setAndBack xs)
+
+sudoku :: Eq a => [[a]] -> Bool
+sudoku mtrx = rows && cols && boxes
+    where rows = all noDupes mtrx 
+          cols = all noDupes (transpose mtrx)
+          boxes = all noDupes (blocks mtrx)
+          blocks mtrx =  chunksOf 9 . concat . concatMap transpose $ chunksOf 3 mtrx
+          noDupes xs = length xs == length (nub xs)
+
+
+subgrid grid = map (map concat) $ map (chunksOf 3) . transpose $ map (chunksOf 3) grid
