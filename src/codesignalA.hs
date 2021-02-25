@@ -254,12 +254,6 @@ prttyMtr mtr = mapM_ (print) mtr
 -- *Main> vertical [[],[],[]] [1,2,3]
 -- [[1],[2],[3]]
 
--- [[1,2,3,4,5], 
---  [16,17,18,19,6], 
---  [15,24,25,20,7], 
---  [14,23,22,21,8], 
---  [13,12,11,10,9]]
-
 bigExample = [[ 1, 2, 3, 4,5], 
               [16,17,18,19,6], 
               [15,24,25,20,7], 
@@ -286,10 +280,33 @@ spiralIdxs n = zip (hrzIdxs n) (vrtcIdxs n)
 -- [((0,4),(4,0)),((1,3),(3,1)),((2,2),(2,2))]
 tup2Rvr (x,y) = (y,x)
 
-spiral mtrx = output
+
+--  [[1, 2, 3, 4,5], 
+--  [16,17,18,19,6], 
+--  [15,24,25,20,7], 
+--  [14,23,22,21,8], 
+--  [13,12,11,10,9]]
+
+-- spiral :: [[Integer]] -> [[Integer]]
+spiral mtrx = (\(_,_,_,acc) -> acc) $ output
       where hrzMtr = mtrx 
             vrtcMtrx = transpose mtrx
             n = (length mtrx) - 1 
             sprlIndxs = spiralIdxs n
-            output = map (\((tx,ry) , (bx,ly)) -> trace ("tx>" ++ (show (mtrx !! tx)) ++ "y>" ++ (show (vrtcMtrx !! ry)) ++ "bx>" ++ (show $ reverse (mtrx !! bx)) ++ "ly>" ++ (show (reverse $ vrtcMtrx !! ly)) ) ((tx,ry) , (bx,ly)) ) $ init sprlIndxs 
+            output = foldr (\((t,r),(b,l)) (hrz,vrt,cnt,ac) -> spiralTurns ((t,r),(b,l)) (hrz,vrt,cnt,ac) ) (hrzMtr, vrtcMtrx, 0,[]) sprlIndxs
 
+-- spiralTurns :: (Num a1) => (([a2], [a2]), ([a2], [a2])) -> (a1, [[a2]]) -> (a1, [[a2]])
+spiralTurns :: (Eq a1, Num a1) => ((Int, Int), (Int, Int)) -> ([[a2]], [[a2]], a1, [[a2]]) -> ([[a2]], [[a2]], a1, [[a2]])
+spiralTurns ((t,r),(b,l)) (hrz,vrt,cnt,ac)
+  | cnt == 0 =  (hrz,vrt,cnt+1,(( hrz !! t) : (drop 1 $ vrt !! r) : (init $ hrz !! b) : (init $ vrt !! l) : ac)) 
+  | otherwise = (hrz,vrt,cnt+1,((init $ tail $ hrz !! t) : (init $ tail $ vrt !! r) : (init $ tail $ hrz !! b) : (init $ tail $ vrt !! l) : ac)) 
+
+-- output = map (\((tx,ry) , (bx,ly)) -> trace ("tx>" ++ (show (mtrx !! tx)) ++ "y>" ++ (show (vrtcMtrx !! ry)) ++ "bx>" ++ (show $ reverse (mtrx !! bx)) ++ "ly>" ++ (show (reverse $ vrtcMtrx !! ly)) ) ((tx,ry) , (bx,ly)) ) $ init sprlIndxs 
+
+
+
+
+
+
+diagsB mtrx = map concat . transpose 
+  $ zipWith (\blnks dta -> blnks ++ (map (:[]) dta)) (iterate ([]:) []) mtrx
