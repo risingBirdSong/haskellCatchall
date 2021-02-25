@@ -15,3 +15,6 @@ addTwoDigits'' n = uncurry (+) $ divMod n 10
 addTwoDigits' :: Show a => a -> Int
 addTwoDigits' = sum . map (\c -> read [c]) . show
 addTwoDigits''' n = (mod n 10)+(div n 10)
+
+largestNumber :: Int -> Int
+largestNumber n = read $ replicate n '9'
