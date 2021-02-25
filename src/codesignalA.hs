@@ -280,6 +280,28 @@ spiralIdxs n = zip (hrzIdxs n) (vrtcIdxs n)
 -- [((0,4),(4,0)),((1,3),(3,1)),((2,2),(2,2))]
 tup2Rvr (x,y) = (y,x)
 
+-- spiral :: [[Integer]] -> [[Integer]]
+spiral mtrx = (\(hrz,vrt,cnt,acc) -> trace (show acc) acc) $ output
+      where hrzMtr = mtrx 
+            vrtcMtrx = transpose mtrx
+            n = (length mtrx) - 1 
+            sprlIndxs = spiralIdxs n
+            output = foldr (\((t,r),(b,l)) (hrz,vrt,cnt,ac) -> spiralTurns ((t,r),(b,l)) (hrz,vrt,cnt,ac) ) (hrzMtr, vrtcMtrx, 0,[]) sprlIndxs
+
+spiralTurns ((t,r),(b,l)) (hrz,vrt,cnt,ac)
+  | cnt < 1 = trace ("count>" ++ show cnt) (hrz,vrt,cnt+1,(( hrz !! t) : (vrt !! r) : (reverse $ hrz !! b) : (reverse $ vrt !! l) : ac)) 
+  -- | cnt < 1 = trace ("count>" ++ show cnt) (hrz,vrt,cnt+1,(( hrz !! t) : (drop 1 $ vrt !! r) : (reverse $ init $ reverse $ hrz !! b) : (reverse $ init $ reverse $ vrt !! l) : ac)) 
+  | otherwise = trace ("count>" ++ show cnt) (hrz,vrt,cnt+1,((init $ tail $ hrz !! t) : (init $ tail $ vrt !! r) : (init $ tail $ hrz !! b) : (init $ tail $ vrt !! l) : ac)) 
+  -- | otherwise = (hrz,vrt,cnt,ac)
+
+-- (hrz,vrt,cnt+1,(( hrz !! t) : (drop 1 $ vrt !! r) : (init $ hrz !! b) : (init $ vrt !! l) : ac))
+-- output = map (\((tx,ry) , (bx,ly)) -> trace ("tx>" ++ (show (mtrx !! tx)) ++ "y>" ++ (show (vrtcMtrx !! ry)) ++ "bx>" ++ (show $ reverse (mtrx !! bx)) ++ "ly>" ++ (show (reverse $ vrtcMtrx !! ly)) ) ((tx,ry) , (bx,ly)) ) $ init sprlIndxs 
+
+
+spiralNumbers' n = solve (n, n) 1
+solve (1, 1) x = [[x]]
+solve (r, c) x = trace (show $ [x..x + c - 1]) [x..x + c - 1] : logic
+  where logic = (map reverse . transpose $ solve (c, r - 1) (x + c))
 
 --  [[1, 2, 3, 4,5], 
 --  [16,17,18,19,6], 
@@ -287,24 +309,19 @@ tup2Rvr (x,y) = (y,x)
 --  [14,23,22,21,8], 
 --  [13,12,11,10,9]]
 
--- spiral :: [[Integer]] -> [[Integer]]
-spiral mtrx = (\(_,_,_,acc) -> acc) $ output
-      where hrzMtr = mtrx 
-            vrtcMtrx = transpose mtrx
-            n = (length mtrx) - 1 
-            sprlIndxs = spiralIdxs n
-            output = foldr (\((t,r),(b,l)) (hrz,vrt,cnt,ac) -> spiralTurns ((t,r),(b,l)) (hrz,vrt,cnt,ac) ) (hrzMtr, vrtcMtrx, 0,[]) sprlIndxs
 
--- spiralTurns :: (Num a1) => (([a2], [a2]), ([a2], [a2])) -> (a1, [[a2]]) -> (a1, [[a2]])
-spiralTurns :: (Eq a1, Num a1) => ((Int, Int), (Int, Int)) -> ([[a2]], [[a2]], a1, [[a2]]) -> ([[a2]], [[a2]], a1, [[a2]])
-spiralTurns ((t,r),(b,l)) (hrz,vrt,cnt,ac)
-  | cnt == 0 =  (hrz,vrt,cnt+1,(( hrz !! t) : (drop 1 $ vrt !! r) : (init $ hrz !! b) : (init $ vrt !! l) : ac)) 
-  | otherwise = (hrz,vrt,cnt+1,((init $ tail $ hrz !! t) : (init $ tail $ vrt !! r) : (init $ tail $ hrz !! b) : (init $ tail $ vrt !! l) : ac)) 
+-- , r> 5 c> 4
+--  r> 4 c> 4
+--  r> 4 c> 3
+--  r> 3 c> 3
+--  r> 3 c> 2
+--  r> 2 c> 2
+--  r> 2 c> 1
 
--- output = map (\((tx,ry) , (bx,ly)) -> trace ("tx>" ++ (show (mtrx !! tx)) ++ "y>" ++ (show (vrtcMtrx !! ry)) ++ "bx>" ++ (show $ reverse (mtrx !! bx)) ++ "ly>" ++ (show (reverse $ vrtcMtrx !! ly)) ) ((tx,ry) , (bx,ly)) ) $ init sprlIndxs 
-
-
-
+spiralNumbers n = spiral n n 1 where
+    spiral _ 0 _ = []
+    spiral 0 h _ = take h $ repeat []
+    spiral w h i = take w [i..] : (transpose $ reverse $ spiral (h-1) w (i+w))
 
 
 
