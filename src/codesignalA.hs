@@ -377,8 +377,10 @@ sudoku mtrx = rows && cols && boxes
           noDupes xs = length xs == length (nub xs)
 
 
-sprialling grid 0 = [] 
-sprialling grid n = head grid : sprialling (reverse $ transpose grid) (n-1) 
+spiralling [] = []   
+spiralling grid = head grid : spiralling (reverse $ transpose (tail grid))   
+
+
 
 --              [[ 1, 2, 3, 4,5], 
 --               [16,17,18,19,6], 
