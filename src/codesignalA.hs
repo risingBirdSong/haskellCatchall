@@ -453,3 +453,11 @@ isInfiniteProcess' a b | odd a == odd b = a > b
 
 
 isInfiniteProcess'' a b = a > b || ((b - a) `mod` 2) == 1
+
+arithmeticExpression a b c = any (==True) [a+b==c,a-b==c,a*b==c,fractDiv a b c]
+
+fractDiv a b c = (realToFrac a)/(realToFrac b) == (realToFrac c)
+
+
+arithmeticExpression' a b c = any (\f -> a' `f` b' == c') [(+), (-), (*), (/)]
+  where [a', b', c'] = map toRational [a, b, c]
