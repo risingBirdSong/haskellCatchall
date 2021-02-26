@@ -440,3 +440,16 @@ knapsackLight v1 w1 v2 w2 mx
 
 extraNumber a b c = head . head . filter ((==1) . length) . group $ sort [a,b,c]
 extraNumber' a b c =  a `xor` b `xor` c
+
+
+isInfiniteProcess a b = go a b
+  where go a b 
+          | a > b = True 
+          | a == b = False 
+          | otherwise = go (succ a) (pred b)   
+
+isInfiniteProcess' a b | odd a == odd b = a > b
+                      | otherwise = True
+
+
+isInfiniteProcess'' a b = a > b || ((b - a) `mod` 2) == 1
