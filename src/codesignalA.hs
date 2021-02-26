@@ -419,3 +419,19 @@ wordCount ws = lastbit
           . groupBy (\ a b -> length a == length b) . sortOn (Down . length) 
           $ groupBy (\(_,a) (_, b) -> a == b)  $ sortOn (Down . snd) firstbit
         firstbit = zip [0..] $ words . filter (\x -> isAlpha x || isSpace x) $ map toLower ws 
+
+
+reachNextLevel exp thrsh rwrd = (exp + rwrd) >= thrsh
+
+-- knapsackLight v1 w1 v2 w2 mx = sum . map fst . takeWhile (\(v,w) -> w <= mx) 
+--                . scanl (\(val, ac) (v,w) -> (v,w+ac)) (0,0) 
+--                 $ sortOn Down [(v1,w1),(v2,w2)]
+
+
+knapsackLight v1 w1 v2 w2 mx
+  | w1 + w2 <= mx = v1 + v2 
+  | w1 <= mx && w2 <= mx = max v1 v2 
+  | min w1 w2 > mx = 0
+  | otherwise = case min w1 w2 of
+                  w1 -> v1 
+                  w2 -> v2
