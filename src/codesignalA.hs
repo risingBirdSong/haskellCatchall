@@ -1,6 +1,7 @@
 -- {-# LANGUAGE FlexibleContexts #-}
 
 import Data.List
+import Data.Bits (xor)
 import Numeric 
 import Data.Char 
 import qualified Data.Map as M
@@ -435,3 +436,7 @@ knapsackLight v1 w1 v2 w2 mx
   | otherwise = case min w1 w2 of
                   w1 -> v1 
                   w2 -> v2
+
+
+extraNumber a b c = head . head . filter ((==1) . length) . group $ sort [a,b,c]
+extraNumber' a b c =  a `xor` b `xor` c
