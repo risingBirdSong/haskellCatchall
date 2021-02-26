@@ -380,10 +380,31 @@ sudoku mtrx = rows && cols && boxes
 spiralling [] = []   
 spiralling grid = head grid : spiralling (reverse $ transpose (tail grid))   
 
+maxMultiple divisor bound = go bound 
+  where go n
+          | n <= bound && n `mod` divisor == 0 = n 
+          | otherwise = go (n-1)
+
+spirallingGrid =  [[ 1, 2, 3, 4,5], 
+                  [16,17,18,19,6], 
+                  [15,24,25,20,7], 
+                  [14,23,22,21,8], 
+                  [13,12,11,10,9]]
 
 
---              [[ 1, 2, 3, 4,5], 
---               [16,17,18,19,6], 
---               [15,24,25,20,7], 
---               [14,23,22,21,8], 
---               [13,12,11,10,9]]
+circleOfNumbers n firstNumber = (n `div` 2 + firstNumber) `mod` n  
+circleOfNumbers' n firstNumber = answer
+    where range' = take (n*2) $ cycle $ [1..(n-1)] ++ [0]
+          answer =  (drop firstNumber range')  !! ((n `div` 2) - 1)
+
+
+
+lateRide n = sum $ map (digitToInt) (show hours ++ show minutes)
+      where (hours,minutes) = n `divMod` 60
+
+gg n = n `divMod` 60
+
+
+-- length $ tail $
+phoneCall min1 min2_10 min11 s = takeWhile (<=s) . scanl (+) 0
+    $ concat [[min1], replicate 10 min2_10, replicate (s `div` min11) min11]
