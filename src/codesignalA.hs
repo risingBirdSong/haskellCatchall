@@ -11,6 +11,8 @@ import Data.Maybe
 import Data.List.Split
 import Debug.Trace
 import Control.Monad
+import Data.Function
+import Data.Ord
 
 foldCount xs = foldr logic (M.empty) xs 
     where logic x mp 
@@ -406,5 +408,14 @@ gg n = n `divMod` 60
 
 
 -- length $ tail $
-phoneCall min1 min2_10 min11 s = takeWhile (<=s) . scanl (+) 0
-    $ concat [[min1], replicate 10 min2_10, replicate (s `div` min11) min11]
+phoneCall min1 min2_10 min11 s = length $ takeWhile (<=s) . tail 
+  . scanl (+) 0 $ [min1] ++ replicate 9 min2_10 ++ repeat min11
+
+
+practice = "practice makes perfect. you'll only get Perfect by practice. just practice!"
+
+wordCount ws = lastbit 
+  where lastbit = map (\x -> (head x, length x)) $ group . map snd . concatMap (sort . concat) 
+          . groupBy (\ a b -> length a == length b) . sortOn (Down . length) 
+          $ groupBy (\(_,a) (_, b) -> a == b)  $ sortOn (Down . snd) firstbit
+        firstbit = zip [0..] $ words . filter (\x -> isAlpha x || isSpace x) $ map toLower ws 
