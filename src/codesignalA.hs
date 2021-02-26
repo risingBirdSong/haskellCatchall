@@ -461,3 +461,10 @@ fractDiv a b c = (realToFrac a)/(realToFrac b) == (realToFrac c)
 
 arithmeticExpression' a b c = any (\f -> a' `f` b' == c') [(+), (-), (*), (/)]
   where [a', b', c'] = map toRational [a, b, c]
+
+
+willYou young beautiful loved 
+  | not yngBty && loved = True 
+  | not loved && yngBty = True 
+  | otherwise = False
+    where yngBty = young && beautiful 
