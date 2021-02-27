@@ -526,3 +526,7 @@ magicalWell a' b' n' = sum $ go a' b' n'
 -- magicalWel' a b n =  foldr (\ (x,y) acc -> (x*y) + acc) 0 $ zip [a..n+a] [b..(n+b)-1]  
       
 iteratedwell a b n = sum $ map (uncurry (*)) $ take n $ iterate (\(x,y)->(x+1, y+1)) (a,b)
+
+-- from community, great!
+magicalWell' a b n =
+    sum $ take n $ zipWith (*) [a..] [b..]
