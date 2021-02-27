@@ -523,5 +523,7 @@ magicalWell a' b' n' = sum $ go a' b' n'
           | otherwise = (a*b) : go (succ a) (succ b) (pred n) 
 
 
-magicalWel' a b n =  foldr (\ (x,y) acc -> (x*y) + acc) 0 $ zip [a..n+a] [b..(n+b)-1]  
+-- magicalWel' a b n =  foldr (\ (x,y) acc -> (x*y) + acc) 0 $ zip [a..n+a] [b..(n+b)-1]  
+magicalWel' a b n =  sum $ map (uncurry (+)) $ zip [a..n+a] [b..(n+b)-1]  
       
+-- (1,2) 
