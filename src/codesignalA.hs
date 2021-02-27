@@ -506,3 +506,6 @@ factWalk n = go 1 1
   where go walk fct 
           | fct > n = []
           | otherwise = walk*fct : go (walk+1) (walk*fct)
+
+
+countSumOfTwoRepresentations2 n l r = length $ [[x,y] | x <- [l..r], y <- [l..r], x + y == n, x<=y]
