@@ -530,3 +530,6 @@ iteratedwell a b n = sum $ map (uncurry (*)) $ take n $ iterate (\(x,y)->(x+1, y
 -- from community, great!
 magicalWell' a b n =
     sum $ take n $ zipWith (*) [a..] [b..]
+ 
+
+lineUp = sum . map (fromEnum . even) . scanl1 (+) . map (fromEnum . (/= 'A'))
