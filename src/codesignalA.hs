@@ -515,3 +515,13 @@ countSumOfTwoRepresentations2' n l r = [[x,n-x] | x <- [l..r],x<=n-x,(n-x)<=r]
 countSumOfTwoRepresentations2'' n l r = min leftBound rightBound where
     leftBound = max 0 $ div n 2 - l + 1
     rightBound = max 0 $ r - div (n+1) 2 + 1
+
+
+magicalWell a' b' n' = sum $ go a' b' n' 
+  where go a b n
+          | n == 0 = []
+          | otherwise = (a*b) : go (succ a) (succ b) (pred n) 
+
+
+magicalWel' a b n =  foldr (\ (x,y) acc -> (x*y) + acc) 0 $ zip [a..n+a] [b..(n+b)-1]  
+      
