@@ -14,6 +14,7 @@ import Debug.Trace
 import Control.Monad
 import Data.Function
 import Data.Ord
+import Data.Maybe
 
 foldCount xs = foldr logic (M.empty) xs 
     where logic x mp 
@@ -468,3 +469,26 @@ willYou young beautiful loved
   | not loved && yngBty = True 
   | otherwise = False
     where yngBty = young && beautiful 
+
+
+
+fact n = product $ [1..n]
+
+facts stop = go 2 
+  where go n
+         | n > stop = []
+         | otherwise = fact n : go (succ n) 
+
+leastFactorial n = fromMaybe 0 $ find (>=n) $ facts n
+
+
+leastFactorial' n = head $ dropWhile (<n) facList
+    where
+        facList = scanl (*) 1 [1..]
+
+leastFactorial'' n = walk 1 1
+  where walk m k = if k >= n then k else walk (m+1) (k*m)
+        -- the invariant here is that k = (m-1)!
+
+leastFactorial''' n =  head $ filter (>= n) facts
+  where facts = scanl1 (*) [1..]
