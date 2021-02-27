@@ -471,6 +471,7 @@ willYou young beautiful loved
     where yngBty = young && beautiful 
 
 
+goodFacts n = scanl (*) 1 [2..n]
 
 fact n = product $ [1..n]
 
@@ -492,3 +493,16 @@ leastFactorial'' n = walk 1 1
 
 leastFactorial''' n =  head $ filter (>= n) facts
   where facts = scanl1 (*) [1..]
+
+leastFact_remake n =  head $ dropWhile (<n) factList 
+    where factList = scanl (*) 1 [2..n]
+
+leastFact_remake' n = walk 1 1 
+  where walk ones fct
+          | fct > n = fct 
+          | otherwise = walk (succ ones) (fct*ones) 
+
+factWalk n = go 1 1
+  where go walk fct 
+          | fct > n = []
+          | otherwise = walk*fct : go (walk+1) (walk*fct)
