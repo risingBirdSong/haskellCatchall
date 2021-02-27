@@ -508,4 +508,10 @@ factWalk n = go 1 1
           | otherwise = walk*fct : go (walk+1) (walk*fct)
 
 
-countSumOfTwoRepresentations2 n l r = length $ [[x,y] | x <- [l..r], y <- [l..r], x + y == n, x<=y]
+countSumOfTwoRepresentations2 n l r = [[x,y] | x <- [l..r], y <- [l..r], (x+y) == n, x<=y]
+countSumOfTwoRepresentations2' n l r = [[x,n-x] | x <- [l..r],x<=n-x,(n-x)<=r]
+
+-- community solution 
+countSumOfTwoRepresentations2'' n l r = min leftBound rightBound where
+    leftBound = max 0 $ div n 2 - l + 1
+    rightBound = max 0 $ r - div (n+1) 2 + 1
