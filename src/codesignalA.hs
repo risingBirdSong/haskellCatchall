@@ -554,10 +554,11 @@ adjacentElementsProduct xs = maximum . map (uncurry (*)) $ zip xs (tail xs)
 -- twoCurry = onceCurry 2
 -- finalCurry = twoCurry 3
 
-additionWithoutCarrying param1 param2 = read (concat solve) :: Int  
+-- read (concat solve) :: Int
+additionWithoutCarrying param1 param2 = read solve :: Int  
     where s1 = show param1
           s2 = show param2 
           [shrt, lng] = sortBy (comparing length) [s1,s2]
           (paddedA, paddedB) = ((replicate ( length lng - length shrt) '0' ++ shrt),lng)
-          solve = zipWith (\a b -> show ((digitToInt a) + (digitToInt b))) paddedA paddedB
+          solve = zipWith (\a b -> last $ show ((digitToInt a) + (digitToInt b))) paddedA paddedB
           
