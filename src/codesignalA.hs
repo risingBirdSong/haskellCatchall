@@ -533,3 +533,31 @@ magicalWell' a b n =
  
 
 lineUp = sum . map (fromEnum . even) . scanl1 (+) . map (fromEnum . (/= 'A'))
+
+lineUp' commands = (sum $ map fromEnum $ scanl (\acc x -> if acc then x == 'A' else x `elem` "LR") True commands) - 1
+lineUp'' = pred . length . filter id . scanl (flip ($)) True . map (\c -> if c == 'A' then id else not)
+lineUp''' commands = sum [1 | z <- scanl1 (+) $ map ((+1).ord) commands, even z]
+
+
+centry n =  ((n - 1) `div` 100) + 1
+
+pali str = str == (reverse str)
+
+
+examp = [3, 6, -2, -5, 7, 3]
+adjacentElementsProduct xs = maximum . map (uncurry (*)) $ zip xs (tail xs)
+
+
+-- thisCurriedFunction a b c = a + b + c 
+
+-- onceCurry = thisCurriedFunction 1
+-- twoCurry = onceCurry 2
+-- finalCurry = twoCurry 3
+
+additionWithoutCarrying param1 param2 = read (concat solve) :: Int  
+    where s1 = show param1
+          s2 = show param2 
+          [shrt, lng] = sortBy (comparing length) [s1,s2]
+          (paddedA, paddedB) = ((replicate ( length lng - length shrt) '0' ++ shrt),lng)
+          solve = zipWith (\a b -> show ((digitToInt a) + (digitToInt b))) paddedA paddedB
+          
