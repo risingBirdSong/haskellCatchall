@@ -562,3 +562,27 @@ additionWithoutCarrying param1 param2 = read solve :: Int
           (paddedA, paddedB) = ((replicate ( length lng - length shrt) '0' ++ shrt),lng)
           solve = zipWith (\a b -> last $ show ((digitToInt a) + (digitToInt b))) paddedA paddedB
           
+
+
+additionWithoutCarrying' a' b' = reverse $ go a' b' 
+  where divten x = x `div` 10
+        lastDgt x = x `mod` 10
+        go a b 
+            | a == 0 && b == 0 = []
+            | otherwise = lastDgt (lastDgt a + lastDgt b) : additionWithoutCarrying' (divten a) (divten b)  
+
+
+
+
+additionWithoutCarrying'' a b = go a b 1 
+  where go 0 0 _ = 0 
+        go x y dgt = (((x `mod` 10 + y `mod` 10) `mod` 10) * dgt) + go (x `div` 10) (y `div` 10) (dgt * 10) 
+
+appleBoxes k = (evens-odds)
+    where odds = sum . map (^2) $ filter odd apples
+          evens = sum . map (^2) $ filter even apples 
+          apples = [1..k] 
+
+
+appleBoxes' k = foldr (\x r -> x^2 * (-1)^x + r) 0 [1..k]
+appleBoxes'' k = sum . map (\x -> if odd x then -x else x ) $ map (\x -> x*x) [1..k]
