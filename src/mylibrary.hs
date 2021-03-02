@@ -2,6 +2,9 @@ import Numeric
 import Data.Char
 import qualified Data.Map as M
 import Data.List
+
+numsToList nums = map digitToInt $ show nums
+
 numToNumList n = reverse $ go n 
   where go 0 = []
         go num = snd (num `divMod` 10) : go (num `div` 10)
