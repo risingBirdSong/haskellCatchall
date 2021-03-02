@@ -80,3 +80,4 @@ changeOne xs n f = frstPart ++ [(f changed)] ++ lastPart
 
 
 stripEnd f xs = reverse . dropWhile f $ reverse xs 
+

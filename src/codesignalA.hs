@@ -606,3 +606,13 @@ increaseNumberRoundness' n = 0 `elem` res && any (/= 0) res
         res =  dropWhile (==0) . reverse . map digitToInt . show $ n
 
 increaseNumberRoundness'' n = any (< '1') . dropWhile (< '1') . reverse $ show n
+
+
+rounders n
+    | n < 10 = n
+    | otherwise = 10 * rounders (div (n + mod n 10) 10)
+
+rounders_rmk n  
+  | n < 10 = n 
+  | otherwise  =  10 * rounders ((n + (n `mod` 10)) `div` 10)
+
