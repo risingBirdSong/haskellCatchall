@@ -616,3 +616,14 @@ rounders_rmk n
   | n < 10 = n 
   | otherwise  =  10 * rounders ((n + (n `mod` 10)) `div` 10)
 
+
+
+candles a b = a + f a b
+  where f a b
+          | a < b = 0
+          | otherwise = trace ("a>" ++ show a) (a `div` b) + f ((a `mod` b)+(a `div` b)) b
+
+candlesRmk cndls mn = cndls + go cndls mn 
+  where go candles makeNew 
+            | candles < makeNew = 0 
+            | otherwise = candles `div` makeNew + go (candles `div` makeNew + candles `mod` makeNew) makeNew
