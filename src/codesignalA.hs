@@ -600,4 +600,4 @@ increaseNumberRoundness' n = 0 `elem` res && any (/= 0) res
     where
         res =  dropWhile (==0) . reverse . map digitToInt . show $ n
 
-increaseNumberRoundness'' = any (< '1') . dropWhile (< '1') . reverse . show
+increaseNumberRoundness'' n = any (< '1') . dropWhile (< '1') . reverse $ show n
