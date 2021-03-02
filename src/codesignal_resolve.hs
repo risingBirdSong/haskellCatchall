@@ -37,3 +37,11 @@ libgroupBy p' (x':xs') = (x' : ys') : zs'
     go _ _ [] = ([], [])
 
 allLongestStrings xs = last $ libgroupBy (\x y -> length x == length y) $ sortBy (comparing length) xs
+
+-- strange behavior of standard groupBy. why not split at 2?
+-- *Main> groupBy (<) [1,2,3,2,3,4]
+--[[1,2,3,2,3,4]]
+
+-- more intuitive groupBy with libgroupBy
+-- *Main> libgroupBy (<) [1,2,3,1,2,3]
+-- [[1,2,3],[1,2,3]]
