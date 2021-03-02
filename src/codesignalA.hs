@@ -587,6 +587,8 @@ appleBoxes k = (evens-odds)
 appleBoxes' k = foldr (\x r -> x^2 * (-1)^x + r) 0 [1..k]
 appleBoxes'' k = sum . map (\x -> if odd x then -x else x ) $ map (\x -> x*x) [1..k]
 
+stripEnd f xs = reverse . dropWhile f $ reverse xs 
+numsToList n = map digitToInt $ show n
 
 
 increaseNumberRoundness n = nonzeros >= 1 && zeros >= 1
@@ -595,6 +597,9 @@ increaseNumberRoundness n = nonzeros >= 1 && zeros >= 1
           nonzeros = length $ filter (/=0) rest
           zeros = length $ filter (==0) rest
           numsToList = map digitToInt $ show n
+
+increaseNumberRoundnessAgain nums = any (==0) toList 
+    where toList = stripEnd (==0) $ numsToList nums
 
 increaseNumberRoundness' n = 0 `elem` res && any (/= 0) res
     where

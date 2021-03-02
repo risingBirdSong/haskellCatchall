@@ -77,3 +77,6 @@ changeOne xs n f = frstPart ++ [(f changed)] ++ lastPart
   where frstPart = take n xs
         lastPart = drop (n+1) xs
         changed = head $ drop n xs 
+
+
+stripEnd f xs = reverse . dropWhile f $ reverse xs 
