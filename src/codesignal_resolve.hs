@@ -139,3 +139,5 @@ gauravsinghSubLists lst = reverse $ go 1 []
 
 
 cassesgreatidea =  [take 1, take 2, take 3] <*> tails [1,2,3,4]
+
+chal1 l = take <$> [1..pred $ length l] <*> tails l
