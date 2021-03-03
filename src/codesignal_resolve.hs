@@ -60,6 +60,17 @@ libgroupByA p' (x':xs') = (x' : ys') : zs'
         where (ys,zs) = go p x xs 
     go _ _ [] = ([],[])
 
+
+libgroupByB _ [] = []
+libgroupByB p' (x':xs') = (x':ys') : zs'
+  where (ys',zs') = go p' x' xs'
+        go p z (x:xs)
+           | p z x = (x:ys, zs)
+           | otherwise = ([], (x:ys) : zs)
+             where (ys, zs) = go p x xs
+        go _ _ [] = ([],[])
+
+
 allLongestStrings xs = last $ libgroupBy (\x y -> length x == length y) $ sortBy (comparing length) xs
 
 -- strange behavior of standard groupBy. why not split at 2?
@@ -79,3 +90,15 @@ commonCharacterCount s1 s2 = sum $ map snd $ M.toList $ M.intersectionWith min m
 
 commonCharacterCount' sA sB = sum $ map (uncurry min) $ (\x -> (count x sA, count x sB)) <$> ['a'..'z']
   where count s xs = length $ filter (==s) xs  
+
+coolPrint = let (_, result) =
+                      mapAccumR 
+                        (\cumulativeLength item -> 
+                          let newLength = cumulativeLength + length item 
+                          in (newLength, take cumulativeLength (repeat ' ') ++ item)
+                        )
+                        0
+                        ["Geese", "Monkeys", "Chocolate", "Chips", "Dust", "Box"]
+                    in mapM_ putStrLn $ reverse result
+
+-- isLucky n 
