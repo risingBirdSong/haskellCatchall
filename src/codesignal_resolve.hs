@@ -117,3 +117,25 @@ isLucky n =  (sum frst == sum lst)
 
 digits' 0 = []
 digits' n = digits' (n `div` 10) ++ [n `mod` 10]
+
+
+-- https://discord.com/channels/280033776820813825/505367988166197268/816533687323328512
+
+-- [1,2,3,4] should give
+-- [1]
+-- [2]
+-- [3]
+-- [4]
+-- [1,2]
+-- [2,3]
+-- [3,4]
+-- [1,2,3]
+-- [2,3,4]
+
+gauravsinghSubLists lst = reverse $ go 1 [] 
+  where go cnt acc 
+            | cnt == length lst = acc
+            | otherwise = go (cnt + 1) ( divvy cnt 1 lst : acc)
+
+
+cassesgreatidea =  [take 1, take 2, take 3] <*> tails [1,2,3,4]
