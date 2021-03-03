@@ -144,10 +144,44 @@ chal1 l = take <$> [1..pred $ length l] <*> tails l
 
 
 lc = [-1, 150, 190, 170, -1, -1, 160, 180]
--- sortByHeight xs 
 
 practiceMapAccumA xs = mapAccumR (\a b -> (a+1,(a,b*2))) 0 xs
 -- (10,[(9,2),(8,4),(7,6),(6,8),(5,10),(4,12),(3,14),(2,16),(1,18),(0,20)])
 practiceMapAccumB xs = mapAccumL (\a b -> (a+1, (a,b*2))) 0 xs
 -- (10,[(0,2),(1,4),(2,6),(3,8),(4,10),(5,12),(6,14),(7,16),(8,18),(9,20)])
 
+-- sortByHeight xs = mapAccumL a -> b -> (a, c) a t b
+-- 
+sortByHeight xs = putBack xs srtPeople
+    where srtPeople = sort $ filter (/=(-1)) xs
+          putBack [] _ = []
+          putBack xs [] = xs
+          putBack (x:xs) (p:ppl)
+            | x == (-1) = x : putBack xs (p:ppl)
+            | otherwise = p : putBack xs ppl
+
+sortByHeight xs = snd $ mapAccumL treesAndPeople sortPeople xs
+      where treesAndPeople [] x = ([],x)
+            treesAndPeople (p:people) x 
+                | x == (-1) = (p:people, x)
+                | otherwise = (people, p)
+            sortPeople = sort $ filter (/=(-1)) xs 
+
+
+data Mylist a = RevMe a | Stay a | Cntr [ Mylist a] deriving (Show, Ord, Eq)
+
+ts1 = RevMe "bar"
+ts2 = Cntr [Stay "foo", Cntr [RevMe "bar"], Stay "baz"]
+-- "foo(bar)baz(blim)"
+ts3 = Cntr [Stay "foo", Cntr [RevMe "bar"], Stay "baz", Cntr [RevMe "Blim"]]
+mylistrev (RevMe x) = RevMe (reverse x) 
+mylistrev (Stay x) = Stay x 
+mylistrev (Cntr xs) = Cntr ( map mylistrev xs)  
+
+-- Cntr [Stay "foo",Cntr [RevMe "rab"],Stay "baz",Cntr [RevMe "milB"]]
+-- *Main> mylistrev ts1
+-- RevMe "rab"
+-- *Main> mylistrev ts2
+-- Cntr [Stay "foo",Cntr [RevMe "rab"],Stay "baz"]
+-- *Main> mylistrev ts3
+-- Cntr [Stay "foo",Cntr [RevMe "rab"],Stay "baz",Cntr [RevMe "milB"]]
