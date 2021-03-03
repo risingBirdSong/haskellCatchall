@@ -36,6 +36,16 @@ libgroupBy p' (x':xs') = (x' : ys') : zs'
       where (ys,zs) = go p x xs
     go _ _ [] = ([], [])
 
+libgroupByA _ [] = []
+libgroupByA p' (x':xs') = (x' : ys') : zs'
+  where 
+    (ys',zs') = go p' x' xs' 
+    go p z (x:xs)
+       | p z x = (x : ys, zs)
+       | otherwise = ([], (x:ys) : zs)
+        where (ys,zs) = go p x xs 
+    go _ _ [] = ([],[])
+
 allLongestStrings xs = last $ libgroupBy (\x y -> length x == length y) $ sortBy (comparing length) xs
 
 -- strange behavior of standard groupBy. why not split at 2?
@@ -45,3 +55,5 @@ allLongestStrings xs = last $ libgroupBy (\x y -> length x == length y) $ sortBy
 -- more intuitive groupBy with libgroupBy
 -- *Main> libgroupBy (<) [1,2,3,1,2,3]
 -- [[1,2,3],[1,2,3]]
+
+lb = [(1,2),(2,3),(3,1),(1,2),(2,3)]
