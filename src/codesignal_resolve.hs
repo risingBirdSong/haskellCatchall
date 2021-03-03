@@ -141,3 +141,13 @@ gauravsinghSubLists lst = reverse $ go 1 []
 cassesgreatidea =  [take 1, take 2, take 3] <*> tails [1,2,3,4]
 
 chal1 l = take <$> [1..pred $ length l] <*> tails l
+
+
+lc = [-1, 150, 190, 170, -1, -1, 160, 180]
+-- sortByHeight xs 
+
+practiceMapAccumA xs = mapAccumR (\a b -> (a+1,(a,b*2))) 0 xs
+-- (10,[(9,2),(8,4),(7,6),(6,8),(5,10),(4,12),(3,14),(2,16),(1,18),(0,20)])
+practiceMapAccumB xs = mapAccumL (\a b -> (a+1, (a,b*2))) 0 xs
+-- (10,[(0,2),(1,4),(2,6),(3,8),(4,10),(5,12),(6,14),(7,16),(8,18),(9,20)])
+
