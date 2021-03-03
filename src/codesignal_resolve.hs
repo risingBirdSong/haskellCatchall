@@ -91,14 +91,21 @@ commonCharacterCount s1 s2 = sum $ map snd $ M.toList $ M.intersectionWith min m
 commonCharacterCount' sA sB = sum $ map (uncurry min) $ (\x -> (count x sA, count x sB)) <$> ['a'..'z']
   where count s xs = length $ filter (==s) xs  
 
+-- https://stackoverflow.com/questions/44558242/picture-how-mapaccumr-works
 coolPrint = let (_, result) =
                       mapAccumR 
                         (\cumulativeLength item -> 
                           let newLength = cumulativeLength + length item 
-                          in (newLength, take cumulativeLength (repeat ' ') ++ item)
+                          in (newLength, take (cumulativeLength) (repeat ' ') ++ item ++" ")
                         )
                         0
                         ["Geese", "Monkeys", "Chocolate", "Chips", "Dust", "Box"]
                     in mapM_ putStrLn $ reverse result
+-- Box
+--    Dust
+--        Chips
+--             Chocolate
+--                      Monkeys
+--                             Geese
 
 -- isLucky n 
