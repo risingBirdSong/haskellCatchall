@@ -2,6 +2,20 @@ import Data.List
 import Data.Ord
 import Data.List.Split
 import qualified Data.List.GroupBy as Grp
+import qualified Data.Map as M
+import Debug.Trace
+
+--                                                    myLib
+-- *****************************************************************************************************
+
+count :: (Ord a, Integral b) => [a] -> M.Map a b
+count =
+  foldr updateMap M.empty
+    where updateMap v counts
+            | M.member v counts = M.adjust succ v counts
+            | otherwise           = M.insert v 1 counts
+
+-- *****************************************************************************************************
 
 centuryFromYear y =  ((y-1) `div` 100) + 1
 
@@ -56,4 +70,12 @@ allLongestStrings xs = last $ libgroupBy (\x y -> length x == length y) $ sortBy
 -- *Main> libgroupBy (<) [1,2,3,1,2,3]
 -- [[1,2,3],[1,2,3]]
 
-lb = [(1,2),(2,3),(3,1),(1,2),(2,3)]
+
+
+commonCharacterCount s1 s2 = sum $ map snd $ M.toList $ M.intersectionWith min mA mB 
+  where mA = count s1
+        mB = count s2   
+
+
+commonCharacterCount' sA sB = sum $ map (uncurry min) $ (\x -> (count x sA, count x sB)) <$> ['a'..'z']
+  where count s xs = length $ filter (==s) xs  
