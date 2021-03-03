@@ -1,4 +1,5 @@
 import Data.List
+import Data.Char
 import Data.Ord
 import Data.List.Split
 import qualified Data.List.GroupBy as Grp
@@ -108,4 +109,11 @@ coolPrint = let (_, result) =
 --                      Monkeys
 --                             Geese
 
--- isLucky n 
+isLucky n =  (sum frst == sum lst)
+    where toList = map digitToInt $ show n
+          frst = take ((length toList)`div`2) toList
+          lst = drop ((length toList)`div`2) toList
+
+
+digits' 0 = []
+digits' n = digits' (n `div` 10) ++ [n `mod` 10]
