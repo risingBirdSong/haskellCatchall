@@ -291,3 +291,11 @@ toBarcode' xs = sequence $ map f xs
   where f '0' = Just '.'
         f '1' = Just '|'
         f _ = Nothing
+
+
+
+a = [1, 2, 3]
+b = [2, 1, 3]
+
+areSimilar as bs = sort as == sort bs && limitMismathes
+  where limitMismathes = (<=2) . length . filter (uncurry (/=)) $ zip as bs 
