@@ -239,3 +239,18 @@ reverseInParentheses'''' xs =
                   Just j = elemIndex ')' bs
                   (cs,_:ds) = splitAt j bs
               in reverseInParentheses'''' (as ++ reverse cs ++ ds)
+
+
+ld = [50, 60, 60, 45, 70]
+alternatingSums xs = (\(a , b) -> [tidyUp a, tidyUp b]) $ partition (even.fst) $ zip [0..] xs
+  where tidyUp ys = sum  $ map snd ys
+
+alternatingSums' a = f (partition (even . fst) (zip [0..] a))
+  where
+    f (even,odd) = [sum $ snd (unzip even), sum $ snd (unzip odd)]
+
+
+-- alternatingSums zs = go zs [] []
+--       where go [] aa bb = [sum aa, sum bb]
+--             go (x:y:zs) aa bb = go (zs) (x:aa) (y:bb)
+--             go (x:zs) aa bb = go [] (x:aa) bb
