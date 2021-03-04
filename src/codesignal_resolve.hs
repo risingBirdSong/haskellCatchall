@@ -249,8 +249,22 @@ alternatingSums' a = f (partition (even . fst) (zip [0..] a))
   where
     f (even,odd) = [sum $ snd (unzip even), sum $ snd (unzip odd)]
 
+alternatingNumbers = transpose [[1,2,3],[4,5,6]]
 
 -- alternatingSums zs = go zs [] []
 --       where go [] aa bb = [sum aa, sum bb]
 --             go (x:y:zs) aa bb = go (zs) (x:aa) (y:bb)
 --             go (x:zs) aa bb = go [] (x:aa) bb
+
+
+example wholegroup@(x:y:xs) = even $ length wholegroup 
+
+vowelDigit :: String -> Bool
+vowelDigit "" = True
+vowelDigit(x:y:xs) 
+                 | even ( length xs + 2 ) && x `elem` ['A','E','I','O','U','a','e','i','o','u'] && y `elem` ['0'..'9'] = vowelDigit xs 
+                 |otherwise = False 
+
+
+isVowel x = x `elem` ['a','e','i','o','u']
+vowelDigit' xs = even (length xs) && all (\x -> isDigit x || isVowel x) (map toLower xs)
