@@ -177,7 +177,6 @@ ts3 = Cntr [Stay "foo", Cntr [RevMe "bar"], Stay "baz", Cntr [RevMe "Blim"]]
 mylistrev (RevMe x) = RevMe (reverse x) 
 mylistrev (Stay x) = Stay x 
 mylistrev (Cntr xs) = Cntr ( map mylistrev xs)  
-
 -- Cntr [Stay "foo",Cntr [RevMe "rab"],Stay "baz",Cntr [RevMe "milB"]]
 -- *Main> mylistrev ts1
 -- RevMe "rab"
@@ -185,3 +184,52 @@ mylistrev (Cntr xs) = Cntr ( map mylistrev xs)
 -- Cntr [Stay "foo",Cntr [RevMe "rab"],Stay "baz"]
 -- *Main> mylistrev ts3
 -- Cntr [Stay "foo",Cntr [RevMe "rab"],Stay "baz",Cntr [RevMe "milB"]]
+
+-- reverseInParentheses xs = go xs 
+--   where go [] = []
+--         go (x:xs) 
+--             | x == '(' =
+
+--  foo(bar(baz))blim
+-- reverseInParentheses xs = go xs []
+--   where go (x:xs) stck 
+--           | x == '(' = go (dropWhile isAlpha xs) (takeWhile isAlpha xs)
+--           | x == ')' =
+
+
+-- "foo(bar)baz(blim)"
+reverseInParentheses' xs = head $ foldr f [""] xs
+    where f ')' xs = "":xs
+          f '(' (x:y:xs) = (reverse x ++ y) : xs  
+          f c grp@(x:xs) = trace (show grp) (c:x):xs
+
+reverseInParentheses'' inputString = reverse res
+    where  (res,_) = foldl revAcc ([],[]) inputString
+         
+revAcc (acc@(cur,stack)) c  
+    | c == '(' = (cur, []:stack) -- start adding to stack
+    | c == ')' = -- remove from stack 
+                 case stack of 
+                     -- TODO may need some extra reverses in here...
+                     h:[] -> ((reverse h ++ cur), [])
+                     h:h2:tl -> (cur, (reverse h ++ h2):tl)
+    | otherwise = case stack of 
+                      h:tl -> (cur,(c:h):tl)
+                      []   -> (c:cur, stack)
+          
+
+reverseInParentheses''' :: String -> String
+reverseInParentheses''' s = rev s [] where
+    rev [] stk = reverse stk
+    rev (')':t) stk = let (s1, s2) = span (/='(') stk in rev t (reverse s1 ++ tail s2)
+    rev (h:t) stk = rev t (h:stk)
+
+
+reverseInParentheses'''' xs =
+    case elemIndices '(' xs of
+        [] -> xs
+        is -> let i = last is 
+                  (as,_:bs) = splitAt i xs
+                  Just j = elemIndex ')' bs
+                  (cs,_:ds) = splitAt j bs
+              in reverseInParentheses'''' (as ++ reverse cs ++ ds)
