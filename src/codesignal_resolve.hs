@@ -268,3 +268,22 @@ vowelDigit(x:y:xs)
 
 isVowel x = x `elem` ['a','e','i','o','u']
 vowelDigit' xs = even (length xs) && all (\x -> isDigit x || isVowel x) (map toLower xs)
+
+
+picture = ["abc",
+           "ded"]
+
+addBorder mtr = topNBottom : map (\x -> '*' : x ++ "*" ) mtr ++ [topNBottom]
+    where topNBottom = replicate ((length $ head mtr) + 2) '*'
+
+
+
+
+toBarcode "" = Nothing
+toBarcode xs = if all valid convert then Just (convert) else Nothing
+  where f '0' = '.'
+        f '1' = '|'
+        f _ = ' '
+        valid x = x `elem` "|."
+        convert = (map f xs)
+
