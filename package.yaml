@@ -52,6 +52,7 @@ dependencies:
 - time
 - vector 
 - lens
+- parsec
 
 library:
   source-dirs: src

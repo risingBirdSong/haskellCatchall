@@ -190,18 +190,24 @@ mylistrev (Cntr xs) = Cntr ( map mylistrev xs)
 --         go (x:xs) 
 --             | x == '(' =
 
---  foo(bar(baz))blim
 -- reverseInParentheses xs = go xs []
 --   where go (x:xs) stck 
 --           | x == '(' = go (dropWhile isAlpha xs) (takeWhile isAlpha xs)
 --           | x == ')' =
 
 
+--  foo(bar(baz))blim
 -- "foo(bar)baz(blim)"
 reverseInParentheses' xs = head $ foldr f [""] xs
     where f ')' xs = "":xs
           f '(' (x:y:xs) = (reverse x ++ y) : xs  
           f c grp@(x:xs) = trace (show grp) (c:x):xs
+
+reverseInParenthesesR' xs = foldr f [""] xs 
+  where f ')' xs = "":xs 
+        f '(' (x:y:xs) = (reverse x ++ y) : xs 
+        f  c  (x:xs) = (c:x):xs
+
 
 reverseInParentheses'' inputString = reverse res
     where  (res,_) = foldl revAcc ([],[]) inputString

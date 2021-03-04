@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 4fc330cc76b3dd78ac4ee0124ddf145e001d0a73e2c8a29e4ce7d78d3c5a43f4
+-- hash: 1b68b23b4157fc01191e4ea51866e106e8de84fbb9982c13f7983a806622f89d
 
 name:           catchallHaskell
 version:        0.1.0.0
@@ -46,6 +46,7 @@ library
     , lens
     , matrix
     , mtl
+    , parsec
     , primes
     , probability
     , process
@@ -85,6 +86,7 @@ executable catchallHaskell-exe
     , lens
     , matrix
     , mtl
+    , parsec
     , primes
     , probability
     , process
@@ -125,6 +127,7 @@ test-suite catchallHaskell-test
     , lens
     , matrix
     , mtl
+    , parsec
     , primes
     , probability
     , process
