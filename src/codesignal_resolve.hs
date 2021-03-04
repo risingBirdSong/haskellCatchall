@@ -287,3 +287,7 @@ toBarcode xs = if all valid convert then Just (convert) else Nothing
         valid x = x `elem` "|."
         convert = (map f xs)
 
+toBarcode' xs = sequence $ map f xs
+  where f '0' = Just '.'
+        f '1' = Just '|'
+        f _ = Nothing
