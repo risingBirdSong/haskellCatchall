@@ -1,5 +1,4 @@
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE ScopedTypeVariables #-}
 
 import Data.List
 import Data.Char
@@ -88,11 +87,11 @@ libgroupByC p' (a:as) = (a : xs') : zs'
 -- [[1,2,3,4,5],[4,5,6,7],[6,7,8,9]]
 
 -- mygroupBy :: (a -> a -> Bool) -> [a] -> [[a]]
-mygroupBy p (x':xs') = go (xs') [[]]
-  where go [x] rst = rst
-        go (x:y:zs) (acc:accs)
-             | p x y = go (y:zs) ((a:acc):accs)
-             | otherwise = go (y:zs) ([]:(x:acc):accs)
+-- mygroupBy p (x':xs') = go (xs') [[x']]
+--   where go [x] rst = rst
+--         go (x:y:zs) (acc:accs)
+--              | p x y = go (y:zs) ((a:acc):accs)
+--              | otherwise = go (y:zs) ([]:(x:acc):accs)
 
 
 allLongestStrings xs = last $ libgroupBy (\x y -> length x == length y) $ sortBy (comparing length) xs
@@ -341,3 +340,19 @@ bfrct xs bls = partition snd $ zip xs bls
 
 rvrsInt :: Int -> Int
 rvrsInt num = read $ reverse $ show num
+
+
+merge :: Ord a => [a] -> [a] -> [a]
+merge xs [] = xs
+merge [] ys = ys
+merge (x:xs) (y:ys) | x <= y    = x:merge xs (y:ys)
+                    | otherwise = y:merge (x:xs) ys
+
+
+msort :: Ord a => [a] -> [a]
+msort [] = []
+msort [a] = [a]
+msort xs = merge (msort (firstHalf xs)) (msort (secondHalf xs))
+
+firstHalf  xs = let { n = length xs } in take (div n 2) xs
+secondHalf xs = let { n = length xs } in drop (div n 2) xs
