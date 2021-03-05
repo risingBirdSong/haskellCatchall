@@ -356,3 +356,9 @@ msort xs = merge (msort (firstHalf xs)) (msort (secondHalf xs))
 
 firstHalf  xs = let { n = length xs } in take (div n 2) xs
 secondHalf xs = let { n = length xs } in drop (div n 2) xs
+
+
+palindromeRearranging xs = 1 >= (length . filter odd $ map length . group $ sort xs) 
+
+arrayMaximalAdjacentDifference xs = foldr (\(x,y) acc -> max (abs(x-y)) acc) 0 $ zip xs (tail xs)
+arrayMaximalAdjacentDifference' xs = maximum . map abs $ zipWith (-) xs (tail xs)
