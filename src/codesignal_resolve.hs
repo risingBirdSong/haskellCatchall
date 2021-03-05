@@ -40,6 +40,8 @@ la = ["aba",
  "vcd", 
  "aba"]
 
+almstIncSeq xs = and $ ((<2) . length . filter (uncurry (>)) . zip xs) . tail <$> [xs, tail xs]
+
 libgroupBy :: (a -> a -> Bool) -> [a] -> [[a]]
 libgroupBy _ [] = []
 libgroupBy p' (x':xs') = (x' : ys') : zs'
@@ -311,3 +313,10 @@ arrayChange xs = go xs 0
 
 arrayChange' xs = head $ foldl ko [0, minBound] xs
   where ko [total, pre] x = if pre >= x then [total + pre - x + 1, pre + 1] else [total, x]
+
+
+-- bfrct :: [a] -> [Bool] -> ([(a, Bool)], [(a, Bool)])
+bfrct xs bls = partition snd $ zip xs bls
+
+rvrsInt :: Int -> Int
+rvrsInt num = read $ reverse $ show num
