@@ -1,3 +1,6 @@
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+
 import Data.List
 import Data.Char
 import Data.Ord
@@ -63,7 +66,6 @@ libgroupByA p' (x':xs') = (x' : ys') : zs'
         where (ys,zs) = go p x xs 
     go _ _ [] = ([],[])
 
-
 libgroupByB _ [] = []
 libgroupByB p' (x':xs') = (x':ys') : zs'
   where (ys',zs') = go p' x' xs'
@@ -72,6 +74,25 @@ libgroupByB p' (x':xs') = (x':ys') : zs'
            | otherwise = ([], (x:ys) : zs)
              where (ys, zs) = go p x xs
         go _ _ [] = ([],[])
+
+libgroupByC _ [] = []
+libgroupByC p' (a:as) = (a : xs') : zs' 
+  where (xs', zs') = go p' a as 
+        go p z (x:xs) 
+          | p z x = (x:ys, zs)
+          | otherwise = ([], (x:ys) : zs)
+            where (ys, zs) = go p x xs 
+        go _ _ [] = ([],[])
+
+-- *Main> libgroupByC (<) [1,2,3,4,5,4,5,6,7,6,7,8,9]
+-- [[1,2,3,4,5],[4,5,6,7],[6,7,8,9]]
+
+-- mygroupBy :: (a -> a -> Bool) -> [a] -> [[a]]
+mygroupBy p (x':xs') = go (xs') [[]]
+  where go [x] rst = rst
+        go (x:y:zs) (acc:accs)
+             | p x y = go (y:zs) ((a:acc):accs)
+             | otherwise = go (y:zs) ([]:(x:acc):accs)
 
 
 allLongestStrings xs = last $ libgroupBy (\x y -> length x == length y) $ sortBy (comparing length) xs
