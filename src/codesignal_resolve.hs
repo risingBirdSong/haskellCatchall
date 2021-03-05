@@ -299,3 +299,15 @@ b = [2, 1, 3]
 
 areSimilar as bs = sort as == sort bs && limitMismathes
   where limitMismathes = (<=2) . length . filter (uncurry (/=)) $ zip as bs 
+
+arrayChange :: (Ord a, Num a) => [a] -> a
+arrayChange xs = go xs 0  
+  where go [x] c = c 
+        go (x:y:zs) c 
+            | x < y = go (y:zs) c 
+            | otherwise = go ((y+calc):zs) (c+calc)
+              where calc = (x - y) + 1
+
+
+arrayChange' xs = head $ foldl ko [0, minBound] xs
+  where ko [total, pre] x = if pre >= x then [total + pre - x + 1, pre + 1] else [total, x]
