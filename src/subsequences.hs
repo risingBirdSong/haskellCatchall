@@ -30,4 +30,18 @@ subs'' 0 _      = [[]]
 subs'' n xs | n >= length xs = [xs]
 subs'' n (x:xs) = concat [map (x:) $ subs'' (n-1) xs, subs'' n xs]
 
+str = ["a","b","c"]
 
+shower = mapM_ putStrLn str  
+
+sbs [] = []
+sbs (x:xs) = [x] : trace ("((" ++ show (sbs xs) ++ "))") foldr f [] (sbs xs)
+  where f y acc = shwer  
+            where shwer = trace (">>" ++ show (y : (x:y) : acc) ++ "<<") (y : (x:y) : acc)
+    
+-- [[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
+
+-- 1 : (sbs [2,3]) 2 : sbs ([3]) : 3 : sbs ([])
+-- 1 : (sbs [2,3]) 2 : sbs ([3]) : 3 : []
+-- 1 : (sbs [2,3]) 2 : sbs ([3]) : [3]
+-- 1 : (sbs [2,3]) 2 : sbs ([3]) : [3]

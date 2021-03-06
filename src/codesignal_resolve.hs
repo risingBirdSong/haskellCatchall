@@ -396,4 +396,19 @@ minesweeper xss = (hrz , cnvrtd)
 
 
 
+rowA = [1,0,0]
 
+newRow = [2,2,1]
+
+
+minesweeper' xss = zipWith (zipWith (-)) newGrid cnvrtd
+    where cnvrtd = map (map fromEnum) xss
+          sngle xs = zipWith3 (\a b c -> a+b+c) (0:xs) xs (tail xs ++ [0])
+          newGrid = transpose $ map sngle $ transpose $ map sngle cnvrtd
+
+arrayReplace xs a b = map (\x -> if x == a then b else x) xs
+
+evenDigitsOnly n = all even $ map digitToInt $ show n
+
+-- [1,0,0]
+-- 0 1 0 
