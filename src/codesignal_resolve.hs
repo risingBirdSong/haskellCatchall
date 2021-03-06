@@ -380,3 +380,28 @@ boxBlur xss = transpose $ map ( map (`div` 9) . threes) . transpose $ map threes
 
 threes (x:y:z:xs) = sum [x,y,z] : threes (y:z:xs)
 threes _ = []
+
+matrixA = [[True, False, False],
+          [False, True, False],
+          [False, False, False]]
+matrixB = [[False, False, False],
+          [False, True, False],
+          [False, False, False]]
+
+-- zipWith (zipWith (-)) hrz cnvrtd
+minesweeper xss = (hrz , cnvrtd) 
+            where sngleRow xs = zipWith3 (\a b c -> a + b + c) (0:xs) xs (tail $ xs++[0]) 
+                  cnvrtd = map (map fromEnum) xss
+                  hrz = transpose $ map sngleRow . transpose $ map sngleRow cnvrtd
+
+
+newtype Second = Second Int deriving (Show)
+
+data Minute = Minute
+  { minutes :: Int,
+    seconds :: Second
+  } deriving Show
+
+-- how to construct a simple Data Constructor two ways
+minA = Minute 3 (Second 2)
+minB = Minute {minutes = 33 , seconds = (Second 3)}
