@@ -362,3 +362,21 @@ palindromeRearranging xs = 1 >= (length . filter odd $ map length . group $ sort
 
 arrayMaximalAdjacentDifference xs = foldr (\(x,y) acc -> max (abs(x-y)) acc) 0 $ zip xs (tail xs)
 arrayMaximalAdjacentDifference' xs = maximum . map abs $ zipWith (-) xs (tail xs)
+
+ia = [5, 3, 6, 7, 9]
+avoidObstacles xs = maximum $ map abs $ zipWith (-) valid (tail valid)
+  where mx = maximum xs
+        steps = [2..mx+1] \\ xs
+        valid = filter (\stp -> any (\o -> (o `div` stp == 0)) xs ) steps  
+
+
+
+image = [[7, 4, 0, 1], 
+         [5, 6, 2, 2], 
+         [6, 10, 7, 8], 
+         [1, 4, 2, 0]]
+
+boxBlur xss = transpose $ map ( map (`div` 9) . threes) . transpose $ map threes xss
+
+threes (x:y:z:xs) = sum [x,y,z] : threes (y:z:xs)
+threes _ = []

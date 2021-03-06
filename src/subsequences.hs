@@ -29,3 +29,5 @@ subs'' _ []     = [[]]
 subs'' 0 _      = [[]]
 subs'' n xs | n >= length xs = [xs]
 subs'' n (x:xs) = concat [map (x:) $ subs'' (n-1) xs, subs'' n xs]
+
+
