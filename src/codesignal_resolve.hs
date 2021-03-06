@@ -395,13 +395,5 @@ minesweeper xss = (hrz , cnvrtd)
                   hrz = transpose $ map sngleRow . transpose $ map sngleRow cnvrtd
 
 
-newtype Second = Second Int deriving (Show)
 
-data Minute = Minute
-  { minutes :: Int,
-    seconds :: Second
-  } deriving Show
 
--- how to construct a simple Data Constructor two ways
-minA = Minute 3 (Second 2)
-minB = Minute {minutes = 33 , seconds = (Second 3)}

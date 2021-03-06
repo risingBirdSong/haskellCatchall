@@ -182,3 +182,16 @@ instance Functor Tree where
   fmap f (Node a aa) = (Node (f a) (fmap (fmap f) aa) ) 
 
 myTree = Node 100 [Node 12 [], Node 46 [Node 66 [Node 99 []]], Node 123 [Node 9 []]]
+
+
+
+newtype Second = Second Int deriving (Show)
+
+data Minute = Minute
+  { minutes :: Int,
+    seconds :: Second
+  } deriving Show
+
+-- how to construct a simple Data Constructor two ways
+minA = Minute 3 (Second 2)
+minB = Minute {minutes = 33 , seconds = (Second 3)}
