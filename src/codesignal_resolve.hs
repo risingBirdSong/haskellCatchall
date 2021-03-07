@@ -426,41 +426,17 @@ chessBoardCellColor a b = (==1) $ length . group $ map even [color a, color b]
   where color sq = sum $ map fromEnum sq 
 
 
-sbA = ["","a","b","ab","c","ac","bc","abc"] 
-sbB = ["","d","e","de","f","df","ef","def"]
+aa =  ["ab", "bb", "aa"]
 
-assembleLetters = firstBatch ++ lastWork
-  where splitup = split (condense $ oneOf "ptw") ['a'..'z']
-        firstBatch = chunksOf 3 $ head splitup
-        lastbatch = drop 1 splitup
-        lastWork = map (\(_,a,b)->a++b) $ filter (\(i,_,_)->even i) $ zip3 [0..] (lastbatch) (tail lastbatch)
+bb = ["aba", "bbb", "bab"]
+
+cc = ["abc", 
+ "abx", 
+ "axx", 
+ "abc"]
+
+stringsRearrangement xs = any handleOnePerm $ permutations xs 
+handleOnePerm perm = all (==1) $ map (uncurry differences) $ zip perm (tail perm)
+differences a b =  length $ filter (==False) $ zipWith (==) a b
 
 
-phoneMap = M.fromList $ zip ['2'..'9'] assembleLetters
-
-lookupLtrs = traverse (\x -> M.lookup  x phoneMap) "235"
-chnk1 str = chunksOf 1 str
-
-aa xs = fmap (concatMap $ chunksOf 1) xs
-
-prod as bs = (++) <$> as <*> bs
-
-substring s = concatMap (tail . inits) (tails s)
-
-combinations :: String -> [String]
-combinations = comb . map letters
-    where
-        comb :: [[Char]] -> [[Char]]
-        comb [] = [[]]
-        comb (x : xs) = [h : t | h <- x , t <- comb xs]
-
-letters :: Char -> [Char]
-letters '2' = "abc"
-letters '3' = "def"
-letters '4' = "ghi"
-letters '5' = "jkl"
-letters '6' = "mno"
-letters '7' = "pqrs"
-letters '8' = "tvu"
-letters '9' = "wxyz"
-letters _ = []
