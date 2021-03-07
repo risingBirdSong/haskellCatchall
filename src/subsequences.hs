@@ -40,18 +40,42 @@ sbs (x:xs) = [x] : foldr f [] (sbs xs)
             where shwer =  (y : (x:y) : acc)
 -- trace ( show (y : (x:y) : acc) )    
 
--- [[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
-
-statues = [6, 2, 3, 8]
-
-makeArrayConsecutive2' statues = length $ allStatues \\ statues
-    where allStatues = [(minimum statues)..(maximum statues)] 
-
 -- [2,3,6,8] length 4
 -- he wants this [2,3,4,5,6,7,8] length 7
 
+dpLCS :: String -> String -> Int
+dpLCS _ [] = 0
+dpLCS a b =
+  let nextRow ac prevRow =
+        let diagonals = 0:prevRow
+            lefts = 0:thisRow
+            ups = prevRow
+            maxes = zipWith max lefts ups
+            thisRow = zipWith3 (\diag maxLeftUp bc ->
+                                   if bc == ac then 1 + diag else maxLeftUp)
+                                   diagonals maxes b
+        in thisRow
+
+      firstRow = map (\_ -> 0) b
+      dpTable = firstRow:zipWith nextRow a dpTable
+
+  in last (last dpTable)
 
 
+dpLCS' _ [] = 0
+dpLCS' a b = 
+  let nextRow ac prevRow =
+        let diagnls = 0:prevRow
+            lefts = 0:thisRow 
+            ups = prevRow 
+            maxes = zipWith max lefts ups 
+            thisRow = zipWith3 (\diag maxLeftUp bc ->
+                                    if bc == ac then 1 + diag else maxLeftUp)
+                                    diagnls maxes b 
+        in thisRow 
+      firstRow = map (\_ -> 0) b
+      dpTable = firstRow: zipWith nextRow a dpTable
+ in last (last dpTable)
 
 
 

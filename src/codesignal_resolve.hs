@@ -6,6 +6,7 @@ import Data.Ord
 import Data.List.Split
 import qualified Data.List.GroupBy as Grp
 import qualified Data.Map as M
+import qualified Data.Vector as V
 import Debug.Trace
 
 --                                                    myLib
@@ -412,3 +413,10 @@ evenDigitsOnly n = all even $ map digitToInt $ show n
 
 -- [1,0,0]
 -- 0 1 0 
+
+alphabeticShift :: String -> String
+alphabeticShift str = map (\x -> toEnum $ ( ((fromEnum  x) - 96) `mod` 26) + 97 ) str
+
+
+alphaShift str = map nxt str 
+  where nxt x = if x == 'z' then 'a' else succ x 

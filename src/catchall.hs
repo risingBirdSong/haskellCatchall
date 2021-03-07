@@ -195,3 +195,7 @@ data Minute = Minute
 -- how to construct a simple Data Constructor two ways
 minA = Minute 3 (Second 2)
 minB = Minute {minutes = 33 , seconds = (Second 3)}
+
+
+fibby' n = fibs !! n
+    where fibs = 0:1: zipWith (+) fibs (tail fibs) 
