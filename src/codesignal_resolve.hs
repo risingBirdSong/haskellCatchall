@@ -440,3 +440,4 @@ handleOnePerm perm = all (==1) $ map (uncurry differences) $ zip perm (tail perm
 differences a b =  length $ filter (==False) $ zipWith (==) a b
 
 
+arrayMaxConsecutiveSum xs k = maximum $ map sum $ divvy k 1 xs 
