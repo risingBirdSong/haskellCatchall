@@ -434,4 +434,15 @@ assembleLetters = firstBatch ++ lastWork
         firstBatch = chunksOf 3 $ head splitup
         lastbatch = drop 1 splitup
         lastWork = map (\(_,a,b)->a++b) $ filter (\(i,_,_)->even i) $ zip3 [0..] (lastbatch) (tail lastbatch)
--- phone d
+
+
+phoneMap = M.fromList $ zip ['2'..'9'] assembleLetters
+
+lookupLtrs = traverse (\x -> M.lookup  x phoneMap) "235"
+chnk1 str = chunksOf 1 str
+
+aa xs = fmap (concatMap $ chunksOf 1) xs
+
+prod as bs = (++) <$> as <*> bs
+
+substring s = concatMap (tail . inits) (tails s)
