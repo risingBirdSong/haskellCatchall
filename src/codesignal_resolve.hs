@@ -441,3 +441,10 @@ differences a b =  length $ filter (==False) $ zipWith (==) a b
 
 
 arrayMaxConsecutiveSum xs k = maximum $ map sum $ divvy k 1 xs 
+arrayMaxConsecutiveSum' xs k = maximum $ map sum $ divvy k 1 xs 
+
+mapDvy xs k = go xs 1 0 (M.empty) []
+  where go [x] _ _ myMap _ = myMap
+        go (x:xs) smalCnt bgCnt myMap fillList
+          | k `mod` smalCnt == 0 = go (x:xs) (1) (bgCnt + 1) (M.insert bgCnt ( fillList) myMap) []
+          | otherwise = go xs (smalCnt + 1) (bgCnt) myMap (x:fillList)  
