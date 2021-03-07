@@ -420,3 +420,7 @@ alphabeticShift str = map (\x -> toEnum $ ( ((fromEnum  x) - 96) `mod` 26) + 97 
 
 alphaShift str = map nxt str 
   where nxt x = if x == 'z' then 'a' else succ x 
+
+
+chessBoardCellColor a b = (==1) $ length . group $ map even [color a, color b] 
+  where color sq = sum $ map fromEnum sq 
