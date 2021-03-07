@@ -424,3 +424,14 @@ alphaShift str = map nxt str
 
 chessBoardCellColor a b = (==1) $ length . group $ map even [color a, color b] 
   where color sq = sum $ map fromEnum sq 
+
+
+sbA = ["","a","b","ab","c","ac","bc","abc"] 
+sbB = ["","d","e","de","f","df","ef","def"]
+
+assembleLetters = firstBatch ++ lastWork
+  where splitup = split (condense $ oneOf "ptw") ['a'..'z']
+        firstBatch = chunksOf 3 $ head splitup
+        lastbatch = drop 1 splitup
+        lastWork = map (\(_,a,b)->a++b) $ filter (\(i,_,_)->even i) $ zip3 [0..] (lastbatch) (tail lastbatch)
+-- phone d
