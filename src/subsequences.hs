@@ -35,13 +35,34 @@ str = ["a","b","c"]
 shower = mapM_ putStrLn str  
 
 sbs [] = []
-sbs (x:xs) = [x] : trace ("((" ++ show (sbs xs) ++ "))") foldr f [] (sbs xs)
+sbs (x:xs) = [x] : foldr f [] (sbs xs)
   where f y acc = shwer  
-            where shwer = trace (">>" ++ show (y : (x:y) : acc) ++ "<<") (y : (x:y) : acc)
-    
+            where shwer =  (y : (x:y) : acc)
+-- trace ( show (y : (x:y) : acc) )    
+
 -- [[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
 
--- 1 : (sbs [2,3]) 2 : sbs ([3]) : 3 : sbs ([])
--- 1 : (sbs [2,3]) 2 : sbs ([3]) : 3 : []
--- 1 : (sbs [2,3]) 2 : sbs ([3]) : [3]
--- 1 : (sbs [2,3]) 2 : sbs ([3]) : [3]
+statues = [6, 2, 3, 8]
+
+makeArrayConsecutive2' statues = length $ allStatues \\ statues
+    where allStatues = [(minimum statues)..(maximum statues)] 
+
+-- [2,3,6,8] length 4
+-- he wants this [2,3,4,5,6,7,8] length 7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- makeArrayConsecutive2 n = length [(minimum n) .. (maximum n)] - length n
+--makeArrayConsecutive2 s = (maximum (s) - minimum s + 1) - length s 
