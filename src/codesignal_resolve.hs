@@ -443,8 +443,30 @@ differences a b =  length $ filter (==False) $ zipWith (==) a b
 arrayMaxConsecutiveSum xs k = maximum $ map sum $ divvy k 1 xs 
 arrayMaxConsecutiveSum' xs k = maximum $ map sum $ divvy k 1 xs 
 
-mapDvy xs k = go xs 1 0 (M.empty) []
-  where go [x] _ _ myMap _ = myMap
-        go (x:xs) smalCnt bgCnt myMap fillList
-          | k `mod` smalCnt == 0 = go (x:xs) (1) (bgCnt + 1) (M.insert bgCnt ( fillList) myMap) []
-          | otherwise = go xs (smalCnt + 1) (bgCnt) myMap (x:fillList)  
+-- arrayMaxConsecutiveSum k = maximum . map (sum . take k) . tails
+
+-- mapDvy xs k = go xs 1 0 (M.empty) []
+--   where go [x] _ _ myMap _ = myMap
+--         go (x:xs) smalCnt bgCnt myMap fillList
+--           | k `mod` smalCnt == 0 = go (x:xs) (1) (bgCnt + 1) (M.insert bgCnt ( fillList) myMap) []
+--           | otherwise = go xs (smalCnt + 1) (bgCnt) myMap (x:fillList)  
+
+
+arrayMap xs k = go xs 0 
+  where go []  mymax =  mymax
+        go (xs) mymax = go (drop 1 xs) (max mymax (sum $ take k xs)) 
+            
+
+arrayMaxConsecutiveSum'' xs k = maximum . map (sum . take k) $  tails xs 
+
+-- arrayMaxConsecutiveSum''' xs k = scanl (\x (themax, cntr) -> (0,cntr) xs
+  -- where logic localMax theMax cn
+
+maxSum_Melissa k xs = let (ys, zs) = splitAt k xs in maximum . scanl (+) (sum ys) $ zipWith (-) zs xs
+
+maxSum_Melissa' k xs = let (firstSublist, remainder) = splitAt k xs; firstSublistSum = sum firstSublist in maximum . scanl (\x (p, m) -> x + p - m) firstSublistSum $ zip remainder xs
+
+-- *Main> divvy 3 1 [1..6]
+-- [[1,2,3],[2,3,4],[3,4,5],[4,5,6]]
+
+-- [1,2,3,4,5,6]
