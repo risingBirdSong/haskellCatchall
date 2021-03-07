@@ -446,3 +446,21 @@ aa xs = fmap (concatMap $ chunksOf 1) xs
 prod as bs = (++) <$> as <*> bs
 
 substring s = concatMap (tail . inits) (tails s)
+
+combinations :: String -> [String]
+combinations = comb . map letters
+    where
+        comb :: [[Char]] -> [[Char]]
+        comb [] = [[]]
+        comb (x : xs) = [h : t | h <- x , t <- comb xs]
+
+letters :: Char -> [Char]
+letters '2' = "abc"
+letters '3' = "def"
+letters '4' = "ghi"
+letters '5' = "jkl"
+letters '6' = "mno"
+letters '7' = "pqrs"
+letters '8' = "tvu"
+letters '9' = "wxyz"
+letters _ = []
