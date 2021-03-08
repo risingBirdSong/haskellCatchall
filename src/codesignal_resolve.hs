@@ -480,3 +480,19 @@ exb = [1, 3, 4, 2, 4, 2, 4]
 
 
 exc =  [963, 741, 22, 851, 399, 382, 190, 247, 494, 452, 891, 532, 795, 920, 465, 831, 344, 391, 582, 897, 763, 951, 735, 806, 320, 702, 200, 59, 870, 345, 695, 321, 817, 83, 416, 36, 914, 335, 117, 985, 690, 303, 875, 556, 292, 309, 496, 791, 509, 360, 235, 784, 607, 341]
+
+
+bishopAndPawn bb p' = ((coords (head p') (last p')) `elem` bshppath)
+    where bshppath = handled (head bb) (last bb)
+
+
+coords x y = (fromEnum x , fromEnum y)  
+bshpmv x y = zipWith (coords) x y 
+
+handler start dir = take 8 $ iterate (dir) start 
+
+handleBoth x y dirA dirB= uncurry bshpmv ((handler x dirA) , (handler y dirB)) 
+
+handled x y = concatMap (uncurry (handleBoth x y)) [(succ , succ), (succ, pred), (pred, succ), (pred,pred)]
+
+hitPawn p bhs = p `elem` bhs
