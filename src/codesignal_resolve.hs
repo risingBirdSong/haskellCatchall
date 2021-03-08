@@ -501,7 +501,3 @@ hitPawn p bhs = p `elem` bhs
 bishopAndPawn' b p = (abs (bx - px) == (abs (by - py)) )
   where [bx,by,px,py] = map fromEnum (b ++ p) 
 
-type Height = Int 
-type Width = Int
-makeMtrx :: Height -> Width -> a -> [[a]]
-makeMtrx h w v = replicate h (replicate w v)

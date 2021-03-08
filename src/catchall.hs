@@ -199,3 +199,9 @@ minB = Minute {minutes = 33 , seconds = (Second 3)}
 
 fibby' n = fibs !! n
     where fibs = 0:1: zipWith (+) fibs (tail fibs) 
+
+
+type Height = Int 
+type Width = Int
+makeMtrx :: Height -> Width -> a -> [[a]]
+makeMtrx h w v = replicate h (replicate w v)
