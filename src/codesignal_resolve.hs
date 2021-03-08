@@ -462,11 +462,21 @@ arrayMaxConsecutiveSum'' xs k = maximum . map (sum . take k) $  tails xs
 -- arrayMaxConsecutiveSum''' xs k = scanl (\x (themax, cntr) -> (0,cntr) xs
   -- where logic localMax theMax cn
 
-maxSum_Melissa k xs = let (ys, zs) = splitAt k xs in maximum . scanl (+) (sum ys) $ zipWith (-) zs xs
+maxSum_Melissa k xs = let (ys, zs) = splitAt k xs in trace (show ys) maximum . scanl (+) (sum ys) $ trace (" zip- --> " ++ show (zipWith (-) zs xs) ++ "  <--  " ++ "  zs>  " ++ show zs ++ "  xs  " ++ show xs )  zipWith (-) zs xs
+maxSum_Melissa' k xs = let (ys, zs) = splitAt k xs in  maximum . scanl (+) (sum ys) $  zipWith (-) zs xs
 
-maxSum_Melissa' k xs = let (firstSublist, remainder) = splitAt k xs; firstSublistSum = sum firstSublist in maximum . scanl (\x (p, m) -> x + p - m) firstSublistSum $ zip remainder xs
+stepA k xs = ("first-> ", firstSub, "rem->",  remainder, "zipped ->", zipped, "scanned ->", scanned)
+    where (firstSub, remainder) = splitAt k xs
+          zipped = zipWith (-) remainder xs
+          scanned = scanl (+) (sum firstSub) zipped
 
--- *Main> divvy 3 1 [1..6]
--- [[1,2,3],[2,3,4],[3,4,5],[4,5,6]]
+maxSum_Melissa'' k xs = let (firstSublist, remainder) = splitAt k xs; firstSublistSum = sum firstSublist in maximum . scanl (\x (p, m) -> x + p - m) firstSublistSum $ zip remainder xs
 
--- [1,2,3,4,5,6]
+exa = [2, 3, 5, 1, 6]
+exb = [1, 3, 4, 2, 4, 2, 4]
+
+-- exb = [1, 3, 4, 2, 4, 2, 4]
+-- (4 - 1) (2-3) (4 - 4)
+
+
+exc =  [963, 741, 22, 851, 399, 382, 190, 247, 494, 452, 891, 532, 795, 920, 465, 831, 344, 391, 582, 897, 763, 951, 735, 806, 320, 702, 200, 59, 870, 345, 695, 321, 817, 83, 416, 36, 914, 335, 117, 985, 690, 303, 875, 556, 292, 309, 496, 791, 509, 360, 235, 784, 607, 341]
