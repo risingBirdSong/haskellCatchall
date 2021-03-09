@@ -501,3 +501,6 @@ hitPawn p bhs = p `elem` bhs
 bishopAndPawn' b p = (abs (bx - px) == (abs (by - py)) )
   where [bx,by,px,py] = map fromEnum (b ++ p) 
 
+arrayMaxConsecutiveSumRemake xs k = 
+  let (firstSubList , remainder) = splitAt k xs
+  in maximum $ scanl (+) (sum firstSubList) $ zipWith (-) remainder xs
