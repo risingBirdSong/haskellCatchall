@@ -9,6 +9,7 @@ import qualified Data.Map as M
 import qualified Data.Vector as V
 import Debug.Trace
 import Data.Maybe
+import qualified Data.Universe.Helpers as Hlp 
 
 --                                                    myLib
 -- *****************************************************************************************************
@@ -545,3 +546,19 @@ diagsB  = (++) <$> transpose . zipWith drop [0..]
 diagsC [] = []
 diagsC ([]:xss) = xss
 diagsC xss = zipWith (++) (map ((:[]) . head) xss ++ repeat []) ([]:diagsC (map tail xss))
+
+diagsD :: [[a]] -> [[a]]
+diagsD mtrx = tail $ go [] mtrx where
+    -- it is critical for some applications that we start producing answers
+    -- before inspecting es_
+    go b es_ = [h | h:_ <- b] : case es_ of
+        []   -> transpose ts
+        e:es -> go (e:ts) es
+        where ts = [t | _:t <- b]
+
+
+wildPatternMatching str = case (splitOn "." str) of
+                    [as,bs,[d,e,f],[g]] -> True
+                    otherwise -> False
+
+-- isIPv4Address all the logic is is the numbers have to be valid and less than 255, that's it, simple.
