@@ -8,6 +8,7 @@ import qualified Data.List.GroupBy as Grp
 import qualified Data.Map as M
 import qualified Data.Vector as V
 import Debug.Trace
+import Data.Maybe
 
 --                                                    myLib
 -- *****************************************************************************************************
@@ -523,7 +524,10 @@ myDiags mtrx = snd $ mapAccumL (\i lst -> (succ i , take i lst) ) 1 diags
   where prepends =  iterate (0:) []
         diags = transpose $ zipWith (++) prepends mtrx
 
--- myDiags mtrx = map (\(list,idx) -> take idx list) $ zip diags [1..]
---   where prepends =  iterate (0:) []
---         diags = transpose $ zipWith (++) prepends mtrx
+myDiagsB mtrx = map (\(list,idx) -> take idx list) $ zip diags [1..]
+  where prepends =  iterate (0:) []
+        diags = transpose $ zipWith (++) prepends mtrx
         
+myDiagsC mtrx = map (catMaybes) diags 
+      where prepends =  iterate (Nothing:) []
+            diags = transpose $ zipWith (++) prepends (map (map Just) mtrx)
