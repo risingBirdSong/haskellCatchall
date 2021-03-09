@@ -531,3 +531,7 @@ myDiagsB mtrx = map (\(list,idx) -> take idx list) $ zip diags [1..]
 myDiagsC mtrx = map (catMaybes) diags 
       where prepends =  iterate (Nothing:) []
             diags = transpose $ zipWith (++) prepends (map (map Just) mtrx)
+
+
+diagsD mtrx = map concat . transpose 
+  $ zipWith (++)  (iterate ([]:) []) (map (map (:[])) mtrx)
