@@ -562,3 +562,17 @@ wildPatternMatching str = case (splitOn "." str) of
                     otherwise -> False
 
 -- isIPv4Address all the logic is is the numbers have to be valid and less than 255, that's it, simple.
+
+areEquallyStrong a b x y = (max a b)==(max x y)
+
+lngst xs = maximumBy (comparing length) xs
+
+lngst' xs = foldr logic [] xs
+  where logic x acc 
+              | length x > length acc = x 
+              | otherwise = acc 
+
+
+addSum :: String -> String -> Int 
+addSum x y = (read x) + (read y)
+
