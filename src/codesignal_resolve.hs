@@ -533,5 +533,15 @@ myDiagsC mtrx = map (catMaybes) diags
             diags = transpose $ zipWith (++) prepends (map (map Just) mtrx)
 
 
-diagsD mtrx = map concat . transpose 
+diagsA mtrx = map concat . transpose 
   $ zipWith (++)  (iterate ([]:) []) (map (map (:[])) mtrx)
+
+rotate90 = reverse . transpose
+rotate180 = rotate90 . rotate90
+
+diagsB  = (++) <$> transpose . zipWith drop [0..]
+                 <*> transpose . zipWith drop [1..] . rotate180
+
+diagsC [] = []
+diagsC ([]:xss) = xss
+diagsC xss = zipWith (++) (map ((:[]) . head) xss ++ repeat []) ([]:diagsC (map tail xss))
