@@ -504,3 +504,22 @@ bishopAndPawn' b p = (abs (bx - px) == (abs (by - py)) )
 arrayMaxConsecutiveSumRemake xs k = 
   let (firstSubList , remainder) = splitAt k xs
   in maximum $ scanl (+) (sum firstSubList) $ zipWith (-) remainder xs
+
+
+blockA = [
+  [1,2, 3, 4],
+  [5,6, 7, 8],
+  [9,10,11,12]
+  ]
+
+blockB = [
+  [1,2,3,4],
+  [0,5,6,7, 8],
+  [0,0,9,10,11,12]
+  ]
+
+
+myDiags mtrx = map (\(list,idx) -> take idx list) $ zip diags [1..]
+  where prepends =  iterate (0:) []
+        diags = transpose $ zipWith (++) prepends mtrx
+        
