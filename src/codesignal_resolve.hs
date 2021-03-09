@@ -519,7 +519,11 @@ blockB = [
   ]
 
 
-myDiags mtrx = map (\(list,idx) -> take idx list) $ zip diags [1..]
+myDiags mtrx = snd $ mapAccumL (\i lst -> (succ i , take i lst) ) 1 diags
   where prepends =  iterate (0:) []
         diags = transpose $ zipWith (++) prepends mtrx
+
+-- myDiags mtrx = map (\(list,idx) -> take idx list) $ zip diags [1..]
+--   where prepends =  iterate (0:) []
+--         diags = transpose $ zipWith (++) prepends mtrx
         
