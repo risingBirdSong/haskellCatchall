@@ -20,3 +20,8 @@ isMAC48Address str = ((and $ concat [(concat validchars)]) && validlast && notra
 
           checkhyphens = map ((=="-").last) firstbit
 isMAC48Address' str =  concat $ splitOn "-" str
+
+lineEncoding str = concatMap lgc $ group str
+  where lgc xs 
+          | length xs == 1 = xs 
+          | otherwise = (show $ length xs) ++ [head xs] 
