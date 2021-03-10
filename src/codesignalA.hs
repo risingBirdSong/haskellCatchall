@@ -627,3 +627,5 @@ candlesRmk cndls mn = cndls + go cndls mn
   where go candles makeNew 
             | candles < makeNew = 0 
             | otherwise = candles `div` makeNew + go (candles `div` makeNew + candles `mod` makeNew) makeNew
+
+
