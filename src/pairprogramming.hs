@@ -176,3 +176,11 @@ filternegs lst = filter (\x -> x < 0) lst
 -- countNegs mtrx
 
 practice =  filter (>5) [1,2,3,4,5,6,7,8]
+
+
+adjList = [3, 6, -2, -5, 7, 3]
+
+-- adjacentElementsProduct :: [b] -> [(b, b)]
+adjacentElementsProduct xs = maximum $ zipWith (*) xs (tail xs)
+
+
