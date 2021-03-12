@@ -175,7 +175,17 @@ pairs = [[1,3],
 -- (3 : [1,8], 8 : [6,3])
 -- ([1,3,8] [3,6,8])
 
-prepareLink xs = (foldr   (`M.insert` []) M.empty multiples, rest)
+testMap = M.fromList [(1,10),(2,20),(3,30)]
+
+prepareLink xs = ( appending)
   where multiples = setNub $ concat $ filter ((>1).length) $ group $ sort $ concat xs  
         rest = filter (not . (`elem` multiples)) $ concat xs
+        themap = foldr (`M.insert` []) M.empty multiples
+        mapkeys = M.keys themap
+        appending = map (appendlogic) xs
+          where appendlogic pair 
+                  |  (not . null) (pair `intersect` mapkeys) =  M.adjust (++ (pair \\ mapkeys)) ((head $ intersect pair mapkeys)) themap
+                  |  otherwise = themap
+        -- filteredpairs = map (\\ mapkeys) pairs 
         
+
