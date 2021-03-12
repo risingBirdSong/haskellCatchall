@@ -40,7 +40,6 @@ patternsa =
   "b", 
   "b"]
 
-setNub xs = S.toList $ S.fromList xs
 areFollowingPatterns xs ys = (length $ setNub xs) == (length $ setNub ys) 
 
 recurFun [] _ = True
@@ -135,6 +134,19 @@ ptB =["z",
     "u"]
 
 numsA = [0, 1, 2, 3, 5, 2]
-containsCloseNums nums k = any (<= k) $ zipWith (\x y -> abs (snd x - snd y)) candidates (tail candidates)
-    where candidates = concat $ filter ((>1).length)
-              $ groupBy (\x y -> fst x == fst y)  $ sort $ zip nums [0..]
+-- containsCloseNums nums k = any (<= k) $ zipWith (\x y -> abs (snd x - snd y)) candidates (tail candidates)
+--     where candidates = concat $ filter ((>1).length)
+--               $ groupBy (\x y -> fst x == fst y)  $ sort $ zip nums [0..]
+
+containsCloseNums nums k = go (zip [0..] nums ) (M.empty)
+  where go [] mp = False
+        go ((idx,x):xs) mp = case (M.lookup x mp) of
+                                   Just lastidx -> if (abs (idx - lastidx) <= k) then True else gonext
+                                   Nothing -> gonext
+                                  where gonext = (go xs (M.insert x idx mp))
+
+
+setNub xs = S.toList $ S.fromList xs
+
+possibleSums coins quantity = length $ filter (/=0) $ setNub $ map sum 
+    $ subsequences . concat $ zipWith replicate quantity coins
