@@ -133,3 +133,8 @@ ptB =["z",
     "xgxpvhprdd", 
     "e", 
     "u"]
+
+numsA = [0, 1, 2, 3, 5, 2]
+containsCloseNums nums k = any (<= k) $ zipWith (\x y -> abs (snd x - snd y)) candidates (tail candidates)
+    where candidates = concat $ filter ((>1).length)
+              $ groupBy (\x y -> fst x == fst y)  $ sort $ zip nums [0..]
