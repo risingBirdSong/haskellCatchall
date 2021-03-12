@@ -7,6 +7,8 @@ import qualified Data.Set as S
 import Data.Foldable
 import Data.Maybe
 import Data.Function
+import Data.Tuple
+import Data.Ord
 
 groupingDishes dishes =  map sorting . cleanup $ M.toList . musthavetwoings $ foldr gather (M.empty ) dishes
     where gather (food:ings) themap  = foldr handleingreds  themap ings
@@ -157,15 +159,12 @@ possibleSums  =  ((subtract 1. S.size. S.fromList. fmap sum.sequence.fmap (\(c, 
 possibleSumsA  =  (( fmap sum.sequence.fmap (\(c, q)->fmap (c *) [0..q])).).zip
 
 
-swapLexOrder str pairs = (paired, linked)
-  where linked = sort $ setNub $ concat pairs
-        setNub xs = S.toList $ S.fromList xs
-        paired = zip [1..] str
+-- swapLexOrder str pairs = (paired, linked)
+--   where linked = sort $ setNub $ concat pairs
+--         setNub xs = S.toList $ S.fromList xs
+--         paired = zip [1..] str
 
-pairs = [[1,3], 
- [6,8], 
- [3,8], 
- [2,7]] 
+
 
 -- (1 : [3]) (3 : [1,8]) (6 : [8]) (8 : [6,3]) (2 : [7]) (7 : [2])
 
@@ -174,18 +173,38 @@ pairs = [[1,3],
 
 -- (3 : [1,8], 8 : [6,3])
 -- ([1,3,8] [3,6,8])
+-- pairs :: [[Int]]
 
+strA = "abdc"
+pairsA :: [[Int]]
+pairsA = [[1, 4], [3, 4]]
+
+myInt :: Integer
+myInt = 1
+
+pairs = [[1,3], 
+ [6,8], 
+ [3,8], 
+ [2,7]
+ ]     
+
+testMap :: M.Map Integer Integer
 testMap = M.fromList [(1,10),(2,20),(3,30)]
 
-prepareLink xs = ( appending)
+
+strB = "abcdefgh"
+prsB :: [[Int]]
+prsB = [[1,4], 
+        [7,8]]
+
+swapLexOrder str xs  = (map fst $ splicedBack, linked, unlinked)
   where multiples = setNub $ concat $ filter ((>1).length) $ group $ sort $ concat xs  
         rest = filter (not . (`elem` multiples)) $ concat xs
-        themap = foldr (`M.insert` []) M.empty multiples
-        mapkeys = M.keys themap
-        appending = map (appendlogic) xs
-          where appendlogic pair 
-                  |  (not . null) (pair `intersect` mapkeys) =  M.adjust (++ (pair \\ mapkeys)) ((head $ intersect pair mapkeys)) themap
-                  |  otherwise = themap
-        -- filteredpairs = map (\\ mapkeys) pairs 
-        
+        linking = setNub $ foldr (\pr acc -> if ( (not . null) $ intersect pr acc) then acc ++ pr else acc) multiples xs
+        (linked, unlinked)  = partition (\p -> (p `elem` linking) ) [1..(length str)]
+        takeidxs idxxs = foldr (\idx acc -> ((str !! ((idx-1))) , idx) : acc ) [] (idxxs) 
+        [takenLinked, takenUnlinked] = map (takeidxs) [linked,unlinked]
+        sortLinked = map fst $ sortBy (comparing Down) takenLinked 
+        zipSortedLinkNewIdxs = map swap $ zip linking sortLinked
+        splicedBack = foldr (insertBy (\(a,ai) (b,bi) -> compare ai bi )) zipSortedLinkNewIdxs takenUnlinked
 
