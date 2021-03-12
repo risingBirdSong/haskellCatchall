@@ -41,6 +41,7 @@ patternsa =
   "b"]
 
 areFollowingPatterns xs ys = (length $ setNub xs) == (length $ setNub ys) 
+setNub xs = S.toList $ S.fromList xs
 
 recurFun [] _ = True
 recurFun ((x, y) : xs) mp = 
@@ -146,7 +147,11 @@ containsCloseNums nums k = go (zip [0..] nums ) (M.empty)
                                   where gonext = (go xs (M.insert x idx mp))
 
 
-setNub xs = S.toList $ S.fromList xs
 
-possibleSums coins quantity = length $ filter (/=0) $ setNub $ map sum 
+possibleSumsMine coins quantity =  setAndSize $ map sum 
     $ subsequences . concat $ zipWith replicate quantity coins
+      where setAndSize xs = S.size $ S.fromList xs
+
+
+possibleSums  =  ((subtract 1. S.size. S.fromList. fmap sum.sequence.fmap (\(c, q)->fmap (c *) [0..q])).).zip
+possibleSumsA  =  (( fmap sum.sequence.fmap (\(c, q)->fmap (c *) [0..q])).).zip
