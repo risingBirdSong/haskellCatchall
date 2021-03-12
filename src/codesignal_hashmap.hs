@@ -155,3 +155,27 @@ possibleSumsMine coins quantity =  setAndSize $ map sum
 
 possibleSums  =  ((subtract 1. S.size. S.fromList. fmap sum.sequence.fmap (\(c, q)->fmap (c *) [0..q])).).zip
 possibleSumsA  =  (( fmap sum.sequence.fmap (\(c, q)->fmap (c *) [0..q])).).zip
+
+
+swapLexOrder str pairs = (paired, linked)
+  where linked = sort $ setNub $ concat pairs
+        setNub xs = S.toList $ S.fromList xs
+        paired = zip [1..] str
+
+pairs = [[1,3], 
+ [6,8], 
+ [3,8], 
+ [2,7]] 
+
+-- (1 : [3]) (3 : [1,8]) (6 : [8]) (8 : [6,3]) (2 : [7]) (7 : [2])
+
+-- *Main> group $ sort $ concat pairs
+-- [[1],[2],[3,3],[6],[7],[8,8]]
+
+-- (3 : [1,8], 8 : [6,3])
+-- ([1,3,8] [3,6,8])
+
+prepareLink xs = (foldr   (`M.insert` []) M.empty multiples, rest)
+  where multiples = setNub $ concat $ filter ((>1).length) $ group $ sort $ concat xs  
+        rest = filter (not . (`elem` multiples)) $ concat xs
+        
