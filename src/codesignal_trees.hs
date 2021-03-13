@@ -32,10 +32,17 @@ myOtherTreeA = Tree 1 (Tree 2 Null (Tree 3 Null Null)) (Tree 2 Null (Tree 5 Null
 myOtherTreeB = Tree 1 (Tree 2 Null (Tree 3 Null Null)) (Tree 2 Null (Tree 3 Null Null))
 
 isTreeSymmetric Null = True
-isTreeSymmetric (Tree v l r) = (sum ([v] ++ go l) == ( sum  ([v] ++ go r)))
+isTreeSymmetric (Tree v l r) = ((sum $ map abs ([-v] ++ go l)) == ( sum  ([v] ++ go r)))
 go (Tree v Null Null) = [v] ++ [] 
 go Null = [] 
 go (Tree v Null r) = [v]  ++ (go r)
 go (Tree v l Null) = [(-v)] ++ (go l)
-go (Tree v l r) = [v] ++ (go l) ++ (go r)
+go (Tree v l r) = [-v] ++ (go l) ++ [v] ++ (go r)
 -- isTreeSymmetric (Tree v l Null) = 1 + (isTreeSymmetric v l)
+
+ktree = Tree 3 (Tree 1 Null Null) (Tree 5 (Tree 4 Null Null) (Tree 6 Null Null))
+
+kthSmallestInBST t k = (appendTree t) !! (k-1) 
+
+appendTree Null = []
+appendTree (Tree v l r) =  (appendTree  l) ++ [v] ++ (appendTree r) 
