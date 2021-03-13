@@ -197,8 +197,18 @@ prsB :: [[Int]]
 prsB = [[1,4], 
         [7,8]]
 
-swapLexOrder str xs  = (map fst $ splicedBack, linked, unlinked)
-  where multiples = setNub $ concat $ filter ((>1).length) $ group $ sort $ concat xs  
+
+strC = "acxrabdz"
+pairsC :: [[Int]]
+pairsC = [[1,3], 
+ [6,8], 
+ [3,8], 
+ [2,7]]
+-- Expected Output:
+-- "zdxrabca"
+
+swapLexOrder str xs  = (map fst $ splicedBack)
+  where multiples = setNub $ concat $ filter ((>=1).length) $ group $ sort $ concat xs  
         rest = filter (not . (`elem` multiples)) $ concat xs
         linking = setNub $ foldr (\pr acc -> if ( (not . null) $ intersect pr acc) then acc ++ pr else acc) multiples xs
         (linked, unlinked)  = partition (\p -> (p `elem` linking) ) [1..(length str)]
