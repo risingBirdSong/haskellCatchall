@@ -46,3 +46,17 @@ kthSmallestInBST t k = (appendTree t) !! (k-1)
 
 appendTree Null = []
 appendTree (Tree v l r) =  (appendTree  l) ++ [v] ++ (appendTree r) 
+
+
+kthSmallestInBST' t k = case kSmall t k of
+    Left  l -> undefined -- went past the end
+    Right r -> r
+
+kSmall  Null        _ = Left 0
+kSmall (Tree v l r) k = case kSmall l k of
+    Right res -> Right res 
+    Left  n   -> if k == n+1 
+        then Right v
+        else case kSmall r (k-(n+1)) of
+            Left m -> Left (n+m+1)
+            result -> result
