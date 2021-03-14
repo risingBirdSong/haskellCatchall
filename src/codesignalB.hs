@@ -58,3 +58,17 @@ ex2 = 1678
 rounders n
     | n < 10 = n 
     | otherwise = 10 * (rounders ((n + n `mod` 10) `div` 10))
+
+
+candles candlesNumber makeNew = go candlesNumber 0 0
+  where
+    go 0 _ burned = burned
+    go cnd stubs burned = (let new = cnd + stubs in go (new `div` makeNew) (new `mod` makeNew) (burned + cnd))
+
+
+candles' candles makeNew = go candles 0 0
+      where go 0    _ acc = acc
+            go cnds lftv acc = (let new = cnds + lftv in go (new `div` makeNew) (new `mod` makeNew) (acc + cnds) )
+            
+
+
