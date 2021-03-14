@@ -60,3 +60,19 @@ kSmall (Tree v l r) k = case kSmall l k of
         else case kSmall r (k-(n+1)) of
             Left m -> Left (n+m+1)
             result -> result
+
+-- isSubtree t1 t2 = 
+      -- where 
+
+bigtree = Tree 5 (Tree 10 (Tree 4 (Tree 1 Null Null) (Tree 2 Null Null) ) (Tree 6 Null (Tree (-1) Null Null))) (Tree 7 Null Null)
+smalltree = Tree 10 (Tree 4 (Tree 1 Null Null) (Tree 2 Null Null) ) (Tree 6 Null (Tree (-1) Null Null))
+
+inorder Null = [] 
+inorder (Tree v l r) =  (inorder l) ++ [v] ++ (inorder r)
+
+preorder Null = [] 
+preorder (Tree v l r) =  [v] ++ (preorder l) ++ (preorder r)
+
+
+postorder Null = []
+postorder (Tree v l r) = (postorder l) ++ (postorder r) ++[v]

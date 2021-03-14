@@ -71,4 +71,9 @@ candles' candles makeNew = go candles 0 0
             go cnds lftv acc = (let new = cnds + lftv in go (new `div` makeNew) (new `mod` makeNew) (acc + cnds) )
             
 
+countBlackCells n m = (n^2) + (m^2)
+
+arrayReplace inp rplc sbst = map logic inp 
+      where logic x = if x == rplc then sbst else x 
+
 
