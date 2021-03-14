@@ -3,6 +3,7 @@ import Data.List.Split
 import Data.Char
 import Data.Function
 import Data.Ord
+import Debug.Trace
 buildPalindrome xs =  concat $ concatMap (nub) $ group $ (group xs) ++ (group $  reverse xs)
 buildPalindrome' xs =  (group xs) ++ (group $  reverse xs)
 
@@ -48,9 +49,12 @@ stichBackDeleted xss = maximum $ map (listtoint) xss
 
 longestWord txt = maximumBy (comparing length) $ splitWhen (not.isAlpha) txt
 
-handleTime "24" "00" = False 
-handleTime h' m' = ( h >= 0 && h <= 24) && (m >= 0 && m <= 60) && (head h' /= '0')
-      where h = (read h' :: Int)
-            m = (read m' :: Int)
-            
-validTime time = (\[h,m] -> handleTime h m ) $ filter (not . null) $ splitWhen (not . isNumber) time
+
+ex1 = 1234
+ex2 = 1678
+-- [1000 , 200 , 30 , 4 todo]
+-- 1000
+
+rounders n
+    | n < 10 = n 
+    | otherwise = 10 * (rounders ((n + n `mod` 10) `div` 10))
