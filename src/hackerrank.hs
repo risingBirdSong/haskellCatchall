@@ -1,4 +1,5 @@
 import Data.List
+import Debug.Trace
 exa = "5 6 7 \n3 6 10"
 
 compareTriplets :: [Int] -> [Int] -> [Int]
@@ -20,3 +21,14 @@ mainB = do
   ignore <- getLine 
   nums <- map read <$> words <$> getLine 
   print $ aVeryBigSum nums  
+
+exmatrix = [[[1,2,3],[4,5,6],[7,8,9]]]
+
+dropper xss = mapAccumL (\drp (xs:xss) -> (drp + 1, (drop drp xs) )) 0 xss
+
+main = do 
+  a <- prepare 
+  b <- prepare
+  c <- prepare 
+  print [[a,b,c]]
+        where prepare = map (\x -> read x :: Int) . words <$> getLine  
