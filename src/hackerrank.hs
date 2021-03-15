@@ -22,13 +22,19 @@ mainB = do
   nums <- map read <$> words <$> getLine 
   print $ aVeryBigSum nums  
 
-exmatrix = [[[1,2,3],[4,5,6],[7,8,9]]]
+exmatrix = [[1,2,3],
+            [4,5,6],
+            [9,8,9]]
 
-dropper xss = mapAccumL (\drp (xs:xss) -> (drp + 1, (drop drp xs) )) 0 xss
+-- dropper :: Traversable t => t [a] -> (Int, t [a])
+dropper xss = snd $ mapAccumL (\drp (xs) -> (drp + 1, head (drop drp xs) )) 0 xss
 
 main = do 
+  ignore <- getLine 
   a <- prepare 
   b <- prepare
   c <- prepare 
-  print [[a,b,c]]
-        where prepare = map (\x -> read x :: Int) . words <$> getLine  
+  let firstdiag = sum $ dropper [a,b,c]
+  let scnddiag = sum $ dropper $ transpose $ reverse [a,b,c]
+  print (abs $ firstdiag - scnddiag)
+        where prepare = map (\x -> read x) . words <$> getLine  
