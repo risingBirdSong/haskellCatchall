@@ -67,8 +67,6 @@ kSmall (Tree v l r) k = case kSmall l k of
 bigtree = Tree 5 (Tree 10 (Tree 4 (Tree 1 Null Null) (Tree 2 Null Null) ) (Tree 6 Null (Tree (-1) Null Null))) (Tree 7 Null Null)
 smalltree = Tree 10 (Tree 4 (Tree 1 Null Null) (Tree 2 Null Null) ) (Tree 6 Null (Tree (-1) Null Null))
 
-inorder Null = [] 
-inorder (Tree v l r) =  (inorder l) ++ [v] ++ (inorder r)
 
 preorder Null = [] 
 preorder (Tree v l r) =  [v] ++ (preorder l) ++ (preorder r)
@@ -76,3 +74,13 @@ preorder (Tree v l r) =  [v] ++ (preorder l) ++ (preorder r)
 
 postorder Null = []
 postorder (Tree v l r) = (postorder l) ++ (postorder r) ++[v]
+
+inorder Null = [] 
+inorder (Tree v l r) =  (inorder l) ++ [v] ++ (inorder r)
+
+isSubTree bg sm = (preorder sm) `isInfixOf` (preorder bg) && (postorder sm) `isInfixOf` (postorder bg)
+
+
+restoreex = Tree 1 (Tree 2  (Tree 4 Null Null) Null) (Tree 3 (Tree 5 Null Null) (Tree 6 Null Null))
+
+-- restoreBinaryTree inorder preorder = 
