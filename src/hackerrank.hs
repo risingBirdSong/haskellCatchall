@@ -1,4 +1,6 @@
 import Data.List
+import Control.Applicative
+import Control.Monad
 import Debug.Trace
 exa = "5 6 7 \n3 6 10"
 
@@ -30,11 +32,9 @@ exmatrix = [[1,2,3],
 dropper xss = snd $ mapAccumL (\drp (xs) -> (drp + 1, head (drop drp xs) )) 0 xss
 
 main = do 
-  ignore <- getLine 
-  a <- prepare 
-  b <- prepare
-  c <- prepare 
-  let firstdiag = sum $ dropper [a,b,c]
-  let scnddiag = sum $ dropper $ transpose $ reverse [a,b,c]
+  n <- readLn 
+  lines <- parse <$> replicateM n getLine
+  let firstdiag = sum $ dropper lines
+  let scnddiag = sum $ dropper $ transpose $ reverse lines
   print (abs $ firstdiag - scnddiag)
-        where prepare = map (\x -> read x) . words <$> getLine  
+  where parse = map (map read . words)
