@@ -1,7 +1,10 @@
 import Data.List
 import Control.Applicative
 import Control.Monad
+import Control.Applicative
 import Debug.Trace
+import Data.Ratio
+import Data.Char
 exa = "5 6 7 \n3 6 10"
 
 compareTriplets :: [Int] -> [Int] -> [Int]
@@ -29,12 +32,29 @@ exmatrix = [[1,2,3],
             [9,8,9]]
 
 -- dropper :: Traversable t => t [a] -> (Int, t [a])
-dropper xss = snd $ mapAccumL (\drp (xs) -> (drp + 1, head (drop drp xs) )) 0 xss
+diags xss = snd $ mapAccumL (\drp (xs) -> (drp + 1, head (drop drp xs) )) 0 xss
 
-main = do 
+mainC = do 
   n <- readLn 
   lines <- parse <$> replicateM n getLine
-  let firstdiag = sum $ dropper lines
-  let scnddiag = sum $ dropper $ transpose $ reverse lines
+  let firstdiag = sum $ diags lines
+  let scnddiag = sum $ diags $ transpose $ reverse lines
   print (abs $ firstdiag - scnddiag)
   where parse = map (map read . words)
+
+
+
+staircase n = zipWith (++) blanks stairs
+  where stairs = take n $ iterate (++"#") "#"
+        blanks = reverse $ take n $ iterate (++" ") ""
+
+mainD = do 
+  tonum <- readLn :: IO Int 
+  let makestairs = staircase tonum
+  mapM_ putStrLn makestairs
+
+
+-- Mini-Max Sum
+-- nums :: [Integer]
+nums = [1, 2, 3, 4, 5]
+
