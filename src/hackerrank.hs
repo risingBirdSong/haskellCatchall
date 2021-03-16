@@ -74,10 +74,11 @@ mainE = do
 
 birthdayCakeCandles xs = length $ maximumBy (comparing length) $ group $ sort xs 
 
-main = do 
+mainF = do 
   ignore <- getLine 
   rawlist <- getLine 
   let list = (map read $ words rawlist) :: [Integer] 
   print $ birthdayCakeCandles list
 
   
+-- Time Conversion

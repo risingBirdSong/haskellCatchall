@@ -82,5 +82,18 @@ isSubTree bg sm = (preorder sm) `isInfixOf` (preorder bg) && (postorder sm) `isI
 
 
 restoreex = Tree 1 (Tree 2  (Tree 4 Null Null) Null) (Tree 3 (Tree 5 Null Null) (Tree 6 Null Null))
+restoreexlist = Tree [1] (Tree [2]  (Tree [4] Null Null) Null) (Tree [3] (Tree [5] Null Null) (Tree [6] Null Null))
 
--- restoreBinaryTree inorder preorder = 
+
+amap = M.empty 
+
+largestValuesInTreeRows t = map maximum  $ M.elems $ buildTree t
+buildTree t = go t 0 M.empty
+  where go Null row themap = themap 
+        go (Tree v l r) row themap 
+            | M.member row themap = go r (row + 1) (go (l) (row + 1) (M.insertWith (++) row [v] themap))
+            | otherwise = go r (row + 1) (go (l) (row + 1) (M.insert row [v] themap))
+          
+
+
+foldtest xs = foldr (+) 0 xs
