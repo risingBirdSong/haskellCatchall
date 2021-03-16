@@ -58,3 +58,16 @@ mainD = do
 -- nums :: [Integer]
 nums = [1, 2, 3, 4, 5]
 
+
+
+-- miniMaxSum xs = let [a,b] = sum <$> ([init, tail] <*> [xs]) in [a,b]
+-- miniMaxSum xs = sum <$> ([init, tail] <*> [xs])
+miniMaxSum xs = sum <$> ([init, tail] <*> [sort xs])
+ 
+main = do 
+  rawxs <- getLine 
+  let xs = map read $ words rawxs
+  let [a,b] = miniMaxSum xs 
+  putStrLn (show a ++ " " ++ show b)
+  
+  
