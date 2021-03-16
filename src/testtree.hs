@@ -1,7 +1,21 @@
+{-# LANGUAGE DeriveFoldable #-}
+
 import Data.Maybe
 import Data.List
 
-data Tree a = Null | Tree a (Tree a) (Tree a) deriving (Show, Eq, Ord)
+
+data Tree a = Null | Tree a (Tree a) (Tree a) deriving (Show, Eq, Ord, Foldable)
+
+instance Functor Tree where
+    fmap f Null = Null
+    fmap f (Tree a x y) =  Tree (f a) (fmap f x) (fmap f y)
+
+-- fmap f bt
+
+
+
+
+
 example = Tree 1 (Tree 2  (Tree 4 Null Null) Null) (Tree 3 (Tree 5 Null Null) (Tree 6 Null Null))
 restoreexlist = Tree [1] (Tree [2]  (Tree [4] Null Null) Null) (Tree [3] (Tree [5] Null Null) (Tree [6] Null Null))
 
@@ -37,3 +51,30 @@ list1 = [1]
 listRow Null = repeat []
 listRow (Tree v l r) = [v] : zipWith (<>) (listRow l) (listRow r)
 solver tree = map maximum . takeWhile (not . null) $ listRow tree 
+
+
+
+listNum Null = repeat []
+listNum (Tree v l r) = [v] : zipWith (<>) (listNum l) (listNum r)
+
+takelistnum t = takeWhile (not . null) $ listNum t 
+
+
+        -- 1
+      -- 2   3
+  --  4     5 6
+
+
+listNum' (Tree v Null Null) = [[v]]
+listNum' (Tree v Null r) = map (v :) (listNum' r)
+listNum' (Tree v l Null) = map (v :) (listNum' l)
+listNum' (Tree v l r) =  map (v:) $ (listNum' l) ++ (listNum' r)
+
+-- digitTreeSum' :: Tree Int -> [[Int]]
+digitTreeSum' (Tree v Null Null) = [[v]]
+digitTreeSum' (Tree v Null r)    = map (v :) (digitTreeSum' r)
+digitTreeSum' (Tree v l    Null) = map (v :) (digitTreeSum' l)
+digitTreeSum' (Tree v l    r)    = [l, r] >>=  (\x -> map (v :) (digitTreeSum' x))
+
+
+-- digitTreeSum' (Tree v l    r)    = [l, r] >>= (\x -> map (v :) (digitTreeSum' x))
