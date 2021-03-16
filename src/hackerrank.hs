@@ -5,6 +5,7 @@ import Control.Applicative
 import Debug.Trace
 import Data.Ratio
 import Data.Char
+import Data.Ord
 exa = "5 6 7 \n3 6 10"
 
 compareTriplets :: [Int] -> [Int] -> [Int]
@@ -64,10 +65,19 @@ nums = [1, 2, 3, 4, 5]
 -- miniMaxSum xs = sum <$> ([init, tail] <*> [xs])
 miniMaxSum xs = sum <$> ([init, tail] <*> [sort xs])
  
-main = do 
+mainE = do 
   rawxs <- getLine 
   let xs = map read $ words rawxs
   let [a,b] = miniMaxSum xs 
   putStrLn (show a ++ " " ++ show b)
-  
+
+
+birthdayCakeCandles xs = length $ maximumBy (comparing length) $ group $ sort xs 
+
+main = do 
+  ignore <- getLine 
+  rawlist <- getLine 
+  let list = (map read $ words rawlist) :: [Integer] 
+  print $ birthdayCakeCandles list
+
   
