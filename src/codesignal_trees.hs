@@ -9,7 +9,7 @@ import Data.Maybe
 import Data.Function
 import Data.Tuple
 import Data.Ord
-
+import Data.Char
 --
 -- Binary trees are already defined with this interface:
 data Tree a = Tree { value :: a
@@ -97,3 +97,45 @@ buildTree t = go t 0 M.empty
 
 
 foldtest xs = foldr (+) 0 xs
+
+
+-- fmap f bt
+
+
+
+--      1
+--    2   3
+--  4    5  6
+
+
+mergeMax :: Ord a => [a] -> [a] -> [a]
+mergeMax (x:xs) (y:ys) = max x y : mergeMax xs ys
+mergeMax xs [] = xs
+mergeMax [] ys = ys
+
+solution' :: Ord a => Tree a -> [a]
+solution' Null = []
+solution' (Tree v l r) = v : mergeMax (solution' l) (solution' r)
+
+
+list1 = [1]
+
+
+listRow Null = repeat []
+listRow (Tree v l r) = [v] : zipWith (<>) (listRow l) (listRow r)
+solver tree = map maximum . takeWhile (not . null) $ listRow tree 
+
+listNum' (Tree v Null Null) = [[v]]
+listNum' (Tree v Null r) = map (v :) (listNum' r)
+listNum' (Tree v l Null) = map (v :) (listNum' l)
+listNum' (Tree v l r) =  map (v:) $ (listNum' l) ++ (listNum' r)
+
+
+digitTreeSum t = sum $ map (\x -> read x :: Int) $ map (map intToDigit) $ listNum' t
+
+atree = Tree 1 (Tree 2  (Tree 4 Null Null) Null) (Tree 3 (Tree 5 Null Null) (Tree 6 Null Null))
+
+
+traverseTree' Null  = repeat []
+traverseTree' (Tree v l r)  = [v] : zipWith (<>) (traverseTree' l) (traverseTree' r)
+traverseTree t = concat $ takeWhile (not . null) $ traverseTree' t
