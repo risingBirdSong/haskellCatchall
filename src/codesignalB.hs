@@ -134,15 +134,14 @@ nextLarger  xs = fst $ foldr add ([], []) xs
 --  6  [7,8,8,-1] [6,7,8]
  
 
-pairs xs = zip xs (tail xs) 
-sorted xs =and [x < y | (x,y) <- pairs xs]
 
-playA k = [ replicate k a | a <- [1..k]]
-playB k = replicate k [1..k]
+climbingStaircase 0 k = [[]]
+climbingStaircase n k = concat $ [map (i:) (climbingStaircase (n-i) k)|i<-[1..opts]]
+ where 
+  opts = min n k
 
--- climbing = 
+understanding 0 = [[]]
+understanding stairs = concat $ [ map (i:) (understanding (stairs - 1)) | i <- [1..stairs]]
 
--- how can this be down with list comprehension ?
--- climbingStairs stairs steps =  [ lst | lst <- [1..steps] , (sum lst) == stairs]
-
+-- [[1,1,1],[1,2,1],[2,1,1],[2,2,1],[3,1,1],[3,2,1]]
 
