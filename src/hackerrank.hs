@@ -6,6 +6,7 @@ import Debug.Trace
 import Data.Ratio
 import Data.Char
 import Data.Ord
+import Data.List.Split
 exa = "5 6 7 \n3 6 10"
 
 compareTriplets :: [Int] -> [Int] -> [Int]
@@ -81,4 +82,21 @@ mainF = do
   print $ birthdayCakeCandles list
 
   
--- Time Conversion
+-- Number Line Jumps
+
+kangaroo k1 v1 k2 v2 
+  | v1 > v2 && (k1 - k2) `mod` (v1 - v2) == 0 = "YES" 
+  | otherwise = "NO" 
+
+
+-- Subarray Division
+birthday xs thesum ln  = length $ filter ((==thesum) . sum) $ divvy ln 1 xs
+
+main :: IO()
+main = do
+  ignore <- getLine 
+  rawarr <- getLine 
+  rawdata <- getLine 
+  let arr = map read $ words rawarr
+  let [sm , ln] = map read $ words rawdata 
+  print (birthday arr sm ln)
