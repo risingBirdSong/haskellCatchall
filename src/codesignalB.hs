@@ -105,6 +105,20 @@ k = [4,5,2,25]
 
 
 
+
+
+
+nextLargerRe xs = fst $ foldr logic ([],[]) xs 
+  where logic x (rest, stk)
+          | null stk = ((-1):rest,[x])
+          | x < head stk = ((head stk) : rest, x : stk)
+          | otherwise = logic x (rest, tail stk)
+
+
+
+
+
+
 nextLarger  xs = fst $ foldr add ([], []) xs
     where
     add x (rest, stack)
@@ -119,3 +133,4 @@ nextLarger  xs = fst $ foldr add ([], []) xs
 --  7  [8,8,-1] [7,8]
 --  6  [7,8,8,-1] [6,7,8]
  
+
