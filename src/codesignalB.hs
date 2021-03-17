@@ -4,6 +4,9 @@ import Data.Char
 import Data.Function
 import Data.Ord
 import Debug.Trace
+
+import Data.Maybe
+
 buildPalindrome xs =  concat $ concatMap (nub) $ group $ (group xs) ++ (group $  reverse xs)
 buildPalindrome' xs =  (group xs) ++ (group $  reverse xs)
 
@@ -77,3 +80,42 @@ arrayReplace inp rplc sbst = map logic inp
       where logic x = if x == rplc then sbst else x 
 
 
+-- For s = "4[ab]", the output should be
+-- decodeString(s) = "abababab";
+
+-- For s = "2[b3[a]]", the output should be
+-- decodeString(s) = "baaabaaa";
+
+-- For s = "z1[y]zzz2[abc]", the output should be
+-- decodeString(s) = "zyzzzabcabc".
+
+-- decodeString s = 
+
+-- resursetasks 
+
+-- For a = [6, 7, 3, 8], the output should be
+-- nextLarger(a) = [7, 8, 8, -1]
+
+h =  [6, 7, 3, 8]
+ho = [7,8,8,-1]
+
+j = [1, 3, 2, 4]
+jo =[3,4,4,-1]
+k = [4,5,2,25]
+
+
+
+nextLarger  xs = fst $ foldr add ([], []) xs
+    where
+    add x (rest, stack)
+        | null stack = (-1 : rest, [x])
+        | x < head stack = (head stack : rest, x : stack)
+        | otherwise = add x (rest, tail stack)
+            
+-- input [6,7,3,8]
+--  8  [-1]  [8]
+--  3  [8,-1] [3,8]
+--  7  [8,-1] [8]
+--  7  [8,8,-1] [7,8]
+--  6  [7,8,8,-1] [6,7,8]
+ 
