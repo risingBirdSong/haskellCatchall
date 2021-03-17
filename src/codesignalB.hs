@@ -134,3 +134,15 @@ nextLarger  xs = fst $ foldr add ([], []) xs
 --  6  [7,8,8,-1] [6,7,8]
  
 
+pairs xs = zip xs (tail xs) 
+sorted xs =and [x < y | (x,y) <- pairs xs]
+
+playA k = [ replicate k a | a <- [1..k]]
+playB k = replicate k [1..k]
+
+-- climbing = 
+
+-- how can this be down with list comprehension ?
+-- climbingStairs stairs steps =  [ lst | lst <- [1..steps] , (sum lst) == stairs]
+
+
