@@ -199,15 +199,48 @@ notDiag q qs = and [abs (q-qi) /= i | (qi,i) <- qs `zip` [1..]]
 firstPossible = [4,2,7,3,6,8,5,1]
 
 
-casQueens n = foldM nextQueen [] [1..n] where
+casQueens n = head $ foldM nextQueen [] [1..n] where
   nextQueen qns _ = do
     cur <- [1..n]
     guard $ (cur `notElem` qns) -- No same column
     -- Remove diagonal catches
-    guard $ (cur `notElem` zipWith (+) qns [1..])
+    guard $ trace (" cur -> " ++ show cur ++ " qns -> " ++ (show qns)) (cur `notElem` zipWith (+) qns [1..])
     guard $ (cur `notElem` zipWith (-) qns [1..])
     return $ cur : qns
 
+-- [4,2,7,3,6,8,5,1]
+
+-- 12345678
+
+-- Q2345678
+-- 12Q45678
+-- 1234Q678
+-- 1Q345678
+-- x.xQxxx.
+-- the rest of this sequence arent valid
+
+--  cur -> 1 qns -> []
+--  cur -> 2 qns -> [1]
+--  cur -> 3 qns -> [1]
+--  cur -> 2 qns -> [3,1]
+--  cur -> 4 qns -> [3,1]
+--  cur -> 5 qns -> [3,1]
+--  cur -> 2 qns -> [5,3,1]
+--  cur -> 4 qns -> [2,5,3,1]
+--  cur -> 6 qns -> [4,2,5,3,1]
+--  cur -> 7 qns -> [4,2,5,3,1]
+--  cur -> 8 qns -> [4,2,5,3,1]
+
+
+-- 1234Q678
+-- 12345678
+
+nogos cur qns = ("pos:", rawZip cur qns, "neg:" , rawZipNeg cur qns)
+rawZip :: (Num c, Enum c) => p -> [c] -> [c]
+rawZip cur qns = zipWith (+) qns [1..]
+rawZipNeg cur qns = zipWith (-) qns [1..]
+guardQueenPos cur qns = (cur `notElem` zipWith (+) qns [1..])
+guardQueenNeg cur qns = (cur `notElem` zipWith (-) qns [1..])
 
 
 myGuard = do 
