@@ -4,6 +4,7 @@ import Data.Char
 import Data.Function
 import Data.Ord
 import Debug.Trace
+import Control.Monad
 
 import Data.Maybe
 
@@ -136,7 +137,7 @@ nextLarger  xs = fst $ foldr add ([], []) xs
 
 
 climbingStaircase 0 k = [[]]
-climbingStaircase n k = concat $ [map (i:) (climbingStaircase (n-i) k)|i<-[1..opts]]
+climbingStaircase n k =  concat $ [map (i:) (climbingStaircase (n-i) k)|i<-[1..opts]]
  where 
   opts = min n k
 
@@ -145,3 +146,85 @@ understanding stairs = concat $ [ map (i:) (understanding (stairs - 1)) | i <- [
 
 -- [[1,1,1],[1,2,1],[2,1,1],[2,2,1],[3,1,1],[3,2,1]]
 
+
+
+-- given n, "queens n" solves the n-queens problem, returning a list of all the
+-- safe arrangements. each solution is a list of the columns where the queens are
+-- located for each row
+
+
+  -- foldM :: (Monad m) => (a -> b -> m a) -> a -> [b] -> m a
+  -- foldM folds (from left to right) in the list monad, which is convenient for 
+  -- "nondeterminstically" finding "all possible solutions" of something. the 
+  -- initial value [] corresponds to the only safe arrangement of queens in 0 rows
+ 
+  -- given a safe arrangement y of queens in the first i rows, and a list of 
+  -- possible choices, "oneMoreQueen y _" returns a list of all the safe 
+  -- arrangements of queens in the first (i+1) rows along with remaining choices 
+
+    -- "safe x" tests whether a queen at column x is safe from previous queens
+-- prints what the board looks like for a solution; with an extra newline
+
+-- queens :: Int -> [[Int]]
+queens n = map fst $ foldM oneMoreQueen ([],[1..n]) [1..n]  where 
+  oneMoreQueen (y,d) _ = [(x:y, delete x d) | x <- d, safe x]  where
+    safe x = and [x /= c + n && x /= c - n | (n,c) <- zip [1..] y]
+ 
+printSolution y = do
+     let n = length y
+     mapM_ (\x -> putStrLn [if z == x then 'Q' else '.' | z <- [1..n]]) y
+     putStrLn ""
+ 
+main = do
+  n <- readLn :: IO Int
+  mapM_ printSolution $ queens n
+
+
+mainA = do
+  n <- readLn :: IO Int
+  mapM_ printSolution $ queens' n
+
+ 
+queens' :: Int -> [[Int]]
+queens' n = foldM f [] [1..n]
+    where
+      f qs _ = [q:qs | q <- [1..n] \\ qs, q `notDiag` qs]
+      q `notDiag` qs = and [abs (q - qi) /= i | (qi,i) <- qs `zip` [1..]]
+
+
+
+assembleQueen qs n= [q:qs | q <- [1..n] \\ qs, q `notDiag` qs]
+notDiag q qs = and [abs (q-qi) /= i | (qi,i) <- qs `zip` [1..]]
+
+firstPossible = [4,2,7,3,6,8,5,1]
+
+
+casQueens n = foldM nextQueen [] [1..n] where
+  nextQueen qns _ = do
+    cur <- [1..n]
+    guard $ (cur `notElem` qns) -- No same column
+    -- Remove diagonal catches
+    guard $ (cur `notElem` zipWith (+) qns [1..])
+    guard $ (cur `notElem` zipWith (-) qns [1..])
+    return $ cur : qns
+
+
+
+myGuard = do 
+  cur <- [1..10]
+  guard $ cur < 5
+  return cur
+
+
+mainCas = do
+  n <- readLn :: IO Int
+  mapM_ printSolution $ queens' n
+
+-- ...Q....
+-- .Q......
+-- ......Q.
+-- ..Q.....
+-- .....Q..
+-- .......Q
+-- ....Q...
+-- Q.......
