@@ -199,12 +199,21 @@ notDiag q qs = and [abs (q-qi) /= i | (qi,i) <- qs `zip` [1..]]
 firstPossible = [4,2,7,3,6,8,5,1]
 
 
-casQueens n = head $ foldM nextQueen [] [1..n] where
+casQueensDebug n = head $ foldM nextQueen [] [1..n] where
   nextQueen qns _ = do
     cur <- [1..n]
     guard $ (cur `notElem` qns) -- No same column
     -- Remove diagonal catches
     guard $ trace (" cur -> " ++ show cur ++ " qns -> " ++ (show qns)) (cur `notElem` zipWith (+) qns [1..])
+    guard $ (cur `notElem` zipWith (-) qns [1..])
+    return $ cur : qns
+
+casQueens n = foldM nextQueen [] [1..n] where
+  nextQueen qns _ = do
+    cur <- [1..n]
+    guard $ (cur `notElem` qns) -- No same column
+    -- Remove diagonal catches
+    guard $ (cur `notElem` zipWith (+) qns [1..])
     guard $ (cur `notElem` zipWith (-) qns [1..])
     return $ cur : qns
 
@@ -251,7 +260,7 @@ myGuard = do
 
 mainCas = do
   n <- readLn :: IO Int
-  mapM_ printSolution $ queens' n
+  mapM_ printSolution $ casQueens n
 
 -- ...Q....
 -- .Q......
