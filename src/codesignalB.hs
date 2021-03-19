@@ -217,6 +217,14 @@ casQueens n = foldM nextQueen [] [1..n] where
     guard $ (cur `notElem` zipWith (-) qns [1..])
     return $ cur : qns
 
+-- sumSubsets arr num = foldM getsum [] arr 
+--       where getsum acc c = do 
+--             toaddlist <- acc 
+--             toadd     <- toaddlist
+--             if ((toadd + c) < num) then return (c:toadd:acc) else return acc
+            
+
+
 -- [4,2,7,3,6,8,5,1]
 
 -- 12345678
@@ -270,3 +278,8 @@ mainCas = do
 -- .......Q
 -- ....Q...
 -- Q.......
+
+
+remakeclimbing 0 k = [[]]
+remakeclimbing stairs steps = concat $ [ map (val:) (remakeclimbing (stairs - val) (steps) ) | val <- [1..lower]]
+  where lower = min stairs steps
