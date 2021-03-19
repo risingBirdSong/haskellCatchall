@@ -299,3 +299,30 @@ remakeQueens n = foldM logic [] [1..n]
           return (cur : qns)
 
 
+sumSubsets arr num = nub $ ko arr num
+
+ko _ 0 = [[]]
+ko [] _ = []
+ko (x:xs) num = if x > num then [] else
+  [ x:xs' | xs' <- ko xs (num-x)] ++ ko xs num
+
+
+sumSubsetsDebug arr num = nub $ kod arr num
+
+kod _ 0 = [[]]
+kod [] _ = []
+kod (x:xs) num = if x > num then [] else
+  [ trace (" x ->" ++ show x ++ " xs' -> " ++(show xs') ++ "num -> " ++ (show num)) x:xs' | xs' <- kod xs (num-x)] ++ trace ("xs -> " ++ (show xs)) kod xs num
+
+
+-- arr: [1, 2, 3, 4, 5]  num: 5
+          -- ++ ko [2,3,4,5] 5   
+
+
+subsets [] = [[]]
+subsets (x:xs) = [x] : subsets xs ++ (map (x:) (subsets xs))
+f xs n = map ((==n).sum) (subsets xs)
+
+
+mysubsets [] = [[]]
+mysubsets (x:xs) = [x] : mysubsets xs ++ (map (x:) (mysubsets xs))
