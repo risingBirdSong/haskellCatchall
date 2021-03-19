@@ -299,20 +299,49 @@ remakeQueens n = foldM logic [] [1..n]
           return (cur : qns)
 
 
-sumSubsets arr num = nub $ ko arr num
+sumSubsets arr num =  nub $ ko arr num
 
 ko _ 0 = [[]]
 ko [] _ = []
 ko (x:xs) num = if x > num then [] else
   [ x:xs' | xs' <- ko xs (num-x)] ++ ko xs num
 
+-- this example is to see how the middle number, 2, is discarded from the final answer [1,3]
+
+-- [1,2,3] 4
+-- x      xs      num
+-- 1    [2,3]      4            ++  (ko [2,3] 4)
+-- 2    [3]        3            ++  (ko [3] 3)
+                                 -- hit first base case 
+-- lefthand    right hand
+--  1       :    [3]               
+
+-- and awesome! Melissa made a much more thorough analysis!
+
+-- ko [1,2,3]) 4
+-- -- unfold ko
+-- = [ 1:xs' | xs' <- ko [2,3] 3] ++ ko [2,3] 4
+-- -- unfold both ko, rename some xs' to make them less confusing
+-- = [ 1:xs' | xs' <- [ 2:xs'' | xs'' <- ko [3] 1] ++ ko [3] 3] ++ [ 2:xs''' | xs''' <- ko [3] 2] ++ ko [3] 4
+-- -- ko [3] 1 = [] by if, same for ko [3] 2
+-- = [ 1:xs' | xs' <- [ 2:xs'' | xs'' <- []] ++ ko [3] 3] ++ [ 2:xs''' | xs''' <- []] ++ ko [3] 4
+-- = [ 1:xs' | xs' <- [] ++ ko [3] 3] ++ [] ++ ko [3] 4
+-- = [ 1:xs' | xs' <- ko [3] 3] ++ ko [3] 4
+-- -- unfold both ko with renaming
+-- = [ 1:xs' | xs' <- [ 3:xs'' | xs'' <- ko [] 0] ++ ko [] 3] ++ [ 3:xs''' | xs''' <- ko [] 1] ++ ko [] 4]
+-- -- all ko applications are the first two cases: ko [] 0 = [[]]; all other ko applications = []
+-- = [ 1:xs' | xs' <- [ 3:xs'' | xs'' <- [[]]] ++ []] ++ [ 3:xs''' | xs''' <- []] ++ []
+-- -- reduce only the inner and rightmost comprehension
+-- = [ 1:xs' | xs' <- [3:[]] ++ []] ++ [] ++ []
+-- = [ 1:xs' | xs' <- [[3]]
+-- = [[1,3]]
 
 sumSubsetsDebug arr num = nub $ kod arr num
 
 kod _ 0 = [[]]
 kod [] _ = []
 kod (x:xs) num = if x > num then [] else
-  [ trace (" x ->" ++ show x ++ " xs' -> " ++(show xs') ++ "num -> " ++ (show num)) x:xs' | xs' <- kod xs (num-x)] ++ trace ("xs -> " ++ (show xs)) kod xs num
+  [ trace ("left x" ++ show x) x:xs' | xs' <- kod xs (num-x)] ++ trace ("right xs" ++ (show xs)) kod xs num
 
 
 -- arr: [1, 2, 3, 4, 5]  num: 5
