@@ -5,7 +5,8 @@ import Data.Function
 import Data.Ord
 import Debug.Trace
 import Control.Monad
-
+import qualified Data.Set as S
+import qualified Data.Map as M
 import Data.Maybe
 
 buildPalindrome xs =  concat $ concatMap (nub) $ group $ (group xs) ++ (group $  reverse xs)
@@ -134,6 +135,11 @@ nextLarger  xs = fst $ foldr add ([], []) xs
 --  7  [8,8,-1] [7,8]
 --  6  [7,8,8,-1] [6,7,8]
  
+sumSubsOpts [] n = [[]] 
+sumSubsOpts xs n = concat $ [map (val:) (sumSubsOpts (delete val xs) (n)) | val <- xs ]
+
+takewhilesum xs n = snd $ foldr (\x (rng,cntr) -> if x + rng <= n then ((rng + x),x:cntr) else (rng,cntr)) (0,[]) xs
+
 
 
 climbingStaircase 0 k = [[]]
@@ -293,8 +299,3 @@ remakeQueens n = foldM logic [] [1..n]
           return (cur : qns)
 
 
-sumSubsets arr n = foldM logic [] arr
-  where logic acc x = do 
-            getnum <- arr 
-            let cursum = sum acc 
-            if ((cursum + getnum) <= n) then return (getnum : acc) else return acc 
