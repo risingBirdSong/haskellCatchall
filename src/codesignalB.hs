@@ -283,3 +283,11 @@ mainCas = do
 remakeclimbing 0 k = [[]]
 remakeclimbing stairs steps = concat $ [ map (val:) (remakeclimbing (stairs - val) (steps) ) | val <- [1..lower]]
   where lower = min stairs steps
+
+remakeQueens n = foldM logic [] [1..n]
+  where logic qns x = do 
+          cur <- [1..n]
+          guard $ cur `notElem` qns  
+          guard $ cur `notElem` (zipWith (+) qns [1..])
+          guard $ cur `notElem` (zipWith (-) qns [1..])
+          return (cur : qns)
