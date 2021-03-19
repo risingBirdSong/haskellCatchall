@@ -285,9 +285,16 @@ remakeclimbing stairs steps = concat $ [ map (val:) (remakeclimbing (stairs - va
   where lower = min stairs steps
 
 remakeQueens n = foldM logic [] [1..n]
-  where logic qns x = do 
+  where logic qns _ = do 
           cur <- [1..n]
           guard $ cur `notElem` qns  
           guard $ cur `notElem` (zipWith (+) qns [1..])
           guard $ cur `notElem` (zipWith (-) qns [1..])
           return (cur : qns)
+
+
+sumSubsets arr n = foldM logic [] arr
+  where logic acc x = do 
+            getnum <- arr 
+            let cursum = sum acc 
+            if ((cursum + getnum) <= n) then return (getnum : acc) else return acc 
