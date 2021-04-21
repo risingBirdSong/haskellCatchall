@@ -73,4 +73,15 @@ parseTestB = parseTimeM True defaultTimeLocale "%Y-%m-%d" "asdf" :: Maybe Day
 -- *Main> parseTestB 
 -- Nothing
 
+addingDaysLearn = do 
+  today <- utctDay <$> getCurrentTime
+  putStrLn $ ("today is -> ") ++ (show today)
+  putStrLn "type a number of days you want to add on the next line, then enter"
+  numAsString <- getLine 
+  let num = read numAsString :: Integer
+  print ("add " ++ (show num) ++ "days to today")
+  print (addDays num today)
+  return ()
+
+
 main = putStrLn "hey"
