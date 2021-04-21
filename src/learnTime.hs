@@ -106,6 +106,15 @@ workingTime = handleTime "2012-01-01 13:08:14"
 
 aConvenienceParse = iso8601ParseM  "2012-01-01T13:08:14Z" :: IO UTCTime
 convenientlyBroke = iso8601ParseM  "broke" :: IO UTCTime
+-- *** Exception: user error (no parse of "broke")
 -- "2012-01-01T13:08:14Z"
+
+f :: Maybe Int
+f = do
+  -- Right res <- pure $ Left "haha, no"
+  -- returns Nothing
+  Right res <- pure $ Right 2
+  -- returns (Just 2)
+  pure (res)
 
 main = putStrLn "hey"
