@@ -104,6 +104,8 @@ brokenTime = handleTime "2012-01-01T13:08:14Z"
 workingTime :: UTCTime 
 workingTime = handleTime "2012-01-01 13:08:14"
 
+aConvenienceParse = iso8601ParseM  "2012-01-01T13:08:14Z" :: IO UTCTime
+convenientlyBroke = iso8601ParseM  "broke" :: IO UTCTime
 -- "2012-01-01T13:08:14Z"
 
 main = putStrLn "hey"
