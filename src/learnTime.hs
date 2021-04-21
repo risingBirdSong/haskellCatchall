@@ -1,6 +1,7 @@
 import Data.Time
 import Data.Fixed
 import Control.Applicative
+import Data.Time.Format.ISO8601
 
 
 -- following along to https://williamyaoh.com/posts/2019-09-16-time-cheatsheet.html
@@ -29,6 +30,7 @@ learningMonad = do
 -- mkUTCTime :: (Integer, Int, Int)
 --           -> (Int, Int, Pico)
 --           -> UTCTime
+mkUTCTime :: (Integer, Int, Int) -> (Int, Int, Pico) -> UTCTime
 mkUTCTime (year, mon, day) (hour, min, sec) =
   UTCTime (fromGregorian year mon day)
           (timeOfDayToTime (TimeOfDay hour min sec))
@@ -83,5 +85,25 @@ addingDaysLearn = do
   print (addDays num today)
   return ()
 
+
+-- parseStringAsDate :: IO ()
+parseStringAsDate = do 
+  txt <- getLine
+  -- let parsed = formatTime defaultTimeLocale   
+  return ()
+
+timeFormat = "%Y-%m-%d %H:%M:%S"
+handleTime = parseTimeOrError True defaultTimeLocale timeFormat
+
+isoTimeNothing = formatParseM iso8601Format "2012-01-01 13:08:14 UTC" :: Maybe UTCTime
+isoTimeJust = formatParseM iso8601Format "2012-01-01T13:08:14Z" :: Maybe UTCTime
+
+brokenTime :: UTCTime 
+brokenTime = handleTime "2012-01-01T13:08:14Z"
+
+workingTime :: UTCTime 
+workingTime = handleTime "2012-01-01 13:08:14"
+
+-- "2012-01-01T13:08:14Z"
 
 main = putStrLn "hey"
