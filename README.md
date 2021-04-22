@@ -19,3 +19,9 @@ cairo          > not be found.
 cairo          >
 
 --  While building package cairo-0.13.8.1 using:
+
+-- profiling
+
+this command was the one that worked for me for profiling my stack program
+
+``stack exec --profile -- myprojectname-exe  +RTS -p``
