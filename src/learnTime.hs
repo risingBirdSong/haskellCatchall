@@ -60,6 +60,14 @@ convertIsoToDay = do
 convertIsoToDay' str = fmap (formatTime defaultTimeLocale "%Y-%m-%d") 
                       (formatParseM iso8601Format str :: Maybe UTCTime)
 
+makeIso str = formatParseM iso8601Format str :: Maybe UTCTime
+
+convertUTCIsoToDay iso = fmap (formatTime defaultTimeLocale "%Y-%m-%d") iso 
+
+-- *Main> convertUTCIsoToDay $ makeIso "2012-01-01T13:08:14Z"
+-- Just "2012-01-01"
+
+myStringParser str = parseTimeM True defaultTimeLocale "%Y-%m-%d" str :: Maybe Day
   -- case iso of
   --     Just isotime -> return $ Just $ formatTime defaultTimeLocale "%Y-%m-%d" isotime
   --     Nothing -> return Nothing
