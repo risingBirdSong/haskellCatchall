@@ -117,4 +117,13 @@ f = do
   -- returns (Just 2)
   pure (res)
 
+
+parseIsoTime str = formatParseM iso8601Format str :: Maybe UTCTime
+
+timeA = parseIsoTime "2012-01-01T13:08:14Z"
+timeB =  parseIsoTime "2012-02-01T13:08:14Z"
+
+timeCompare (Just a) (Just b) = a `compare` b
+
+
 main = putStrLn "hey"
