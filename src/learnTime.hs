@@ -50,6 +50,17 @@ formatting = do
   putStrLn formatB
   return ()
 
+-- convertIsoToDay :: IO ()
+convertIsoToDay = do 
+  let iso = formatParseM iso8601Format "2012-01-01T13:08:14Z" :: Maybe UTCTime
+  print iso 
+  return $ fmap (formatTime defaultTimeLocale "%Y-%m-%d") iso
+
+
+  -- case iso of
+  --     Just isotime -> return $ Just $ formatTime defaultTimeLocale "%Y-%m-%d" isotime
+  --     Nothing -> return Nothing
+
 -- %y: year, 2-digit abbreviation
 -- %Y: year, full
 -- %m: month, 2-digit
