@@ -51,11 +51,14 @@ formatting = do
   return ()
 
 -- convertIsoToDay :: IO ()
-convertIsoToDay = do 
-  let iso = formatParseM iso8601Format "2012-01-01T13:08:14Z" :: Maybe UTCTime
+convertIsoToDay = do
+  str <- getLine 
+  let iso = formatParseM iso8601Format str :: Maybe UTCTime
   print iso 
   return $ fmap (formatTime defaultTimeLocale "%Y-%m-%d") iso
 
+convertIsoToDay' str = fmap (formatTime defaultTimeLocale "%Y-%m-%d") 
+                      (formatParseM iso8601Format str :: Maybe UTCTime)
 
   -- case iso of
   --     Just isotime -> return $ Just $ formatTime defaultTimeLocale "%Y-%m-%d" isotime
