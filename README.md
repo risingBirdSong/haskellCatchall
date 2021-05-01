@@ -25,3 +25,7 @@ cairo          >
 this command was the one that worked for me for profiling my stack program
 
 ``stack exec --profile -- myprojectname-exe  +RTS -p``
+
+and how to insert your own Cost Centres for clearer reading 
+
+https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/profiling.html#inserting-cost-centres-by-hand
