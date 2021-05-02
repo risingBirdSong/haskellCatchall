@@ -21,3 +21,15 @@ roadsBuilding cities roads = S.toList $ S.difference ( S.fromList [ sort [x,y]  
 
 doubleSort xxs = sort $ map sort xxs
 
+-- https://app.codesignal.com/arcade/graphs-arcade/kingdom-roads/ty4w8WJZ4sZSBNK5Q
+
+roads = [[3, 0], [0, 4], [5, 0], [2, 1],
+          [1, 4], [2, 3], [5, 2]]
+roadsA = [[0, 4], [5, 0], [2, 1],
+          [1, 4], [2, 3], [5, 2]]
+
+efficientRoadNetwork n roads = all (==True) $ [ doRoadsConnect x y roads | x <- [0..n-1] , y <- [0..n-1] , x /= y ]
+
+connections num roads = concat $ filter (num `elem`) roads
+
+doRoadsConnect str end roads = not . null $ connections str roads `intersect` connections end roads
